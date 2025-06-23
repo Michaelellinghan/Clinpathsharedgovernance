@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinical Pathology Shared Governance Council</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .nhs-blue { background-color: #005EB8; }
+        .nhs-dark-blue { background-color: #003087; }
+        .nhs-light-grey { background-color: #F0F4F5; }
+        .nhs-text-blue { color: #005EB8; }
+        .nhs-text-dark-blue { color: #003087; }
+        .page { display: none; }
+        .page.active { display: block; }
+        .article-content h3 { font-size: 1.5rem; font-weight: 600; color: #005EB8; margin-top: 2rem; margin-bottom: 1rem; }
+        .article-content p { margin-bottom: 1rem; line-height: 1.75; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl md:text-2xl font-bold nhs-text-dark-blue cursor-pointer" data-page="home-page">Clinical Pathology SGC</h1>
+            <nav class="hidden md:flex items-center space-x-6">
+                <button class="nav-button text-gray-600 hover:nhs-text-blue transition duration-300" data-page="home-page">Home</button>
+                <button class="nav-button text-gray-600 hover:nhs-text-blue transition duration-300" data-page="projects-hub-page">Projects</button>
+                <button class="nav-button text-gray-600 hover:nhs-text-blue transition duration-300" data-page="newsletters-page">Newsletters</button>
+                <button class="nav-button text-gray-600 hover:nhs-text-blue transition duration-300" data-page="team-page">Team</button>
+                <button class="nav-button text-gray-600 hover:nhs-text-blue transition duration-300" data-page="links-page">Links</button>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden"><i data-feather="menu"></i></button>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white px-6 pb-4">
+            <button class="nav-button text-left w-full block py-2 text-gray-600 hover:nhs-text-blue" data-page="home-page">Home</button>
+            <button class="nav-button text-left w-full block py-2 text-gray-600 hover:nhs-text-blue" data-page="projects-hub-page">Projects</button>
+            <button class="nav-button text-left w-full block py-2 text-gray-600 hover:nhs-text-blue" data-page="newsletters-page">Newsletters</button>
+            <button class="nav-button text-left w-full block py-2 text-gray-600 hover:nhs-text-blue" data-page="team-page">Meet the Team</button>
+            <button class="nav-button text-left w-full block py-2 text-gray-600 hover:nhs-text-blue" data-page="socials-page">Social Media</button>
+            <button class="nav-button text-left w-full block py-2 text-gray-600 hover:nhs-text-blue" data-page="links-page">Learning Links</button>
+            <button class="nav-button text-left w-full block py-2 text-gray-600 hover:nhs-text-blue" data-page="contact-page">Suggestions</button>
+        </div>
+    </header>
+
+    <!-- Home Page -->
+    <div id="home-page" class="page active">
+        <main>
+            <section class="nhs-light-grey">
+                <div class="container mx-auto px-6 py-20 text-center">
+                    <h2 class="text-4xl font-bold nhs-text-dark-blue mb-4">Empowering Our Team, Improving Our Service</h2>
+                    <p class="text-lg text-gray-700 max-w-3xl mx-auto">Welcome to the online hub for the Clinical Pathology Shared Governance Council. Discover our projects, read our latest news, and find helpful resources.</p>
+                </div>
+            </section>
+            <section class="py-16">
+                <div class="container mx-auto px-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <button data-page="projects-hub-page" class="nav-button text-left p-6 bg-white rounded-lg shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+                            <i data-feather="clipboard" class="w-12 h-12 nhs-text-blue mb-4"></i>
+                            <h3 class="text-xl font-bold nhs-text-dark-blue mb-2">Our Projects</h3>
+                            <p class="text-gray-600">See the initiatives we're working on to improve our services and workplace.</p>
+                        </button>
+                        <button data-page="newsletters-page" class="nav-button text-left p-6 bg-white rounded-lg shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+                            <i data-feather="file-text" class="w-12 h-12 nhs-text-blue mb-4"></i>
+                            <h3 class="text-xl font-bold nhs-text-dark-blue mb-2">Newsletters</h3>
+                            <p class="text-gray-600">Catch up on the latest news, updates, and spotlights from the council.</p>
+                        </button>
+                        <button data-page="story-page" class="nav-button text-left p-6 bg-white rounded-lg shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+                            <i data-feather="heart" class="w-12 h-12 nhs-text-blue mb-4"></i>
+                            <h3 class="text-xl font-bold nhs-text-dark-blue mb-2">Patient Stories</h3>
+                            <p class="text-gray-600">Read the powerful stories of patients like Nikki Fretwell.</p>
+                        </button>
+                        <button data-page="team-page" class="nav-button text-left p-6 bg-white rounded-lg shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+                           <i data-feather="users" class="w-12 h-12 nhs-text-blue mb-4"></i>
+                            <h3 class="text-xl font-bold nhs-text-dark-blue mb-2">Meet the Team</h3>
+                            <p class="text-gray-600">Get to know the dedicated members of our governance council.</p>
+                        </button>
+                         <button data-page="links-page" class="nav-button text-left p-6 bg-white rounded-lg shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+                           <i data-feather="book-open" class="w-12 h-12 nhs-text-blue mb-4"></i>
+                            <h3 class="text-xl font-bold nhs-text-dark-blue mb-2">Learning Links</h3>
+                            <p class="text-gray-600">Find useful resources for professional development and learning.</p>
+                        </button>
+                        <button data-page="contact-page" class="nav-button text-left p-6 bg-white rounded-lg shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+                           <i data-feather="edit-3" class="w-12 h-12 nhs-text-blue mb-4"></i>
+                            <h3 class="text-xl font-bold nhs-text-dark-blue mb-2">Get In Touch</h3>
+                            <p class="text-gray-600">Have a suggestion? We'd love to hear from you.</p>
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <!-- Projects Hub Page -->
+    <div id="projects-hub-page" class="page">
+        <main class="py-16">
+            <div class="container mx-auto px-6">
+                <button class="back-button nhs-text-blue font-semibold mb-8" data-back="home-page">&larr; Back to Home</button>
+                <h2 class="text-4xl font-bold text-center mb-12 nhs-text-dark-blue">Our Projects</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <button data-page="patient-project-page" class="nav-button bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
+                        <img src="https://placehold.co/600x400/005EB8/FFFFFF?text=Patient+Stories" alt="Stylised image of people" class="w-full h-48 object-cover">
+                        <div class="p-6 text-left">
+                            <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Patient Tours & Stories</h3>
+                            <p class="text-gray-600">Learn more about our patient-focused initiatives.</p>
+                        </div>
+                    </button>
+                    <button data-page="video-project-page" class="nav-button bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
+                        <img src="https://placehold.co/600x400/4CAF50/FFFFFF?text=Video+Tours" alt="Stylised image of a camera" class="w-full h-48 object-cover">
+                        <div class="p-6 text-left">
+                            <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Laboratory Video Tours</h3>
+                            <p class="text-gray-600">Discover our video series for wards and GPs.</p>
+                        </div>
+                    </button>
+                    <button data-page="garden-project-page" class="nav-button bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
+                        <img src="https://placehold.co/600x400/8BC34A/FFFFFF?text=Garden+Project" alt="Stylised image of a garden" class="w-full h-48 object-cover">
+                        <div class="p-6 text-left">
+                            <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Garden Project</h3>
+                            <p class="text-gray-600">See how we're creating a space for wellbeing.</p>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- INDIVIDUAL PROJECT PAGES -->
+    <div id="patient-project-page" class="page">
+        <main class="py-16">
+            <div class="container mx-auto px-6 max-w-4xl">
+                 <button class="back-button nhs-text-blue font-semibold mb-8" data-back="projects-hub-page">&larr; Back to Projects</button>
+                 <h2 class="text-3xl font-bold nhs-text-dark-blue mb-4">Patient Tours & Stories</h2>
+                 <p class="text-gray-700 mb-6">Giving patients a behind-the-scenes look at our labs and sharing their powerful stories helps to demystify the process, build trust, and highlight the human element at the heart of our work. Read one such story from a long-term dialysis patient below.</p>
+                 <button class="nav-button text-lg bg-nhs-blue text-white font-bold py-3 px-6 rounded-lg hover:bg-nhs-dark-blue transition duration-300" data-page="story-page">Read Nikki Fretwell's Story</button>
+            </div>
+        </main>
+    </div>
+     <div id="video-project-page" class="page">
+        <main class="py-16">
+            <div class="container mx-auto px-6 max-w-4xl">
+                 <button class="back-button nhs-text-blue font-semibold mb-8" data-back="projects-hub-page">&larr; Back to Projects</button>
+                 <h2 class="text-3xl font-bold nhs-text-dark-blue mb-4">Laboratory Video Tours</h2>
+                 <p class="text-gray-700 mb-6">We're curating a series of videos for each department in Clinical Pathology to teach the wards and GPs what we do and what they can do to help us improve patient care. These short, engaging videos will cover key aspects of the pathology process, from sample collection to result interpretation, providing a valuable educational resource for clinical staff.</p>
+                 <div class="text-center bg-gray-100 p-8 rounded-lg">
+                    <i data-feather="video" class="h-12 w-12 mx-auto mb-4 text-nhs-blue"></i>
+                    <h3 class="text-xl font-semibold text-gray-700">Videos Coming Soon!</h3>
+                </div>
+            </div>
+        </main>
+    </div>
+    <div id="garden-project-page" class="page">
+        <main class="py-16">
+            <div class="container mx-auto px-6 max-w-4xl">
+                 <button class="back-button nhs-text-blue font-semibold mb-8" data-back="projects-hub-page">&larr; Back to Projects</button>
+                 <h2 class="text-3xl font-bold nhs-text-dark-blue mb-4">Garden Project</h2>
+                 <p class="text-gray-700 mb-6">We are developing a calming green space for staff and patients to relax and recuperate. Work has already started, and we've collected many wonderful plants, thanks to the generosity of <a href="https://www.notcutts.co.uk/" target="_blank" class="text-green-700 hover:underline">Nottcutts in Nottingham</a> and <a href="https://sixacrenurseries.co.uk/" target="_blank" class="text-green-700 hover:underline">Six Acres Nursery in Leicester</a>. We've also received pots kindly donated by Maria Pallon.</p>
+                 <p class="text-gray-700 mb-6">Funding has been secured for new furniture, and we plan on sprucing up and refreshing the current items. Keep an eye out for updates on a big Pathology garden sort-and-clean lunch day!</p>
+                 <div class="p-4 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-800 rounded-r-lg">
+                    <p class="font-bold">A Gentle Reminder:</p>
+                    <p>Our new plants need your help! If you are passing by and see that they look a little dry, please be so kind as to give them a quick water. Thank you!</p>
+                 </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Newsletters Page -->
+    <div id="newsletters-page" class="page">
+       <main class="py-16">
+           <div class="container mx-auto px-6">
+                <button class="back-button nhs-text-blue font-semibold mb-8" data-back="home-page">&larr; Back to Home</button>
+                <h2 class="text-3xl font-bold text-center mb-12 nhs-text-dark-blue">Council Newsletters</h2>
+                <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8">
+                    <div class="space-y-4">
+                        <a href="https://www.canva.com/design/DAGq_W5r-H4/7ZHZKr-ctFrh4vkM6JyN_g/view" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-4 p-4 rounded-lg hover:bg-gray-100 transition duration-300">
+                            <i data-feather="file-text" class="flex-shrink-0 h-6 w-6 nhs-text-blue"></i><span class="font-semibold text-gray-700">July 2025 Edition</span><span class="ml-auto text-sm font-medium nhs-text-blue hover:underline">View Now &rarr;</span>
+                        </a>
+                        <a href="https://www.canva.com/design/DAGnXoAq70Y/0VKC3AAIqPUdaLLZ3cpQUg/view" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-4 p-4 rounded-lg hover:bg-gray-100 transition duration-300">
+                            <i data-feather="file-text" class="flex-shrink-0 h-6 w-6 nhs-text-blue"></i><span class="font-semibold text-gray-700">June 2025 Edition</span><span class="ml-auto text-sm font-medium nhs-text-blue hover:underline">View Now &rarr;</span>
+                        </a>
+                        <a href="https://www.canva.com/design/DAGj3M0ceJ4/nLv3uC_Jojrf20YVExh8Vw/view" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-4 p-4 rounded-lg hover:bg-gray-100 transition duration-300">
+                            <i data-feather="file-text" class="flex-shrink-0 h-6 w-6 nhs-text-blue"></i><span class="font-semibold text-gray-700">May 2025 Edition</span><span class="ml-auto text-sm font-medium nhs-text-blue hover:underline">View Now &rarr;</span>
+                        </a>
+                        <a href="https://www.canva.com/design/DAGhotuowcw/bUjeV9GXeNrwuFZTfrObjA/view" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-4 p-4 rounded-lg hover:bg-gray-100 transition duration-300">
+                            <i data-feather="file-text" class="flex-shrink-0 h-6 w-6 nhs-text-blue"></i><span class="font-semibold text-gray-700">April 2025 Edition</span><span class="ml-auto text-sm font-medium nhs-text-blue hover:underline">View Now &rarr;</span>
+                        </a>
+                         <a href="https://www.canva.com/design/DAGecEbcDF4/bbbGy79e_uK0gRLLYJa4nA/view" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-4 p-4 rounded-lg hover:bg-gray-100 transition duration-300">
+                            <i data-feather="file-text" class="flex-shrink-0 h-6 w-6 nhs-text-blue"></i><span class="font-semibold text-gray-700">March 2025 Edition</span><span class="ml-auto text-sm font-medium nhs-text-blue hover:underline">View Now &rarr;</span>
+                        </a>
+                         <a href="https://www.canva.com/design/DAGSvAh8E6I/b4ZBT3LhYVKWDxoh-OYN5g/view" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-4 p-4 rounded-lg hover:bg-gray-100 transition duration-300">
+                            <i data-feather="file-text" class="flex-shrink-0 h-6 w-6 nhs-text-blue"></i><span class="font-semibold text-gray-700">January 2025 Edition</span><span class="ml-auto text-sm font-medium nhs-text-blue hover:underline">View Now &rarr;</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+       </main>
+    </div>
+
+    <!-- Patient Story Page -->
+    <div id="story-page" class="page">
+         <main class="py-16">
+            <div class="container mx-auto px-6 max-w-4xl">
+                <button class="back-button nhs-text-blue font-semibold mb-8" data-back="home-page">&larr; Back to Home</button>
+                <h2 class="text-4xl font-bold nhs-text-dark-blue mb-4">Nikki Fretwell - Dialysis Patient</h2>
+                <p class="text-lg text-gray-600 mb-8 italic">A Life on Dialysis: A Patient's Journey and Insights</p>
+                <div class="article-content text-gray-700">
+                    <p>In this article, we delve into the remarkable story of Nicola Fretwell...</p>
+                    <h3>Meet Nicola: A Trailblazer in Dialysis Care</h3>
+                    <p>Nicola Fretwell is not your average haemodialysis patient...</p>
+                    <h3>The Path to Diagnosis: A Difficult Beginning</h3>
+                    <p>Nicola's journey began at the age of 17...</p>
+                    <h3>A Son's Perspective on Life with a Mother on Dialysis</h3>
+                    <p>When asked if she thinks her son, now grown up, sees or saw her differently...</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Meet the Team Page -->
+    <div id="team-page" class="page">
+        <main class="py-16 bg-white">
+            <div class="container mx-auto px-6 max-w-5xl">
+                <button class="back-button nhs-text-blue font-semibold mb-8" data-back="home-page">&larr; Back to Home</button>
+                <h2 class="text-4xl font-bold nhs-text-dark-blue mb-2 text-center">Meet the Council</h2>
+                <p class="text-lg text-gray-600 mb-12 text-center">The dedicated individuals driving our shared governance initiatives.</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Team Member Cards -->
+                    <div class="text-center p-6 bg-gray-50 rounded-lg shadow-md"><i data-feather="user" class="h-16 w-16 mx-auto mb-4 text-white bg-nhs-blue p-4 rounded-full"></i><h3 class="text-xl font-bold nhs-text-dark-blue">Michael Ellingham</h3><p class="text-gray-600">Haematology & Blood Transfusion</p></div>
+                    <div class="text-center p-6 bg-gray-50 rounded-lg shadow-md"><i data-feather="user" class="h-16 w-16 mx-auto mb-4 text-white bg-nhs-blue p-4 rounded-full"></i><h3 class="text-xl font-bold nhs-text-dark-blue">Katarzyna Fijalkowska</h3><p class="text-gray-600">Haematology & Blood Transfusion</p></div>
+                    <div class="text-center p-6 bg-gray-50 rounded-lg shadow-md"><i data-feather="user" class="h-16 w-16 mx-auto mb-4 text-white bg-nhs-blue p-4 rounded-full"></i><h3 class="text-xl font-bold nhs-text-dark-blue">Akwasi Boakye</h3><p class="text-gray-600">Immunology</p></div>
+                    <div class="text-center p-6 bg-gray-50 rounded-lg shadow-md"><i data-feather="user" class="h-16 w-16 mx-auto mb-4 text-white bg-nhs-blue p-4 rounded-full"></i><h3 class="text-xl font-bold nhs-text-dark-blue">Yasmin Dixon</h3><p class="text-gray-600">Chemistry</p></div>
+                    <div class="text-center p-6 bg-gray-50 rounded-lg shadow-md"><i data-feather="user" class="h-16 w-16 mx-auto mb-4 text-white bg-nhs-blue p-4 rounded-full"></i><h3 class="text-xl font-bold nhs-text-dark-blue">Matthew Rogers</h3><p class="text-gray-600">Chemistry</p></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Social Media Page -->
+    <div id="socials-page" class="page">
+        <main class="py-16 nhs-light-grey">
+             <div class="container mx-auto px-6 max-w-5xl">
+                <button class="back-button nhs-text-blue font-semibold mb-8" data-back="home-page">&larr; Back to Home</button>
+                <h2 class="text-4xl font-bold nhs-text-dark-blue mb-2 text-center">Promoting Our Profession</h2>
+                <p class="text-lg text-gray-600 mb-12 text-center">A collection of videos promoting our vital role as Biomedical Scientists in the NHS.</p>
+                <div class="text-center bg-white p-10 rounded-lg shadow-md">
+                    <i data-feather="video" class="h-16 w-16 mx-auto mb-4 text-nhs-blue"></i>
+                    <h3 class="text-2xl font-semibold text-gray-700">Content Coming Soon!</h3>
+                    <p class="text-gray-500 mt-2">We are currently curating videos to share here. Please check back later.</p>
+                </div>
+             </div>
+        </main>
+    </div>
+    
+    <!-- Learning Links Page -->
+    <div id="links-page" class="page">
+        <main class="py-16">
+             <div class="container mx-auto px-6 max-w-4xl">
+                <button class="back-button nhs-text-blue font-semibold mb-8" data-back="home-page">&larr; Back to Home</button>
+                 <h2 class="text-4xl font-bold nhs-text-dark-blue mb-2 text-center">Helpful Learning Resources</h2>
+                 <p class="text-lg text-gray-600 mb-12 text-center">A curated list of websites for professional development and learning.</p>
+                 <div class="space-y-4">
+                    <a href="https://www.ibms.org/home/" target="_blank" rel="noopener noreferrer" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"><div class="flex items-center justify-between"><div><h3 class="text-xl font-semibold nhs-text-blue">IBMS</h3><p class="text-gray-600 mt-1">The Institute of Biomedical Science - our professional body.</p></div><i data-feather="external-link" class="text-gray-400"></i></div></a>
+                    <a href="https://www.hcpc-uk.org/" target="_blank" rel="noopener noreferrer" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"><div class="flex items-center justify-between"><div><h3 class="text-xl font-semibold nhs-text-blue">HCPC</h3><p class="text-gray-600 mt-1">The Health and Care Professions Council - our regulator.</p></div><i data-feather="external-link" class="text-gray-400"></i></div></a>
+                    <a href="https://www.rcpath.org/" target="_blank" rel="noopener noreferrer" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"><div class="flex items-center justify-between"><div><h3 class="text-xl font-semibold nhs-text-blue">RCPath</h3><p class="text-gray-600 mt-1">The Royal College of Pathologists.</p></div><i data-feather="external-link" class="text-gray-400"></i></div></a>
+                     <a href="https://www.blood.co.uk/" target="_blank" rel="noopener noreferrer" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"><div class="flex items-center justify-between"><div><h3 class="text-xl font-semibold nhs-text-blue">NHS Blood and Transplant</h3><p class="text-gray-600 mt-1">Professional resources for transfusion specialists.</p></div><i data-feather="external-link" class="text-gray-400"></i></div></a>
+                    <a href="https://www.learnhaem.com/" target="_blank" rel="noopener noreferrer" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"><div class="flex items-center justify-between"><div><h3 class="text-xl font-semibold nhs-text-blue">LearnHaem</h3> <p class="text-gray-600 mt-1">An educational resource for haematology and transfusion science.</p></div><i data-feather="external-link" class="text-gray-400"></i></div></a>
+                    <a href="https://practical-haemostasis.com/" target="_blank" rel="noopener noreferrer" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"><div class="flex items-center justify-between"><div><h3 class="text-xl font-semibold nhs-text-blue">Practical-Haemostasis</h3><p class="text-gray-600 mt-1">A guide to laboratory haemostasis and thrombosis.</p></div><i data-feather="external-link" class="text-gray-400"></i></div></a>
+                    <a href="https://www.ukneqas.org.uk/" target="_blank" rel="noopener noreferrer" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"><div class="flex items-center justify-between"><div><h3 class="text-xl font-semibold nhs-text-blue">UK NEQAS</h3><p class="text-gray-600 mt-1">UK National External Quality Assessment Service.</p></div><i data-feather="external-link" class="text-gray-400"></i></div></a>
+                 </div>
+             </div>
+        </main>
+    </div>
+
+    <!-- Contact Page -->
+    <div id="contact-page" class="page">
+        <main class="py-20">
+            <div class="container mx-auto px-6 text-center max-w-4xl">
+                 <button class="back-button nhs-text-blue font-semibold mb-8" data-back="home-page">&larr; Back to Home</button>
+                <i data-feather="edit-3" class="mx-auto mb-4 nhs-text-blue h-12 w-12"></i>
+                <h2 class="text-3xl font-bold nhs-text-dark-blue">Have a Suggestion?</h2>
+                <p class="text-lg text-gray-700 max-w-2xl mx-auto my-4">Your ideas are important to us. If you have a suggestion for a new project or an improvement, please get in touch.</p>
+                <a href="mailto:michael.ellingham@nhs.net" class="inline-block bg-green-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-green-700 transition duration-300 text-lg">Email Us Your Idea</a>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="nhs-dark-blue text-white py-6">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2024 Clinical Pathology Shared Governance Council. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const pages = document.querySelectorAll('.page');
+        const navButtons = document.querySelectorAll('.nav-button, h1[data-page]');
+        const backButtons = document.querySelectorAll('.back-button');
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        function showPage(pageId) {
+            pages.forEach(page => page.classList.remove('active'));
+            const pageToShow = document.getElementById(pageId);
+            if (pageToShow) {
+                pageToShow.classList.add('active');
+                window.scrollTo(0, 0);
+            }
+             mobileMenu.classList.add('hidden');
+        }
+
+        navButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const pageId = button.getAttribute('data-page');
+                showPage(pageId);
+            });
+        });
+
+        backButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const pageId = button.getAttribute('data-back');
+                showPage(pageId);
+            });
+        });
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        feather.replace();
+    </script>
+</body>
+</html>
