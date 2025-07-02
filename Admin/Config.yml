@@ -1,0 +1,46 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "" 
+public_folder: ""
+
+collections:
+  - name: "pages"
+    label: "Main Pages"
+    files:
+      - file: "index.html"
+        label: "Website Content"
+        name: "content"
+        fields:
+          - {label: "About Us Section", name: "about_us", widget: "object", fields: [
+              {label: "Title", name: "title", widget: "string"},
+              {label: "Description", name: "description", widget: "markdown"}
+            ]}
+          - {label: "Learning Links", name: "learning_links", widget: "list", fields: [
+              {label: "Category", name: "category", widget: "string"},
+              {label: "Links", name: "links", widget: "list", fields: [
+                  {label: "Title", name: "title", widget: "string"},
+                  {label: "Description", name: "description", widget: "string"},
+                  {label: "URL", name: "url", widget: "string"}
+              ]}
+            ]}
+          - {label: "Newsletters", name: "newsletters", widget: "list", fields: [
+              {label: "Title", name: "title", widget: "string"},
+              {label: "Link", name: "link", widget: "string"}
+            ]}
+          - {label: "Social Media Videos", name: "social_media", widget: "list", fields: [
+              {label: "Title", name: "title", widget: "string"},
+              {label: "Description", name: "description", widget: "string"},
+              {label: "Video URL", name: "video_url", widget: "string"},
+              {label: "Thumbnail Image", name: "thumbnail", widget: "image", optional: true}
+            ]}
+  - name: "team"
+    label: "Council Members"
+    folder: "_data/team"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Name", name: "name", widget: "string"}
+      - {label: "Department", name: "department", widget: "string"}
+      - {label: "Email", name: "email", widget: "string"}
