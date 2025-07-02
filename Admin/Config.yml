@@ -2,30 +2,52 @@ backend:
   name: git-gateway
   branch: main
 
-media_folder: "" 
+media_folder: ""
 public_folder: ""
 
 collections:
   - name: "content"
-    label: "Website Content"
+    label: "Editable Website Content"
     files:
-      - label: "Editable Text Content"
+      - label: "Main Content"
         name: "main_content"
         file: "data.json"
         fields:
-          - {label: "About Us & Council Description", name: "about_us", widget: "object", fields: [
-              {label: "Title", name: "title", widget: "string"},
-              {label: "Description", name: "description", widget: "markdown"}
-            ]}
-          - {label: "Project Descriptions", name: "projects", widget: "object", fields: [
-              {label: "Garden Project", name: "garden", widget: "markdown"},
-              {label: "Patient Interviews Project", name: "interviews", widget: "markdown"},
-              {label: "Video Tours Project", name: "videos", widget: "markdown"}
-            ]}
-          - {label: "Harvey's Lab Tours Links", name: "harveys_tours", widget: "list", fields: [
-              {label: "Title", name: "title", widget: "string"},
-              {label: "Description", name: "description", widget: "string"},
-              {label: "URL", name: "url", widget: "string"}
-            ]}
+          - label: "About Us & Council Description"
+            name: "about_us"
+            widget: "object"
+            fields:
+              - label: "Title"
+                name: "title"
+                widget: "string"
+              - label: "Description"
+                name: "description"
+                widget: "markdown"
+          - label: "Project Descriptions"
+            name: "projects"
+            widget: "object"
+            fields:
+              - label: "Garden Project"
+                name: "garden"
+                widget: "markdown"
+              - label: "Patient Interviews Project"
+                name: "interviews"
+                widget: "markdown"
+              - label: "Video Tours Project"
+                name: "videos"
+                widget: "markdown"
+          - label: "Harvey's Lab Tours Links"
+            name: "harveys_tours"
+            widget: "list"
+            fields:
+              - label: "Title"
+                name: "title"
+                widget: "string"
+              - label: "Description"
+                name: "description"
+                widget: "string"
+              - label: "URL"
+                name: "url"
+                widget: "string"
 
-⁹
+
