@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#005EB8">
@@ -20,30 +20,37 @@
         .nhs-text-dark-blue { color: #003087; }
         .page { display: none; }
         .page.active { display: block; }
-        .article-content h3 { font-size: 1.5rem; font-weight: 600; color: #005EB8; margin-top: 2rem; margin-bottom: 1rem; }
-        .article-content p { margin-bottom: 1rem; line-height: 1.75; }
+        .article-content h3 { font-size: 1.5rem; font-weight: 700; color: #005EB8; margin-top: 2.5rem; margin-bottom: 1rem; border-bottom: 2px solid #F0F4F5; padding-bottom: 0.5rem; }
+        .article-content p { margin-bottom: 1rem; line-height: 1.75; color: #4A5568; }
         .article-content blockquote { border-left: 4px solid #005EB8; padding-left: 1rem; margin-left: 1rem; font-style: italic; color: #555; }
-        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000; }
+        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000; border-radius: 0.5rem; }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-        .short-video-container { position: relative; padding-bottom: 177.77%; /* 9:16 aspect ratio */ height: 0; overflow: hidden; max-width: 100%; background: #000; }
+        .short-video-container { position: relative; padding-bottom: 177.77%; /* 9:16 aspect ratio */ height: 0; overflow: hidden; max-width: 100%; background: #000; border-radius: 0.5rem; }
         .short-video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-
+        .home-card {
+            border-top: 4px solid #005EB8;
+            transition: all 0.3s ease-in-out;
+        }
+        .home-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
 
     <!-- Header -->
     <header class="bg-white shadow-md sticky top-0 z-50">
-        <div class="container mx-auto px-6 py-2 flex justify-between items-center">
-            <div class="cursor-pointer" data-page="home-page">
-                <img src="logo.jpg" alt="Clinical Pathology Shared Governance Council Logo" class="h-20 w-auto">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <div class="cursor-pointer flex items-center space-x-3" data-page="home-page">
+                <img src="logo.jpg" alt="Clinical Pathology Shared Governance Council Logo" class="h-16 w-auto">
             </div>
-            <nav class="hidden md:flex items-center space-x-6">
-                <button class="nav-button text-gray-600 hover:nhs-text-blue transition duration-300" data-page="home-page">Home</button>
-                <button class="nav-button text-gray-600 hover:nhs-text-blue transition duration-300" data-page="projects-hub-page">Projects</button>
-                <button class="nav-button text-gray-600 hover:nhs-text-blue transition duration-300" data-page="newsletters-page">Newsletters</button>
-                <button class="nav-button text-gray-600 hover:nhs-text-blue transition duration-300" data-page="team-page">About Us</button>
-                <button class="nav-button text-gray-600 hover:nhs-text-blue transition duration-300" data-page="links-page">Links</button>
+            <nav class="hidden md:flex items-center space-x-8">
+                <button class="nav-button font-semibold text-gray-600 hover:nhs-text-blue transition duration-300" data-page="home-page">Home</button>
+                <button class="nav-button font-semibold text-gray-600 hover:nhs-text-blue transition duration-300" data-page="projects-hub-page">Projects</button>
+                <button class="nav-button font-semibold text-gray-600 hover:nhs-text-blue transition duration-300" data-page="newsletters-page">Newsletters</button>
+                <button class="nav-button font-semibold text-gray-600 hover:nhs-text-blue transition duration-300" data-page="team-page">About Us</button>
+                <button class="nav-button font-semibold text-gray-600 hover:nhs-text-blue transition duration-300" data-page="links-page">Links</button>
             </nav>
             <button id="mobile-menu-button" class="md:hidden"><i data-feather="menu"></i></button>
         </div>
@@ -61,43 +68,43 @@
     <!-- Home Page -->
     <div id="home-page" class="page active">
         <main>
-            <section class="nhs-light-grey">
-                <div class="container mx-auto px-6 py-20 text-center">
-                    <h2 class="text-4xl font-bold nhs-text-dark-blue mb-4">Welcome to the Clinical Pathology Shared Governance</h2>
-                    <p class="text-lg text-gray-700 max-w-3xl mx-auto">Discover our projects, read our latest news, and find helpful resources.</p>
+            <section class="bg-white">
+                <div class="container mx-auto px-6 py-24 text-center">
+                    <h2 class="text-4xl md:text-5xl font-extrabold nhs-text-dark-blue mb-4">Welcome to the Clinical Pathology Shared Governance</h2>
+                    <p class="text-lg text-gray-600 max-w-3xl mx-auto">Discover our projects, read our latest news, and find helpful resources.</p>
                 </div>
             </section>
-            <section class="py-16">
+            <section class="py-20 bg-nhs-light-grey">
                 <div class="container mx-auto px-6">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        <div class="p-6 bg-white rounded-lg border border-gray-200">
+                        <div class="p-8 bg-white rounded-lg shadow-sm home-card">
                            <i data-feather="clipboard" class="w-12 h-12 nhs-text-blue mb-4"></i>
-                           <h3 class="text-xl font-bold nhs-text-dark-blue mb-4">Our Projects</h3>
+                           <h3 class="text-2xl font-bold nhs-text-dark-blue mb-4">Our Projects</h3>
                            <div class="space-y-3">
-                               <button data-page="garden-project-page" class="nav-button flex items-center space-x-2 w-full text-left p-2 rounded-lg hover:bg-gray-100 transition">
-                                   <i data-feather="arrow-right-circle" class="w-5 h-5 text-gray-500"></i><span>Garden Project</span>
+                               <button data-page="garden-project-page" class="nav-button flex items-center space-x-3 w-full text-left p-3 rounded-lg hover:bg-gray-100 transition">
+                                   <i data-feather="arrow-right-circle" class="w-5 h-5 text-gray-500"></i><span class="font-semibold">Garden Project</span>
                                </button>
-                               <button data-page="patient-interview-hub-page" class="nav-button flex items-center space-x-2 w-full text-left p-2 rounded-lg hover:bg-gray-100 transition">
-                                   <i data-feather="arrow-right-circle" class="w-5 h-5 text-gray-500"></i><span>Patient Interviews</span>
+                               <button data-page="patient-interview-hub-page" class="nav-button flex items-center space-x-3 w-full text-left p-3 rounded-lg hover:bg-gray-100 transition">
+                                   <i data-feather="arrow-right-circle" class="w-5 h-5 text-gray-500"></i><span class="font-semibold">Patient Interviews</span>
                                </button>
-                               <button data-page="video-project-page" class="nav-button flex items-center space-x-2 w-full text-left p-2 rounded-lg hover:bg-gray-100 transition">
-                                   <i data-feather="arrow-right-circle" class="w-5 h-5 text-gray-500"></i><span>Video Tours</span>
+                               <button data-page="video-project-page" class="nav-button flex items-center space-x-3 w-full text-left p-3 rounded-lg hover:bg-gray-100 transition">
+                                   <i data-feather="arrow-right-circle" class="w-5 h-5 text-gray-500"></i><span class="font-semibold">Video Tours</span>
                                </button>
                            </div>
                         </div>
-                        <button data-page="newsletters-page" class="nav-button text-left p-6 bg-white rounded-lg border border-nhs-blue hover:bg-nhs-light-grey transition-all duration-300">
-                            <i data-feather="file-text" class="w-12 h-12 nhs-text-blue mb-4"></i><h3 class="text-xl font-bold nhs-text-dark-blue mb-2">Newsletters</h3><p class="text-gray-600">Catch up on the latest news from the council.</p>
+                        <button data-page="newsletters-page" class="nav-button text-left p-8 bg-white rounded-lg shadow-sm home-card">
+                            <i data-feather="file-text" class="w-12 h-12 nhs-text-blue mb-4"></i><h3 class="text-2xl font-bold nhs-text-dark-blue mb-2">Newsletters</h3><p class="text-gray-600">Catch up on the latest news from the council.</p>
                         </button>
-                         <button data-page="socials-page" class="nav-button text-left p-6 bg-white rounded-lg border border-nhs-blue hover:bg-nhs-light-grey transition-all duration-300">
-                           <i data-feather="instagram" class="w-12 h-12 nhs-text-blue mb-4"></i><h3 class="text-xl font-bold nhs-text-dark-blue mb-2">Social Media</h3><p class="text-gray-600">Videos promoting our role as Biomedical Scientists.</p>
+                         <button data-page="socials-page" class="nav-button text-left p-8 bg-white rounded-lg shadow-sm home-card">
+                           <i data-feather="instagram" class="w-12 h-12 nhs-text-blue mb-4"></i><h3 class="text-2xl font-bold nhs-text-dark-blue mb-2">Social Media</h3><p class="text-gray-600">Videos promoting our role as Biomedical Scientists.</p>
                         </button>
-                        <button data-page="team-page" class="nav-button text-left p-6 bg-white rounded-lg border border-nhs-blue hover:bg-nhs-light-grey transition-all duration-300">
-                           <i data-feather="users" class="w-12 h-12 nhs-text-blue mb-4"></i><h3 class="text-xl font-bold nhs-text-dark-blue mb-2">About Us</h3><p class="text-gray-600">Learn about our council and what we do.</p>
+                        <button data-page="team-page" class="nav-button text-left p-8 bg-white rounded-lg shadow-sm home-card">
+                           <i data-feather="users" class="w-12 h-12 nhs-text-blue mb-4"></i><h3 class="text-2xl font-bold nhs-text-dark-blue mb-2">About Us</h3><p class="text-gray-600">Learn about our council and what we do.</p>
                         </button>
-                         <button data-page="links-page" class="nav-button text-left p-6 bg-white rounded-lg border border-nhs-blue hover:bg-nhs-light-grey transition-all duration-300">
-                           <i data-feather="book-open" class="w-12 h-12 nhs-text-blue mb-4"></i><h3 class="text-xl font-bold nhs-text-dark-blue mb-2">Learning Links</h3><p class="text-gray-600">Useful resources for professional development.</p>
+                         <button data-page="links-page" class="nav-button text-left p-8 bg-white rounded-lg shadow-sm home-card">
+                           <i data-feather="book-open" class="w-12 h-12 nhs-text-blue mb-4"></i><h3 class="text-2xl font-bold nhs-text-dark-blue mb-2">Learning Links</h3><p class="text-gray-600">Useful resources for professional development.</p>
                         </button>
-                        <button data-page="contact-page" class="nav-button text-left p-6 bg-white rounded-lg border border-nhs-blue hover:bg-nhs-light-grey transition-all duration-300">
+                        <button data-page="contact-page" class="nav-button text-left p-8 bg-white rounded-lg shadow-sm home-card">
                            <i data-feather="send" class="w-12 h-12 nhs-text-blue mb-4"></i><h3 class="text-xl font-bold nhs-text-dark-blue mb-2">Get In Touch</h3><p class="text-gray-600">Have a suggestion? We'd love to hear it.</p>
                         </button>
                     </div>
@@ -231,11 +238,11 @@
    <div id="contact-page" class="page"><main class="py-20"><div class="container mx-auto px-6 text-center max-w-4xl"><button class="back-button nhs-text-blue font-semibold mb-8" data-back="home-page">← Back to Home</button><i data-feather="send" class="mx-auto mb-4 nhs-text-blue h-12 w-12"></i><h2 class="text-3xl font-bold nhs-text-dark-blue">Have a Suggestion?</h2><p class="text-lg text-gray-700 max-w-2xl mx-auto my-4">Your ideas are important to us. If you have a suggestion for a new project or an improvement, we'd love to hear from you.</p><a href="mailto:michael.ellingham@nhs.net" class="inline-block bg-green-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-green-700 transition duration-300 text-lg">Email Michael Ellingham</a></div></main></div>
 
    <!-- Footer -->
-   <footer class="nhs-dark-blue text-white py-6"><div class="container mx-auto px-6 text-center"><p>© 2024 Clinical Pathology Shared Governance Council. All Rights Reserved.</p></div></footer>
+   <footer class="nhs-dark-blue text-white py-8"><div class="container mx-auto px-6 text-center"><p>© 2024 Clinical Pathology Shared Governance Council. All Rights Reserved.</p></div></footer>
 
    <script>
        const pages = document.querySelectorAll('.page');
-       const navButtons = document.querySelectorAll('.nav-button, h1[data-page]');
+       const navButtons = document.querySelectorAll('.nav-button, div[data-page]');
        const backButtons = document.querySelectorAll('.back-button');
        const mobileMenuButton = document.getElementById('mobile-menu-button');
        const mobileMenu = document.getElementById('mobile-menu');
