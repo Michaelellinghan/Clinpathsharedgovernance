@@ -2,52 +2,48 @@ backend:
   name: git-gateway
   branch: main
 
-media_folder: ""
+media_folder: "" 
 public_folder: ""
 
 collections:
   - name: "content"
-    label: "Editable Website Content"
+    label: "Website Content"
     files:
       - label: "Main Content"
         name: "main_content"
         file: "data.json"
         fields:
-          - label: "About Us & Council Description"
-            name: "about_us"
-            widget: "object"
-            fields:
-              - label: "Title"
-                name: "title"
-                widget: "string"
-              - label: "Description"
-                name: "description"
-                widget: "markdown"
-          - label: "Project Descriptions"
-            name: "projects"
-            widget: "object"
-            fields:
-              - label: "Garden Project"
-                name: "garden"
-                widget: "markdown"
-              - label: "Patient Interviews Project"
-                name: "interviews"
-                widget: "markdown"
-              - label: "Video Tours Project"
-                name: "videos"
-                widget: "markdown"
-          - label: "Harvey's Lab Tours Links"
-            name: "harveys_tours"
+          - {label: "About Us & Council Description", name: "about_us", widget: "object", fields: [ {label: "Title", name: "title", widget: "string"}, {label: "Description", name: "description", widget: "markdown"} ]}
+          - label: "Council Members"
+            name: "team_members"
             widget: "list"
             fields:
-              - label: "Title"
-                name: "title"
-                widget: "string"
-              - label: "Description"
-                name: "description"
-                widget: "string"
-              - label: "URL"
-                name: "url"
-                widget: "string"
-
-
+              - {label: "Name", name: "name", widget: "string"}
+              - {label: "Department", name: "department", widget: "string"}
+              - {label: "Email", name: "email", widget: "string"}
+          - label: "Newsletters"
+            name: "newsletters"
+            widget: "list"
+            fields:
+              - {label: "Title", name: "title", widget: "string"}
+              - {label: "Link", name: "link", widget: "string"}
+          - label: "Social Media Videos"
+            name: "social_media"
+            widget: "list"
+            fields:
+              - {label: "Title", name: "title", widget: "string"}
+              - {label: "Description", name: "description", widget: "string"}
+              - {label: "Video URL", name: "video_url", widget: "string"}
+              - {label: "Thumbnail Image", name: "thumbnail", widget: "image", optional: true}
+          - label: "Learning Links"
+            name: "learning_links"
+            widget: "list"
+            fields:
+              - {label: "Category", name: "category", widget: "string"}
+              - label: "Links"
+                name: "links"
+                widget: "list"
+                fields:
+                  - {label: "Title", name: "title", widget: "string"}
+                  - {label: "Description", name: "description", widget: "string"}
+                  - {label: "URL", name: "url", widget: "string"}
