@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garden Project - SGC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#005EB8">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .nhs-blue { background-color: #005EB8; }
+        .nhs-dark-blue { background-color: #003087; }
+        .nhs-light-grey { background-color: #F0F4F5; }
+        .nhs-text-blue { color: #005EB8; }
+        .nhs-text-dark-blue { color: #003087; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <a href="index.html" class="cursor-pointer flex items-center space-x-3">
+                <img src="logo.jpg" alt="Clinical Pathology Shared Governance Council Logo" class="h-16 w-auto">
+            </a>
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="index.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Home</a>
+                <a href="projects.html" class="font-semibold text-nhs-blue transition duration-300">Projects</a>
+                <a href="games.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Games</a>
+                <a href="newsletters.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Newsletters</a>
+                <a href="about.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">About Us</a>
+                <a href="links.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Links</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden"><i data-feather="menu"></i></button>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white px-6 pb-4">
+            <a href="index.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Home</a>
+            <a href="projects.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Projects</a>
+            <a href="games.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Games</a>
+            <a href="newsletters.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Newsletters</a>
+            <a href="about.html" class="block py-2 text-gray-600 hover:nhs-text-blue">About Us</a>
+            <a href="social.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Social Media</a>
+            <a href="links.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Learning Links</a>
+            <a href="contact.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Suggestions</a>
+        </div>
+    </header>
+
+    <main class="py-16">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <a href="projects.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8">
+                <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Projects
+            </a>
+            <h2 class="text-3xl font-bold nhs-text-dark-blue mb-4">Garden Project</h2>
+            <p class="text-gray-700 mb-6">We are developing a calming green space for staff and patients to relax and recuperate. Work has already started, and we've collected many wonderful plants, thanks to the generosity of <a href="https://www.notcutts.co.uk/" target="_blank" rel="noopener noreferrer" class="text-green-700 hover:underline">Nottcutts in Nottingham</a> and <a href="https://sixacrenurseries.co.uk/" target="_blank" rel="noopener noreferrer" class="text-green-700 hover:underline">Six Acres Nursery in Leicester</a>. We've also received pots kindly donated by Maria Pallon.</p>
+            <p class="text-gray-700 mb-6">Funding has been secured for new furniture, and we plan on sprucing up and refreshing the current items. Keep an eye out for updates on a big Pathology garden sort-and-clean lunch day!</p>
+            <div class="p-4 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-800 rounded-r-lg">
+                <p class="font-bold">A Gentle Reminder:</p>
+                <p>Our new plants need your help! If you are passing by and see that they look a little dry, please be so kind as to give them a quick water. Thank you!</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="nhs-dark-blue text-white py-8 mt-16"><div class="container mx-auto px-6 text-center"><p>&copy; 2024 Clinical Pathology Shared Governance Council. All Rights Reserved.</p></div></footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+            feather.replace();
+        });
+   </script>
+</body>
+</html>
