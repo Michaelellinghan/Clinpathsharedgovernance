@@ -18,12 +18,13 @@
         .nhs-light-grey { background-color: #F0F4F5; }
         .nhs-text-blue { color: #005EB8; }
         .nhs-text-dark-blue { color: #003087; }
-        .antigram-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
-        .antigram-table th, .antigram-table td { border: 1px solid #d1d5db; padding: 0.5rem; text-align: center; }
+        .antigram-table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 0.7rem; }
+        .antigram-table th, .antigram-table td { border: 1px solid #d1d5db; padding: 0.4rem 0.2rem; text-align: center; }
         .antigram-table th { background-color: #e5e7eb; font-weight: bold; }
-        .antigram-table .antigen-header { writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg); font-size: 0.75rem; }
+        .antigram-table .antigen-header { writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg); }
         .antigram-table .reaction-pos { color: #dc2626; font-weight: bold; }
         .difficulty-btn.active { background-color: #003087; color: white; }
+        .antibody-choice-btn.selected { background-color: #fde047; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -56,7 +57,7 @@
     </header>
 
     <main class="py-16 bg-nhs-light-grey">
-        <div class="container mx-auto px-6 max-w-7xl text-center">
+        <div class="container mx-auto px-2 md:px-6 max-w-7xl text-center">
             <a href="games.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8">
                 <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Games
             </a>
@@ -71,17 +72,18 @@
 
             <div class="bg-white p-4 rounded-lg shadow-md">
                 <div class="overflow-x-auto">
-                    <table id="antigram-table" class="antigram-table text-sm"></table>
+                    <table id="antigram-table" class="antigram-table"></table>
                 </div>
             </div>
 
             <div class="mt-6">
-                <h3 class="text-xl font-semibold mb-3">Select the antibody/antibodies:</h3>
+                <h3 class="text-xl font-semibold mb-3">Select your answer(s):</h3>
                 <div id="antibody-options" class="flex flex-wrap justify-center gap-2"></div>
             </div>
 
             <div id="antigram-feedback" class="mt-6 p-4 rounded-lg text-lg font-semibold hidden"></div>
-            <button id="new-panel-btn" class="mt-4 bg-nhs-blue text-white font-bold py-2 px-6 rounded-lg hover:bg-nhs-dark-blue transition duration-300">New Panel</button>
+            <button id="check-answer-btn" class="mt-4 bg-green-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-green-700 transition duration-300">Check Answer</button>
+            <button id="new-panel-btn" class="mt-4 bg-nhs-blue text-white font-bold py-3 px-8 rounded-lg hover:bg-nhs-dark-blue transition duration-300">New Panel</button>
         </div>
     </main>
 
@@ -97,22 +99,18 @@
             const antigramTable = document.getElementById('antigram-table');
             const antibodyOptionsContainer = document.getElementById('antibody-options');
             const newPanelBtn = document.getElementById('new-panel-btn');
+            const checkAnswerBtn = document.getElementById('check-answer-btn');
             const antigramFeedback = document.getElementById('antigram-feedback');
             const difficultyButtons = document.querySelectorAll('.difficulty-btn');
 
-            const antigens = ['D', 'C', 'c', 'E', 'e', 'K', 'k', 'Fya', 'Fyb', 'Jka', 'Jkb', 'Lea', 'Leb', 'P1', 'M', 'N', 'S', 's'];
+            const antigens = ['D', 'C', 'c', 'E', 'e', 'Cʷ', 'V', 'K', 'k', 'Kpᵃ', 'Kpᵇ', 'Jsᵃ', 'Jsᵇ', 'Fyᵃ', 'Fyᵇ', 'Jkᵃ', 'Jkᵇ', 'Luᵃ', 'Luᵇ', 'Leᵃ', 'Leᵇ', 'P₁', 'M', 'N', 'S', 's'];
             const allAntibodies = [
-                { name: 'Anti-D', antigen: 'D', freq: 'common' }, { name: 'Anti-C', antigen: 'C', freq: 'common' }, 
-                { name: 'Anti-c', antigen: 'c', freq: 'common' }, { name: 'Anti-E', antigen: 'E', freq: 'common' }, 
-                { name: 'Anti-e', antigen: 'e', freq: 'common' }, { name: 'Anti-K', antigen: 'K', freq: 'common' }, 
-                { name: 'Anti-k', antigen: 'k', freq: 'rare' }, { name: 'Anti-Fya', antigen: 'Fya', freq: 'common' }, 
-                { name: 'Anti-Fyb', antigen: 'Fyb', freq: 'rare' }, { name: 'Anti-Jka', antigen: 'Jka', freq: 'common' }, 
-                { name: 'Anti-Jkb', antigen: 'Jkb', freq: 'rare' }, { name: 'Anti-Lea', antigen: 'Lea', freq: 'common' }, 
-                { name: 'Anti-Leb', antigen: 'Leb', freq: 'rare' }, { name: 'Anti-P1', antigen: 'P1', freq: 'common' },
-                { name: 'Anti-M', antigen: 'M', freq: 'common' }, { name: 'Anti-N', antigen: 'N', freq: 'rare' },
-                { name: 'Anti-S', antigen: 'S', freq: 'common' }, { name: 'Anti-s', antigen: 's', freq: 'rare' }
+                { name: 'Anti-D', antigen: 'D' }, { name: 'Anti-C', antigen: 'C' }, { name: 'Anti-c', antigen: 'c' },
+                { name: 'Anti-E', antigen: 'E' }, { name: 'Anti-e', antigen: 'e' }, { name: 'Anti-K', antigen: 'K' },
+                { name: 'Anti-Fya', antigen: 'Fyᵃ' }, { name: 'Anti-Jka', antigen: 'Jkᵃ' }, { name: 'Anti-S', antigen: 'S' },
+                { name: 'Anti-s', antigen: 's' }, { name: 'Anti-M', antigen: 'M' }
             ];
-            
+
             let currentAntibodies = [];
             let selectedAntibodies = [];
             let currentDifficulty = 'easy';
@@ -131,8 +129,8 @@
                 if (cell.antigens['E'] === '+') cell.antigens['e'] = Math.random() < 0.5 ? '+' : '0';
                 if (cell.antigens['K'] === '+') cell.antigens['k'] = '0';
                 if (cell.antigens['k'] === '+') cell.antigens['K'] = '0';
-                if (cell.antigens['Fya'] === '+') cell.antigens['Fyb'] = Math.random() < 0.5 ? '+' : '0';
-                if (cell.antigens['Jka'] === '+') cell.antigens['Jkb'] = Math.random() < 0.5 ? '+' : '0';
+                if (cell.antigens['Fyᵃ'] === '+') cell.antigens['Fyᵇ'] = Math.random() < 0.5 ? '+' : '0';
+                if (cell.antigens['Jkᵃ'] === '+') cell.antigens['Jkᵇ'] = Math.random() < 0.5 ? '+' : '0';
                 if (cell.antigens['S'] === '+') cell.antigens['s'] = Math.random() < 0.5 ? '+' : '0';
                 return cell;
             }
@@ -144,37 +142,39 @@
                 if (currentDifficulty === 'medium') numAntibodies = 2;
                 if (currentDifficulty === 'hard') numAntibodies = 3;
 
-                const commonAbs = allAntibodies.filter(ab => ab.freq === 'common');
-                shuffle(commonAbs);
-                currentAntibodies = commonAbs.slice(0, numAntibodies);
+                shuffle(allAntibodies);
+                currentAntibodies = allAntibodies.slice(0, numAntibodies);
 
-                const panelCells = Array.from({ length: 8 }, () => generateRandomCell());
+                const panelCells = Array.from({ length: 11 }, generateRandomCell);
 
-                let tableHTML = '<thead><tr>' + antigens.map(ag => `<th class="antigen-header">${ag}</th>`).join('') + '<th>Reaction</th></tr></thead><tbody>';
-                panelCells.forEach((cell) => {
+                let tableHTML = `<thead><tr><th class="w-12">Cell</th>${antigens.map(ag => `<th class="antigen-header">${ag}</th>`).join('')}<th>IAT</th></tr></thead><tbody>`;
+                panelCells.forEach((cell, index) => {
                     let reaction = '0';
+                    let strength = 0;
                     for (const ab of currentAntibodies) {
                         if (cell.antigens[ab.antigen] === '+') {
                             reaction = '+';
-                            break;
+                            strength = Math.max(strength, Math.floor(Math.random() * 2) + 2); // 2+ to 3+
                         }
+                        // Dosage
+                        if(ab.antigen === 'C' && cell.antigens['c'] === '0') strength++;
+                        if(ab.antigen === 'c' && cell.antigens['C'] === '0') strength++;
+                        if(ab.antigen === 'E' && cell.antigens['e'] === '0') strength++;
+                        if(ab.antigen === 'e' && cell.antigens['E'] === '0') strength++;
                     }
-                    tableHTML += `<tr>${antigens.map(ag => `<td>${cell.antigens[ag]}</td>`).join('')}<td class="${reaction === '+' ? 'reaction-pos' : ''}">${reaction}</td></tr>`;
+                    if (reaction === '+') reaction = `${Math.min(strength, 4)}+`;
+
+                    tableHTML += `<tr><td class="font-bold">${index + 1}</td>${antigens.map(ag => `<td>${cell.antigens[ag]}</td>`).join('')}<td class="${reaction !== '0' ? 'reaction-pos' : ''}">${reaction}</td></tr>`;
                 });
                 tableHTML += '</tbody>';
                 antigramTable.innerHTML = tableHTML;
                 
-                const options = [...currentAntibodies];
-                while(options.length < 8) {
-                    const randomAb = allAntibodies[Math.floor(Math.random() * allAntibodies.length)];
-                    if(!options.some(opt => opt.name === randomAb.name)) {
-                        options.push(randomAb);
-                    }
-                }
+                const options = [...allAntibodies];
                 shuffle(options);
+                const displayOptions = options.slice(0, 12);
                 
                 antibodyOptionsContainer.innerHTML = '';
-                options.forEach(ab => {
+                displayOptions.forEach(ab => {
                     antibodyOptionsContainer.innerHTML += `<button class="antibody-choice-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">${ab.name}</button>`;
                 });
 
@@ -184,27 +184,28 @@
             function selectAntibody(event) {
                 const btn = event.target;
                 const abName = btn.textContent;
-
+                btn.classList.toggle('selected');
                 if (selectedAntibodies.includes(abName)) {
                     selectedAntibodies = selectedAntibodies.filter(ab => ab !== abName);
-                    btn.classList.remove('bg-yellow-300');
                 } else {
                     selectedAntibodies.push(abName);
-                    btn.classList.add('bg-yellow-300');
                 }
-                checkAnswer();
             }
 
-            function checkAnswer() {
+            function checkFinalAnswer() {
                 const currentAntibodyNames = currentAntibodies.map(ab => ab.name).sort();
                 const selectedAntibodyNames = selectedAntibodies.sort();
-
-                if (currentAntibodyNames.length === selectedAntibodyNames.length && currentAntibodyNames.every((val, index) => val === selectedAntibodyNames[index])) {
-                    antigramFeedback.classList.remove('hidden');
-                    antigramFeedback.textContent = `Correct! The antibody is ${currentAntibodyNames.join(' & ')}.`;
+                const isCorrect = currentAntibodyNames.length === selectedAntibodyNames.length && currentAntibodyNames.every((val, index) => val === selectedAntibodyNames[index]);
+                
+                antigramFeedback.classList.remove('hidden');
+                if (isCorrect) {
+                    antigramFeedback.textContent = `Correct! The antibody/antibodies are: ${currentAntibodyNames.join(', ')}.`;
                     antigramFeedback.className = 'mt-6 p-4 rounded-lg text-lg font-semibold bg-green-100 text-green-800';
-                    document.querySelectorAll('.antibody-choice-btn').forEach(btn => btn.disabled = true);
+                } else {
+                    antigramFeedback.textContent = `Incorrect. The correct answer was: ${currentAntibodyNames.join(', ')}.`;
+                    antigramFeedback.className = 'mt-6 p-4 rounded-lg text-lg font-semibold bg-red-100 text-red-800';
                 }
+                document.querySelectorAll('.antibody-choice-btn').forEach(btn => btn.disabled = true);
             }
             
             difficultyButtons.forEach(btn => {
@@ -217,6 +218,7 @@
             });
 
             newPanelBtn.addEventListener('click', generatePanel);
+            checkAnswerBtn.addEventListener('click', checkFinalAnswer);
             
             document.querySelector('.difficulty-btn[data-difficulty="easy"]').classList.add('active');
             generatePanel();
