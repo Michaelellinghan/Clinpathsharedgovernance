@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chemistry Case Challenge - SGC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#005EB8">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .nhs-blue { background-color: #005EB8; }
+        .nhs-dark-blue { background-color: #003087; }
+        .nhs-light-grey { background-color: #F0F4F5; }
+        .nhs-text-blue { color: #005EB8; }
+        .nhs-text-dark-blue { color: #003087; }
+        .dept-button {
+            transition: all 0.2s ease-in-out;
+        }
+        .dept-button:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <a href="index.html" class="cursor-pointer flex items-center space-x-3">
+                <img src="logo.jpg" alt="Clinical Pathology Shared Governance Council Logo" class="h-16 w-auto">
+            </a>
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="index.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Home</a>
+                <a href="projects.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Projects</a>
+                <a href="games.html" class="font-semibold text-nhs-blue transition duration-300">Games</a>
+                <a href="newsletters.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Newsletters</a>
+                <a href="about.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">About Us</a>
+                <a href="links.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Links</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden"><i data-feather="menu"></i></button>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white px-6 pb-4">
+             <a href="index.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Home</a>
+            <a href="projects.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Projects</a>
+            <a href="games.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Games</a>
+            <a href="newsletters.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Newsletters</a>
+            <a href="about.html" class="block py-2 text-gray-600 hover:nhs-text-blue">About Us</a>
+            <a href="social.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Social Media</a>
+            <a href="links.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Learning Links</a>
+            <a href="contact.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Suggestions</a>
+        </div>
+    </header>
+
+    <main class="py-16 bg-nhs-light-grey">
+        <div class="container mx-auto px-6 max-w-2xl text-center">
+            <a href="games.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8">
+                <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Games
+            </a>
+            <h2 class="text-3xl font-bold nhs-text-dark-blue mb-4">Chemistry: Test Sorter Challenge</h2>
+            <p class="text-gray-600 mb-8 max-w-2xl mx-auto">A test has been requested. To which department should the sample be sent?</p>
+
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-lg font-semibold text-gray-600 mb-2">Test Requested:</h3>
+                <p id="test-name" class="text-3xl md:text-4xl font-extrabold nhs-text-dark-blue mb-8 h-20 flex items-center justify-center"></p>
+                
+                <div id="chem-game-feedback" class="mb-6 h-10 text-2xl font-bold"></div>
+
+                <div id="chem-department-buttons" class="grid grid-cols-2 gap-4">
+                    <!-- Department buttons will be generated here -->
+                </div>
+            </div>
+            
+            <div class="mt-8 bg-white p-4 rounded-lg shadow-md">
+                <p class="text-lg">Score: <span id="chem-game-score" class="font-bold">0</span></p>
+                <button id="chem-new-game-btn" class="mt-4 bg-nhs-blue text-white font-bold py-2 px-6 rounded-lg hover:bg-nhs-dark-blue transition duration-300">Start New Game</button>
+            </div>
+        </div>
+    </main>
+
+    <footer class="nhs-dark-blue text-white py-8 mt-16"><div class="container mx-auto px-6 text-center"><p>&copy; 2024 Clinical Pathology Shared Governance Council. All Rights Reserved.</p></div></footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+            feather.replace();
+
+            const testNameEl = document.getElementById('test-name');
+            const departmentButtonsEl = document.getElementById('chem-department-buttons');
+            const feedbackEl = document.getElementById('chem-game-feedback');
+            const scoreEl = document.getElementById('chem-game-score');
+            const newGameBtn = document.getElementById('chem-new-game-btn');
+
+            const tests = [
+                { name: 'Full Blood Count', department: 'Haematology' },
+                { name: 'Urea & Electrolytes', department: 'Chemistry' },
+                { name: 'Group & Save', department: 'Transfusion' },
+                { name: 'Anti-Nuclear Antibody (ANA)', department: 'Immunology' },
+                { name: 'Coagulation Screen', department: 'Haematology' },
+                { name: 'Liver Function Tests', department: 'Chemistry' },
+                { name: 'Crossmatch', department: 'Transfusion' },
+                { name: 'C3 / C4 Complement', department: 'Immunology' },
+                { name: 'Amylase', department: 'Chemistry' },
+                { name: 'Reticulocyte Count', department: 'Haematology' },
+            ];
+
+            const departments = ['Haematology', 'Chemistry', 'Transfusion', 'Immunology'];
+            let currentTest = {};
+            let score = 0;
+            let buttonsLocked = false;
+
+            function startNewGame() {
+                score = 0;
+                scoreEl.textContent = score;
+                nextRound();
+            }
+
+            function nextRound() {
+                buttonsLocked = false;
+                feedbackEl.textContent = '';
+                feedbackEl.className = 'mb-6 h-10 text-2xl font-bold';
+                currentTest = tests[Math.floor(Math.random() * tests.length)];
+                testNameEl.textContent = currentTest.name;
+            }
+
+            function checkAnswer(selectedDept) {
+                if (buttonsLocked) return;
+                buttonsLocked = true;
+
+                if (selectedDept === currentTest.department) {
+                    feedbackEl.textContent = 'Correct!';
+                    feedbackEl.className = 'mb-6 h-10 text-2xl font-bold text-green-600';
+                    score++;
+                } else {
+                    feedbackEl.textContent = `Incorrect! This goes to ${currentTest.department}.`;
+                    feedbackEl.className = 'mb-6 h-10 text-2xl font-bold text-red-600';
+                }
+                scoreEl.textContent = score;
+
+                setTimeout(nextRound, 2000);
+            }
+            
+            function createButtons() {
+                departmentButtonsEl.innerHTML = '';
+                departments.forEach(dept => {
+                    departmentButtonsEl.innerHTML += `
+                        <button class="dept-button bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-3 sm:py-4 px-2 text-sm sm:text-base md:text-lg border border-gray-400 rounded shadow" data-dept="${dept}">
+                            ${dept}
+                        </button>`;
+                });
+                document.querySelectorAll('.dept-button').forEach(btn => {
+                    btn.addEventListener('click', () => checkAnswer(btn.dataset.dept));
+                });
+            }
+
+            newGameBtn.addEventListener('click', startNewGame);
+            
+            createButtons();
+            startNewGame();
+        });
+   </script>
+</body>
+</html>
