@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Links - SGC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#005EB8">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .nhs-blue { background-color: #005EB8; }
+        .nhs-dark-blue { background-color: #003087; }
+        .nhs-light-grey { background-color: #F0F4F5; }
+        .nhs-text-blue { color: #005EB8; }
+        .nhs-text-dark-blue { color: #003087; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <a href="index.html" class="cursor-pointer flex items-center space-x-3">
+                <img src="logo.jpg" alt="Clinical Pathology Shared Governance Council Logo" class="h-16 w-auto">
+            </a>
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="index.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Home</a>
+                <a href="projects.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Projects</a>
+                <a href="games.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Games</a>
+                <a href="newsletters.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Newsletters</a>
+                <a href="about.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">About Us</a>
+                <a href="links.html" class="font-semibold text-nhs-blue transition duration-300">Links</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden"><i data-feather="menu"></i></button>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white px-6 pb-4">
+             <a href="index.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Home</a>
+            <a href="projects.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Projects</a>
+            <a href="games.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Games</a>
+            <a href="newsletters.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Newsletters</a>
+            <a href="about.html" class="block py-2 text-gray-600 hover:nhs-text-blue">About Us</a>
+            <a href="social.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Social Media</a>
+            <a href="links.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Learning Links</a>
+            <a href="contact.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Suggestions</a>
+        </div>
+    </header>
+
+    <main class="py-16">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <a href="index.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8">
+                <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Home
+            </a>
+            <h2 class="text-4xl font-bold nhs-text-dark-blue mb-2 text-center">Helpful Learning Resources</h2>
+            <p class="text-lg text-gray-600 mb-12 text-center">A curated list of websites for professional development and learning.</p>
+            
+            <div class="space-y-10">
+                <!-- General Category -->
+                <div>
+                    <h3 class="text-2xl font-semibold nhs-text-blue border-b-2 border-nhs-blue pb-2 mb-4">General & Professional Bodies</h3>
+                    <div class="space-y-4">
+                        <a href="https://www.ibms.org/home/" target="_blank" rel="noopener noreferrer" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"><div class="flex items-center justify-between"><div><h3 class="text-xl font-semibold nhs-text-blue">IBMS</h3><p class="text-gray-600 mt-1">The Institute of Biomedical Science - our professional body.</p></div><i data-feather="external-link" class="text-gray-400"></i></div></a>
+                        <a href="https://www.hcpc-uk.org/" target="_blank" rel="noopener noreferrer" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"><div class="flex items-center justify-between"><div><h3 class="text-xl font-semibold nhs-text-blue">HCPC</h3><p class="text-gray-600 mt-1">The Health and Care Professions Council - our regulator.</p></div><i data-feather="external-link" class="text-gray-400"></i></div></a>
+                        <a href="https://www.rcpath.org/" target="_blank" rel="noopener noreferrer" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"><div class="flex items-center justify-between"><div><h3 class="text-xl font-semibold nhs-text-blue">RCPath</h3><p class="text-gray-600 mt-1">The Royal College of Pathologists.</p></div><i data-feather="external-link" class="text-gray-400"></i></div></a>
+                        <a href="https://www.ukas.com/" target="_blank" rel="noopener noreferrer" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"><div class="flex items-center justify-between"><div><h3 class="text-xl font-semibold nhs-text-blue">UKAS</h3><p class="text-gray-600 mt-1">The UK's National Accreditation Body.</p></div><i data-feather="external-link" class="text-gray-400"></i></div></a>
+                        <a href="https://www.nice.org.uk/" target="_blank" rel="noopener noreferrer" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"><div class="flex items-center justify-between"><div><h3 class="text-xl font-semibold nhs-text-blue">NICE</h3><p class="text-gray-600 mt-1">National Institute for Health and Care Excellence guidelines.</p></div><i data-feather="external-link" class="text-gray-400"></i></div></a>
+                    </div>
+                </div>
+
+                <!-- Haematology Category -->
+                <div>
+                    <h3 class="text-2xl font-semibold nhs-text-blue border-b-2 border-nhs-blue pb-2 mb-4">Haematology</h3>
+                    <div class="space-y-4">
+                        <a href="https://b-s-h.org.uk/" target="_blank" rel="noopener noreferrer" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"><div class="flex items-center justify-between"><div><h3 class="text-xl font-semibold nhs-text-blue">British Society for Haematology</h3><p class="text-gray-600 mt-1">Guidelines, research and education for haematology.</p></div><i data-feather="external-link" class="text-gray-400"></i></div></a>
+                        <a href="https://haembase.com/" target="_blank" rel="noopener noreferrer" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"><div class="flex items-center justify-between"><div><h3 class="text-xl font-semibold nhs-text-blue">Haembase</h3><p class="text-gray-600 mt-1">An educational resource for trainees in haematology.</p></div><i data-feather="external-link" class="text-gray-400"></i></div></a>
+                        <a href="http://www.bloodline.net/" target="_blank" rel="noopener noreferrer" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"><div class="flex items-center justify-between"><div><h3 class="text-xl font-semibold nhs-text-blue">Bloodline Image Atlas</h3><p class="text-gray-600 mt-1">Image atlas and case studies for haematology.</p></div><i data-feather="external-link" class="text-gray-400"></i></div></a>
+                        <a href="https://www.blood-academy.com/" target="_blank" rel="noopener noreferrer" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"><div class="flex items-center justify-between"><div><h3 class="text-xl font-semibold nhs-text-blue">Blood Academy</h3><p class="text-gray-600 mt-1">E-learning resource covering all aspects of haematology.</p></div><i data-feather="external-link" class="text-gray-400"></i></div></a>
+                        <a href="https://practical-haemostasis.com/" target="_blank" rel="noopener noreferrer" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"><div class="flex items-center justify-between"><div><h3 class="text-xl font-semibold nhs-text-blue">Practical-Haemostasis</h3><p class="text-gray-600 mt-1">A guide to laboratory haemostasis and thrombosis.</p></div><i data-feather="external-link" class="text-gray-400"></i></div></a>
+                    </div>
+                </div>
+
+                <!-- Blood Transfusion Category -->
+                <div>
+                    <h3 class="text-2xl font-semibold nhs-text-blue border-b-2 border-nhs-blue pb-2 mb-4">Blood Transfusion</h3>
+                    <div class="space-y-4">
+                        <a href="https://www.transfusionguidelines.org/" target="_blank" rel="noopener noreferrer" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"><div class="flex items-center justify-between"><div><h3 class="text-xl font-semibold nhs-text-blue">Transfusion Guidelines (JPAC)</h3><p class="text-gray-600 mt-1">The official UK guidelines for blood transfusion services.</p></div><i data-feather="external-link" class="text-gray-400"></i></div></a>
+                        <a href="https://hospital.blood.co.uk/" target="_blank" rel="noopener noreferrer" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"><div class="flex items-center justify-between"><div><h3 class="text-xl font-semibold nhs-text-blue">NHS Blood and Transplant (Hospitals)</h3><p class="text-gray-600 mt-1">Professional resources and guidelines for transfusion.</p></div><i data-feather="external-link" class="text-gray-400"></i></div></a>
+                        <a href="https://www.shotuk.org/" target="_blank" rel="noopener noreferrer" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"><div class="flex items-center justify-between"><div><h3 class="text-xl font-semibold nhs-text-blue">SHOT</h3><p class="text-gray-600 mt-1">The UK's haemovigilance scheme for transfusion safety.</p></div><i data-feather="external-link" class="text-gray-400"></i></div></a>
+                        <a href="https://www.bbts.org.uk/education/" target="_blank" rel="noopener noreferrer" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"><div class="flex items-center justify-between"><div><h3 class="text-xl font-semibold nhs-text-blue">British Blood Transfusion Society</h3><p class="text-gray-600 mt-1">Education, training and resources from the BBTS.</p></div><i data-feather="external-link" class="text-gray-400"></i></div></a>
+                        <a href="https://www.bbguy.org/" target="_blank" rel="noopener noreferrer" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"><div class="flex items-center justify-between"><div><h3 class="text-xl font-semibold nhs-text-blue">Blood Bank Guy</h3><p class="text-gray-600 mt-1">Transfusion medicine education from Dr. Joe Chaffin.</p></div><i data-feather="external-link" class="text-gray-400"></i></div></a>
+                    </div>
+                </div>
+
+                 <!-- Chemistry Category -->
+                <div>
+                    <h3 class="text-2xl font-semibold nhs-text-blue border-b-2 border-nhs-blue pb-2 mb-4">Clinical Chemistry</h3>
+                    <div class="space-y-4">
+                        <a href="https://labmed.org.uk/" target="_blank" rel="noopener noreferrer" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"><div class="flex items-center justify-between"><div><h3 class="text-xl font-semibold nhs-text-blue">Association for Laboratory Medicine</h3><p class="text-gray-600 mt-1">Formerly the ACB, a key professional body for the field.</p></div><i data-feather="external-link" class="text-gray-400"></i></div></a>
+                        <a href="https://labtestsonline.org.uk/" target="_blank" rel="noopener noreferrer" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"><div class="flex items-center justify-between"><div><h3 class="text-xl font-semibold nhs-text-blue">Lab Tests Online UK</h3><p class="text-gray-600 mt-1">Peer-reviewed information on clinical lab testing.</p></div><i data-feather="external-link" class="text-gray-400"></i></div></a>
+                        <a href="https://www.acp.org.uk/publication/books/item/clinical-biochemistry-for-trainees.html" target="_blank" rel="noopener noreferrer" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"><div class="flex items-center justify-between"><div><h3 class="text-xl font-semibold nhs-text-blue">ACP Trainee Handbook</h3><p class="text-gray-600 mt-1">A Clinical Biochemistry handbook from the Association of Clinical Pathologists.</p></div><i data-feather="external-link" class="text-gray-400"></i></div></a>
+                        <a href="https://learninghub.nhs.uk/catalogue/clinical-biochemistry-e-learning" target="_blank" rel="noopener noreferrer" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"><div class="flex items-center justify-between"><div><h3 class="text-xl font-semibold nhs-text-blue">NHS Learning Hub - Biochemistry</h3><p class="text-gray-600 mt-1">E-learning modules covering various aspects of clinical biochemistry.</p></div><i data-feather="external-link" class="text-gray-400"></i></div></a>
+                        <a href="https://www.biochemistry.org/" target="_blank" rel="noopener noreferrer" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"><div class="flex items-center justify-between"><div><h3 class="text-xl font-semibold nhs-text-blue">The Biochemical Society</h3><p class="text-gray-600 mt-1">Promoting the advancement of molecular biosciences.</p></div><i data-feather="external-link" class="text-gray-400"></i></div></a>
+                    </div>
+                </div>
+
+                 <!-- Immunology Category -->
+                <div>
+                    <h3 class="text-2xl font-semibold nhs-text-blue border-b-2 border-nhs-blue pb-2 mb-4">Immunology</h3>
+                    <div class="space-y-4">
+                          <a href="https://www.immunology.org/" target="_blank" rel="noopener noreferrer" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"><div class="flex items-center justify-between"><div><h3 class="text-xl font-semibold nhs-text-blue">British Society for Immunology</h3><p class="text-gray-600 mt-1">Representing scientists and clinicians in immunology.</p></div><i data-feather="external-link" class="text-gray-400"></i></div></a>
+                          <a href="https://www.ukpin.org.uk/" target="_blank" rel="noopener noreferrer" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"><div class="flex items-center justify-between"><div><h3 class="text-xl font-semibold nhs-text-blue">UK PIN</h3><p class="text-gray-600 mt-1">The UK Primary Immunodeficiency Network.</p></div><i data-feather="external-link" class="text-gray-400"></i></div></a>
+                          <a href="https://learninghub.nhs.uk/catalogue/pathologyportal?nodeId=2196" target="_blank" rel="noopener noreferrer" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"><div class="flex items-center justify-between"><div><h3 class="text-xl font-semibold nhs-text-blue">NHS Learning Hub - Immunology</h3><p class="text-gray-600 mt-1">The Pathology Portal for Immunology and Allergy.</p></div><i data-feather="external-link" class="text-gray-400"></i></div></a>
+                          <a href="https://www.immunologyda.com/" target="_blank" rel="noopener noreferrer" class="block p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"><div class="flex items-center justify-between"><div><h3 class="text-xl font-semibold nhs-text-blue">Immunology Disease Area</h3><p class="text-gray-600 mt-1">Resources and news for immunology professionals.</p></div><i data-feather="external-link" class="text-gray-400"></i></div></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="nhs-dark-blue text-white py-8 mt-16"><div class="container mx-auto px-6 text-center"><p>&copy; 2024 Clinical Pathology Shared Governance Council. All Rights Reserved.</p></div></footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+            feather.replace();
+        });
+   </script>
+</body>
+</html>
