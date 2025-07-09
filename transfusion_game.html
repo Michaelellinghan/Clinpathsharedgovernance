@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antibody ID Challenge - SGC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#005EB8">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .nhs-blue { background-color: #005EB8; }
+        .nhs-dark-blue { background-color: #003087; }
+        .nhs-light-grey { background-color: #F0F4F5; }
+        .nhs-text-blue { color: #005EB8; }
+        .nhs-text-dark-blue { color: #003087; }
+        .antigram-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+        .antigram-table th, .antigram-table td { border: 1px solid #d1d5db; padding: 0.5rem; text-align: center; }
+        .antigram-table th { background-color: #e5e7eb; font-weight: bold; }
+        .antigram-table .antigen-header { writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg); font-size: 0.75rem; }
+        .antigram-table .reaction-pos { color: #dc2626; font-weight: bold; }
+        .difficulty-btn.active { background-color: #003087; color: white; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <a href="index.html" class="cursor-pointer flex items-center space-x-3">
+                <img src="logo.jpg" alt="Clinical Pathology Shared Governance Council Logo" class="h-16 w-auto">
+            </a>
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="index.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Home</a>
+                <a href="projects.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Projects</a>
+                <a href="games.html" class="font-semibold text-nhs-blue transition duration-300">Games</a>
+                <a href="newsletters.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Newsletters</a>
+                <a href="about.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">About Us</a>
+                <a href="links.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Links</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden"><i data-feather="menu"></i></button>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white px-6 pb-4">
+             <a href="index.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Home</a>
+            <a href="projects.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Projects</a>
+            <a href="games.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Games</a>
+            <a href="newsletters.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Newsletters</a>
+            <a href="about.html" class="block py-2 text-gray-600 hover:nhs-text-blue">About Us</a>
+            <a href="social.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Social Media</a>
+            <a href="links.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Learning Links</a>
+            <a href="contact.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Suggestions</a>
+        </div>
+    </header>
+
+    <main class="py-16 bg-nhs-light-grey">
+        <div class="container mx-auto px-6 max-w-7xl text-center">
+            <a href="games.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8">
+                <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Games
+            </a>
+            <h2 class="text-3xl font-bold nhs-text-dark-blue mb-4">Antibody Identification Challenge</h2>
+            <p class="text-gray-600 mb-6 max-w-3xl mx-auto">An antibody screen was positive. Use the panel below to identify the antibody. Rule out non-reacting cells and match the pattern of reactivity.</p>
+            
+            <div class="flex justify-center items-center space-x-2 mb-6 bg-gray-200 p-2 rounded-lg max-w-sm mx-auto">
+                <button class="difficulty-btn flex-1 py-2 px-4 rounded-md text-sm font-semibold" data-difficulty="easy">Easy</button>
+                <button class="difficulty-btn flex-1 py-2 px-4 rounded-md text-sm font-semibold" data-difficulty="medium">Medium</button>
+                <button class="difficulty-btn flex-1 py-2 px-4 rounded-md text-sm font-semibold" data-difficulty="hard">Hard</button>
+            </div>
+
+            <div class="bg-white p-4 rounded-lg shadow-md">
+                <div class="overflow-x-auto">
+                    <table id="antigram-table" class="antigram-table text-sm"></table>
+                </div>
+            </div>
+
+            <div class="mt-6">
+                <h3 class="text-xl font-semibold mb-3">Select the antibody/antibodies:</h3>
+                <div id="antibody-options" class="flex flex-wrap justify-center gap-2"></div>
+            </div>
+
+            <div id="antigram-feedback" class="mt-6 p-4 rounded-lg text-lg font-semibold hidden"></div>
+            <button id="new-panel-btn" class="mt-4 bg-nhs-blue text-white font-bold py-2 px-6 rounded-lg hover:bg-nhs-dark-blue transition duration-300">New Panel</button>
+        </div>
+    </main>
+
+    <footer class="nhs-dark-blue text-white py-8 mt-16"><div class="container mx-auto px-6 text-center"><p>&copy; 2024 Clinical Pathology Shared Governance Council. All Rights Reserved.</p></div></footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+            feather.replace();
+
+            const antigramTable = document.getElementById('antigram-table');
+            const antibodyOptionsContainer = document.getElementById('antibody-options');
+            const newPanelBtn = document.getElementById('new-panel-btn');
+            const antigramFeedback = document.getElementById('antigram-feedback');
+            const difficultyButtons = document.querySelectorAll('.difficulty-btn');
+
+            const antigens = ['D', 'C', 'c', 'E', 'e', 'K', 'k', 'Fya', 'Fyb', 'Jka', 'Jkb', 'Lea', 'Leb', 'P1', 'M', 'N', 'S', 's'];
+            const allAntibodies = [
+                { name: 'Anti-D', antigen: 'D', freq: 'common' }, { name: 'Anti-C', antigen: 'C', freq: 'common' }, 
+                { name: 'Anti-c', antigen: 'c', freq: 'common' }, { name: 'Anti-E', antigen: 'E', freq: 'common' }, 
+                { name: 'Anti-e', antigen: 'e', freq: 'common' }, { name: 'Anti-K', antigen: 'K', freq: 'common' }, 
+                { name: 'Anti-k', antigen: 'k', freq: 'rare' }, { name: 'Anti-Fya', antigen: 'Fya', freq: 'common' }, 
+                { name: 'Anti-Fyb', antigen: 'Fyb', freq: 'rare' }, { name: 'Anti-Jka', antigen: 'Jka', freq: 'common' }, 
+                { name: 'Anti-Jkb', antigen: 'Jkb', freq: 'rare' }, { name: 'Anti-Lea', antigen: 'Lea', freq: 'common' }, 
+                { name: 'Anti-Leb', antigen: 'Leb', freq: 'rare' }, { name: 'Anti-P1', antigen: 'P1', freq: 'common' },
+                { name: 'Anti-M', antigen: 'M', freq: 'common' }, { name: 'Anti-N', antigen: 'N', freq: 'rare' },
+                { name: 'Anti-S', antigen: 'S', freq: 'common' }, { name: 'Anti-s', antigen: 's', freq: 'rare' }
+            ];
+            
+            let currentAntibodies = [];
+            let selectedAntibodies = [];
+            let currentDifficulty = 'easy';
+
+            function shuffle(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+            }
+
+            function generateRandomCell() {
+                const cell = { antigens: {} };
+                antigens.forEach(ag => { cell.antigens[ag] = Math.random() < 0.5 ? '+' : '0'; });
+                if (cell.antigens['C'] === '+') cell.antigens['c'] = Math.random() < 0.5 ? '+' : '0';
+                if (cell.antigens['E'] === '+') cell.antigens['e'] = Math.random() < 0.5 ? '+' : '0';
+                if (cell.antigens['K'] === '+') cell.antigens['k'] = '0';
+                if (cell.antigens['k'] === '+') cell.antigens['K'] = '0';
+                if (cell.antigens['Fya'] === '+') cell.antigens['Fyb'] = Math.random() < 0.5 ? '+' : '0';
+                if (cell.antigens['Jka'] === '+') cell.antigens['Jkb'] = Math.random() < 0.5 ? '+' : '0';
+                if (cell.antigens['S'] === '+') cell.antigens['s'] = Math.random() < 0.5 ? '+' : '0';
+                return cell;
+            }
+
+            function generatePanel() {
+                antigramFeedback.classList.add('hidden');
+                selectedAntibodies = [];
+                let numAntibodies = 1;
+                if (currentDifficulty === 'medium') numAntibodies = 2;
+                if (currentDifficulty === 'hard') numAntibodies = 3;
+
+                const commonAbs = allAntibodies.filter(ab => ab.freq === 'common');
+                shuffle(commonAbs);
+                currentAntibodies = commonAbs.slice(0, numAntibodies);
+
+                const panelCells = Array.from({ length: 8 }, () => generateRandomCell());
+
+                let tableHTML = '<thead><tr>' + antigens.map(ag => `<th class="antigen-header">${ag}</th>`).join('') + '<th>Reaction</th></tr></thead><tbody>';
+                panelCells.forEach((cell) => {
+                    let reaction = '0';
+                    for (const ab of currentAntibodies) {
+                        if (cell.antigens[ab.antigen] === '+') {
+                            reaction = '+';
+                            break;
+                        }
+                    }
+                    tableHTML += `<tr>${antigens.map(ag => `<td>${cell.antigens[ag]}</td>`).join('')}<td class="${reaction === '+' ? 'reaction-pos' : ''}">${reaction}</td></tr>`;
+                });
+                tableHTML += '</tbody>';
+                antigramTable.innerHTML = tableHTML;
+                
+                const options = [...currentAntibodies];
+                while(options.length < 8) {
+                    const randomAb = allAntibodies[Math.floor(Math.random() * allAntibodies.length)];
+                    if(!options.some(opt => opt.name === randomAb.name)) {
+                        options.push(randomAb);
+                    }
+                }
+                shuffle(options);
+                
+                antibodyOptionsContainer.innerHTML = '';
+                options.forEach(ab => {
+                    antibodyOptionsContainer.innerHTML += `<button class="antibody-choice-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">${ab.name}</button>`;
+                });
+
+                document.querySelectorAll('.antibody-choice-btn').forEach(btn => btn.addEventListener('click', selectAntibody));
+            }
+
+            function selectAntibody(event) {
+                const btn = event.target;
+                const abName = btn.textContent;
+
+                if (selectedAntibodies.includes(abName)) {
+                    selectedAntibodies = selectedAntibodies.filter(ab => ab !== abName);
+                    btn.classList.remove('bg-yellow-300');
+                } else {
+                    selectedAntibodies.push(abName);
+                    btn.classList.add('bg-yellow-300');
+                }
+                checkAnswer();
+            }
+
+            function checkAnswer() {
+                const currentAntibodyNames = currentAntibodies.map(ab => ab.name).sort();
+                const selectedAntibodyNames = selectedAntibodies.sort();
+
+                if (currentAntibodyNames.length === selectedAntibodyNames.length && currentAntibodyNames.every((val, index) => val === selectedAntibodyNames[index])) {
+                    antigramFeedback.classList.remove('hidden');
+                    antigramFeedback.textContent = `Correct! The antibody is ${currentAntibodyNames.join(' & ')}.`;
+                    antigramFeedback.className = 'mt-6 p-4 rounded-lg text-lg font-semibold bg-green-100 text-green-800';
+                    document.querySelectorAll('.antibody-choice-btn').forEach(btn => btn.disabled = true);
+                }
+            }
+            
+            difficultyButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    difficultyButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentDifficulty = btn.dataset.difficulty;
+                    generatePanel();
+                });
+            });
+
+            newPanelBtn.addEventListener('click', generatePanel);
+            
+            document.querySelector('.difficulty-btn[data-difficulty="easy"]').classList.add('active');
+            generatePanel();
+        });
+   </script>
+</body>
+</html>
