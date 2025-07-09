@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chemistry Case Challenge - SGC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#005EB8">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .nhs-blue { background-color: #005EB8; }
+        .nhs-dark-blue { background-color: #003087; }
+        .nhs-light-grey { background-color: #F0F4F5; }
+        .nhs-text-blue { color: #005EB8; }
+        .nhs-text-dark-blue { color: #003087; }
+        .result-table th, .result-table td { padding: 0.5rem 1rem; border-bottom: 1px solid #e5e7eb; }
+        .result-abnormal { color: #dc2626; font-weight: bold; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <a href="index.html" class="cursor-pointer flex items-center space-x-3">
+                <img src="logo.jpg" alt="Clinical Pathology Shared Governance Council Logo" class="h-16 w-auto">
+            </a>
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="index.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Home</a>
+                <a href="projects.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Projects</a>
+                <a href="games.html" class="font-semibold text-nhs-blue transition duration-300">Games</a>
+                <a href="newsletters.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Newsletters</a>
+                <a href="about.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">About Us</a>
+                <a href="links.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Links</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden"><i data-feather="menu"></i></button>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white px-6 pb-4">
+            <a href="index.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Home</a>
+            <a href="projects.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Projects</a>
+            <a href="games.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Games</a>
+            <a href="newsletters.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Newsletters</a>
+            <a href="about.html" class="block py-2 text-gray-600 hover:nhs-text-blue">About Us</a>
+            <a href="social.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Social Media</a>
+            <a href="links.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Learning Links</a>
+            <a href="contact.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Suggestions</a>
+        </div>
+    </header>
+
+    <main class="py-16 bg-nhs-light-grey">
+        <div class="container mx-auto px-6 max-w-4xl text-center">
+            <a href="games.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8">
+                <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Games
+            </a>
+            <h2 class="text-3xl font-bold nhs-text-dark-blue mb-4">Clinical Chemistry Case Challenge</h2>
+            <p class="text-gray-600 mb-8 max-w-2xl mx-auto">Analyse the patient's case notes and biochemistry results to determine the most likely diagnosis.</p>
+
+            <div class="bg-white p-6 rounded-lg shadow-md text-left">
+                <h3 class="text-xl font-bold nhs-text-dark-blue mb-4 border-b pb-2">Case Study</h3>
+                <p id="case-scenario" class="text-gray-700 mb-6"></p>
+
+                <h3 class="text-xl font-bold nhs-text-dark-blue mb-4 border-b pb-2">Results</h3>
+                <table id="results-table" class="w-full result-table">
+                    <!-- Results will be generated here -->
+                </table>
+
+                <div class="mt-8">
+                    <h3 class="text-xl font-bold nhs-text-dark-blue mb-4">What is the most likely diagnosis?</h3>
+                    <div id="diagnosis-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Options will be generated here -->
+                    </div>
+                </div>
+            </div>
+            
+            <div id="case-feedback" class="mt-6 p-4 rounded-lg text-lg font-semibold hidden"></div>
+            <button id="new-case-btn" class="mt-6 bg-nhs-blue text-white font-bold py-3 px-8 rounded-lg hover:bg-nhs-dark-blue transition duration-300">New Case</button>
+        </div>
+    </main>
+
+    <footer class="nhs-dark-blue text-white py-8 mt-16"><div class="container mx-auto px-6 text-center"><p>&copy; 2024 Clinical Pathology Shared Governance Council. All Rights Reserved.</p></div></footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+            feather.replace();
+
+            const caseScenarioEl = document.getElementById('case-scenario');
+            const resultsTableEl = document.getElementById('results-table');
+            const diagnosisOptionsEl = document.getElementById('diagnosis-options');
+            const caseFeedbackEl = document.getElementById('case-feedback');
+            const newCaseBtn = document.getElementById('new-case-btn');
+
+            const cases = [
+                {
+                    scenario: "A 68-year-old man presents to A&E with severe abdominal pain radiating to his back. He admits to heavy alcohol consumption.",
+                    results: [
+                        { test: 'Amylase', value: '1250 U/L', ref: '25-125', abnormal: true },
+                        { test: 'Sodium', value: '138 mmol/L', ref: '135-145', abnormal: false },
+                        { test: 'Potassium', value: '4.2 mmol/L', ref: '3.5-5.0', abnormal: false },
+                        { test: 'Urea', value: '6.5 mmol/L', ref: '2.5-7.8', abnormal: false },
+                    ],
+                    options: ['Myocardial Infarction', 'Acute Pancreatitis', 'Diabetic Ketoacidosis', 'Appendicitis'],
+                    answer: 'Acute Pancreatitis'
+                },
+                {
+                    scenario: "A 45-year-old woman presents with fatigue, weight gain, and feeling cold. Her GP suspects a thyroid issue.",
+                    results: [
+                        { test: 'TSH', value: '12.5 mU/L', ref: '0.4-4.0', abnormal: true },
+                        { test: 'Free T4', value: '8.0 pmol/L', ref: '10-22', abnormal: true },
+                        { test: 'Sodium', value: '140 mmol/L', ref: '135-145', abnormal: false },
+                    ],
+                    options: ['Hyperthyroidism', 'Hypothyroidism', 'Cushing\'s Syndrome', 'Normal Thyroid Function'],
+                    answer: 'Hypothyroidism'
+                },
+                {
+                    scenario: "A 55-year-old man with known type 2 diabetes presents with confusion. He has been unwell with a chest infection for 3 days.",
+                    results: [
+                        { test: 'Glucose', value: '35.2 mmol/L', ref: '4.0-7.0', abnormal: true },
+                        { test: 'Ketones', value: 'Negative', ref: 'Negative', abnormal: false },
+                        { test: 'Sodium', value: '155 mmol/L', ref: '135-145', abnormal: true },
+                        { test: 'Osmolality (calc)', value: '350 mOsmol/kg', ref: '275-295', abnormal: true },
+                    ],
+                    options: ['Diabetic Ketoacidosis (DKA)', 'Hypoglycaemia', 'Hyperosmolar Hyperglycaemic State (HHS)', 'Sepsis'],
+                    answer: 'Hyperosmolar Hyperglycaemic State (HHS)'
+                }
+            ];
+
+            let currentCase = {};
+
+            function loadNewCase() {
+                currentCase = cases[Math.floor(Math.random() * cases.length)];
+                
+                caseScenarioEl.textContent = currentCase.scenario;
+
+                let resultsHTML = '<tbody>';
+                currentCase.results.forEach(res => {
+                    resultsHTML += `<tr><td class="font-semibold text-left">${res.test}</td><td class="text-right ${res.abnormal ? 'result-abnormal' : ''}">${res.value}</td><td class="text-xs text-gray-500 text-right">${res.ref}</td></tr>`;
+                });
+                resultsHTML += '</tbody>';
+                resultsTableEl.innerHTML = resultsHTML;
+
+                diagnosisOptionsEl.innerHTML = '';
+                currentCase.options.forEach(opt => {
+                    diagnosisOptionsEl.innerHTML += `<button class="diagnosis-option-btn w-full text-left p-4 bg-gray-100 rounded-lg hover:bg-gray-200 transition">${opt}</button>`;
+                });
+                
+                document.querySelectorAll('.diagnosis-option-btn').forEach(btn => {
+                    btn.addEventListener('click', checkCaseAnswer);
+                });
+
+                caseFeedbackEl.classList.add('hidden');
+            }
+
+            function checkCaseAnswer(event) {
+                const selectedAnswer = event.target.textContent;
+                caseFeedbackEl.classList.remove('hidden');
+                
+                if(selectedAnswer === currentCase.answer) {
+                    caseFeedbackEl.textContent = 'Correct! Well done.';
+                    caseFeedbackEl.className = 'mt-6 p-4 rounded-lg text-lg font-semibold bg-green-100 text-green-800';
+                } else {
+                    caseFeedbackEl.textContent = `Incorrect. The correct diagnosis is ${currentCase.answer}.`;
+                    caseFeedbackEl.className = 'mt-6 p-4 rounded-lg text-lg font-semibold bg-red-100 text-red-800';
+                }
+
+                document.querySelectorAll('.diagnosis-option-btn').forEach(btn => btn.disabled = true);
+            }
+
+            newCaseBtn.addEventListener('click', loadNewCase);
+            loadNewCase();
+        });
+   </script>
+</body>
+</html>
