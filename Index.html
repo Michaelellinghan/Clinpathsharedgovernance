@@ -29,8 +29,6 @@
         .short-video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
         .home-card { border-top: 4px solid #005EB8; transition: all 0.3s ease-in-out; }
         .home-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
-        
-        /* Game Styles */
         .game-card { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.6s; cursor: pointer; }
         .game-card.flipped { transform: rotateY(180deg); }
         .card-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; align-items: center; justify-content: center; border-radius: 0.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
@@ -38,8 +36,6 @@
         .card-back { background-color: #fff; transform: rotateY(180deg); padding: 1rem; text-align: center; }
         .card-back img { max-width: 100%; max-height: 80%; object-fit: contain; }
         .game-card.matched { transform: rotateY(180deg); cursor: default; box-shadow: 0 0 10px 3px #4ade80; }
-        
-        /* Antigram Styles */
         .antigram-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
         .antigram-table th, .antigram-table td { border: 1px solid #d1d5db; padding: 0.5rem; text-align: center; }
         .antigram-table th { background-color: #e5e7eb; font-weight: bold; }
@@ -50,7 +46,6 @@
 </head>
 <body class="bg-gray-50 text-gray-800">
 
-    <!-- Header -->
     <header class="bg-white shadow-md sticky top-0 z-50">
         <div class="container mx-auto px-6 py-3 flex justify-between items-center">
             <div class="cursor-pointer flex items-center space-x-3" data-page="home-page">
@@ -78,7 +73,6 @@
         </div>
     </header>
 
-    <!-- Home Page -->
     <div id="home-page" class="page active">
         <main>
             <section class="bg-white">
@@ -118,111 +112,10 @@
         </main>
     </div>
     
-    <!-- Games Hub Page -->
-    <div id="games-hub-page" class="page">
-        <main class="py-16">
-            <div class="container mx-auto px-6">
-                <button class="back-button nhs-text-blue font-semibold mb-8" data-back="home-page">&larr; Back to Home</button>
-                <h2 class="text-4xl font-bold text-center mb-12 nhs-text-dark-blue">Pathology Games</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <button data-page="haem-game-page" class="nav-button bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
-                        <div class="p-6 text-left">
-                            <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Haematology Match-Up</h3>
-                            <p class="text-gray-600">Match the blood cells to their names in this memory game.</p>
-                        </div>
-                    </button>
-                    <button data-page="transfusion-game-page" class="nav-button bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
-                        <div class="p-6 text-left">
-                            <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Antibody ID Challenge</h3>
-                            <p class="text-gray-600">Use the antigram to identify the antibody.</p>
-                        </div>
-                    </button>
-                    <button data-page="compatibility-game-page" class="nav-button bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
-                        <div class="p-6 text-left">
-                            <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Blood Group BATTLE</h3>
-                            <p class="text-gray-600">Is it a compatible transfusion? Make the call!</p>
-                        </div>
-                    </button>
-                </div>
-            </div>
-        </main>
-    </div>
-
-    <!-- Haematology Game Page -->
+    <div id="games-hub-page" class="page">...</div>
     <div id="haem-game-page" class="page">...</div>
-
-    <!-- Transfusion Game Page -->
-    <div id="transfusion-game-page" class="page">
-        <main class="py-16 bg-nhs-light-grey">
-            <div class="container mx-auto px-6 max-w-7xl text-center">
-                <button class="back-button nhs-text-blue font-semibold mb-8" data-back="games-hub-page">&larr; Back to Games</button>
-                <h2 class="text-3xl font-bold nhs-text-dark-blue mb-4">Antibody Identification Challenge</h2>
-                <p class="text-gray-600 mb-6 max-w-3xl mx-auto">An antibody screen was positive. Use the panel below to identify the antibody. Rule out non-reacting cells and match the pattern of reactivity.</p>
-                
-                <div class="flex justify-center items-center space-x-2 mb-6 bg-gray-200 p-2 rounded-lg max-w-sm mx-auto">
-                    <button class="difficulty-btn flex-1 py-2 px-4 rounded-md text-sm font-semibold" data-difficulty="easy">Easy</button>
-                    <button class="difficulty-btn flex-1 py-2 px-4 rounded-md text-sm font-semibold" data-difficulty="medium">Medium</button>
-                    <button class="difficulty-btn flex-1 py-2 px-4 rounded-md text-sm font-semibold" data-difficulty="hard">Hard</button>
-                </div>
-
-                <div class="bg-white p-4 rounded-lg shadow-md">
-                    <div class="overflow-x-auto">
-                        <table id="antigram-table" class="antigram-table text-sm"></table>
-                    </div>
-                </div>
-
-                <div class="mt-6">
-                    <h3 class="text-xl font-semibold mb-3">Select the antibody/antibodies:</h3>
-                    <div id="antibody-options" class="flex flex-wrap justify-center gap-2"></div>
-                </div>
-
-                <div id="antigram-feedback" class="mt-6 p-4 rounded-lg text-lg font-semibold hidden"></div>
-                <button id="new-panel-btn" class="mt-4 bg-nhs-blue text-white font-bold py-2 px-6 rounded-lg hover:bg-nhs-dark-blue transition duration-300">New Panel</button>
-            </div>
-        </main>
-    </div>
-
-    <!-- Compatibility Game Page -->
-    <div id="compatibility-game-page" class="page">
-        <main class="py-16 bg-nhs-light-grey">
-            <div class="container mx-auto px-6 max-w-lg text-center">
-                 <button class="back-button nhs-text-blue font-semibold mb-8" data-back="games-hub-page">&larr; Back to Games</button>
-                 <h2 class="text-3xl font-bold nhs-text-dark-blue mb-4">Blood Group BATTLE</h2>
-                 <p class="text-gray-600 mb-8">A patient needs blood. Is the unit compatible? Make the right call!</p>
-                 
-                 <div id="compat-game-area" class="space-y-8">
-                    <div class="flex justify-around items-center">
-                        <div>
-                            <h3 class="text-lg font-semibold text-gray-700">Patient</h3>
-                            <div class="mt-2 bg-white p-4 rounded-lg shadow-md">
-                                <i data-feather="user" class="w-16 h-16 mx-auto text-nhs-blue"></i>
-                                <p id="patient-blood-group" class="text-2xl font-bold mt-2"></p>
-                            </div>
-                        </div>
-                        <i data-feather="arrow-right-circle" class="w-12 h-12 text-gray-400"></i>
-                        <div>
-                             <h3 class="text-lg font-semibold text-gray-700">Blood Unit</h3>
-                             <div class="mt-2 bg-red-500 text-white p-4 rounded-lg shadow-md">
-                                 <i data-feather="droplet" class="w-16 h-16 mx-auto"></i>
-                                 <p id="unit-blood-group" class="text-2xl font-bold mt-2"></p>
-                             </div>
-                        </div>
-                    </div>
-                    <div id="compat-feedback" class="text-xl font-bold p-4 rounded-lg hidden"></div>
-                    <div class="flex justify-center space-x-4">
-                        <button id="safe-btn" class="bg-green-500 text-white font-bold py-4 px-8 rounded-lg text-xl hover:bg-green-600 transition-transform transform hover:scale-105">Safe</button>
-                        <button id="unsafe-btn" class="bg-red-500 text-white font-bold py-4 px-8 rounded-lg text-xl hover:bg-red-600 transition-transform transform hover:scale-105">Unsafe</button>
-                    </div>
-                 </div>
-                 <div id="compat-score-area" class="mt-8">
-                    <p class="text-lg">Score: <span id="compat-score" class="font-bold">0</span></p>
-                    <button id="compat-new-game-btn" class="mt-4 bg-nhs-blue text-white font-bold py-2 px-6 rounded-lg hover:bg-nhs-dark-blue transition duration-300">Start New Game</button>
-                 </div>
-            </div>
-        </main>
-    </div>
-
-    <!-- All other pages are included here, but truncated for brevity -->
+    <div id="transfusion-game-page" class="page">...</div>
+    <div id="compatibility-game-page" class="page">...</div>
     <div id="projects-hub-page" class="page">...</div>
     <div id="patient-interview-hub-page" class="page">...</div>
     <div id="nikki-story-page" class="page">...</div>
@@ -234,134 +127,237 @@
     <div id="links-page" class="page">...</div>
     <div id="contact-page" class="page">...</div>
 
-    <footer class="nhs-dark-blue text-white py-8"><div class="container mx-auto px-6 text-center"><p>&copy; 2024 Clinical Pathology Shared Governance Council. All Rights Reserved.</p></div></footer>
+    <footer class="nhs-dark-blue text-white py-8"><div class="container mx-auto px-6 text-center"><p>© 2024 Clinical Pathology Shared Governance Council. All Rights Reserved.</p></div></footer>
 
     <script>
-        // --- Page Navigation Logic --- (Unchanged)
-        
-        // --- Game Logic ---
-        // Haematology Game Logic (Unchanged)
-        
-        // --- Transfusion Game Logic ---
-        // (Includes new difficulty levels and compatibility game)
-        const antigramTable = document.getElementById('antigram-table');
-        const antibodyOptionsContainer = document.getElementById('antibody-options');
-        const newPanelBtn = document.getElementById('new-panel-btn');
-        const antigramFeedback = document.getElementById('antigram-feedback');
-        const difficultyButtons = document.querySelectorAll('.difficulty-btn');
+        document.addEventListener('DOMContentLoaded', () => {
+            const pages = document.querySelectorAll('.page');
+            const navButtons = document.querySelectorAll('[data-page]');
+            const backButtons = document.querySelectorAll('.back-button');
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
 
-        const allAntibodies = [
-            { name: 'Anti-D', antigen: 'D', freq: 'common' }, { name: 'Anti-C', antigen: 'C', freq: 'common' }, 
-            { name: 'Anti-c', antigen: 'c', freq: 'common' }, { name: 'Anti-E', antigen: 'E', freq: 'common' }, 
-            { name: 'Anti-e', antigen: 'e', freq: 'common' }, { name: 'Anti-K', antigen: 'K', freq: 'common' }, 
-            { name: 'Anti-k', antigen: 'k', freq: 'rare' }, { name: 'Anti-Fya', antigen: 'Fya', freq: 'common' }, 
-            { name: 'Anti-Fyb', antigen: 'Fyb', freq: 'rare' }, { name: 'Anti-Jka', antigen: 'Jka', freq: 'common' }, 
-            { name: 'Anti-Jkb', antigen: 'Jkb', freq: 'rare' }, { name: 'Anti-Lea', antigen: 'Lea', freq: 'common' }, 
-            { name: 'Anti-Leb', antigen: 'Leb', freq: 'rare' }, { name: 'Anti-P1', antigen: 'P1', freq: 'common' },
-            { name: 'Anti-M', antigen: 'M', freq: 'common' }, { name: 'Anti-N', antigen: 'N', freq: 'rare' },
-            { name: 'Anti-S', antigen: 'S', freq: 'common' }, { name: 'Anti-s', antigen: 's', freq: 'rare' }
-        ];
-        
-        let currentAntibodies = [];
-        let currentDifficulty = 'easy';
-
-        function generatePanel() { /* ... existing logic ... */ }
-        function checkAnswer() { /* ... existing logic ... */ }
-        
-        difficultyButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                difficultyButtons.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                currentDifficulty = btn.dataset.difficulty;
-                generatePanel();
-            });
-        });
-
-        // --- Blood Compatibility Game ---
-        const patientBloodGroupEl = document.getElementById('patient-blood-group');
-        const unitBloodGroupEl = document.getElementById('unit-blood-group');
-        const safeBtn = document.getElementById('safe-btn');
-        const unsafeBtn = document.getElementById('unsafe-btn');
-        const compatFeedbackEl = document.getElementById('compat-feedback');
-        const compatScoreEl = document.getElementById('compat-score');
-        const newCompatGameBtn = document.getElementById('compat-new-game-btn');
-
-        const bloodGroups = ['O-', 'O+', 'A-', 'A+', 'B-', 'B+', 'AB-', 'AB+'];
-        const compatibilityMatrix = {
-            'O-': ['O-'],
-            'O+': ['O-', 'O+'],
-            'A-': ['O-', 'A-'],
-            'A+': ['O-', 'O+', 'A-', 'A+'],
-            'B-': ['O-', 'B-'],
-            'B+': ['O-', 'O+', 'B-', 'B+'],
-            'AB-': ['O-', 'A-', 'B-', 'AB-'],
-            'AB+': ['O-', 'O+', 'A-', 'A+', 'B-', 'B+', 'AB-', 'AB+']
-        };
-        let patientGroup, unitGroup, score;
-
-        function newCompatRound() {
-            patientGroup = bloodGroups[Math.floor(Math.random() * bloodGroups.length)];
-            unitGroup = bloodGroups[Math.floor(Math.random() * bloodGroups.length)];
-            patientBloodGroupEl.textContent = patientGroup;
-            unitBloodGroupEl.textContent = unitGroup;
-            compatFeedbackEl.classList.add('hidden');
-            safeBtn.disabled = false;
-            unsafeBtn.disabled = false;
-        }
-
-        function checkCompat(isSafeClicked) {
-            safeBtn.disabled = true;
-            unsafeBtn.disabled = true;
-            const isActuallySafe = compatibilityMatrix[patientGroup].includes(unitGroup);
-            compatFeedbackEl.classList.remove('hidden');
-            if (isSafeClicked === isActuallySafe) {
-                compatFeedbackEl.textContent = 'Correct!';
-                compatFeedbackEl.className = 'text-xl font-bold p-4 rounded-lg bg-green-100 text-green-800';
-                score++;
-            } else {
-                compatFeedbackEl.textContent = `Incorrect! This transfusion is ${isActuallySafe ? 'Safe' : 'Unsafe'}.`;
-                compatFeedbackEl.className = 'text-xl font-bold p-4 rounded-lg bg-red-100 text-red-800';
+            function showPage(pageId) {
+                if (!pageId) return;
+                pages.forEach(page => page.classList.remove('active'));
+                const pageToShow = document.getElementById(pageId);
+                if (pageToShow) {
+                    pageToShow.classList.add('active');
+                    window.scrollTo(0, 0);
+                }
+                mobileMenu.classList.add('hidden');
             }
-            compatScoreEl.textContent = score;
-            setTimeout(newCompatRound, 2000);
-        }
 
-        function startNewCompatGame() {
-            score = 0;
-            compatScoreEl.textContent = score;
-            newCompatRound();
-        }
+            navButtons.forEach(button => button.addEventListener('click', () => showPage(button.getAttribute('data-page'))));
+            backButtons.forEach(button => button.addEventListener('click', () => showPage(button.getAttribute('data-back'))));
+            mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+            
+            feather.replace();
 
-        if(safeBtn) safeBtn.addEventListener('click', () => checkCompat(true));
-        if(unsafeBtn) unsafeBtn.addEventListener('click', () => checkCompat(false));
-        if(newCompatGameBtn) newCompatGameBtn.addEventListener('click', startNewCompatGame);
+            // --- Game Logic ---
+            const gameBoard = document.getElementById('game-board');
+            const movesCountSpan = document.getElementById('moves-count');
+            const newGameBtn = document.getElementById('new-game-btn');
+            const winMessage = document.getElementById('win-message');
 
-        // Initial setup for games when their pages are shown
-        const observerCallback = (mutationsList, observer) => {
-            for(const mutation of mutationsList) {
-                if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-                    const haemGamePage = document.getElementById('haem-game-page');
-                    const transfusionGamePage = document.getElementById('transfusion-game-page');
-                    const compatGamePage = document.getElementById('compatibility-game-page');
-                    
-                    if (haemGamePage && haemGamePage.classList.contains('active')) { createHaemBoard(); }
-                    if (transfusionGamePage && transfusionGamePage.classList.contains('active')) { 
-                        document.querySelector('.difficulty-btn[data-difficulty="easy"]').classList.add('active');
-                        generatePanel(); 
-                    }
-                    if (compatGamePage && compatGamePage.classList.contains('active')) { startNewCompatGame(); }
+            const haemCards = [
+                { name: 'Neutrophil', type: 'name' }, { name: 'Neutrophil', type: 'image', content: 'neutrophil.png' },
+                { name: 'Lymphocyte', type: 'name' }, { name: 'Lymphocyte', type: 'image', content: 'lymphocyte.png' },
+                { name: 'Monocyte', type: 'name' }, { name: 'Monocyte', type: 'image', content: 'monocyte.png' },
+                { name: 'Eosinophil', type: 'name' }, { name: 'Eosinophil', type: 'image', content: 'eosinophil.png' },
+                { name: 'Basophil', type: 'name' }, { name: 'Basophil', type: 'image', content: 'basophil.png' },
+                { name: 'Red Cell', type: 'name' }, { name: 'Red Cell', type: 'image', content: 'rbc.png' },
+                { name: 'Platelets', type: 'name' }, { name: 'Platelets', type: 'image', content: 'platelets.png' },
+                { name: 'Sickle Cell', type: 'name' }, { name: 'Sickle Cell', type: 'image', content: 'sickle.png' },
+            ];
+
+            let firstCard, secondCard, lockBoard, moves, matchedPairs;
+
+            function shuffle(array) { array.sort(() => Math.random() - 0.5); }
+
+            function createHaemBoard() {
+                shuffle(haemCards);
+                if(gameBoard) gameBoard.innerHTML = '';
+                if(winMessage) winMessage.classList.add('hidden');
+                moves = 0;
+                matchedPairs = 0;
+                if(movesCountSpan) movesCountSpan.textContent = moves;
+                firstCard = null;
+                secondCard = null;
+                lockBoard = false;
+
+                haemCards.forEach(cardData => {
+                    const cardElement = document.createElement('div');
+                    cardElement.classList.add('perspective-1000');
+                    cardElement.innerHTML = `
+                        <div class="game-card" data-name="${cardData.name}">
+                            <div class="card-face card-front">
+                                <i data-feather="help-circle" class="w-10 h-10"></i>
+                            </div>
+                            <div class="card-face card-back">
+                                ${cardData.type === 'image' ? `<img src="${cardData.content}" alt="${cardData.name}">` : `<span class="font-bold text-lg">${cardData.name}</span>`}
+                            </div>
+                        </div>
+                    `;
+                    if(gameBoard) gameBoard.appendChild(cardElement);
+                    cardElement.addEventListener('click', flipCard);
+                });
+                feather.replace();
+            }
+
+            function flipCard() {
+                if (lockBoard || this.querySelector('.game-card').classList.contains('flipped')) return;
+                const card = this.querySelector('.game-card');
+                card.classList.add('flipped');
+                if (!firstCard) { firstCard = card; return; }
+                secondCard = card;
+                lockBoard = true;
+                moves++;
+                movesCountSpan.textContent = moves;
+                checkForMatch();
+            }
+
+            function checkForMatch() {
+                const isMatch = firstCard.dataset.name === secondCard.dataset.name;
+                isMatch ? disableCards() : unflipCards();
+            }
+
+            function disableCards() {
+                firstCard.parentElement.removeEventListener('click', flipCard);
+                secondCard.parentElement.removeEventListener('click', flipCard);
+                firstCard.classList.add('matched');
+                secondCard.classList.add('matched');
+                matchedPairs++;
+                resetHaemBoard();
+                if (winMessage && matchedPairs === haemCards.length / 2) {
+                    winMessage.classList.remove('hidden');
                 }
             }
-        };
 
-        const observer = new MutationObserver(observerCallback);
-        const haemGamePage = document.getElementById('haem-game-page');
-        const transfusionGamePage = document.getElementById('transfusion-game-page');
-        const compatGamePage = document.getElementById('compatibility-game-page');
-        if (haemGamePage) observer.observe(haemGamePage, { attributes: true });
-        if (transfusionGamePage) observer.observe(transfusionGamePage, { attributes: true });
-        if (compatGamePage) observer.observe(compatGamePage, { attributes: true });
+            function unflipCards() {
+                setTimeout(() => {
+                    firstCard.classList.remove('flipped');
+                    secondCard.classList.remove('flipped');
+                    resetHaemBoard();
+                }, 1200);
+            }
 
+            function resetHaemBoard() { [firstCard, secondCard, lockBoard] = [null, null, false]; }
+
+            if(newGameBtn) newGameBtn.addEventListener('click', createHaemBoard);
+            
+            const antigramTable = document.getElementById('antigram-table');
+            const antibodyOptionsContainer = document.getElementById('antibody-options');
+            const newPanelBtn = document.getElementById('new-panel-btn');
+            const antigramFeedback = document.getElementById('antigram-feedback');
+            const difficultyButtons = document.querySelectorAll('.difficulty-btn');
+
+            const allAntibodies = [
+                { name: 'Anti-D', antigen: 'D', freq: 'common' }, { name: 'Anti-C', antigen: 'C', freq: 'common' }, 
+                { name: 'Anti-c', antigen: 'c', freq: 'common' }, { name: 'Anti-E', antigen: 'E', freq: 'common' }, 
+                { name: 'Anti-e', antigen: 'e', freq: 'common' }, { name: 'Anti-K', antigen: 'K', freq: 'common' }, 
+                { name: 'Anti-k', antigen: 'k', freq: 'rare' }, { name: 'Anti-Fya', antigen: 'Fya', freq: 'common' }, 
+                { name: 'Anti-Fyb', antigen: 'Fyb', freq: 'rare' }, { name: 'Anti-Jka', antigen: 'Jka', freq: 'common' }, 
+                { name: 'Anti-Jkb', antigen: 'Jkb', freq: 'rare' }, { name: 'Anti-Lea', antigen: 'Lea', freq: 'common' }, 
+                { name: 'Anti-Leb', antigen: 'Leb', freq: 'rare' }, { name: 'Anti-P1', antigen: 'P1', freq: 'common' },
+                { name: 'Anti-M', antigen: 'M', freq: 'common' }, { name: 'Anti-N', antigen: 'N', freq: 'rare' },
+                { name: 'Anti-S', antigen: 'S', freq: 'common' }, { name: 'Anti-s', antigen: 's', freq: 'rare' }
+            ];
+            
+            let currentAntibodies = [];
+            let currentDifficulty = 'easy';
+
+            function generatePanel() { /* ... existing logic ... */ }
+            function checkAnswer() { /* ... existing logic ... */ }
+            
+            if(difficultyButtons) difficultyButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    difficultyButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentDifficulty = btn.dataset.difficulty;
+                    generatePanel();
+                });
+            });
+
+            const patientBloodGroupEl = document.getElementById('patient-blood-group');
+            const unitBloodGroupEl = document.getElementById('unit-blood-group');
+            const safeBtn = document.getElementById('safe-btn');
+            const unsafeBtn = document.getElementById('unsafe-btn');
+            const compatFeedbackEl = document.getElementById('compat-feedback');
+            const compatScoreEl = document.getElementById('compat-score');
+            const newCompatGameBtn = document.getElementById('compat-new-game-btn');
+
+            const bloodGroups = ['O-', 'O+', 'A-', 'A+', 'B-', 'B+', 'AB-', 'AB+'];
+            const compatibilityMatrix = {
+                'O-': ['O-'], 'O+': ['O-', 'O+'], 'A-': ['O-', 'A-'], 'A+': ['O-', 'O+', 'A-', 'A+'],
+                'B-': ['O-', 'B-'], 'B+': ['O-', 'O+', 'B-', 'B+'], 'AB-': ['O-', 'A-', 'B-', 'AB-'],
+                'AB+': ['O-', 'O+', 'A-', 'A+', 'B-', 'B+', 'AB-', 'AB+']
+            };
+            let patientGroup, unitGroup, score;
+
+            function newCompatRound() {
+                patientGroup = bloodGroups[Math.floor(Math.random() * bloodGroups.length)];
+                unitGroup = bloodGroups[Math.floor(Math.random() * bloodGroups.length)];
+                if(patientBloodGroupEl) patientBloodGroupEl.textContent = patientGroup;
+                if(unitBloodGroupEl) unitBloodGroupEl.textContent = unitGroup;
+                if(compatFeedbackEl) compatFeedbackEl.classList.add('hidden');
+                if(safeBtn) safeBtn.disabled = false;
+                if(unsafeBtn) unsafeBtn.disabled = false;
+            }
+
+            function checkCompat(isSafeClicked) {
+                if(safeBtn) safeBtn.disabled = true;
+                if(unsafeBtn) unsafeBtn.disabled = true;
+                const isActuallySafe = compatibilityMatrix[patientGroup].includes(unitGroup);
+                if(compatFeedbackEl) {
+                    compatFeedbackEl.classList.remove('hidden');
+                    if (isSafeClicked === isActuallySafe) {
+                        compatFeedbackEl.textContent = 'Correct!';
+                        compatFeedbackEl.className = 'text-xl font-bold p-4 rounded-lg bg-green-100 text-green-800';
+                        score++;
+                    } else {
+                        compatFeedbackEl.textContent = `Incorrect! This transfusion is ${isActuallySafe ? 'Safe' : 'Unsafe'}.`;
+                        compatFeedbackEl.className = 'text-xl font-bold p-4 rounded-lg bg-red-100 text-red-800';
+                    }
+                }
+                if(compatScoreEl) compatScoreEl.textContent = score;
+                setTimeout(newCompatRound, 2000);
+            }
+
+            function startNewCompatGame() {
+                score = 0;
+                if(compatScoreEl) compatScoreEl.textContent = score;
+                newCompatRound();
+            }
+
+            if(safeBtn) safeBtn.addEventListener('click', () => checkCompat(true));
+            if(unsafeBtn) unsafeBtn.addEventListener('click', () => checkCompat(false));
+            if(newCompatGameBtn) newCompatGameBtn.addEventListener('click', startNewCompatGame);
+
+            const observer = new MutationObserver((mutationsList, observer) => {
+                for(const mutation of mutationsList) {
+                    if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                        const haemGamePage = document.getElementById('haem-game-page');
+                        const transfusionGamePage = document.getElementById('transfusion-game-page');
+                        const compatGamePage = document.getElementById('compatibility-game-page');
+                        
+                        if (haemGamePage && haemGamePage.classList.contains('active')) { createHaemBoard(); }
+                        if (transfusionGamePage && transfusionGamePage.classList.contains('active')) { 
+                            document.querySelector('.difficulty-btn[data-difficulty="easy"]').classList.add('active');
+                            generatePanel(); 
+                        }
+                        if (compatGamePage && compatGamePage.classList.contains('active')) { startNewCompatGame(); }
+                    }
+                }
+            });
+
+            const haemGamePage = document.getElementById('haem-game-page');
+            const transfusionGamePage = document.getElementById('transfusion-game-page');
+            const compatGamePage = document.getElementById('compatibility-game-page');
+            if (haemGamePage) observer.observe(haemGamePage, { attributes: true });
+            if (transfusionGamePage) observer.observe(transfusionGamePage, { attributes: true });
+            if (compatGamePage) observer.observe(compatGamePage, { attributes: true });
+        });
    </script>
 </body>
 </html>
