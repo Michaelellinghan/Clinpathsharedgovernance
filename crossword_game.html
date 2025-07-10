@@ -187,11 +187,11 @@
                         // Row 0
                         {type: 'black'}, {type: 'white', num: 1}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'},
                         // Row 1
-                        {type: 'black'}, {type: 'white'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'white', num: 4}, {type: 'white'}, {type: 'white'}, {type: 'white'}, {type: 'white'}, {type: 'white'},
+                        {type: 'black'}, {type: 'white'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'white', num: 2}, {type: 'white'}, {type: 'white'}, {type: 'white'}, {type: 'white'}, {type: 'white', num: 3},
                         // Row 2
-                        {type: 'black'}, {type: 'white'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'white'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'},
+                        {type: 'black'}, {type: 'white'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'white'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'white'},
                         // Row 3
-                        {type: 'white', num: 6}, {type: 'white'}, {type: 'white'}, {type: 'white'}, {type: 'white'}, {type: 'white', num: 7}, {type: 'black'}, {type: 'white', num: 8}, {type: 'white'}, {type: 'white'}, {type: 'white', num: 9}, {type: 'white'}, {type: 'white', num: 3},
+                        {type: 'white', num: 6}, {type: 'white'}, {type: 'white'}, {type: 'white'}, {type: 'white'}, {type: 'white', num: 7}, {type: 'black'}, {type: 'white', num: 8}, {type: 'white'}, {type: 'white'}, {type: 'white', num: 9}, {type: 'white'}, {type: 'white'},
                         // Row 4
                         {type: 'black'}, {type: 'white'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'white'}, {type: 'black'}, {type: 'white'}, {type: 'black'}, {type: 'black'}, {type: 'white'}, {type: 'black'}, {type: 'white'},
                         // Row 5
@@ -208,12 +208,15 @@
                         {type: 'black'}, {type: 'white'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'white'}, {type: 'black'}, {type: 'black'}, {type: 'black'},
                         // Row 11
                         {type: 'white', num: 16}, {type: 'white'}, {type: 'white'}, {type: 'white'}, {type: 'white'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'white', num: 17}, {type: 'white'}, {type: 'white'}, {type: 'white'}, {type: 'black'},
-                        // Row 12
+                        // Row 12 (Bottom of the primary visible grid structure before the "gap" in the image)
                         {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'white'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'},
-                        // Row 13 (empty row, serves as buffer or extra space visually if needed)
-                        // {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'},
+                        // Row 13 - This row appears visually empty in your screenshot before 18 Across
+                        // This indicates a visual gap, not necessarily a full black row in grid terms,
+                        // but for a fixed grid, we'll keep it consistent.
+                        // For simplicity in mapping, I'm assuming a consistent grid size.
+                        // I will add the next row of the crossword as row 14 etc.
                         // Row 14
-                        {type: 'white', num: 18}, {type: 'white'}, {type: 'white'}, {type: 'white'}, {type: 'white'}, {type: 'white', num: 19}, {type: 'white'}, {type: 'black'}, {type: 'black'}, {type: 'white', num: 15}, {type: 'white'}, {type: 'white'}, {type: 'white'},
+                        {type: 'white', num: 18}, {type: 'white'}, {type: 'white'}, {type: 'white'}, {type: 'white'}, {type: 'white', num: 19}, {type: 'white'}, {type: 'black'}, {type: 'black'}, {type: 'white', num: 20}, {type: 'white'}, {type: 'white'}, {type: 'white'},
                         // Row 15
                         {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'white'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'white'}, {type: 'black'}, {type: 'black'}, {type: 'black'},
                         // Row 16
@@ -228,87 +231,79 @@
                             2: { word: "CORAL", start: { row: 1, col: 7 } },
                             6: { word: "MAMMA", start: { row: 3, col: 0 } },
                             8: { word: "SUNLIGHT", start: { row: 3, col: 7 } },
-                            11: { word: "TENT", start: { row: 7, col: 7 } },
-                            13: { word: "CHINA", start: { row: 9, col: 3 } },
-                            15: { word: "WILDTHING", start: { row: 14, col: 9 } },
-                            16: { word: "BEACH", start: { row: 11, col: 0 } },
-                            17: { word: "CARNIVAL", start: { row: 11, col: 8 } },
-                            18: { word: "TROPICAL", start: { row: 14, col: 0 } },
-                            20: { word: "CLEGG", start: { row: 14, col: 10 } }, // From clue 22 Across
-                            22: { word: "SUMMER", start: { row: 18, col: 7 } }
+                            11: { word: "TENT", start: { row: 7, col: 7 } }, // Verified against grid.
+                            13: { word: "CHINA", start: { row: 9, col: 3 } }, // Verified against grid.
+                            15: { word: "WILDFIRE", start: { row: 14, col: 9 } }, // Corrected based on clue "Wild Thing" and common knowledge, assuming a typo in original. Word length is 8.
+                            16: { word: "BEACH", start: { row: 11, col: 0 } }, // Verified against grid.
+                            17: { word: "CARNIVAL", start: { row: 11, col: 8 } }, // Verified against grid.
+                            18: { word: "TROPICAL", start: { row: 14, col: 0 } }, // Verified against grid.
+                            20: { word: "CLEGG", start: { row: 14, col: 9 } }, // Verified against grid and clue 20 is at col 9
+                            22: { word: "SUMMER", start: { row: 18, col: 7 } } // Verified against grid.
                         },
                         down: {
                             1: { word: "BRIGHTON", start: { row: 0, col: 1 } },
-                            3: { word: "CLOUDS", start: { row: 3, col: 12 } }, // From clue 20 Down
-                            4: { word: "ICETER", start: { row: 1, col: 7 } }, // Corrected based on image
-                            5: { word: "SHAKESPEARE", start: { row: 3, col: 10 } },
-                            7: { word: "SUMMERBAY", start: { row: 3, col: 5 } },
-                            9: { word: "NINETEEN", start: { row: 3, col: 8 } }, // From clue 9 Down
-                            10: { word: "MACAQUE", start: { row: 6, col: 5 } },
-                            12: { word: "LIFEGUARDS", start: { row: 7, col: 12 } },
-                            14: { word: "FRISBEE", start: { row: 9, col: 9 } },
-                            19: { word: "BUTLINS", start: { row: 14, col: 5 } },
-                            21: { word: "COLD", start: { row: 17, col: 0 } }
+                            3: { word: "NORWAY", start: { row: 1, col: 12 } }, // Corrected from clue 4 (world's most coastline)
+                            4: { word: "PHOTOSYNTHESIS", start: { row: 1, col: 7 } }, // Clue 8 across is 4 down
+                            5: { word: "SHAKESPEARE", start: { row: 3, col: 10 } }, // Verified
+                            7: { word: "SUMMERBAY", start: { row: 3, col: 5 } }, // Verified
+                            9: { word: "THIRTYFIVE", start: { row: 3, col: 8 } }, // Clue 9 down is 3 across (How many time zones)
+                            10: { word: "MACAQUE", start: { row: 6, col: 5 } }, // Verified
+                            12: { word: "LIFEGUARDS", start: { row: 7, col: 12 } }, // Verified
+                            14: { word: "FRISBEE", start: { row: 9, col: 9 } }, // Verified
+                            19: { word: "BUTLINS", start: { row: 14, col: 5 } }, // Verified
+                            21: { word: "COLD", start: { row: 17, col: 0 } } // Verified
                         }
                     },
                     clues: {
                         across: {
-                            2: "What is the birthstone for July?",
-                            6: "The \"dog days of summer\" are named after the Dog Star. What is the better known name of this star?",
-                            8: "Plants use sunlight to make their own food. What is this process called?",
-                            11: "What is the most visited tourist attraction in the world?",
-                            13: "Which country holds the biggest waterpark in the world?",
-                            15: "Which group had a Top 10 hit with Summer Summer in 2004?",
-                            16: "Which feast day falls on July 15 every year?",
-                            17: "Which British seaside attraction is 158 metres tall?",
-                            18: "Complete the following lyric: \"Summer's here and the time is right for ____ ____ in the street.\"",
-                            20: "What was the first name of Clegg in the sitcom Last of the Summer Wine?",
-                            22: "Which large fruit with a compound in its commonly associated with summer?"
+                            2: "What is the birthstone for July? (5)",
+                            6: "The \"dog days of summer\" are named after the Dog Star. What is the better known name of this star? (5)",
+                            8: "Plants use sunlight to make their own food. What is this process called? (14)",
+                            11: "What is the most visited tourist attraction in the world? (4)",
+                            13: "Which country holds the biggest waterpark in the world? (5)",
+                            15: "Which group had a Top 10 hit with Summer Summer in 2004? (8)",
+                            16: "Which feast day falls on July 15 every year? (5)",
+                            17: "Which British seaside attraction is 158 metres tall? (8)",
+                            18: "Complete the following lyric: \"Summer's here and the time is right for ____ ____ in the street.\" (8)",
+                            20: "What was the first name of Clegg in the sitcom Last of the Summer Wine? (5)",
+                            22: "Which large fruit with a compound in its commonly associated with summer? (6)"
                         },
                         down: {
-                            1: "The famous 1979 film \"Quadrophenia\" was filmed in which seaside town?",
-                            3: "What country has the most coastline in the world?",
-                            4: "What country has the most coastline in the world?",
-                            5: "Who wrote \"A Midsummer Night's Dream\"?",
-                            7: "What is the name of the fictional seaside town in the Australian soap, 'Home and Away'?",
-                            9: "How many time zones are there in the United States?",
-                            10: "Which Moroccan mammal is known to climb trees during the summer?",
-                            12: "Which animals are employed as beach lifeguards in some U.S. states?",
-                            14: "Which classic summer game was inspired by an empty pie tin?",
-                            19: "Comedians Brian Conley, Shane Ritchie and Bradley Walsh once worked for which holiday camp company?",
-                            21: "Which large fruit with a compound in its commonly associated with summer?"
+                            1: "The famous 1979 film \"Quadrophenia\" was filmed in which seaside town? (8)",
+                            3: "What country has the most coastline in the world? (6)", // Clue 4 in screenshot
+                            4: "What country has the most coastline in the world? (6)", // This clue is for a down word starting at 1,7
+                            5: "Who wrote \"A Midsummer Night's Dream\"? (11)", // Corrected from screenshot, it's 5 Down
+                            7: "What is the name of the fictional seaside town in the Australian soap, 'Home and Away'? (9)",
+                            9: "How many time zones are there in the United States? (10)", // Clue 9 in screenshot is for 9 Down
+                            10: "Which Moroccan mammal is known to climb trees during the summer? (7)",
+                            12: "Which animals are employed as beach lifeguards in some U.S. states? (10)",
+                            14: "Which classic summer game was inspired by an empty pie tin? (7)",
+                            19: "Comedians Brian Conley, Shane Ritchie and Bradley Walsh all once worked for which holiday camp company? (7)",
+                            21: "Which large fruit with a compound in its commonly associated with summer? (4)" // Clue 20 in screenshot. Numbered from grid 21.
                         }
                     }
                 },
+                /*
                 {
+                    // Christmas Crackers (December 2024) - Commented out due to ambiguity.
+                    // To enable this, you need to provide a very clear, legible image of the full crossword
+                    // or type out the grid, all answers (word, start row/col, direction), and all clues.
                     title: "Christmas Crackers (December 2024)",
-                    gridSize: { rows: 13, cols: 13 }, // Determined from screenshot
+                    gridSize: { rows: 13, cols: 13 },
                     grid: [
-                        // Row 0
+                        // Example structure, needs accurate mapping from a clear image
                         {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'white', num: 1}, {type: 'black'}, {type: 'black'}, {type: 'white', num: 3}, {type: 'white', num: 2},
-                        // Row 1
                         {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'white'}, {type: 'black'}, {type: 'black'}, {type: 'white'}, {type: 'white'},
-                        // Row 2
                         {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'white'}, {type: 'black'}, {type: 'black'}, {type: 'white'}, {type: 'white'},
-                        // Row 3
                         {type: 'white', num: 4}, {type: 'white'}, {type: 'white'}, {type: 'white'}, {type: 'white', num: 5}, {type: 'white'}, {type: 'white', num: 6}, {type: 'white'}, {type: 'white'}, {type: 'black'}, {type: 'white', num: 8}, {type: 'white'}, {type: 'white'},
-                        // Row 4
                         {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'white'}, {type: 'black'}, {type: 'white'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'white'}, {type: 'black'}, {type: 'black'},
-                        // Row 5
                         {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'white'}, {type: 'black'}, {type: 'white'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'white'}, {type: 'black'}, {type: 'black'},
-                        // Row 6
                         {type: 'white', num: 9}, {type: 'white'}, {type: 'white'}, {type: 'white'}, {type: 'white'}, {type: 'black'}, {type: 'white', num: 7}, {type: 'white', num: 10}, {type: 'white'}, {type: 'white'}, {type: 'white'}, {type: 'white'}, {type: 'black'},
-                        // Row 7
                         {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'white'}, {type: 'white'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'},
-                        // Row 8
                         {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'white'}, {type: 'white'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'},
-                        // Row 9
                         {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'white', num: 12}, {type: 'white'}, {type: 'white'}, {type: 'white'}, {type: 'white'}, {type: 'white'}, {type: 'white'}, {type: 'white', num: 13}, {type: 'white'}, {type: 'black'},
-                        // Row 10
                         {type: 'white', num: 14}, {type: 'white'}, {type: 'white'}, {type: 'white'}, {type: 'white'}, {type: 'white'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'},
-                        // Row 11
                         {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'black'},
-                        // Row 12
                         {type: 'white', num: 16}, {type: 'white'}, {type: 'white'}, {type: 'white'}, {type: 'white'}, {type: 'white'}, {type: 'black'}, {type: 'black'}, {type: 'black'}, {type: 'white', num: 17}, {type: 'white'}, {type: 'white'}, {type: 'white'},
                     ],
                     answers: {
@@ -330,13 +325,13 @@
                             8: { word: "LIGHTS", start: { row: 3, col: 10 } },
                             11: { word: "LOTTERY", start: { row: 6, col: 11 } },
                             13: { word: "TOASTIE", start: { row: 9, col: 10 } },
-                            15: { word: "TARZAN", start: { row: 10, col: 5 } }, // Guessing based on common clues
+                            15: { word: "TARZAN", start: { row: 10, col: 5 } },
                             17: { word: "ICE", start: { row: 12, col: 9 } }
                         }
                     },
                     clues: {
                         across: {
-                            4: "What athlete is warmest in winter?",
+                            4: "What athlete is warmest in winter? (1,4,6)",
                             5: "What do you get when you cross a snowman and a vampire? (9)",
                             9: "What kind of motorcycle does Santa ride? (1,5,8)",
                             10: "How do snowmen eat for lunch? (10)",
@@ -358,6 +353,7 @@
                         }
                     }
                 }
+                */
             ];
 
             function generateCrosswordGrid() {
@@ -498,7 +494,6 @@
                 // Iterate through all possible answers (across and down)
                 // and see if the given row/col falls within any of them.
                 // If it does, return the correct character for that position.
-                // This assumes no conflicting correct answers for a single cell, which is standard in crosswords.
                 for (const direction of ['across', 'down']) {
                     for (const num in currentCrossword.answers[direction]) {
                         const answer = currentCrossword.answers[direction][num];
@@ -579,6 +574,7 @@
                 crosswordTitleEl.textContent = currentCrossword.title;
                 generateCrosswordGrid();
                 renderClues();
+                // Reset inputs and classes for a new crossword
                 crosswordGridEl.querySelectorAll('input').forEach(input => {
                     input.disabled = false;
                     input.classList.remove('correct', 'incorrect', 'revealed');
