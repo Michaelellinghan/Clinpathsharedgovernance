@@ -23,7 +23,7 @@
             grid-template-columns: repeat(12, 1fr);
             gap: 4px;
             user-select: none;
-            touch-action: none; 
+            touch-action: none;
         }
         .word-search-grid div {
             aspect-ratio: 1 / 1;
@@ -37,10 +37,10 @@
             transition: background-color 0.2s;
         }
         .word-search-grid div.selected {
-            background-color: #fde047; 
+            background-color: #fde047;
         }
         .word-search-grid div.found-perm {
-            background-color: #4ade80; 
+            background-color: #4ade80;
             color: white;
         }
         #word-list li.found {
@@ -52,7 +52,31 @@
 <body class="bg-gray-50 text-gray-800">
 
     <header class="bg-white shadow-md sticky top-0 z-50">
-        </header>
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <a href="index.html" class="cursor-pointer flex items-center space-x-3">
+                <img src="logo.jpg" alt="Clinical Pathology Shared Governance Council Logo" class="h-16 w-auto">
+            </a>
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="index.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Home</a>
+                <a href="projects.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Projects</a>
+                <a href="games.html" class="font-semibold text-nhs-blue transition duration-300">Games</a>
+                <a href="newsletters.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Newsletters</a>
+                <a href="about.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">About Us</a>
+                <a href="links.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Links</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden"><i data-feather="menu"></i></button>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white px-6 pb-4">
+             <a href="index.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Home</a>
+            <a href="projects.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Projects</a>
+            <a href="games.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Games</a>
+            <a href="newsletters.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Newsletters</a>
+            <a href="about.html" class="block py-2 text-gray-600 hover:nhs-text-blue">About Us</a>
+            <a href="social.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Social Media</a>
+            <a href="links.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Learning Links</a>
+            <a href="contact.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Suggestions</a>
+        </div>
+    </header>
 
     <main class="py-16 bg-nhs-light-grey">
         <div class="container mx-auto px-6 max-w-4xl text-center">
@@ -69,19 +93,23 @@
                 <div class="w-full md:w-1/3 bg-white p-6 rounded-lg shadow-md">
                     <h3 class="text-xl font-bold nhs-text-dark-blue mb-4">Words to Find:</h3>
                     <ul id="word-list" class="space-y-2 text-left">
-                        </ul>
+                    </ul>
                 </div>
             </div>
-            
+
             <div id="immuno-win-message" class="hidden mt-8 p-4 bg-green-100 text-green-800 rounded-lg">
                 <h3 class="font-bold text-xl">Well Done!</h3>
                 <p>You've found all the words!</p>
             </div>
-             <button id="immuno-new-game-btn" class="mt-6 bg-nhs-blue text-white font-bold py-3 px-8 rounded-lg hover:bg-nhs-dark-blue transition duration-300">New Game</button>
+            <button id="immuno-new-game-btn" class="mt-6 bg-nhs-blue text-white font-bold py-3 px-8 rounded-lg hover:bg-nhs-dark-blue transition duration-300">New Game</button>
         </div>
     </main>
 
-    <footer class="nhs-dark-blue text-white py-8 mt-16"></footer>
+    <footer class="nhs-dark-blue text-white py-8 mt-16">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2024 Clinical Pathology Shared Governance Council. All Rights Reserved.</p>
+        </div>
+    </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -96,20 +124,20 @@
             const wordListEl = document.getElementById('word-list');
             const winMessageEl = document.getElementById('immuno-win-message');
             const newGameBtn = document.getElementById('immuno-new-game-btn');
-            
+
             const masterWordList = [
-                'ADRENAL', 'ALLERGY', 'ANCA', 'ANTIBODY', 'ANTIGEN', 'AQUAPORIN', 'AUTOIMMUNE', 'BASOPHIL', 
-                'BCELL', 'CARDIOLIPIN', 'CASPR', 'CENTROMERE', 'CHEMOKINE', 'COMPLEMENT', 'CONNECTIVE', 'CRYOGLOBULIN', 
-                'CYTOKINE', 'CYTOTOXIC', 'DSDNA', 'DENDRITIC', 'ENDOMYSIAL', 'EOSINOPHIL', 'EPITOPE', 'GBS', 'GAD', 
-                'GASTRIC', 'GBM', 'HELPER', 'HISTAMINE', 'HUMORAL', 'IGA', 'IGE', 'IGG', 'IGM', 
-                'IMMUNITY', 'INFLAMMATION', 'INFLIXIMAB', 'INHIBITOR', 'INNATE', 'INTERFERON', 'INTERLEUKIN', 'INTRINSIC', 
-                'ISOTYPE', 'JO', 'LA', 'LEUKOCYTE', 'LKM', 'LUPUS', 'LYMPHOCYTE', 'LYMPHOID', 'MACROPHAGE', 'MASTCELL', 
-                'MITOCHONDRIA', 'MONOCYTE', 'MYASTHENIA', 'MYELOID', 'MYOSITIS', 'NEUTROPHIL', 'NKCELL', 'NMO', 'NOD', 
-                'OPSONIN', 'PARIETAL', 'PATHOGEN', 'PEMPHIGOID', 'PHAGOCYTE', 'PLASMA', 'PLATELET', 'POLYCLONAL', 
-                'PRIMARY', 'RECEPTOR', 'REGULATORY', 'RHEUMATOID', 'RITUXIMAB', 'RO', 'SCL', 'SECONDARY', 'SEROLOGY', 'SIALIC', 'SJOGRENS', 'SM', 'SMOOTH', 'TCELL', 'THYMUS', 'THYROID', 
+                'ADRENAL', 'ALLERGY', 'ANCA', 'ANTIBODY', 'ANTIGEN', 'AQUAPORIN', 'AUTOIMMUNE', 'BASOPHIL',
+                'BCELL', 'CARDIOLIPIN', 'CASPR', 'CENTROMERE', 'CHEMOKINE', 'COMPLEMENT', 'CONNECTIVE', 'CRYOGLOBULIN',
+                'CYTOKINE', 'CYTOTOXIC', 'DSDNA', 'DENDRITIC', 'ENDOMYSIAL', 'EOSINOPHIL', 'EPITOPE', 'GBS', 'GAD',
+                'GASTRIC', 'GBM', 'HELPER', 'HISTAMINE', 'HUMORAL', 'IGA', 'IGE', 'IGG', 'IGM',
+                'IMMUNITY', 'INFLAMMATION', 'INFLIXIMAB', 'INHIBITOR', 'INNATE', 'INTERFERON', 'INTERLEUKIN', 'INTRINSIC',
+                'ISOTYPE', 'JO', 'LA', 'LEUKOCYTE', 'LKM', 'LUPUS', 'LYMPHOCYTE', 'LYMPHOID', 'MACROPHAGE', 'MASTCELL',
+                'MITOCHONDRIA', 'MONOCYTE', 'MYASTHENIA', 'MYELOID', 'MYOSITIS', 'NEUTROPHIL', 'NKCELL', 'NMO', 'NOD',
+                'OPSONIN', 'PARIETAL', 'PATHOGEN', 'PEMPHIGOID', 'PHAGOCYTE', 'PLASMA', 'PLATELET', 'POLYCLONAL',
+                'PRIMARY', 'RECEPTOR', 'REGULATORY', 'RHEUMATOID', 'RITUXIMAB', 'RO', 'SCL', 'SECONDARY', 'SEROLOGY', 'SIALIC', 'SJOGRENS', 'SM', 'SMOOTH', 'TCELL', 'THYMUS', 'THYROID',
                 'TISSUE', 'TITRE', 'TOLL', 'TOLERANCE', 'TRYPTASE', 'TUMOUR', 'TYPE', 'VACCINE', 'VASCULITIS', 'YO'
             ];
-            
+
             let words = [];
             const gridSize = 12;
             let grid = [];
@@ -132,11 +160,11 @@
                 grid = Array(gridSize * gridSize).fill('');
                 foundWords = [];
                 winMessageEl.classList.add('hidden');
-                
+
                 placeWords();
                 fillGrid();
                 renderGrid();
-                renderWordList();
+                renderWordList(); // Initial rendering of the word list
             }
 
             function placeWords() {
@@ -149,7 +177,7 @@
                         const dir = directions[Math.floor(Math.random() * directions.length)];
                         const startX = Math.floor(Math.random() * gridSize);
                         const startY = Math.floor(Math.random() * gridSize);
-                        
+
                         let x = startX, y = startY;
                         let canPlace = true;
                         for (let i = 0; i < word.length; i++) {
@@ -198,19 +226,29 @@
                 }
             }
 
+            // Modified renderWordList to only update classes
             function renderWordList() {
-                wordListEl.innerHTML = '';
+                wordListEl.innerHTML = ''; // Clear previous list
                 words.forEach(word => {
                     const li = document.createElement('li');
                     li.textContent = word;
-                    li.id = `word-${word}`;
-                    if (foundWords.includes(word)) li.classList.add('found');
+                    li.id = `word-${word}`; // Assign ID for easy access
+                    if (foundWords.includes(word)) {
+                        li.classList.add('found');
+                    }
                     wordListEl.appendChild(li);
                 });
             }
 
+            function markWordAsFound(word) {
+                const listItem = document.getElementById(`word-${word}`);
+                if (listItem) {
+                    listItem.classList.add('found');
+                }
+            }
+
             function handleSelectionStart(targetCell) {
-                if (targetCell) {
+                if (targetCell && targetCell.dataset.index) { // Ensure it's a grid cell
                     isSelecting = true;
                     selection = [targetCell];
                     targetCell.classList.add('selected');
@@ -218,36 +256,66 @@
             }
 
             function handleSelectionMove(targetCell) {
-                if (isSelecting && targetCell && !selection.includes(targetCell)) {
-                    selection.push(targetCell);
-                    targetCell.classList.add('selected');
+                if (isSelecting && targetCell && targetCell.dataset.index && !selection.includes(targetCell)) {
+                    // Check if the new cell is adjacent to the last selected cell
+                    const lastCellIndex = parseInt(selection[selection.length - 1].dataset.index);
+                    const newCellIndex = parseInt(targetCell.dataset.index);
+
+                    const lastRow = Math.floor(lastCellIndex / gridSize);
+                    const lastCol = lastCellIndex % gridSize;
+                    const newRow = Math.floor(newCellIndex / gridSize);
+                    const newCol = newCellIndex % gridSize;
+
+                    const rowDiff = Math.abs(lastRow - newRow);
+                    const colDiff = Math.abs(lastCol - newCol);
+
+                    const isValidMove = (rowDiff <= 1 && colDiff <= 1) && !(rowDiff === 0 && colDiff === 0);
+
+                    if (isValidMove) {
+                        selection.push(targetCell);
+                        targetCell.classList.add('selected');
+                    } else {
+                        // If the move is not valid (e.g., jumping), stop selection
+                        handleSelectionEnd();
+                    }
                 }
             }
 
             function handleSelectionEnd() {
                 if (!isSelecting) return;
                 isSelecting = false;
-                
+
                 const selectedWord = selection.map(cell => cell.textContent).join('');
                 const reversedWord = selectedWord.split('').reverse().join('');
 
-                const checkWord = (word) => {
-                     if (words.includes(word) && !foundWords.includes(word)) {
-                        foundWords.push(word);
-                        selection.forEach(cell => {
-                            cell.classList.add('found-perm');
-                            cell.classList.remove('selected');
-                        });
-                        return true;
-                    }
-                    return false;
+                let wordFound = false;
+
+                // Check original direction
+                if (words.includes(selectedWord) && !foundWords.includes(selectedWord)) {
+                    foundWords.push(selectedWord);
+                    selection.forEach(cell => {
+                        cell.classList.add('found-perm');
+                        cell.classList.remove('selected');
+                    });
+                    markWordAsFound(selectedWord); // Update the specific list item
+                    wordFound = true;
+                }
+                // Check reversed direction
+                else if (words.includes(reversedWord) && !foundWords.includes(reversedWord)) {
+                    foundWords.push(reversedWord);
+                    selection.forEach(cell => {
+                        cell.classList.add('found-perm');
+                        cell.classList.remove('selected');
+                    });
+                    markWordAsFound(reversedWord); // Update the specific list item
+                    wordFound = true;
                 }
 
-                if (!checkWord(selectedWord)) checkWord(reversedWord);
-                
-                document.querySelectorAll('.word-search-grid div.selected').forEach(cell => cell.classList.remove('selected'));
-                selection = [];
-                renderWordList();
+                // If no word was found or it was already found, deselect cells
+                if (!wordFound) {
+                    document.querySelectorAll('.word-search-grid div.selected').forEach(cell => cell.classList.remove('selected'));
+                }
+                selection = []; // Clear selection for next attempt
 
                 if (foundWords.length === words.length) {
                     winMessageEl.classList.remove('hidden');
@@ -255,14 +323,28 @@
             }
 
             // Mouse Events
-            gridEl.addEventListener('mousedown', (e) => handleSelectionStart(e.target));
-            gridEl.addEventListener('mouseover', (e) => handleSelectionMove(e.target));
+            gridEl.addEventListener('mousedown', (e) => {
+                // Only act on grid cells
+                if (e.target.parentElement === gridEl) {
+                    handleSelectionStart(e.target);
+                }
+            });
+            gridEl.addEventListener('mouseover', (e) => {
+                // Only act on grid cells
+                if (e.target.parentElement === gridEl) {
+                    handleSelectionMove(e.target);
+                }
+            });
             document.addEventListener('mouseup', handleSelectionEnd);
-            
+
             // Touch Events
             gridEl.addEventListener('touchstart', (e) => {
                 e.preventDefault();
-                handleSelectionStart(e.touches[0].target);
+                const touch = e.touches[0];
+                const element = document.elementFromPoint(touch.clientX, touch.clientY);
+                if(element && element.parentElement === gridEl) {
+                    handleSelectionStart(element);
+                }
             }, { passive: false });
 
             gridEl.addEventListener('touchmove', (e) => {
@@ -275,9 +357,9 @@
             }, { passive: false });
 
             document.addEventListener('touchend', handleSelectionEnd);
-            
+
             newGameBtn.addEventListener('click', initGame);
-            
+
             initGame();
         });
    </script>
