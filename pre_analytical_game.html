@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pre-analytical Pitfalls - SGC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#005EB8">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .nhs-blue { background-color: #005EB8; }
+        .nhs-dark-blue { background-color: #003087; }
+        .nhs-light-grey { background-color: #F0F4F5; }
+        .nhs-text-blue { color: #005EB8; }
+        .nhs-text-dark-blue { color: #003087; }
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <a href="index.html" class="cursor-pointer flex items-center space-x-3">
+                <img src="logo.jpg" alt="Clinical Pathology Shared Governance Council Logo" class="h-16 w-auto">
+            </a>
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="index.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Home</a>
+                <a href="projects.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Projects</a>
+                <a href="games.html" class="font-semibold text-nhs-blue transition duration-300">Games</a>
+                <a href="newsletters.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Newsletters</a>
+                <a href="about.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">About Us</a>
+                <a href="links.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Links</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden"><i data-feather="menu"></i></button>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white px-6 pb-4">
+             <a href="index.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Home</a>
+            <a href="projects.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Projects</a>
+            <a href="games.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Games</a>
+            <a href="newsletters.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Newsletters</a>
+            <a href="about.html" class="block py-2 text-gray-600 hover:nhs-text-blue">About Us</a>
+            <a href="social.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Social Media</a>
+            <a href="links.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Learning Links</a>
+            <a href="contact.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Suggestions</a>
+        </div>
+    </header>
+
+    <main class="py-16 bg-nhs-light-grey">
+        <div class="container mx-auto px-6 max-w-3xl text-center">
+            <a href="games.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8">
+                <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Games
+            </a>
+            <h2 class="text-3xl font-bold nhs-text-dark-blue mb-4">Pre-analytical Pitfalls</h2>
+            <p class="text-gray-600 mb-8 max-w-2xl mx-auto">Identify common errors in sample collection and handling, and understand their impact on test results.</p>
+
+            <div id="quiz-container" class="bg-white p-8 rounded-lg shadow-md text-left fade-in">
+                <p id="question-text" class="text-xl font-medium mb-6"></p>
+                <div id="options-container" class="space-y-4">
+                    </div>
+                <div id="feedback-container" class="mt-6 p-4 rounded-lg text-white hidden">
+                    <p id="feedback-text" class="font-semibold"></p>
+                </div>
+                <button id="next-question-btn" class="mt-8 bg-nhs-blue text-white font-bold py-3 px-8 rounded-lg hover:bg-nhs-dark-blue transition duration-300 hidden">Next Question</button>
+                <button id="restart-game-btn" class="mt-8 bg-nhs-blue text-white font-bold py-3 px-8 rounded-lg hover:bg-nhs-dark-blue transition duration-300 hidden">Play Again</button>
+            </div>
+
+            <div id="game-over-screen" class="hidden bg-white p-8 rounded-lg shadow-md mt-8 fade-in">
+                <h3 class="text-2xl font-bold nhs-text-dark-blue mb-4">Quiz Complete!</h3>
+                <p id="final-score" class="text-xl text-gray-700 mb-6"></p>
+                <button id="play-again-btn-end" class="bg-nhs-blue text-white font-bold py-3 px-8 rounded-lg hover:bg-nhs-dark-blue transition duration-300">Play Again</button>
+            </div>
+        </div>
+    </main>
+
+    <footer class="nhs-dark-blue text-white py-8 mt-16">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2024 Clinical Pathology Shared Governance Council. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            feather.replace(); // For Feather icons
+
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if(mobileMenuButton) {
+                mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+            }
+
+            const questionTextEl = document.getElementById('question-text');
+            const optionsContainerEl = document.getElementById('options-container');
+            const feedbackContainerEl = document.getElementById('feedback-container');
+            const feedbackTextEl = document.getElementById('feedback-text');
+            const nextQuestionBtn = document.getElementById('next-question-btn');
+            const restartGameBtn = document.getElementById('restart-game-btn');
+            const quizContainerEl = document.getElementById('quiz-container');
+            const gameOverScreenEl = document.getElementById('game-over-screen');
+            const finalScoreEl = document.getElementById('final-score');
+            const playAgainBtnEnd = document.getElementById('play-again-btn-end');
+
+            let currentQuestionIndex = 0;
+            let score = 0;
+            let questions = [];
+
+            const allQuestions = [
+                {
+                    question: "A blood sample for **Potassium** measurement was left at room temperature for 8 hours before being centrifuged. The result is likely to be...",
+                    options: [
+                        { text: "Falsely low due to cell metabolism.", isCorrect: false },
+                        { text: "Falsely high due to potassium leakage from red blood cells.", isCorrect: true },
+                        { text: "Unaffected, as potassium is stable.", isCorrect: false },
+                        { text: "Inconclusive due to clot formation.", isCorrect: false }
+                    ],
+                    explanation: "Prolonged contact of serum/plasma with red blood cells at room temperature allows potassium to leak out of the cells, causing a falsely elevated result."
+                },
+                {
+                    question: "A **coagulation** sample (e.g., for PT/APTT) is collected into a tube that is underfilled, meaning there is too much anticoagulant for the blood volume. What is the likely impact on results?",
+                    options: [
+                        { text: "Clotting times will be falsely shortened.", isCorrect: false },
+                        { text: "Clotting times will be falsely prolonged.", isCorrect: true },
+                        { text: "The sample will haemolyse.", isCorrect: false },
+                        { text: "There will be no significant impact.", isCorrect: false }
+                    ],
+                    explanation: "Too much anticoagulant (citrate) in relation to blood volume will bind more calcium, falsely prolonging clotting times."
+                },
+                {
+                    question: "A sample for **Full Blood Count (FBC)** is severely haemolysed. Which parameter is most likely to be directly affected and why?",
+                    options: [
+                        { text: "White Blood Cell Count (WBC) due to cell lysis.", isCorrect: false },
+                        { text: "Haemoglobin (Hb) due to free haemoglobin in plasma.", isCorrect: true },
+                        { text: "Platelet count due to clumping.", isCorrect: false },
+                        { text: "Mean Cell Volume (MCV) due to cell shrinkage.", isCorrect: false }
+                    ],
+                    explanation: "Haemolysis releases haemoglobin from red blood cells into the plasma. Automated analysers may falsely interpret this free haemoglobin as intact red cell haemoglobin, leading to a falsely elevated Hb result."
+                },
+                {
+                    question: "A blood culture bottle is collected **after** other blood tubes, including an EDTA tube. What is the main risk associated with this collection order?",
+                    options: [
+                        { text: "Contamination of the EDTA tube.", isCorrect: false },
+                        { text: "Dilution of the blood culture.", isCorrect: false },
+                        { text: "Carryover of anticoagulant into the blood culture, inhibiting bacterial growth.", isCorrect: true },
+                        { text: "Inaccurate blood glucose results.", isCorrect: false }
+                    ],
+                    explanation: "Collecting blood culture bottles after other tubes, especially those with anticoagulants like EDTA, risks carryover of these substances into the sterile blood culture, which can inhibit the growth of any bacteria present and lead to a false negative result."
+                },
+                {
+                    question: "A sample for **Troponin** (cardiac marker) is collected in an incorrect tube, which contains a gel separator but no anticoagulant. What's the most immediate concern?",
+                    options: [
+                        { text: "The sample will clot, making it unsuitable for analysis.", isCorrect: true },
+                        { text: "The gel will interfere with troponin measurement.", isCorrect: false },
+                        { text: "The sample will haemolyse rapidly.", isCorrect: false },
+                        { text: "Troponin will degrade quickly.", isCorrect: false }
+                    ],
+                    explanation: "Troponin is typically measured in serum (clotted blood) or heparinised plasma. A tube with only a gel separator and no anticoagulant will allow the blood to clot, but without proper mixing with anticoagulant, the serum separation might be compromised, or the lab may reject it if an anticoagulant is required for stability or analyser compatibility."
+                },
+                {
+                    question: "A **urine sample for microbiology** is collected into an unsterile container. What is the most significant consequence?",
+                    options: [
+                        { text: "It will affect the pH of the sample.", isCorrect: false },
+                        { text: "It will cause the urine to become cloudy.", isCorrect: false },
+                        { text: "It could lead to false positive results due to environmental contamination.", isCorrect: true },
+                        { text: "It will accelerate cellular degradation.", isCorrect: false }
+                    ],
+                    explanation: "An unsterile container can introduce environmental bacteria, leading to a false positive culture result and potentially inappropriate antibiotic treatment."
+                },
+                {
+                    question: "A patient's **bilirubin** sample is exposed to direct sunlight for an extended period. What effect is this likely to have on the result?",
+                    options: [
+                        { text: "Falsely increased due to light activation.", isCorrect: false },
+                        { text: "Falsely decreased due to photodegradation.", isCorrect: true },
+                        { text: "No significant effect, bilirubin is stable.", isCorrect: false },
+                        { text: "It will cause the sample to clot.", isCorrect: false }
+                    ],
+                    explanation: "Bilirubin is light-sensitive and degrades upon exposure to light, leading to a falsely decreased result. Samples for bilirubin should be protected from light."
+                }
+            ];
+
+
+            function loadQuestions() {
+                // Shuffle all questions and pick a subset, or use all for a longer game
+                questions = shuffleArray([...allQuestions]); // Using all for now
+            }
+
+            function shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
+            }
+
+            function displayQuestion() {
+                if (currentQuestionIndex >= questions.length) {
+                    endGame();
+                    return;
+                }
+
+                quizContainerEl.classList.remove('fade-in'); // Reset animation
+                void quizContainerEl.offsetWidth; // Trigger reflow
+                quizContainerEl.classList.add('fade-in');
+
+                const questionData = questions[currentQuestionIndex];
+                questionTextEl.innerHTML = questionData.question;
+                optionsContainerEl.innerHTML = '';
+                feedbackContainerEl.classList.add('hidden');
+                nextQuestionBtn.classList.add('hidden');
+                restartGameBtn.classList.add('hidden'); // Ensure restart button is hidden during game
+
+                // Shuffle options for each question
+                const shuffledOptions = shuffleArray([...questionData.options]);
+
+                shuffledOptions.forEach(option => {
+                    const button = document.createElement('button');
+                    button.textContent = option.text;
+                    button.classList.add('w-full', 'p-3', 'border', 'border-gray-300', 'rounded-lg', 'text-left', 'hover:bg-gray-100', 'focus:outline-none', 'focus:ring-2', 'focus:ring-nhs-blue', 'transition', 'duration-200');
+                    button.dataset.isCorrect = option.isCorrect;
+                    button.addEventListener('click', () => selectOption(button, option.explanation));
+                    optionsContainerEl.appendChild(button);
+                });
+            }
+
+            function selectOption(selectedButton, explanation) {
+                const isCorrect = selectedButton.dataset.isCorrect === 'true';
+                const allOptionButtons = optionsContainerEl.querySelectorAll('button');
+
+                allOptionButtons.forEach(button => {
+                    button.disabled = true; // Disable all buttons after selection
+                    if (button.dataset.isCorrect === 'true') {
+                        button.classList.add('bg-green-200', 'border-green-400');
+                    } else if (button === selectedButton) {
+                        button.classList.add('bg-red-200', 'border-red-400');
+                    }
+                });
+
+                if (isCorrect) {
+                    score++;
+                    feedbackContainerEl.classList.remove('hidden', 'bg-red-100');
+                    feedbackContainerEl.classList.add('bg-green-100');
+                    feedbackTextEl.textContent = `Correct! ${explanation}`;
+                } else {
+                    feedbackContainerEl.classList.remove('hidden', 'bg-green-100');
+                    feedbackContainerEl.classList.add('bg-red-100');
+                    feedbackTextEl.textContent = `Incorrect. ${explanation}`;
+                }
+                feedbackContainerEl.classList.add('fade-in');
+                nextQuestionBtn.classList.remove('hidden');
+            }
+
+            function nextQuestion() {
+                currentQuestionIndex++;
+                displayQuestion();
+            }
+
+            function endGame() {
+                quizContainerEl.classList.add('hidden');
+                gameOverScreenEl.classList.remove('hidden');
+                finalScoreEl.textContent = `You scored ${score} out of ${questions.length} correct answers.`;
+            }
+
+            function startGame() {
+                currentQuestionIndex = 0;
+                score = 0;
+                loadQuestions(); // Load and shuffle questions for a new game
+                quizContainerEl.classList.remove('hidden');
+                gameOverScreenEl.classList.add('hidden');
+                displayQuestion();
+            }
+
+            nextQuestionBtn.addEventListener('click', nextQuestion);
+            playAgainBtnEnd.addEventListener('click', startGame);
+            restartGameBtn.addEventListener('click', startGame); // If you want a restart button mid-game
+
+            // Initial game start
+            startGame();
+        });
+    </script>
+</body>
+</html>
