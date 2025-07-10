@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coagulation Cascade Game - SGC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#005EB8">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .nhs-blue { background-color: #005EB8; }
+        .nhs-dark-blue { background-color: #003087; }
+        .nhs-light-grey { background-color: #F0F4F5; }
+        .nhs-text-blue { color: #005EB8; }
+        .cascade-pathway {
+            background-color: #F0F4F5;
+            border: 2px solid #e5e7eb;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            min-height: 400px;
+        }
+        .factor-slot {
+            background-color: #fff;
+            border: 2px dashed #9ca3af;
+            border-radius: 0.5rem;
+            height: 50px;
+            width: 100%;
+            margin: 0.75rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .factor-slot.correct {
+            border: 2px solid #22c55e;
+            background-color: #dcfce7;
+        }
+        .factor-slot.incorrect {
+            animation: shake 0.5s;
+            border-color: #ef4444;
+        }
+        .draggable-factor {
+            background-color: #fff;
+            border: 2px solid #6b7280;
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem;
+            cursor: grab;
+            user-select: none;
+            transition: all 0.2s;
+        }
+        .draggable-factor:hover {
+            background-color: #f3f4f6;
+            transform: scale(1.05);
+        }
+        .factor-bank {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 1rem;
+            background-color: #e5e7eb;
+            border-radius: 0.5rem;
+        }
+        .arrow {
+            text-align: center;
+            font-size: 1.5rem;
+            color: #6b7280;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        </header>
+
+    <main class="py-16">
+        <div class="container mx-auto px-6">
+            <a href="games.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8">
+                <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Games
+            </a>
+            <div class="text-center">
+                <h2 class="text-3xl font-bold nhs-text-dark-blue mb-4">Coagulation Cascade Challenge</h2>
+                <p class="text-gray-600 mb-2 max-w-2xl mx-auto">Drag and drop the factors from the bank into their correct positions in the cascade.</p>
+                <p class="text-lg font-bold">Score: <span id="score">0</span> / <span id="total-factors">0</span></p>
+            </div>
+
+            <div class="my-8">
+                <h3 class="text-xl font-semibold text-center mb-2">Factor Bank</h3>
+                <div id="factor-bank" class="factor-bank justify-center">
+                    </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+                <div class="cascade-pathway">
+                    <h3 class="text-xl font-bold text-center nhs-text-dark-blue border-b-2 pb-2">Intrinsic Pathway (APTT)</h3>
+                    <div class="factor-slot" data-factor="XIIa"></div>
+                    <div class="arrow">↓</div>
+                    <div class="factor-slot" data-factor="XIa"></div>
+                    <div class="arrow">↓</div>
+                    <div class="factor-slot" data-factor="IXa"></div>
+                </div>
+
+                <div class="cascade-pathway">
+                    <h3 class="text-xl font-bold text-center nhs-text-dark-blue border-b-2 pb-2">Extrinsic Pathway (PT)</h3>
+                    <div class="factor-slot" data-factor="VIIa"></div>
+                </div>
+
+                <div class="cascade-pathway">
+                    <h3 class="text-xl font-bold text-center nhs-text-dark-blue border-b-2 pb-2">Common Pathway</h3>
+                    <div class="factor-slot" data-factor="Xa"></div>
+                    <div class="arrow">↓</div>
+                    <div class="factor-slot" data-factor="Thrombin"></div>
+                    <div class="arrow">↓</div>
+                    <div class="factor-slot" data-factor="Fibrin"></div>
+                </div>
+            </div>
+
+            <div class="text-center mt-8">
+                <div id="win-message" class="hidden p-4 bg-green-100 text-green-800 rounded-lg text-xl font-bold">
+                    Congratulations! You've completed the cascade!
+                </div>
+                <button id="reset-btn" class="mt-4 bg-red-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-red-700 transition duration-300">Reset Game</button>
+            </div>
+        </div>
+    </main>
+    
+    <footer class="nhs-dark-blue text-white py-8 mt-16"></footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            feather.replace();
+            const factors = [
+                { id: 'VIIa', name: 'Factor VIIa' },
+                { id: 'IXa', name: 'Factor IXa' },
+                { id: 'XIa', name: 'Factor XIa' },
+                { id: 'XIIa', name: 'Factor XIIa' },
+                { id: 'Xa', name: 'Factor Xa' },
+                { id: 'Thrombin', name: 'Thrombin (IIa)' },
+                { id: 'Fibrin', name: 'Fibrin (Ia)' }
+            ];
+
+            const scoreEl = document.getElementById('score');
+            const totalFactorsEl = document.getElementById('total-factors');
+            const factorBank = document.getElementById('factor-bank');
+            const slots = document.querySelectorAll('.factor-slot');
+            const winMessage = document.getElementById('win-message');
+            const resetBtn = document.getElementById('reset-btn');
+            
+            let score = 0;
+            const totalFactors = factors.length;
+
+            function initializeGame() {
+                score = 0;
+                scoreEl.textContent = score;
+                totalFactorsEl.textContent = totalFactors;
+                winMessage.classList.add('hidden');
+                factorBank.innerHTML = '';
+                slots.forEach(slot => {
+                    slot.innerHTML = '';
+                    slot.classList.remove('correct');
+                });
+
+                // Shuffle and create draggable factors
+                factors.sort(() => Math.random() - 0.5).forEach(factor => {
+                    const factorEl = document.createElement('div');
+                    factorEl.id = factor.id;
+                    factorEl.textContent = factor.name;
+                    factorEl.className = 'draggable-factor';
+                    factorEl.draggable = true;
+                    factorEl.addEventListener('dragstart', dragStart);
+                    factorBank.appendChild(factorEl);
+                });
+            }
+
+            function dragStart(e) {
+                e.dataTransfer.setData('text/plain', e.target.id);
+            }
+
+            slots.forEach(slot => {
+                slot.addEventListener('dragover', e => e.preventDefault());
+                slot.addEventListener('drop', drop);
+            });
+
+            function drop(e) {
+                e.preventDefault();
+                const slot = e.currentTarget;
+                if (slot.classList.contains('correct')) return;
+
+                const draggedFactorId = e.dataTransfer.getData('text/plain');
+                const draggedFactorEl = document.getElementById(draggedFactorId);
+                const targetFactorId = slot.dataset.factor;
+
+                if (draggedFactorId === targetFactorId) {
+                    // Correct drop
+                    slot.appendChild(draggedFactorEl);
+                    draggedFactorEl.draggable = false;
+                    draggedFactorEl.style.cursor = 'default';
+                    slot.classList.add('correct');
+                    score++;
+                    scoreEl.textContent = score;
+
+                    if (score === totalFactors) {
+                        winMessage.classList.remove('hidden');
+                    }
+                } else {
+                    // Incorrect drop
+                    slot.classList.add('incorrect');
+                    setTimeout(() => slot.classList.remove('incorrect'), 500);
+                }
+            }
+
+            resetBtn.addEventListener('click', initializeGame);
+            
+            // Start game on load
+            initializeGame();
+        });
+    </script>
+</body>
+</html>
