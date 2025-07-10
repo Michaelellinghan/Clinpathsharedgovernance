@@ -17,46 +17,21 @@
         .nhs-dark-blue { background-color: #003087; }
         .nhs-light-grey { background-color: #F0F4F5; }
         .nhs-text-blue { color: #005EB8; }
-        .nhs-text-dark-blue { color: #003087; }
-        .antigram-table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 0.7rem; }
+        .antigram-table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 0.7rem; margin-top: 1rem; }
         .antigram-table th, .antigram-table td { border: 1px solid #d1d5db; padding: 0.4rem 0.2rem; text-align: center; }
         .antigram-table th { background-color: #e5e7eb; font-weight: bold; }
-        .antigram-table .antigen-header { writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg); white-space: nowrap; }
-        .antigram-table .reaction-pos { color: #dc2626; font-weight: bold; }
+        .antigen-header { writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg); white-space: nowrap; cursor: pointer; }
+        .reaction-pos { color: #dc2626; font-weight: bold; }
         .difficulty-btn.active { background-color: #003087; color: white; }
         .antibody-choice-btn.selected { background-color: #fde047; }
-        .antibody-choice-btn:disabled { background-color: #e5e7eb; cursor: not-allowed; }
-        .hidden-col { display: none; }
+        .antibody-choice-btn:disabled, .action-btn:disabled { background-color: #e5e7eb; cursor: not-allowed; color: #9ca3af; }
+        .excluded { text-decoration: line-through; color: #9ca3af; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
 
     <header class="bg-white shadow-md sticky top-0 z-50">
-        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
-            <a href="index.html" class="cursor-pointer flex items-center space-x-3">
-                <img src="logo.jpg" alt="Clinical Pathology Shared Governance Council Logo" class="h-16 w-auto">
-            </a>
-            <nav class="hidden md:flex items-center space-x-8">
-                <a href="index.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Home</a>
-                <a href="projects.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Projects</a>
-                <a href="games.html" class="font-semibold text-nhs-blue transition duration-300">Games</a>
-                <a href="newsletters.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Newsletters</a>
-                <a href="about.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">About Us</a>
-                <a href="links.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Links</a>
-            </nav>
-            <button id="mobile-menu-button" class="md:hidden"><i data-feather="menu"></i></button>
-        </div>
-        <div id="mobile-menu" class="hidden md:hidden bg-white px-6 pb-4">
-             <a href="index.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Home</a>
-            <a href="projects.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Projects</a>
-            <a href="games.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Games</a>
-            <a href="newsletters.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Newsletters</a>
-            <a href="about.html" class="block py-2 text-gray-600 hover:nhs-text-blue">About Us</a>
-            <a href="social.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Social Media</a>
-            <a href="links.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Learning Links</a>
-            <a href="contact.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Suggestions</a>
-        </div>
-    </header>
+        </header>
 
     <main class="py-16 bg-nhs-light-grey">
         <div class="container mx-auto px-2 md:px-6 max-w-7xl text-center">
@@ -64,205 +39,251 @@
                 <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Games
             </a>
             <h2 class="text-3xl font-bold nhs-text-dark-blue mb-4">Antibody Identification Challenge</h2>
-            <p class="text-gray-600 mb-6 max-w-3xl mx-auto">An antibody screen was positive. Use the panel below to identify the antibody/antibodies. Rule out non-reacting cells and match the pattern of reactivity.</p>
+            <p class="text-gray-600 mb-6 max-w-3xl mx-auto">An antibody screen was positive. Use the panels below to identify the antibody/antibodies. Click antigen headers to exclude.</p>
             
-            <div class="flex justify-center items-center space-x-2 mb-6 bg-gray-200 p-2 rounded-lg max-w-sm mx-auto">
-                <button class="difficulty-btn flex-1 py-2 px-4 rounded-md text-sm font-semibold" data-difficulty="easy">Easy (1 Ab)</button>
-                <button class="difficulty-btn flex-1 py-2 px-4 rounded-md text-sm font-semibold" data-difficulty="medium">Medium (2 Abs)</button>
-                <button class="difficulty-btn flex-1 py-2 px-4 rounded-md text-sm font-semibold" data-difficulty="hard">Hard (3 Abs)</button>
+            <div class="flex justify-center items-center space-x-2 mb-6 bg-gray-200 p-2 rounded-lg max-w-md mx-auto">
+                <button class="difficulty-btn flex-1 py-2 px-4 rounded-md text-sm font-semibold" data-difficulty="easy">Easy</button>
+                <button class="difficulty-btn flex-1 py-2 px-4 rounded-md text-sm font-semibold" data-difficulty="medium">Medium</button>
+                <button class="difficulty-btn flex-1 py-2 px-4 rounded-md text-sm font-semibold" data-difficulty="hard">Hard</button>
+            </div>
+            
+            <div class="flex flex-wrap justify-center items-center gap-4 mt-4 mb-4">
+                <button id="screen-btn" class="action-btn bg-gray-200 font-bold py-2 px-4 rounded-lg hover:bg-gray-300 transition duration-300">View Screening Cells</button>
+                <button id="enzyme-panel-btn" class="action-btn bg-gray-200 font-bold py-2 px-4 rounded-lg hover:bg-gray-300 transition duration-300">View Enzyme Panel</button>
+                <button id="additional-panel-btn" class="action-btn bg-gray-200 font-bold py-2 px-4 rounded-lg hover:bg-gray-300 transition duration-300">Do Additional Panel</button>
+            </div>
+
+            <div id="screen-container" class="bg-white p-4 rounded-lg shadow-md mb-4 hidden">
+                 <h3 class="text-xl font-bold nhs-text-dark-blue">Screening Cells</h3>
+                <div class="overflow-x-auto"><table id="screen-table" class="antigram-table"></table></div>
             </div>
 
             <div class="bg-white p-4 rounded-lg shadow-md">
-                <div class="overflow-x-auto">
-                    <table id="antigram-table" class="antigram-table"></table>
-                </div>
+                <h3 class="text-xl font-bold nhs-text-dark-blue">Main Identification Panel</h3>
+                <div class="overflow-x-auto"><table id="main-panel-table" class="antigram-table"></table></div>
+            </div>
+            
+            <div id="additional-panel-container" class="bg-white p-4 rounded-lg shadow-md mt-4 hidden">
+                <h3 class="text-xl font-bold nhs-text-dark-blue">Additional NBS Panel</h3>
+                <div class="overflow-x-auto"><table id="additional-panel-table" class="antigram-table"></table></div>
             </div>
 
-            <div class="mt-6">
-                <h3 class="text-xl font-semibold mb-3">Select your answer(s):</h3>
+            <div class="mt-8">
+                <h3 class="text-xl font-semibold mb-3">What is the antibody specificity?</h3>
                 <div id="antibody-options" class="flex flex-wrap justify-center gap-2"></div>
             </div>
 
             <div id="antigram-feedback" class="mt-6 p-4 rounded-lg text-lg font-semibold hidden"></div>
             <div class="flex justify-center items-center gap-4 mt-4">
-                <button id="enzyme-panel-btn" class="bg-yellow-400 text-black font-bold py-3 px-8 rounded-lg hover:bg-yellow-500 transition duration-300">View Enzyme Panel</button>
                 <button id="check-answer-btn" class="bg-green-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-green-700 transition duration-300">Check Answer</button>
                 <button id="new-panel-btn" class="bg-nhs-blue text-white font-bold py-3 px-8 rounded-lg hover:bg-nhs-dark-blue transition duration-300">New Panel</button>
             </div>
         </div>
     </main>
-
-    <footer class="nhs-dark-blue text-white py-8 mt-16"><div class="container mx-auto px-6 text-center"><p>&copy; 2024 Clinical Pathology Shared Governance Council. All Rights Reserved.</p></div></footer>
+    
+    <footer class="nhs-dark-blue text-white py-8 mt-16"></footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
-            feather.replace();
+        // --- DATA SETUP ---
+        const antigens = ['D', 'C', 'E', 'c', 'e', 'Cʷ', 'K', 'k', 'Fyᵃ', 'Fyᵇ', 'Jkᵃ', 'Jkᵇ', 'Leᵃ', 'Leᵇ', 'P₁', 'M', 'N', 'S', 's', 'Luᵃ', 'Luᵇ'];
+        
+        // Data transcribed from V06084.79X_V.01.pdf
+        const screeningCells = [
+            {antigens: {'D':'+','C':'+','E':'0','c':'+','e':'+','Cʷ':'+','K':'+','k':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'0','Leᵇ':'+','P₁':'+','M':'+','N':'0','S':'+','s':'+','Luᵃ':'0','Luᵇ':'+'}},
+            {antigens: {'D':'+','C':'+','E':'+','c':'0','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'0','Leᵃ':'+','Leᵇ':'0','P₁':'+','M':'0','N':'+','S':'+','s':'0','Luᵃ':'0','Luᵇ':'+'}},
+            {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'+','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'0','Jkᵇ':'+','Leᵃ':'0','Leᵇ':'+','P₁':'+','M':'0','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}}
+        ];
 
-            const antigramTable = document.getElementById('antigram-table');
-            const antibodyOptionsContainer = document.getElementById('antibody-options');
-            const newPanelBtn = document.getElementById('new-panel-btn');
-            const checkAnswerBtn = document.getElementById('check-answer-btn');
-            const enzymePanelBtn = document.getElementById('enzyme-panel-btn');
-            const antigramFeedback = document.getElementById('antigram-feedback');
-            const difficultyButtons = document.querySelectorAll('.difficulty-btn');
+        // Data transcribed from F06171.27X_V.01.pdf
+        const mainPanelCells = [
+            {antigens: {'D':'+','C':'+','E':'0','c':'0','e':'+','Cʷ':'+','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'0','Leᵇ':'+','P₁':'+','M':'+','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
+            {antigens: {'D':'+','C':'+','E':'0','c':'0','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'0','P₁':'+','M':'+','N':'0','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
+            {antigens: {'D':'+','C':'0','E':'+','c':'+','e':'0','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'+','P₁':'+','M':'0','N':'+','S':'+','s':'+','Luᵃ':'0','Luᵇ':'+'}},
+            {antigens: {'D':'0','C':'+','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'+','Jkᵇ':'0','Leᵃ':'0','Leᵇ':'+','P₁':'+','M':'+','N':'0','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
+            {antigens: {'D':'0','C':'0','E':'+','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'+','P₁':'0','M':'+','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
+            {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'+','P₁':'+','M':'+','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
+            {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'0','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'+','P₁':'+','M':'+','N':'+','S':'+','s':'+','Luᵃ':'0','Luᵇ':'+'}},
+            {antigens: {'D':'+','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'0','Leᵇ':'+','P₁':'+','M':'+','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
+            {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'0','Jkᵇ':'+','Leᵃ':'0','Leᵇ':'+','P₁':'0','M':'0','N':'+','S':'+','s':'+','Luᵃ':'0','Luᵇ':'+'}},
+            {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'+','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'0','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'+','P₁':'+','M':'+','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
+            {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'+','k':'+','Fyᵃ':'+','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'0','P₁':'+','M':'+','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}}
+        ];
 
-            const antigens = ['D', 'C', 'E', 'c', 'e', 'Cʷ', 'K', 'k', 'Fyᵃ', 'Fyᵇ', 'Jkᵃ', 'Jkᵇ', 'Leᵃ', 'Leᵇ', 'P₁', 'M', 'N', 'S', 's', 'Luᵃ', 'Luᵇ'];
-            
-            const panelCells = [
-                {antigens: {'D':'+','C':'+','E':'0','c':'0','e':'+','Cʷ':'+','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'0','Leᵇ':'+','P₁':'+','M':'+','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
-                {antigens: {'D':'+','C':'+','E':'0','c':'0','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'0','P₁':'+','M':'+','N':'0','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
-                {antigens: {'D':'+','C':'0','E':'+','c':'+','e':'0','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'+','P₁':'+','M':'0','N':'+','S':'+','s':'+','Luᵃ':'0','Luᵇ':'+'}},
-                {antigens: {'D':'0','C':'+','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'+','Jkᵇ':'0','Leᵃ':'0','Leᵇ':'+','P₁':'+','M':'+','N':'0','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
-                {antigens: {'D':'0','C':'0','E':'+','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'+','P₁':'0','M':'+','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
-                {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'+','P₁':'+','M':'+','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
-                {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'0','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'+','P₁':'+','M':'+','N':'+','S':'+','s':'+','Luᵃ':'0','Luᵇ':'+'}},
-                {antigens: {'D':'+','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'0','Leᵇ':'+','P₁':'+','M':'+','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
-                {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'0','Jkᵇ':'+','Leᵃ':'0','Leᵇ':'+','P₁':'0','M':'0','N':'+','S':'+','s':'+','Luᵃ':'0','Luᵇ':'+'}},
-                {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'+','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'0','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'+','P₁':'+','M':'+','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
-                {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'+','k':'+','Fyᵃ':'+','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'0','P₁':'+','M':'+','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}}
-            ];
+        // Data transcribed from panel-1-profile-lot-4590-163kb.pdf
+        const additionalPanelCells = [
+            {antigens: {'D':'+','C':'+','E':'0','c':'0','e':'+','Cʷ':'+','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'0','Jkᵇ':'+','Leᵃ':'0','Leᵇ':'+','P₁':'+','M':'+','N':'0','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
+            {antigens: {'D':'+','C':'+','E':'0','c':'0','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'0','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'0','P₁':'+','M':'0','N':'+','S':'+','s':'0','Luᵃ':'0','Luᵇ':'+'}},
+            {antigens: {'D':'+','C':'0','E':'+','c':'+','e':'0','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'0','Leᵃ':'0','Leᵇ':'+','P₁':'+','M':'+','N':'0','S':'+','s':'0','Luᵃ':'0','Luᵇ':'w'}},
+            {antigens: {'D':'0','C':'+','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'+','Jkᵇ':'0','Leᵃ':'0','Leᵇ':'+','P₁':'+','M':'+','N':'0','S':'+','s':'0','Luᵃ':'0','Luᵇ':'+'}},
+            {antigens: {'D':'0','C':'0','E':'+','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'0','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'0','P₁':'0','M':'+','N':'0','S':'+','s':'0','Luᵃ':'0','Luᵇ':'+'}},
+            {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'+','Jkᵃ':'0','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'+','P₁':'0','M':'0','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
+            {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'+','k':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'+','Jkᵇ':'0','Leᵃ':'+','Leᵇ':'+','P₁':'+','M':'0','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
+            {antigens: {'D':'0','C':'0','E':'+','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'0','Leᵃ':'+','Leᵇ':'+','P₁':'+','M':'+','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
+            {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'0','Jkᵃ':'0','Jkᵇ':'+','Leᵃ':'0','Leᵇ':'+','P₁':'+','M':'0','N':'+','S':'+','s':'0','Luᵃ':'0','Luᵇ':'w'}},
+            {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'0','Leᵃ':'0','Leᵇ':'+','P₁':'0','M':'+','N':'0','S':'+','s':'0','Luᵃ':'+','Luᵇ':'+'}}
+        ];
 
-            const allAntibodies = [
-                { name: 'Anti-D', antigen: 'D', effect: 'enhance' }, { name: 'Anti-C', antigen: 'C', effect: 'enhance' }, 
-                { name: 'Anti-c', antigen: 'c', effect: 'enhance' }, { name: 'Anti-E', antigen: 'E', effect: 'enhance' }, 
-                { name: 'Anti-e', antigen: 'e', effect: 'enhance' }, { name: 'Anti-K', antigen: 'K', effect: 'unaffected' }, 
-                { name: 'Anti-k', antigen: 'k', effect: 'unaffected' }, { name: 'Anti-Fya', antigen: 'Fyᵃ', effect: 'destroy' }, 
-                { name: 'Anti-Fyb', antigen: 'Fyᵇ', effect: 'destroy' }, { name: 'Anti-Jka', antigen: 'Jkᵃ', effect: 'enhance' }, 
-                { name: 'Anti-Jkb', antigen: 'Jkᵇ', effect: 'enhance' }, { name: 'Anti-S', antigen: 'S', effect: 'destroy' }, 
-                { name: 'Anti-s', antigen: 's', effect: 'destroy' }, { name: 'Anti-M', antigen: 'M', effect: 'destroy' }, 
-                { name: 'Anti-N', antigen: 'N', effect: 'destroy' }, { name: 'Anti-P1', antigen: 'P₁', effect: 'unaffected' }, 
-                { name: 'Anti-Lea', antigen: 'Leᵃ', effect: 'unaffected'}, { name: 'Anti-Leb', antigen: 'Leᵇ', effect: 'unaffected'},
-                { name: 'Anti-Lua', antigen: 'Luᵃ', effect: 'unaffected'}, { name: 'Anti-Lub', antigen: 'Luᵇ', effect: 'unaffected'}
-            ];
+        const allAntibodies = [
+            { name: 'Anti-D', antigen: 'D', effect: 'enhance' }, { name: 'Anti-C', antigen: 'C', effect: 'enhance' }, 
+            { name: 'Anti-c', antigen: 'c', effect: 'enhance' }, { name: 'Anti-E', antigen: 'E', effect: 'enhance' }, 
+            { name: 'Anti-e', antigen: 'e', effect: 'enhance' }, { name: 'Anti-K', antigen: 'K', effect: 'unaffected' }, 
+            { name: 'Anti-k', antigen: 'k', effect: 'unaffected' }, { name: 'Anti-Fya', antigen: 'Fyᵃ', effect: 'destroy' }, 
+            { name: 'Anti-Fyb', antigen: 'Fyᵇ', effect: 'destroy' }, { name: 'Anti-Jka', antigen: 'Jkᵃ', effect: 'enhance' }, 
+            { name: 'Anti-Jkb', antigen: 'Jkᵇ', effect: 'enhance' }, { name: 'Anti-S', antigen: 'S', effect: 'destroy' }, 
+            { name: 'Anti-s', antigen: 's', effect: 'destroy' }, { name: 'Anti-M', antigen: 'M', effect: 'destroy' }, 
+            { name: 'Anti-N', antigen: 'N', effect: 'destroy' }, { name: 'Anti-P1', antigen: 'P₁', effect: 'unaffected' }, 
+            { name: 'Anti-Lea', antigen: 'Leᵃ', effect: 'unaffected'}, { name: 'Anti-Leb', antigen: 'Leᵇ', effect: 'unaffected'},
+            { name: 'Anti-Lua', antigen: 'Luᵃ', effect: 'unaffected'}, { name: 'Anti-Lub', antigen: 'Luᵇ', effect: 'unaffected'},
+            { name: 'Anti-Cw', antigen: 'Cʷ', effect: 'enhance'}
+        ];
 
-            let scenarios = { easy: [], medium: [], hard: [] };
-            
-            function createScenarios() {
-                scenarios.easy = allAntibodies.map(ab => [ab]);
-                for (let i = 0; i < allAntibodies.length; i++) {
-                    for (let j = i + 1; j < allAntibodies.length; j++) {
-                        scenarios.medium.push([allAntibodies[i], allAntibodies[j]]);
+        let scenarios = { easy: [], medium: [], hard: [], panreactive: [] };
+        
+        // --- GAME LOGIC ---
+        let currentAntibodies = [];
+        let selectedAntibodies = [];
+        let currentDifficulty = 'easy';
+
+        function createScenarios() {
+            scenarios.easy = allAntibodies.map(ab => [ab]);
+            for (let i = 0; i < allAntibodies.length; i++) {
+                for (let j = i + 1; j < allAntibodies.length; j++) {
+                    if (allAntibodies[i].effect !== 'destroy' || allAntibodies[j].effect !== 'destroy') {
+                         scenarios.medium.push([allAntibodies[i], allAntibodies[j]]);
                     }
                 }
-                scenarios.hard = Array.from({length: 200}, () => [
-                    allAntibodies[Math.floor(Math.random() * allAntibodies.length)],
-                    allAntibodies[Math.floor(Math.random() * allAntibodies.length)],
-                    allAntibodies[Math.floor(Math.random() * allAntibodies.length)]
-                ].filter((v,i,a) => a.findIndex(t=>(t.name === v.name))===i)); // Unique only
             }
-
-            let currentAntibodies = [];
-            let selectedAntibodies = [];
-            let currentDifficulty = 'easy';
-            
-            function generatePanel() {
-                antigramFeedback.classList.add('hidden');
-                selectedAntibodies = [];
-                checkAnswerBtn.disabled = false;
-                enzymePanelBtn.disabled = false;
-                
-                const currentScenarios = scenarios[currentDifficulty];
-                currentAntibodies = currentScenarios[Math.floor(Math.random() * currentScenarios.length)];
-
-                let tableHTML = `<thead><tr><th class="w-12">Cell</th>${antigens.map(ag => `<th class="antigen-header">${ag}</th>`).join('')}<th>IAT</th><th class="enz-col hidden-col">ENZ</th></tr></thead><tbody>`;
-                panelCells.forEach((cell, index) => {
-                    let iatStrength = 0;
-                    let enzStrength = 0;
-                    
-                    let reactingAbs = currentAntibodies.filter(ab => cell.antigens[ab.antigen] === '+');
-
-                    if (reactingAbs.length > 0) {
-                        iatStrength = Math.floor(Math.random() * 2) + 2; // Base strength 2+ to 3+
-                        
-                        let enzDestroyed = reactingAbs.every(ab => ab.effect === 'destroy');
-                        let enzEnhanced = reactingAbs.some(ab => ab.effect === 'enhance');
-
-                        if (enzDestroyed) {
-                            enzStrength = 0;
-                        } else {
-                            enzStrength = iatStrength;
-                            if (enzEnhanced) {
-                                enzStrength = Math.min(4, iatStrength + 1); // Enhance by 1, max 4+
-                            }
-                        }
+             for (let i = 0; i < allAntibodies.length; i++) {
+                for (let j = i + 1; j < allAntibodies.length; j++) {
+                    for (let k = j + 1; k < allAntibodies.length; k++) {
+                       scenarios.hard.push([allAntibodies[i], allAntibodies[j], allAntibodies[k]]);
                     }
+                }
+            }
+            scenarios.panreactive.push([{ name: 'Pan-reactive', antigen: 'pan', effect: 'unaffected' }]);
+        }
 
-                    const iatReaction = iatStrength > 0 ? `${iatStrength}+` : '0';
-                    const enzReaction = enzStrength > 0 ? `${enzStrength}+` : '0';
+        function calculateReaction(cell, antibodies) {
+            let iatStrength = 0, enzStrength = 0;
+            const reactingAbs = antibodies.filter(ab => ab.antigen === 'pan' || cell.antigens[ab.antigen] === '+');
 
-                    tableHTML += `<tr><td class="font-bold">${index + 1}</td>${antigens.map(ag => `<td>${cell.antigens[ag]}</td>`).join('')}<td class="${iatReaction !== '0' ? 'reaction-pos' : ''}">${iatReaction}</td><td class="enz-col hidden-col ${enzReaction !== '0' ? 'reaction-pos' : ''}">${enzReaction}</td></tr>`;
-                });
-                tableHTML += '</tbody>';
-                antigramTable.innerHTML = tableHTML;
+            if (reactingAbs.length > 0) {
+                iatStrength = Math.floor(Math.random() * 2) + 2;
+                const isEnzymeDestroyed = reactingAbs.every(ab => ab.effect === 'destroy');
+                const isEnzymeEnhanced = reactingAbs.some(ab => ab.effect === 'enhance');
                 
-                const correctOptions = currentAntibodies.map(ab => ab.name);
-                const wrongOptions = allAntibodies.filter(ab => !correctOptions.includes(ab.name))
-                                                  .sort(() => 0.5 - Math.random())
-                                                  .slice(0, 12 - correctOptions.length)
-                                                  .map(ab => ab.name);
-                const displayOptions = [...correctOptions, ...wrongOptions].sort(() => 0.5 - Math.random());
-                
-                antibodyOptionsContainer.innerHTML = '';
-                displayOptions.forEach(abName => {
-                    antibodyOptionsContainer.innerHTML += `<button class="antibody-choice-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">${abName}</button>`;
-                });
-                document.querySelectorAll('.antibody-choice-btn').forEach(btn => btn.addEventListener('click', selectAntibody));
+                if (isEnzymeDestroyed) {
+                    enzStrength = 0;
+                } else {
+                    enzStrength = iatStrength;
+                    if (isEnzymeEnhanced) enzStrength = Math.min(4, iatStrength + 1);
+                }
+            }
+            return {
+                iat: iatStrength > 0 ? `${iatStrength}+` : '0',
+                enz: enzStrength > 0 ? `${enzStrength}+` : '0'
+            };
+        }
+
+        function renderTable(tableEl, panelData, antibodies) {
+            const isScreeningPanel = panelData.length === 3;
+            let tableHTML = `<thead><tr><th class="w-12">${isScreeningPanel ? 'Screen' : 'Cell'}</th>${antigens.map(ag => `<th class="antigen-header" data-antigen="${ag}">${ag}</th>`).join('')}<th>IAT</th><th class="enz-col hidden">ENZ</th></tr></thead><tbody>`;
+            panelData.forEach((cell, index) => {
+                const reaction = calculateReaction(cell, antibodies);
+                tableHTML += `<tr><td class="font-bold">${isScreeningPanel ? 'I, II, III'[index] : index + 1}</td>${antigens.map(ag => `<td data-antigen="${ag}">${cell.antigens[ag]}</td>`).join('')}<td class="${reaction.iat !== '0' ? 'reaction-pos' : ''}">${reaction.iat}</td><td class="enz-col hidden ${reaction.enz !== '0' ? 'reaction-pos' : ''}">${reaction.enz}</td></tr>`;
+            });
+            tableHTML += '</tbody>';
+            tableEl.innerHTML = tableHTML;
+        }
+        
+        function initGame() {
+            // Reset UI
+            antigramFeedback.classList.add('hidden');
+            document.getElementById('screen-container').classList.add('hidden');
+            document.getElementById('additional-panel-container').classList.add('hidden');
+            document.querySelectorAll('.action-btn').forEach(btn => btn.disabled = false);
+            checkAnswerBtn.disabled = false;
+            selectedAntibodies = [];
+
+            // Select Scenario
+            let scenarioPool = scenarios[currentDifficulty];
+            if (Math.random() < 0.15) { // 15% chance of a pan-reactive panel
+                currentAntibodies = scenarios.panreactive[0];
+            } else {
+                currentAntibodies = scenarioPool[Math.floor(Math.random() * scenarioPool.length)];
+            }
+            
+            // Render Panels
+            renderTable(document.getElementById('main-panel-table'), mainPanelCells, currentAntibodies);
+            renderTable(document.getElementById('screen-table'), screeningCells, currentAntibodies);
+            renderTable(document.getElementById('additional-panel-table'), additionalPanelCells, currentAntibodies);
+            
+            // Render Options
+            let displayOptions = [];
+            const correctOptions = currentAntibodies[0].antigen === 'pan' 
+                ? ["Refer to NBS for investigation"] 
+                : currentAntibodies.map(ab => ab.name);
+
+            const wrongOptions = allAntibodies.filter(ab => !correctOptions.includes(ab.name))
+                                              .sort(() => 0.5 - Math.random())
+                                              .slice(0, 12 - correctOptions.length)
+                                              .map(ab => ab.name);
+            displayOptions = [...correctOptions, ...wrongOptions].sort(() => 0.5 - Math.random());
+             if (currentAntibodies[0].antigen !== 'pan' && Math.random() > 0.5) {
+                displayOptions.push("Refer to NBS for investigation");
+                displayOptions.sort(() => 0.5 - Math.random());
             }
 
-            function selectAntibody(event) {
-                const btn = event.target;
-                btn.classList.toggle('selected');
-                const abName = btn.textContent;
+            antibodyOptionsContainer.innerHTML = '';
+            displayOptions.forEach(abName => {
+                antibodyOptionsContainer.innerHTML += `<button class="antibody-choice-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">${abName}</button>`;
+            });
+            
+            // Add Event Listeners
+            document.querySelectorAll('.antibody-choice-btn').forEach(btn => btn.addEventListener('click', (e) => {
+                e.target.classList.toggle('selected');
+                const abName = e.target.textContent;
                 if (selectedAntibodies.includes(abName)) {
                     selectedAntibodies = selectedAntibodies.filter(ab => ab !== abName);
                 } else {
                     selectedAntibodies.push(abName);
                 }
-            }
-
-            function checkFinalAnswer() {
-                checkAnswerBtn.disabled = true;
-                enzymePanelBtn.disabled = true;
-                const currentAntibodyNames = currentAntibodies.map(ab => ab.name).sort();
-                const selectedAntibodyNames = selectedAntibodies.sort();
-                const isCorrect = currentAntibodyNames.length === selectedAntibodyNames.length && currentAntibodyNames.every((val, index) => val === selectedAntibodyNames[index]);
-                
-                antigramFeedback.classList.remove('hidden');
-                if (isCorrect) {
-                    antigramFeedback.textContent = `Correct! The antibody/antibodies are: ${currentAntibodyNames.join(', ')}.`;
-                    antigramFeedback.className = 'mt-6 p-4 rounded-lg text-lg font-semibold bg-green-100 text-green-800';
-                } else {
-                    antigramFeedback.textContent = `Incorrect. The correct answer was: ${currentAntibodyNames.join(', ')}.`;
-                    antigramFeedback.className = 'mt-6 p-4 rounded-lg text-lg font-semibold bg-red-100 text-red-800';
-                }
-                document.querySelectorAll('.antibody-choice-btn').forEach(btn => btn.disabled = true);
-                document.querySelectorAll('.enz-col').forEach(c => c.classList.remove('hidden-col'));
-            }
+            }));
             
-            difficultyButtons.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    difficultyButtons.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    currentDifficulty = btn.dataset.difficulty;
-                    generatePanel();
+            document.querySelectorAll('.antigen-header').forEach(header => {
+                header.addEventListener('click', () => {
+                    const antigenToExclude = header.dataset.antigen;
+                    document.querySelectorAll(`[data-antigen="${antigenToExclude}"]`).forEach(cell => {
+                        cell.classList.toggle('excluded');
+                    });
                 });
             });
+        }
 
-            enzymePanelBtn.addEventListener('click', () => {
-                document.querySelectorAll('.enz-col').forEach(c => c.classList.remove('hidden-col'));
-                enzymePanelBtn.disabled = true;
-            });
-
-            newPanelBtn.addEventListener('click', generatePanel);
-            checkAnswerBtn.addEventListener('click', checkFinalAnswer);
+        function checkFinalAnswer() {
+            checkAnswerBtn.disabled = true;
+            document.querySelectorAll('.action-btn').forEach(btn => btn.disabled = true);
             
-            document.querySelector('.difficulty-btn[data-difficulty="easy"]').classList.add('active');
-            createScenarios();
-            generatePanel();
-        });
-   </script>
-</body>
-</html>
+            const correctAntibodyNames = currentAntibodies[0].antigen === 'pan'
+                ? ["Refer to NBS for investigation"]
+                : currentAntibodies.map(ab => ab.name).sort();
+            
+            const selectedAntibodyNames = selectedAntibodies.sort();
+            const isCorrect = correctAntibodyNames.length === selectedAntibodyNames.length && correctAntibodyNames.every((val, index) => val === selectedAntibodyNames[index]);
+            
+            antigramFeedback.classList.remove('hidden');
+            if (isCorrect) {
+                antigramFeedback.textContent = `Correct! The answer is: ${correctAntibodyNames.join(', ')}.`;
+                antigramFeedback.className = 'mt-6 p-4 rounded-lg text-lg font-semibold bg-green-100 text-green-800';
+            } else {
+                antigramFeedback.textContent = `Incorrect. The correct answer was: ${correctAntibodyNames.join(', ')}.`;
+                antigramFeedback.className = 'mt-6 p-4 rounded-lg text-lg font-semibold bg-red-100 text-red-800';
+            }
+            document.querySelectorAll('.antibody-choice-btn').forEach(btn => btn.disabled = true);
+        }
+        
+        difficultyButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                difficultyButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentDifficulty = btn.dataset.difficulty;
