@@ -248,6 +248,11 @@
                 }
 
                 let availableCases = cases.filter((c, index) => !usedCases.includes(index));
+                if (availableCases.length === 0) { // Double check in case all cases were just used
+                     usedCases = [];
+                     availableCases = cases;
+                }
+                
                 let caseIndex = Math.floor(Math.random() * availableCases.length);
                 let actualIndex = cases.indexOf(availableCases[caseIndex]);
                 usedCases.push(actualIndex);
@@ -277,6 +282,7 @@
 
             function checkCaseAnswer(event) {
                 const selectedAnswer = event.target.textContent;
+                
                 caseFeedbackEl.classList.remove('hidden');
                 nextCaseBtn.classList.remove('hidden');
                 
@@ -292,7 +298,9 @@
             }
 
             nextCaseBtn.addEventListener('click', loadNewCase);
-            loadNewCase(); // Load the first case on page load
+            
+            // Initial Load
+            loadNewCase();
         });
    </script>
 </body>
