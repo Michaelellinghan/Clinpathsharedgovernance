@@ -36,6 +36,7 @@
                 <a href="newsletters.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Newsletters</a>
                 <a href="about.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">About Us</a>
                 <a href="links.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Links</a>
+                <a href="contact.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Suggestions</a>
             </nav>
             <button id="mobile-menu-button" class="md:hidden"><i data-feather="menu"></i></button>
         </div>
@@ -72,7 +73,7 @@
                        <p class="text-gray-600">Test your knowledge with our fun, interactive games.</p>
                     </a>
                     <a href="newsletters.html" class="text-left p-8 bg-white rounded-lg shadow-sm home-card">
-                        <i data-feather="file-text" class="w-12 h-12 nhs-text-blue mb-4"></i><h3 class="text-2xl font-bold nhs-text-dark-blue mb-2">Newsletters</h3><p class="text-gray-600">Catch up on the latest news from the council.</p>
+                         <i data-feather="file-text" class="w-12 h-12 nhs-text-blue mb-4"></i><h3 class="text-2xl font-bold nhs-text-dark-blue mb-2">Newsletters</h3><p class="text-gray-600">Catch up on the latest news from the council.</p>
                     </a>
                      <a href="social.html" class="text-left p-8 bg-white rounded-lg shadow-sm home-card">
                        <i data-feather="instagram" class="w-12 h-12 nhs-text-blue mb-4"></i><h3 class="text-2xl font-bold nhs-text-dark-blue mb-2">Social Media</h3><p class="text-gray-600">Videos promoting our role as Biomedical Scientists.</p>
@@ -82,13 +83,21 @@
                     </a>
                      <a href="links.html" class="text-left p-8 bg-white rounded-lg shadow-sm home-card">
                        <i data-feather="book-open" class="w-12 h-12 nhs-text-blue mb-4"></i><h3 class="text-2xl font-bold nhs-text-dark-blue mb-2">Learning Links</h3><p class="text-gray-600">Useful resources for professional development.</p>
-                    </a>
+                     </a>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer class="nhs-dark-blue text-white py-8"><div class="container mx-auto px-6 text-center"><p>&copy; 2024 Clinical Pathology Shared Governance Council. All Rights Reserved.</p></div></footer>
+    <footer class="nhs-dark-blue text-white py-8">
+        <div class="container mx-auto px-6 text-center">
+            <div class="flex justify-center items-center space-x-8 my-4">
+                <img src="nhs-logo-880x4951.jpeg" alt="NHS Logo" class="h-10">
+                <img src="images.png" alt="Nottingham University Hospitals NHS Trust Logo" class="h-12">
+            </div>
+            <p>&copy; 2024 Clinical Pathology Shared Governance Council. All Rights Reserved.</p>
+        </div>
+    </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -97,6 +106,6 @@
             mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
             feather.replace();
         });
-   </script>
+    </script>
 </body>
 </html>
