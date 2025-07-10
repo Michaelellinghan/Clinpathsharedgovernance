@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antibody & Disease Association - SGC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#005EB8">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .nhs-blue { background-color: #005EB8; }
+        .nhs-dark-blue { background-color: #003087; }
+        .nhs-light-grey { background-color: #F0F4F5; }
+        .nhs-text-blue { color: #005EB8; }
+        .option-btn:disabled {
+            background-color: #d1d5db;
+            cursor: not-allowed;
+        }
+        .option-btn.correct {
+            background-color: #4ade80;
+            color: white;
+        }
+        .option-btn.incorrect {
+            background-color: #f87171;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        </header>
+
+    <main class="py-16">
+        <div class="container mx-auto px-6 max-w-2xl text-center">
+            <a href="games.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8">
+                <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Games
+            </a>
+            <h2 class="text-3xl font-bold nhs-text-dark-blue mb-4">Antibody & Disease Association</h2>
+            <p class="text-gray-600 mb-8 max-w-2xl mx-auto">Test your knowledge of autoimmune serology. Select the correct match for the given item.</p>
+
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <p id="question-prompt" class="text-lg font-semibold text-gray-700"></p>
+                <div id="target-item" class="my-4 p-4 bg-yellow-100 text-yellow-800 text-2xl font-bold rounded-lg">
+                    </div>
+                
+                <div id="answer-options" class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                    </div>
+
+                <div id="feedback-message" class="mt-6 p-4 rounded-lg text-lg font-semibold hidden"></div>
+            </div>
+
+            <div class="mt-6">
+                <p class="text-lg">Score: <span id="score" class="font-bold">0</span></p>
+                <button id="next-question-btn" class="mt-4 bg-nhs-blue text-white font-bold py-3 px-8 rounded-lg hover:bg-nhs-dark-blue transition duration-300 hidden">Next Question</button>
+            </div>
+        </div>
+    </main>
+    
+    <footer class="nhs-dark-blue text-white py-8 mt-16"></footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            feather.replace();
+
+            const associations = [
+                { antibody: 'Anti-dsDNA', disease: 'Systemic Lupus Erythematosus' },
+                { antibody: 'Anti-CCP', disease: 'Rheumatoid Arthritis' },
+                { antibody: 'Anti-TTG (IgA)', disease: 'Coeliac Disease' },
+                { antibody: 'c-ANCA (Anti-PR3)', disease: 'Granulomatosis with Polyangiitis' },
+                { antibody: 'p-ANCA (Anti-MPO)', disease: 'Microscopic Polyangiitis' },
+                { antibody: 'Anti-GBM', disease: 'Goodpasture\'s Syndrome' },
+                { antibody: 'Anti-Scl-70', disease: 'Systemic Sclerosis (Diffuse)' },
+                { antibody: 'Anti-Centromere', disease: 'Systemic Sclerosis (Limited)' },
+                { antibody: 'Anti-Ro (SS-A) & Anti-La (SS-B)', disease: 'Sjögren\'s Syndrome' },
+                { antibody: 'Anti-Mitochondrial (AMA)', disease: 'Primary Biliary Cholangitis' },
+                { antibody: 'Anti-Smooth Muscle (ASMA)', disease: 'Autoimmune Hepatitis Type 1' },
+                { antibody: 'Anti-LKM-1', disease: 'Autoimmune Hepatitis Type 2' },
+                { antibody: 'Anti-Jo-1', disease: 'Polymyositis / Dermatomyositis' },
+                { antibody: 'Anti-Intrinsic Factor', disease: 'Pernicious Anaemia' },
+                { antibody: 'Anti-GAD', disease: 'Type 1 Diabetes Mellitus' },
+                { antibody: 'Anti-Acetylcholine Receptor (AChR)', disease: 'Myasthenia Gravis' }
+            ];
+
+            const questionPromptEl = document.getElementById('question-prompt');
+            const targetItemEl = document.getElementById('target-item');
+            const answerOptionsEl = document.getElementById('answer-options');
+            const feedbackMessageEl = document.getElementById('feedback-message');
+            const nextQuestionBtn = document.getElementById('next-question-btn');
+            const scoreEl = document.getElementById('score');
+
+            let currentAssociation = {};
+            let score = 0;
+            let usedIndices = [];
+
+            function newQuestion() {
+                if (usedIndices.length === associations.length) {
+                    usedIndices = []; // Reset if all questions have been asked
+                }
+
+                let nextIndex;
+                do {
+                    nextIndex = Math.floor(Math.random() * associations.length);
+                } while (usedIndices.includes(nextIndex));
+                
+                usedIndices.push(nextIndex);
+                currentAssociation = associations[nextIndex];
+
+                feedbackMessageEl.classList.add('hidden');
+                nextQuestionBtn.classList.add('hidden');
+                answerOptionsEl.innerHTML = '';
+
+                const askAboutDisease = Math.random() < 0.5;
+
+                if (askAboutDisease) {
+                    questionPromptEl.textContent = 'Which antibody is most commonly associated with this condition?';
+                    targetItemEl.textContent = currentAssociation.disease;
+                    generateOptions(currentAssociation.antibody, 'antibody');
+                } else {
+                    questionPromptEl.textContent = 'Which condition is most commonly associated with this antibody?';
+                    targetItemEl.textContent = currentAssociation.antibody;
+                    generateOptions(currentAssociation.disease, 'disease');
+                }
+            }
+
+            function generateOptions(correctAnswer, type) {
+                let options = [correctAnswer];
+                while (options.length < 4) {
+                    const randomIndex = Math.floor(Math.random() * associations.length);
+                    const randomOption = associations[randomIndex][type];
+                    if (!options.includes(randomOption)) {
+                        options.push(randomOption);
+                    }
+                }
+
+                // Shuffle options
+                options.sort(() => Math.random() - 0.5);
+
+                options.forEach(option => {
+                    const button = document.createElement('button');
+                    button.textContent = option;
+                    button.className = 'option-btn w-full text-left p-4 bg-gray-100 rounded-lg hover:bg-gray-200 transition';
+                    button.addEventListener('click', () => checkAnswer(option, correctAnswer, button));
+                    answerOptionsEl.appendChild(button);
+                });
+            }
+
+            function checkAnswer(selectedOption, correctAnswer, buttonEl) {
+                document.querySelectorAll('.option-btn').forEach(btn => btn.disabled = true);
+                feedbackMessageEl.classList.remove('hidden');
+                nextQuestionBtn.classList.remove('hidden');
+
+                if (selectedOption === correctAnswer) {
+                    score++;
+                    scoreEl.textContent = score;
+                    feedbackMessageEl.textContent = 'Correct!';
+                    feedbackMessageEl.className = 'mt-6 p-4 rounded-lg text-lg font-semibold bg-green-100 text-green-800';
+                    buttonEl.classList.add('correct');
+                } else {
+                    feedbackMessageEl.textContent = `Incorrect. The correct association is ${correctAnswer}.`;
+                    feedbackMessageEl.className = 'mt-6 p-4 rounded-lg text-lg font-semibold bg-red-100 text-red-800';
+                    buttonEl.classList.add('incorrect');
+                    // Highlight the correct answer
+                    document.querySelectorAll('.option-btn').forEach(btn => {
+                        if (btn.textContent === correctAnswer) {
+                            btn.classList.add('correct');
+                        }
+                    });
+                }
+            }
+
+            nextQuestionBtn.addEventListener('click', newQuestion);
+
+            // Initial game start
+            newQuestion();
+        });
+    </script>
+</body>
+</html>
