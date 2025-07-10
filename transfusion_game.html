@@ -77,7 +77,7 @@
             <div id="antigram-feedback" class="mt-6 p-4 rounded-lg text-lg font-semibold hidden"></div>
             <div class="flex justify-center items-center gap-4 mt-4">
                 <button id="check-answer-btn" class="bg-green-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-green-700 transition duration-300">Check Answer</button>
-                <button id="new-panel-btn" class="bg-nhs-blue text-white font-bold py-3 px-8 rounded-lg hover:bg-nhs-dark-blue transition duration-300">New Panel</button>
+                <button id="new-panel-btn" class="bg-gray-800 text-white font-bold py-3 px-8 rounded-lg hover:bg-black transition duration-300">New Panel</button>
             </div>
         </div>
     </main>
@@ -86,7 +86,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- DATA SETUP (panel data, antibody list) ---
+            // --- DATA SETUP ---
             const antigens = ['D', 'C', 'E', 'c', 'e', 'Cʷ', 'K', 'k', 'Fyᵃ', 'Fyᵇ', 'Jkᵃ', 'Jkᵇ', 'Leᵃ', 'Leᵇ', 'P₁', 'M', 'N', 'S', 's', 'Luᵃ', 'Luᵇ'];
             const screeningCells = [
                 {antigens: {'D':'+','C':'+','E':'0','c':'+','e':'+','Cʷ':'+','K':'+','k':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'0','Leᵇ':'+','P₁':'+','M':'+','N':'0','S':'+','s':'+','Luᵃ':'0','Luᵇ':'+'}},
@@ -153,15 +153,11 @@
             
             function isScenarioSolvable(antibodies, panel) {
                 if (antibodies.length === 0) return false;
-
-                // Rule 1: Each antibody must have at least 2 positive and 2 negative cells
                 for (const ab of antibodies) {
                     const posCount = panel.filter(cell => cell.antigens[ab.antigen] === '+').length;
                     const negCount = panel.filter(cell => cell.antigens[ab.antigen] === '0').length;
                     if (posCount < 2 || negCount < 2) return false;
                 }
-
-                // Rule 2: For multiple antibodies, they must be distinguishable
                 if (antibodies.length > 1) {
                     for (let i = 0; i < antibodies.length; i++) {
                         for (let j = i + 1; j < antibodies.length; j++) {
@@ -177,70 +173,66 @@
             }
 
             function createScenarios() {
-                // Easy: 1 antibody
                 scenarios.easy = allAntibodies.map(ab => [ab]).filter(scenario => isScenarioSolvable(scenario, mainPanelCells));
-
-                // Medium: 2 antibodies
                 for (let i = 0; i < allAntibodies.length; i++) {
                     for (let j = i + 1; j < allAntibodies.length; j++) {
                         const scenario = [allAntibodies[i], allAntibodies[j]];
-                        if (isScenarioSolvable(scenario, mainPanelCells)) {
-                            scenarios.medium.push(scenario);
-                        }
+                        if (isScenarioSolvable(scenario, mainPanelCells)) scenarios.medium.push(scenario);
                     }
                 }
-                
-                // Hard: 3 antibodies
-                for (let i = 0; i < 500; i++) { // Limit attempts to find valid combos
+                for (let i = 0; i < 500; i++) {
                     const combo = [...allAntibodies].sort(() => 0.5 - Math.random()).slice(0, 3);
-                    if (isScenarioSolvable(combo, mainPanelCells) && !scenarios.hard.some(s => JSON.stringify(s) === JSON.stringify(combo))) {
-                        scenarios.hard.push(combo);
+                    const uniqueCombo = combo.filter((v,i,a) => a.findIndex(t=>(t.name === v.name))===i);
+                    if (uniqueCombo.length === 3 && isScenarioSolvable(uniqueCombo, mainPanelCells) && !scenarios.hard.some(s => JSON.stringify(s.sort()) === JSON.stringify(uniqueCombo.sort()))) {
+                        scenarios.hard.push(uniqueCombo);
                     }
                 }
-                
                 scenarios.panreactive.push([{ name: 'Pan-reactive', antigen: 'pan', effect: 'unaffected' }]);
             }
 
-            // ... (Rest of the functions: calculateReaction, renderTable, checkFinalAnswer, etc.)
-            // Note: The following functions are simplified for brevity but would be included in full
-            function initGame() {
-                Object.values(uiElements).forEach(el => {
-                    if (el.nodeName === 'BUTTON') el.disabled = false;
-                    else if(el.id && el.id.includes('container')) el.classList.add('hidden');
-                });
-                uiElements.antigramFeedback.classList.add('hidden');
-                selectedAntibodies = [];
-
-                let scenarioPool = scenarios[currentDifficulty] || scenarios.easy;
-                if (Math.random() < 0.1) { 
-                    currentAntibodies = scenarios.panreactive[0];
-                } else {
-                    currentAntibodies = scenarioPool[Math.floor(Math.random() * scenarioPool.length)];
+            function calculateReaction(cell, antibodies) {
+                let iatStrength = 0, enzStrength = 0;
+                const reactingAbs = antibodies.filter(ab => ab.antigen === 'pan' || (cell.antigens[ab.antigen] && cell.antigens[ab.antigen] === '+'));
+                if (reactingAbs.length > 0) {
+                    iatStrength = Math.floor(Math.random() * 2) + 2;
+                    const isEnzymeDestroyed = reactingAbs.every(ab => ab.effect === 'destroy');
+                    const isEnzymeEnhanced = reactingAbs.some(ab => ab.effect === 'enhance');
+                    if (isEnzymeDestroyed) {
+                        enzStrength = 0;
+                    } else {
+                        enzStrength = iatStrength;
+                        if (isEnzymeEnhanced) enzStrength = Math.min(4, iatStrength + 1);
+                    }
                 }
-                
-                renderTable('main-panel-table', mainPanelCells, currentAntibodies);
-                renderTable('screen-table', screeningCells, currentAntibodies);
-                renderTable('additional-panel-table', additionalPanelCells, currentAntibodies);
-                
-                setupAnswerOptions();
-                addEventListeners();
+                return { iat: iatStrength > 0 ? `${iatStrength}+` : '0', enz: enzStrength > 0 ? `${enzStrength}+` : '0' };
             }
 
             function renderTable(tableId, panelData, antibodies) {
                 const tableEl = document.getElementById(tableId);
                 if (!tableEl) return;
+                tableEl.innerHTML = ''; // Clear previous content
                 const isScreeningPanel = panelData.length === 3;
-                let tableHTML = `<thead><tr><th class="w-12">${isScreeningPanel ? 'Screen' : 'Cell'}</th>${antigens.map(ag => `<th class="antigen-header" data-antigen="${ag}">${ag}</th>`).join('')}<th>IAT</th><th class="enz-col hidden-col">ENZ</th></tr></thead><tbody>`;
+                const thead = document.createElement('thead');
+                const tbody = document.createElement('tbody');
+                let headerHTML = `<tr><th class="w-12">${isScreeningPanel ? 'Screen' : 'Cell'}</th>`;
+                antigens.forEach(ag => { headerHTML += `<th class="antigen-header" data-antigen="${ag}">${ag}</th>`; });
+                headerHTML += `<th>IAT</th><th class="enz-col hidden-col">ENZ</th></tr>`;
+                thead.innerHTML = headerHTML;
+                
                 panelData.forEach((cell, index) => {
                     const reaction = calculateReaction(cell, antibodies);
-                    tableHTML += `<tr><td class="font-bold">${isScreeningPanel ? ['I', 'II', 'III'][index] : index + 1}</td>${antigens.map(ag => `<td data-antigen="${ag}">${cell.antigens[ag] || '0'}</td>`).join('')}<td class="${reaction.iat !== '0' ? 'reaction-pos' : ''}">${reaction.iat}</td><td class="enz-col hidden-col ${reaction.enz !== '0' ? 'reaction-pos' : ''}">${reaction.enz}</td></tr>`;
+                    const row = tbody.insertRow();
+                    row.innerHTML = `<td class="font-bold">${isScreeningPanel ? ['I', 'II', 'III'][index] : index + 1}</td>
+                        ${antigens.map(ag => `<td data-antigen="${ag}">${cell.antigens[ag] || '0'}</td>`).join('')}
+                        <td class="${reaction.iat !== '0' ? 'reaction-pos' : ''}">${reaction.iat}</td>
+                        <td class="enz-col hidden-col ${reaction.enz !== '0' ? 'reaction-pos' : ''}">${reaction.enz}</td>`;
                 });
-                tableHTML += '</tbody>';
-                tableEl.innerHTML = tableHTML;
+                tableEl.appendChild(thead);
+                tableEl.appendChild(tbody);
             }
-
+            
             function setupAnswerOptions() {
-                let correctOptions = currentAntibodies[0].antigen === 'pan' 
+                const correctOptions = currentAntibodies[0].antigen === 'pan' 
                     ? ["Refer to NBS for investigation"] 
                     : currentAntibodies.map(ab => ab.name);
                 let wrongOptions = allAntibodies.filter(ab => !correctOptions.includes(ab.name))
@@ -250,16 +242,15 @@
                 if (currentAntibodies[0].antigen !== 'pan') {
                     wrongOptions.push("Refer to NBS for investigation");
                 }
-                let displayOptions = [...new Set([...correctOptions, ...wrongOptions])].sort(() => 0.5 - Math.random());
+                const displayOptions = [...new Set([...correctOptions, ...wrongOptions])].sort(() => 0.5 - Math.random());
 
                 uiElements.antibodyOptionsContainer.innerHTML = '';
                 displayOptions.forEach(abName => {
                     uiElements.antibodyOptionsContainer.innerHTML += `<button class="antibody-choice-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">${abName}</button>`;
                 });
             }
-            
+
             function addEventListeners() {
-                // Event listeners for buttons and headers
                 document.querySelectorAll('.antibody-choice-btn').forEach(btn => btn.addEventListener('click', (e) => {
                     e.target.classList.toggle('selected');
                     const abName = e.target.textContent;
@@ -279,22 +270,6 @@
                 });
             }
             
-            // Bind master event listeners
-            uiElements.difficultyButtons.forEach(btn => btn.addEventListener('click', () => {
-                uiElements.difficultyButtons.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                currentDifficulty = btn.dataset.difficulty;
-                initGame();
-            }));
-            uiElements.screenBtn.addEventListener('click', () => uiElements.screenContainer.classList.toggle('hidden'));
-            uiElements.additionalPanelBtn.addEventListener('click', () => uiElements.additionalPanelContainer.classList.toggle('hidden'));
-            uiElements.enzymePanelBtn.addEventListener('click', () => {
-                document.querySelectorAll('.enz-col').forEach(c => c.classList.remove('hidden-col'));
-                uiElements.enzymePanelBtn.disabled = true;
-            });
-            uiElements.newPanelBtn.addEventListener('click', initGame);
-            uiElements.checkAnswerBtn.addEventListener('click', checkFinalAnswer); // checkFinalAnswer needs to be defined
-            
             function checkFinalAnswer() {
                  uiElements.checkAnswerBtn.disabled = true;
                  document.querySelectorAll('.action-btn, .antibody-choice-btn').forEach(btn => btn.disabled = true);
@@ -312,8 +287,49 @@
                  }
             }
 
+            function initGame() {
+                Object.values(uiElements).forEach(el => {
+                    if (el.nodeName === 'BUTTON' || (el.length > 0 && el[0].nodeName === 'BUTTON')) {
+                         (el.length > 0 ? [...el] : [el]).forEach(btn => btn.disabled = false);
+                    } else if (el.id && el.id.includes('container')) {
+                        el.classList.add('hidden');
+                    }
+                });
+                uiElements.antigramFeedback.classList.add('hidden');
+                selectedAntibodies = [];
 
-            // Initial setup
+                let scenarioPool = scenarios[currentDifficulty] || scenarios.easy;
+                if (Math.random() < 0.1) { 
+                    currentAntibodies = scenarios.panreactive[0];
+                } else {
+                    currentAntibodies = scenarioPool[Math.floor(Math.random() * scenarioPool.length)];
+                }
+                
+                renderTable('main-panel-table', mainPanelCells, currentAntibodies);
+                renderTable('screen-table', screeningCells, currentAntibodies);
+                renderTable('additional-panel-table', additionalPanelCells, currentAntibodies);
+                
+                setupAnswerOptions();
+                addEventListeners();
+            }
+
+            // --- EVENT BINDING ---
+            uiElements.difficultyButtons.forEach(btn => btn.addEventListener('click', () => {
+                uiElements.difficultyButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentDifficulty = btn.dataset.difficulty;
+                initGame();
+            }));
+            uiElements.screenBtn.addEventListener('click', () => uiElements.screenContainer.classList.toggle('hidden'));
+            uiElements.additionalPanelBtn.addEventListener('click', () => uiElements.additionalPanelContainer.classList.toggle('hidden'));
+            uiElements.enzymePanelBtn.addEventListener('click', () => {
+                document.querySelectorAll('.enz-col').forEach(c => c.classList.remove('hidden-col'));
+                uiElements.enzymePanelBtn.disabled = true;
+            });
+            uiElements.newPanelBtn.addEventListener('click', initGame);
+            uiElements.checkAnswerBtn.addEventListener('click', checkFinalAnswer);
+            
+            // --- INITIALIZATION ---
             document.querySelector('.difficulty-btn[data-difficulty="easy"]').classList.add('active');
             createScenarios();
             initGame();
