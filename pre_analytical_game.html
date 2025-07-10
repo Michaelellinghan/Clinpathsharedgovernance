@@ -123,7 +123,7 @@
                         { text: "Unaffected, as potassium is stable.", isCorrect: false },
                         { text: "Inconclusive due to clot formation.", isCorrect: false }
                     ],
-                    explanation: "Prolonged contact of serum/plasma with red blood cells at room temperature allows potassium to leak out of the cells, causing a falsely elevated result."
+                    explanation: "Prolonged contact of serum/plasma with red blood cells at room temperature allows potassium to leak out of the cells, causing a falsely elevated result. This is a common pre-analytical error affecting chemistry results."
                 },
                 {
                     question: "A **coagulation** sample (e.g., for PT/APTT) is collected into a tube that is underfilled, meaning there is too much anticoagulant for the blood volume. What is the likely impact on results?",
@@ -133,57 +133,77 @@
                         { text: "The sample will haemolyse.", isCorrect: false },
                         { text: "There will be no significant impact.", isCorrect: false }
                     ],
-                    explanation: "Too much anticoagulant (citrate) in relation to blood volume will bind more calcium, falsely prolonging clotting times."
+                    explanation: "Too much anticoagulant (citrate) in relation to blood volume will bind more calcium, falsely prolonging clotting times. This is a critical error in coagulation testing."
                 },
                 {
-                    question: "A sample for **Full Blood Count (FBC)** is severely haemolysed. Which parameter is most likely to be directly affected and why?",
-                    options: [
-                        { text: "White Blood Cell Count (WBC) due to cell lysis.", isCorrect: false },
-                        { text: "Haemoglobin (Hb) due to free haemoglobin in plasma.", isCorrect: true },
-                        { text: "Platelet count due to clumping.", isCorrect: false },
-                        { text: "Mean Cell Volume (MCV) due to cell shrinkage.", isCorrect: false }
-                    ],
-                    explanation: "Haemolysis releases haemoglobin from red blood cells into the plasma. Automated analysers may falsely interpret this free haemoglobin as intact red cell haemoglobin, leading to a falsely elevated Hb result."
-                },
-                {
-                    question: "A blood culture bottle is collected **after** other blood tubes, including an EDTA tube. What is the main risk associated with this collection order?",
-                    options: [
-                        { text: "Contamination of the EDTA tube.", isCorrect: false },
-                        { text: "Dilution of the blood culture.", isCorrect: false },
-                        { text: "Carryover of anticoagulant into the blood culture, inhibiting bacterial growth.", isCorrect: true },
-                        { text: "Inaccurate blood glucose results.", isCorrect: false }
-                    ],
-                    explanation: "Collecting blood culture bottles after other tubes, especially those with anticoagulants like EDTA, risks carryover of these substances into the sterile blood culture, which can inhibit the growth of any bacteria present and lead to a false negative result."
-                },
-                {
-                    question: "A sample for **Troponin** (cardiac marker) is collected in an incorrect tube, which contains a gel separator but no anticoagulant. What's the most immediate concern?",
-                    options: [
-                        { text: "The sample will clot, making it unsuitable for analysis.", isCorrect: true },
-                        { text: "The gel will interfere with troponin measurement.", isCorrect: false },
-                        { text: "The sample will haemolyse rapidly.", isCorrect: false },
-                        { text: "Troponin will degrade quickly.", isCorrect: false }
-                    ],
-                    explanation: "Troponin is typically measured in serum (clotted blood) or heparinised plasma. A tube with only a gel separator and no anticoagulant will allow the blood to clot, but without proper mixing with anticoagulant, the serum separation might be compromised, or the lab may reject it if an anticoagulant is required for stability or analyser compatibility."
-                },
-                {
-                    question: "A **urine sample for microbiology** is collected into an unsterile container. What is the most significant consequence?",
-                    options: [
-                        { text: "It will affect the pH of the sample.", isCorrect: false },
-                        { text: "It will cause the urine to become cloudy.", isCorrect: false },
-                        { text: "It could lead to false positive results due to environmental contamination.", isCorrect: true },
-                        { text: "It will accelerate cellular degradation.", isCorrect: false }
-                    ],
-                    explanation: "An unsterile container can introduce environmental bacteria, leading to a false positive culture result and potentially inappropriate antibiotic treatment."
-                },
-                {
-                    question: "A patient's **bilirubin** sample is exposed to direct sunlight for an extended period. What effect is this likely to have on the result?",
+                    question: "A **bilirubin** sample is exposed to direct sunlight for an extended period. What effect is this likely to have on the result?",
                     options: [
                         { text: "Falsely increased due to light activation.", isCorrect: false },
                         { text: "Falsely decreased due to photodegradation.", isCorrect: true },
                         { text: "No significant effect, bilirubin is stable.", isCorrect: false },
                         { text: "It will cause the sample to clot.", isCorrect: false }
                     ],
-                    explanation: "Bilirubin is light-sensitive and degrades upon exposure to light, leading to a falsely decreased result. Samples for bilirubin should be protected from light."
+                    explanation: "Bilirubin is light-sensitive and degrades upon exposure to light, leading to a falsely decreased result in chemistry. Samples for bilirubin should be protected from light."
+                },
+                {
+                    question: "A blood sample for **Sodium** measurement is found to be lipemic (cloudy due to high fats). Using an indirect ion-selective electrode (ISE) method, what is the likely impact?",
+                    options: [
+                        { text: "Falsely high sodium due to interference.", isCorrect: false },
+                        { text: "Falsely low sodium (pseudohyponatremia).", isCorrect: true },
+                        { text: "No effect on sodium, but other analytes affected.", isCorrect: false },
+                        { text: "The sample will clot prematurely.", isCorrect: false }
+                    ],
+                    explanation: "Lipemia increases the solid phase relative to the water phase in plasma, leading to pseudo hyponatremia, especially in indirect ISE methods for chemistry."
+                },
+                {
+                    question: "A patient's blood sample is collected with a **prolonged tourniquet application** (over 3 minutes). Which chemistry analytes are most likely to show a falsely elevated result?",
+                    options: [
+                        { text: "Glucose and Urea.", isCorrect: false },
+                        { text: "Total Protein and Albumin.", isCorrect: true },
+                        { text: "Sodium and Chloride.", isCorrect: false },
+                        { text: "Creatinine and Phosphate.", isCorrect: false }
+                    ],
+                    explanation: "Prolonged tourniquet use (venous stasis) can cause fluid to shift out of the vessel, concentrating larger molecules like total protein and albumin, leading to falsely elevated results in chemistry."
+                },
+                {
+                    question: "An EDTA (lavender top) tube is collected **before** a serum (red top) tube for chemistry tests. What is a significant risk for the chemistry results?",
+                    options: [
+                        { text: "Falsely low potassium and high calcium.", isCorrect: false },
+                        { text: "Falsely high potassium and falsely low calcium.", isCorrect: true },
+                        { text: "Contamination with gel separator.", isCorrect: false },
+                        { text: "Delayed clotting of the serum tube.", isCorrect: false }
+                    ],
+                    explanation: "EDTA contamination from an incorrect order of draw can chelate calcium (falsely low calcium) and release potassium from cells (falsely high potassium), significantly impacting chemistry results."
+                },
+                {
+                    question: "A patient did not fast as required before a **lipid profile** (cholesterol, triglycerides) and had a heavy, fatty meal. What is the expected impact on the results?",
+                    options: [
+                        { text: "Falsely low cholesterol and triglycerides.", isCorrect: false },
+                        { text: "Falsely high cholesterol and triglycerides (lipemia).", isCorrect: true },
+                        { text: "No significant effect, as fasting is not critical for lipids.", isCorrect: false },
+                        { text: "Increased HDL cholesterol only.", isCorrect: false }
+                    ],
+                    explanation: "Failure to fast adequately before a lipid profile, especially after a heavy meal, can lead to a lipemic sample and falsely elevated triglyceride and cholesterol levels in chemistry."
+                },
+                 {
+                    question: "A **blood transfusion** sample for grouping and crossmatching is mislabelled with the wrong patient's details. What is the most severe potential outcome?",
+                    options: [
+                        { text: "Delayed test results.", isCorrect: false },
+                        { text: "Minor allergic reaction.", isCorrect: false },
+                        { text: "Acute haemolytic transfusion reaction leading to severe patient harm or death.", isCorrect: true },
+                        { text: "Need for a repeat venepuncture.", isCorrect: false }
+                    ],
+                    explanation: "Patient misidentification or mislabelling of blood samples for transfusion is one of the most critical pre-analytical errors, potentially leading to a fatal acute haemolytic transfusion reaction if incompatible blood is given."
+                },
+                {
+                    question: "A **coagulation** sample arrives at the laboratory clotted. Which of the following is the most likely reason for this pre-analytical error?",
+                    options: [
+                        { text: "Overfilling the tube.", isCorrect: false },
+                        { text: "Underfilling the tube.", isCorrect: false },
+                        { text: "Insufficient or delayed mixing with anticoagulant.", isCorrect: true },
+                        { text: "Exposure to cold temperature.", isCorrect: false }
+                    ],
+                    explanation: "Inadequate or delayed mixing of the blood with the anticoagulant in a coagulation tube allows the blood to clot, rendering the sample unsuitable for accurate testing."
                 }
             ];
 
