@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Michael Ellingham",
+    "department": "Haematology & Blood Transfusion",
+    "email": "Michael.ellingham@nhs.net",
+    "photo_url": "images/member_placeholder.png"
+  },
+  {
+    "name": "Katarzyna Fijalkowska",
+    "department": "Haematology & Blood Transfusion",
+    "email": "katarzyna.fijalkowska@nhs.net",
+    "photo_url": "images/member_placeholder.png"
+  },
+  {
+    "name": "Akwasi Boakye",
+    "department": "Immunology",
+    "email": "akwasi.boakye1@nhs.net",
+    "photo_url": "images/member_placeholder.png"
+  },
+  {
+    "name": "Yasmin Dixon",
+    "department": "Chemistry",
+    "email": "yasmin.dixon1@nhs.net",
+    "photo_url": "images/member_placeholder.png"
+  },
+  {
+    "name": "Matthew Rodgers",
+    "department": "Chemistry",
+    "email": "matthew.rodgers6@nhs.net",
+    "photo_url": "images/member_placeholder.png"
+  }
+]
