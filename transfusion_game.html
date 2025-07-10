@@ -26,6 +26,7 @@
         .antibody-choice-btn.selected { background-color: #fde047; }
         .antibody-choice-btn:disabled, .action-btn:disabled { background-color: #e5e7eb; cursor: not-allowed; color: #9ca3af; }
         .excluded { text-decoration: line-through; color: #9ca3af; }
+        .hidden-col { display: none; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -84,206 +85,223 @@
     <footer class="nhs-dark-blue text-white py-8 mt-16"></footer>
 
     <script>
-        // --- DATA SETUP ---
-        const antigens = ['D', 'C', 'E', 'c', 'e', 'Cʷ', 'K', 'k', 'Fyᵃ', 'Fyᵇ', 'Jkᵃ', 'Jkᵇ', 'Leᵃ', 'Leᵇ', 'P₁', 'M', 'N', 'S', 's', 'Luᵃ', 'Luᵇ'];
-        
-        // Data transcribed from V06084.79X_V.01.pdf
-        const screeningCells = [
-            {antigens: {'D':'+','C':'+','E':'0','c':'+','e':'+','Cʷ':'+','K':'+','k':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'0','Leᵇ':'+','P₁':'+','M':'+','N':'0','S':'+','s':'+','Luᵃ':'0','Luᵇ':'+'}},
-            {antigens: {'D':'+','C':'+','E':'+','c':'0','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'0','Leᵃ':'+','Leᵇ':'0','P₁':'+','M':'0','N':'+','S':'+','s':'0','Luᵃ':'0','Luᵇ':'+'}},
-            {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'+','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'0','Jkᵇ':'+','Leᵃ':'0','Leᵇ':'+','P₁':'+','M':'0','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}}
-        ];
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- DATA SETUP (panel data, antibody list) ---
+            const antigens = ['D', 'C', 'E', 'c', 'e', 'Cʷ', 'K', 'k', 'Fyᵃ', 'Fyᵇ', 'Jkᵃ', 'Jkᵇ', 'Leᵃ', 'Leᵇ', 'P₁', 'M', 'N', 'S', 's', 'Luᵃ', 'Luᵇ'];
+            const screeningCells = [
+                {antigens: {'D':'+','C':'+','E':'0','c':'+','e':'+','Cʷ':'+','K':'+','k':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'0','Leᵇ':'+','P₁':'+','M':'+','N':'0','S':'+','s':'+','Luᵃ':'0','Luᵇ':'+'}},
+                {antigens: {'D':'+','C':'+','E':'+','c':'0','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'0','Leᵃ':'+','Leᵇ':'0','P₁':'+','M':'0','N':'+','S':'+','s':'0','Luᵃ':'0','Luᵇ':'+'}},
+                {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'+','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'0','Jkᵇ':'+','Leᵃ':'0','Leᵇ':'+','P₁':'+','M':'0','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}}
+            ];
+            const mainPanelCells = [
+                {antigens: {'D':'+','C':'+','E':'0','c':'0','e':'+','Cʷ':'+','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'0','Leᵇ':'+','P₁':'+','M':'+','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
+                {antigens: {'D':'+','C':'+','E':'0','c':'0','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'0','P₁':'+','M':'+','N':'0','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
+                {antigens: {'D':'+','C':'0','E':'+','c':'+','e':'0','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'+','P₁':'+','M':'0','N':'+','S':'+','s':'+','Luᵃ':'0','Luᵇ':'+'}},
+                {antigens: {'D':'0','C':'+','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'+','Jkᵇ':'0','Leᵃ':'0','Leᵇ':'+','P₁':'+','M':'+','N':'0','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
+                {antigens: {'D':'0','C':'0','E':'+','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'+','P₁':'0','M':'+','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
+                {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'+','P₁':'+','M':'+','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
+                {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'0','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'+','P₁':'+','M':'+','N':'+','S':'+','s':'+','Luᵃ':'0','Luᵇ':'+'}},
+                {antigens: {'D':'+','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'0','Leᵇ':'+','P₁':'+','M':'+','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
+                {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'0','Jkᵇ':'+','Leᵃ':'0','Leᵇ':'+','P₁':'0','M':'0','N':'+','S':'+','s':'+','Luᵃ':'0','Luᵇ':'+'}},
+                {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'+','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'0','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'+','P₁':'+','M':'+','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
+                {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'+','k':'+','Fyᵃ':'+','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'0','P₁':'+','M':'+','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}}
+            ];
+            const additionalPanelCells = [
+                {antigens: {'D':'+','C':'+','E':'0','c':'0','e':'+','Cʷ':'+','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'0','Jkᵇ':'+','Leᵃ':'0','Leᵇ':'+','P₁':'+','M':'+','N':'0','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
+                {antigens: {'D':'+','C':'+','E':'0','c':'0','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'0','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'0','P₁':'+','M':'0','N':'+','S':'+','s':'0','Luᵃ':'0','Luᵇ':'+'}},
+                {antigens: {'D':'+','C':'0','E':'+','c':'+','e':'0','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'0','Leᵃ':'0','Leᵇ':'+','P₁':'+','M':'+','N':'0','S':'+','s':'0','Luᵃ':'0','Luᵇ':'w'}},
+                {antigens: {'D':'0','C':'+','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'+','Jkᵇ':'0','Leᵃ':'0','Leᵇ':'+','P₁':'+','M':'+','N':'0','S':'+','s':'0','Luᵃ':'0','Luᵇ':'+'}},
+                {antigens: {'D':'0','C':'0','E':'+','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'0','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'0','P₁':'0','M':'+','N':'0','S':'+','s':'0','Luᵃ':'0','Luᵇ':'+'}},
+                {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'+','Jkᵃ':'0','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'+','P₁':'0','M':'0','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
+                {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'+','k':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'+','Jkᵇ':'0','Leᵃ':'+','Leᵇ':'+','P₁':'+','M':'0','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
+                {antigens: {'D':'0','C':'0','E':'+','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'0','Leᵃ':'+','Leᵇ':'+','P₁':'+','M':'+','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
+                {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'0','Jkᵃ':'0','Jkᵇ':'+','Leᵃ':'0','Leᵇ':'+','P₁':'+','M':'0','N':'+','S':'+','s':'0','Luᵃ':'0','Luᵇ':'w'}},
+                {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'0','Leᵃ':'0','Leᵇ':'+','P₁':'0','M':'+','N':'0','S':'+','s':'0','Luᵃ':'+','Luᵇ':'+'}}
+            ];
+            const allAntibodies = [
+                { name: 'Anti-D', antigen: 'D', effect: 'enhance' }, { name: 'Anti-C', antigen: 'C', effect: 'enhance' }, 
+                { name: 'Anti-c', antigen: 'c', effect: 'enhance' }, { name: 'Anti-E', antigen: 'E', effect: 'enhance' }, 
+                { name: 'Anti-e', antigen: 'e', effect: 'enhance' }, { name: 'Anti-K', antigen: 'K', effect: 'unaffected' }, 
+                { name: 'Anti-k', antigen: 'k', effect: 'unaffected' }, { name: 'Anti-Fya', antigen: 'Fyᵃ', effect: 'destroy' }, 
+                { name: 'Anti-Fyb', antigen: 'Fyᵇ', effect: 'destroy' }, { name: 'Anti-Jka', antigen: 'Jkᵃ', effect: 'enhance' }, 
+                { name: 'Anti-Jkb', antigen: 'Jkᵇ', effect: 'enhance' }, { name: 'Anti-S', antigen: 'S', effect: 'destroy' }, 
+                { name: 'Anti-s', antigen: 's', effect: 'destroy' }, { name: 'Anti-M', antigen: 'M', effect: 'destroy' }, 
+                { name: 'Anti-N', antigen: 'N', effect: 'destroy' }, { name: 'Anti-P1', antigen: 'P₁', effect: 'unaffected' }, 
+                { name: 'Anti-Lea', antigen: 'Leᵃ', effect: 'unaffected'}, { name: 'Anti-Leb', antigen: 'Leᵇ', effect: 'unaffected'},
+                { name: 'Anti-Lua', antigen: 'Luᵃ', effect: 'unaffected'}, { name: 'Anti-Lub', antigen: 'Luᵇ', effect: 'unaffected'},
+                { name: 'Anti-Cw', antigen: 'Cʷ', effect: 'enhance'}
+            ];
+            let scenarios = { easy: [], medium: [], hard: [], panreactive: [] };
+            
+            // --- GAME LOGIC & FUNCTIONS ---
+            let currentAntibodies = [];
+            let selectedAntibodies = [];
+            let currentDifficulty = 'easy';
 
-        // Data transcribed from F06171.27X_V.01.pdf
-        const mainPanelCells = [
-            {antigens: {'D':'+','C':'+','E':'0','c':'0','e':'+','Cʷ':'+','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'0','Leᵇ':'+','P₁':'+','M':'+','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
-            {antigens: {'D':'+','C':'+','E':'0','c':'0','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'0','P₁':'+','M':'+','N':'0','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
-            {antigens: {'D':'+','C':'0','E':'+','c':'+','e':'0','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'+','P₁':'+','M':'0','N':'+','S':'+','s':'+','Luᵃ':'0','Luᵇ':'+'}},
-            {antigens: {'D':'0','C':'+','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'+','Jkᵇ':'0','Leᵃ':'0','Leᵇ':'+','P₁':'+','M':'+','N':'0','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
-            {antigens: {'D':'0','C':'0','E':'+','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'+','P₁':'0','M':'+','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
-            {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'+','P₁':'+','M':'+','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
-            {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'0','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'+','P₁':'+','M':'+','N':'+','S':'+','s':'+','Luᵃ':'0','Luᵇ':'+'}},
-            {antigens: {'D':'+','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'0','Leᵇ':'+','P₁':'+','M':'+','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
-            {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'0','Jkᵇ':'+','Leᵃ':'0','Leᵇ':'+','P₁':'0','M':'0','N':'+','S':'+','s':'+','Luᵃ':'0','Luᵇ':'+'}},
-            {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'+','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'0','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'+','P₁':'+','M':'+','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
-            {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'+','k':'+','Fyᵃ':'+','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'0','P₁':'+','M':'+','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}}
-        ];
+            const difficultyButtons = document.querySelectorAll('.difficulty-btn');
+            const checkAnswerBtn = document.getElementById('check-answer-btn');
+            const newPanelBtn = document.getElementById('new-panel-btn');
+            const screenBtn = document.getElementById('screen-btn');
+            const enzymePanelBtn = document.getElementById('enzyme-panel-btn');
+            const additionalPanelBtn = document.getElementById('additional-panel-btn');
+            const antibodyOptionsContainer = document.getElementById('antibody-options');
+            const antigramFeedback = document.getElementById('antigram-feedback');
 
-        // Data transcribed from panel-1-profile-lot-4590-163kb.pdf
-        const additionalPanelCells = [
-            {antigens: {'D':'+','C':'+','E':'0','c':'0','e':'+','Cʷ':'+','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'0','Jkᵇ':'+','Leᵃ':'0','Leᵇ':'+','P₁':'+','M':'+','N':'0','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
-            {antigens: {'D':'+','C':'+','E':'0','c':'0','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'0','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'0','P₁':'+','M':'0','N':'+','S':'+','s':'0','Luᵃ':'0','Luᵇ':'+'}},
-            {antigens: {'D':'+','C':'0','E':'+','c':'+','e':'0','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'0','Leᵃ':'0','Leᵇ':'+','P₁':'+','M':'+','N':'0','S':'+','s':'0','Luᵃ':'0','Luᵇ':'w'}},
-            {antigens: {'D':'0','C':'+','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'+','Jkᵇ':'0','Leᵃ':'0','Leᵇ':'+','P₁':'+','M':'+','N':'0','S':'+','s':'0','Luᵃ':'0','Luᵇ':'+'}},
-            {antigens: {'D':'0','C':'0','E':'+','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'0','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'0','P₁':'0','M':'+','N':'0','S':'+','s':'0','Luᵃ':'0','Luᵇ':'+'}},
-            {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'+','Jkᵃ':'0','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'+','P₁':'0','M':'0','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
-            {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'+','k':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'+','Jkᵇ':'0','Leᵃ':'+','Leᵇ':'+','P₁':'+','M':'0','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
-            {antigens: {'D':'0','C':'0','E':'+','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'0','Leᵃ':'+','Leᵇ':'+','P₁':'+','M':'+','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
-            {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'0','Jkᵃ':'0','Jkᵇ':'+','Leᵃ':'0','Leᵇ':'+','P₁':'+','M':'0','N':'+','S':'+','s':'0','Luᵃ':'0','Luᵇ':'w'}},
-            {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'0','Leᵃ':'0','Leᵇ':'+','P₁':'0','M':'+','N':'0','S':'+','s':'0','Luᵃ':'+','Luᵇ':'+'}}
-        ];
-
-        const allAntibodies = [
-            { name: 'Anti-D', antigen: 'D', effect: 'enhance' }, { name: 'Anti-C', antigen: 'C', effect: 'enhance' }, 
-            { name: 'Anti-c', antigen: 'c', effect: 'enhance' }, { name: 'Anti-E', antigen: 'E', effect: 'enhance' }, 
-            { name: 'Anti-e', antigen: 'e', effect: 'enhance' }, { name: 'Anti-K', antigen: 'K', effect: 'unaffected' }, 
-            { name: 'Anti-k', antigen: 'k', effect: 'unaffected' }, { name: 'Anti-Fya', antigen: 'Fyᵃ', effect: 'destroy' }, 
-            { name: 'Anti-Fyb', antigen: 'Fyᵇ', effect: 'destroy' }, { name: 'Anti-Jka', antigen: 'Jkᵃ', effect: 'enhance' }, 
-            { name: 'Anti-Jkb', antigen: 'Jkᵇ', effect: 'enhance' }, { name: 'Anti-S', antigen: 'S', effect: 'destroy' }, 
-            { name: 'Anti-s', antigen: 's', effect: 'destroy' }, { name: 'Anti-M', antigen: 'M', effect: 'destroy' }, 
-            { name: 'Anti-N', antigen: 'N', effect: 'destroy' }, { name: 'Anti-P1', antigen: 'P₁', effect: 'unaffected' }, 
-            { name: 'Anti-Lea', antigen: 'Leᵃ', effect: 'unaffected'}, { name: 'Anti-Leb', antigen: 'Leᵇ', effect: 'unaffected'},
-            { name: 'Anti-Lua', antigen: 'Luᵃ', effect: 'unaffected'}, { name: 'Anti-Lub', antigen: 'Luᵇ', effect: 'unaffected'},
-            { name: 'Anti-Cw', antigen: 'Cʷ', effect: 'enhance'}
-        ];
-
-        let scenarios = { easy: [], medium: [], hard: [], panreactive: [] };
-        
-        // --- GAME LOGIC ---
-        let currentAntibodies = [];
-        let selectedAntibodies = [];
-        let currentDifficulty = 'easy';
-
-        function createScenarios() {
-            scenarios.easy = allAntibodies.map(ab => [ab]);
-            for (let i = 0; i < allAntibodies.length; i++) {
-                for (let j = i + 1; j < allAntibodies.length; j++) {
-                    if (allAntibodies[i].effect !== 'destroy' || allAntibodies[j].effect !== 'destroy') {
-                         scenarios.medium.push([allAntibodies[i], allAntibodies[j]]);
+            function createScenarios() {
+                scenarios.easy = allAntibodies.map(ab => [ab]);
+                for (let i = 0; i < allAntibodies.length; i++) {
+                    for (let j = i + 1; j < allAntibodies.length; j++) {
+                        scenarios.medium.push([allAntibodies[i], allAntibodies[j]]);
                     }
                 }
-            }
-             for (let i = 0; i < allAntibodies.length; i++) {
-                for (let j = i + 1; j < allAntibodies.length; j++) {
-                    for (let k = j + 1; k < allAntibodies.length; k++) {
-                       scenarios.hard.push([allAntibodies[i], allAntibodies[j], allAntibodies[k]]);
+                for (let i = 0; i < allAntibodies.length; i++) {
+                    for (let j = i + 1; j < allAntibodies.length; j++) {
+                        for (let k = j + 1; k < allAntibodies.length; k++) {
+                           scenarios.hard.push([allAntibodies[i], allAntibodies[j], allAntibodies[k]]);
+                        }
                     }
                 }
+                scenarios.panreactive.push([{ name: 'Pan-reactive', antigen: 'pan', effect: 'unaffected' }]);
             }
-            scenarios.panreactive.push([{ name: 'Pan-reactive', antigen: 'pan', effect: 'unaffected' }]);
-        }
 
-        function calculateReaction(cell, antibodies) {
-            let iatStrength = 0, enzStrength = 0;
-            const reactingAbs = antibodies.filter(ab => ab.antigen === 'pan' || cell.antigens[ab.antigen] === '+');
+            function calculateReaction(cell, antibodies) {
+                let iatStrength = 0, enzStrength = 0;
+                const reactingAbs = antibodies.filter(ab => ab.antigen === 'pan' || (cell.antigens[ab.antigen] && cell.antigens[ab.antigen] === '+'));
 
-            if (reactingAbs.length > 0) {
-                iatStrength = Math.floor(Math.random() * 2) + 2;
-                const isEnzymeDestroyed = reactingAbs.every(ab => ab.effect === 'destroy');
-                const isEnzymeEnhanced = reactingAbs.some(ab => ab.effect === 'enhance');
+                if (reactingAbs.length > 0) {
+                    iatStrength = Math.floor(Math.random() * 2) + 2;
+                    const isEnzymeDestroyed = reactingAbs.every(ab => ab.effect === 'destroy');
+                    const isEnzymeEnhanced = reactingAbs.some(ab => ab.effect === 'enhance');
+                    
+                    if (isEnzymeDestroyed) {
+                        enzStrength = 0;
+                    } else {
+                        enzStrength = iatStrength;
+                        if (isEnzymeEnhanced) enzStrength = Math.min(4, iatStrength + 1);
+                    }
+                }
+                return {
+                    iat: iatStrength > 0 ? `${iatStrength}+` : '0',
+                    enz: enzStrength > 0 ? `${enzStrength}+` : '0'
+                };
+            }
+
+            function renderTable(tableId, panelData, antibodies) {
+                const tableEl = document.getElementById(tableId);
+                const isScreeningPanel = panelData.length === 3;
+                let tableHTML = `<thead><tr><th class="w-12">${isScreeningPanel ? 'Screen' : 'Cell'}</th>${antigens.map(ag => `<th class="antigen-header" data-antigen="${ag}">${ag}</th>`).join('')}<th>IAT</th><th class="enz-col hidden-col">ENZ</th></tr></thead><tbody>`;
+                panelData.forEach((cell, index) => {
+                    const reaction = calculateReaction(cell, antibodies);
+                    tableHTML += `<tr><td class="font-bold">${isScreeningPanel ? ['I', 'II', 'III'][index] : index + 1}</td>${antigens.map(ag => `<td data-antigen="${ag}">${cell.antigens[ag] || '0'}</td>`).join('')}<td class="${reaction.iat !== '0' ? 'reaction-pos' : ''}">${reaction.iat}</td><td class="enz-col hidden-col ${reaction.enz !== '0' ? 'reaction-pos' : ''}">${reaction.enz}</td></tr>`;
+                });
+                tableHTML += '</tbody>';
+                tableEl.innerHTML = tableHTML;
+            }
+            
+            function initGame() {
+                antigramFeedback.classList.add('hidden');
+                document.getElementById('screen-container').classList.add('hidden');
+                document.getElementById('additional-panel-container').classList.add('hidden');
+                document.querySelectorAll('.action-btn, #check-answer-btn').forEach(btn => btn.disabled = false);
+                selectedAntibodies = [];
+
+                let scenarioPool = scenarios[currentDifficulty] || scenarios.easy;
+                if (Math.random() < 0.15) { 
+                    currentAntibodies = scenarios.panreactive[0];
+                } else {
+                    currentAntibodies = scenarioPool[Math.floor(Math.random() * scenarioPool.length)];
+                }
                 
-                if (isEnzymeDestroyed) {
-                    enzStrength = 0;
-                } else {
-                    enzStrength = iatStrength;
-                    if (isEnzymeEnhanced) enzStrength = Math.min(4, iatStrength + 1);
+                renderTable('main-panel-table', mainPanelCells, currentAntibodies);
+                renderTable('screen-table', screeningCells, currentAntibodies);
+                renderTable('additional-panel-table', additionalPanelCells, currentAntibodies);
+                
+                let correctOptions = currentAntibodies[0].antigen === 'pan' 
+                    ? ["Refer to NBS for investigation"] 
+                    : currentAntibodies.map(ab => ab.name);
+                let wrongOptions = allAntibodies.filter(ab => !correctOptions.includes(ab.name))
+                                                  .sort(() => 0.5 - Math.random())
+                                                  .slice(0, 12 - correctOptions.length)
+                                                  .map(ab => ab.name);
+                if (currentAntibodies[0].antigen !== 'pan') {
+                    wrongOptions.push("Refer to NBS for investigation");
                 }
-            }
-            return {
-                iat: iatStrength > 0 ? `${iatStrength}+` : '0',
-                enz: enzStrength > 0 ? `${enzStrength}+` : '0'
-            };
-        }
+                let displayOptions = [...correctOptions, ...wrongOptions].sort(() => 0.5 - Math.random());
 
-        function renderTable(tableEl, panelData, antibodies) {
-            const isScreeningPanel = panelData.length === 3;
-            let tableHTML = `<thead><tr><th class="w-12">${isScreeningPanel ? 'Screen' : 'Cell'}</th>${antigens.map(ag => `<th class="antigen-header" data-antigen="${ag}">${ag}</th>`).join('')}<th>IAT</th><th class="enz-col hidden">ENZ</th></tr></thead><tbody>`;
-            panelData.forEach((cell, index) => {
-                const reaction = calculateReaction(cell, antibodies);
-                tableHTML += `<tr><td class="font-bold">${isScreeningPanel ? 'I, II, III'[index] : index + 1}</td>${antigens.map(ag => `<td data-antigen="${ag}">${cell.antigens[ag]}</td>`).join('')}<td class="${reaction.iat !== '0' ? 'reaction-pos' : ''}">${reaction.iat}</td><td class="enz-col hidden ${reaction.enz !== '0' ? 'reaction-pos' : ''}">${reaction.enz}</td></tr>`;
-            });
-            tableHTML += '</tbody>';
-            tableEl.innerHTML = tableHTML;
-        }
-        
-        function initGame() {
-            // Reset UI
-            antigramFeedback.classList.add('hidden');
-            document.getElementById('screen-container').classList.add('hidden');
-            document.getElementById('additional-panel-container').classList.add('hidden');
-            document.querySelectorAll('.action-btn').forEach(btn => btn.disabled = false);
-            checkAnswerBtn.disabled = false;
-            selectedAntibodies = [];
-
-            // Select Scenario
-            let scenarioPool = scenarios[currentDifficulty];
-            if (Math.random() < 0.15) { // 15% chance of a pan-reactive panel
-                currentAntibodies = scenarios.panreactive[0];
-            } else {
-                currentAntibodies = scenarioPool[Math.floor(Math.random() * scenarioPool.length)];
-            }
-            
-            // Render Panels
-            renderTable(document.getElementById('main-panel-table'), mainPanelCells, currentAntibodies);
-            renderTable(document.getElementById('screen-table'), screeningCells, currentAntibodies);
-            renderTable(document.getElementById('additional-panel-table'), additionalPanelCells, currentAntibodies);
-            
-            // Render Options
-            let displayOptions = [];
-            const correctOptions = currentAntibodies[0].antigen === 'pan' 
-                ? ["Refer to NBS for investigation"] 
-                : currentAntibodies.map(ab => ab.name);
-
-            const wrongOptions = allAntibodies.filter(ab => !correctOptions.includes(ab.name))
-                                              .sort(() => 0.5 - Math.random())
-                                              .slice(0, 12 - correctOptions.length)
-                                              .map(ab => ab.name);
-            displayOptions = [...correctOptions, ...wrongOptions].sort(() => 0.5 - Math.random());
-             if (currentAntibodies[0].antigen !== 'pan' && Math.random() > 0.5) {
-                displayOptions.push("Refer to NBS for investigation");
-                displayOptions.sort(() => 0.5 - Math.random());
+                antibodyOptionsContainer.innerHTML = '';
+                displayOptions.forEach(abName => {
+                    antibodyOptionsContainer.innerHTML += `<button class="antibody-choice-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">${abName}</button>`;
+                });
+                
+                addEventListeners();
             }
 
-            antibodyOptionsContainer.innerHTML = '';
-            displayOptions.forEach(abName => {
-                antibodyOptionsContainer.innerHTML += `<button class="antibody-choice-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">${abName}</button>`;
-            });
-            
-            // Add Event Listeners
-            document.querySelectorAll('.antibody-choice-btn').forEach(btn => btn.addEventListener('click', (e) => {
-                e.target.classList.toggle('selected');
-                const abName = e.target.textContent;
-                if (selectedAntibodies.includes(abName)) {
-                    selectedAntibodies = selectedAntibodies.filter(ab => ab !== abName);
-                } else {
-                    selectedAntibodies.push(abName);
-                }
-            }));
-            
-            document.querySelectorAll('.antigen-header').forEach(header => {
-                header.addEventListener('click', () => {
-                    const antigenToExclude = header.dataset.antigen;
-                    document.querySelectorAll(`[data-antigen="${antigenToExclude}"]`).forEach(cell => {
-                        cell.classList.toggle('excluded');
+            function addEventListeners() {
+                document.querySelectorAll('.antibody-choice-btn').forEach(btn => btn.addEventListener('click', (e) => {
+                    e.target.classList.toggle('selected');
+                    const abName = e.target.textContent;
+                    if (selectedAntibodies.includes(abName)) {
+                        selectedAntibodies = selectedAntibodies.filter(ab => ab !== abName);
+                    } else {
+                        selectedAntibodies.push(abName);
+                    }
+                }));
+                document.querySelectorAll('.antigen-header').forEach(header => {
+                    header.addEventListener('click', () => {
+                        const antigenToExclude = header.dataset.antigen;
+                        document.querySelectorAll(`[data-antigen="${antigenToExclude}"]`).forEach(cell => {
+                            cell.classList.toggle('excluded');
+                        });
                     });
                 });
-            });
-        }
-
-        function checkFinalAnswer() {
-            checkAnswerBtn.disabled = true;
-            document.querySelectorAll('.action-btn').forEach(btn => btn.disabled = true);
-            
-            const correctAntibodyNames = currentAntibodies[0].antigen === 'pan'
-                ? ["Refer to NBS for investigation"]
-                : currentAntibodies.map(ab => ab.name).sort();
-            
-            const selectedAntibodyNames = selectedAntibodies.sort();
-            const isCorrect = correctAntibodyNames.length === selectedAntibodyNames.length && correctAntibodyNames.every((val, index) => val === selectedAntibodyNames[index]);
-            
-            antigramFeedback.classList.remove('hidden');
-            if (isCorrect) {
-                antigramFeedback.textContent = `Correct! The answer is: ${correctAntibodyNames.join(', ')}.`;
-                antigramFeedback.className = 'mt-6 p-4 rounded-lg text-lg font-semibold bg-green-100 text-green-800';
-            } else {
-                antigramFeedback.textContent = `Incorrect. The correct answer was: ${correctAntibodyNames.join(', ')}.`;
-                antigramFeedback.className = 'mt-6 p-4 rounded-lg text-lg font-semibold bg-red-100 text-red-800';
             }
-            document.querySelectorAll('.antibody-choice-btn').forEach(btn => btn.disabled = true);
-        }
-        
-        difficultyButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                difficultyButtons.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                currentDifficulty = btn.dataset.difficulty;
+
+            function checkFinalAnswer() {
+                checkAnswerBtn.disabled = true;
+                document.querySelectorAll('.action-btn').forEach(btn => btn.disabled = true);
+                
+                const correctAntibodyNames = currentAntibodies[0].antigen === 'pan'
+                    ? ["Refer to NBS for investigation"]
+                    : currentAntibodies.map(ab => ab.name).sort();
+                
+                const selectedAntibodyNames = selectedAntibodies.sort();
+                const isCorrect = correctAntibodyNames.length === selectedAntibodyNames.length && correctAntibodyNames.every((val, index) => val === selectedAntibodyNames[index]);
+                
+                antigramFeedback.classList.remove('hidden');
+                if (isCorrect) {
+                    antigramFeedback.textContent = `Correct! The answer is: ${correctAntibodyNames.join(', ')}.`;
+                    antigramFeedback.className = 'mt-6 p-4 rounded-lg text-lg font-semibold bg-green-100 text-green-800';
+                } else {
+                    antigramFeedback.textContent = `Incorrect. The correct answer was: ${correctAntibodyNames.join(', ')}.`;
+                    antigramFeedback.className = 'mt-6 p-4 rounded-lg text-lg font-semibold bg-red-100 text-red-800';
+                }
+                document.querySelectorAll('.antibody-choice-btn').forEach(btn => btn.disabled = true);
+            }
+            
+            difficultyButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    difficultyButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentDifficulty = btn.dataset.difficulty;
+                    initGame();
+                });
+            });
+
+            screenBtn.addEventListener('click', () => document.getElementById('screen-container').classList.toggle('hidden'));
+            additionalPanelBtn.addEventListener('click', () => document.getElementById('additional-panel-container').classList.toggle('hidden'));
+            enzymePanelBtn.addEventListener('click', () => {
+                document.querySelectorAll('.enz-col').forEach(c => c.classList.remove('hidden-col'));
+                enzymePanelBtn.disabled = true;
+            });
+
+            newPanelBtn.addEventListener('click', initGame);
+            checkAnswerBtn.addEventListener('click', checkFinalAnswer);
+            
+            // Initial setup
+            document.querySelector('.difficulty-btn[data-difficulty="easy"]').classList.add('active');
+            createScenarios();
+            initGame();
+        });
+    </script>
+</body>
+</html>
