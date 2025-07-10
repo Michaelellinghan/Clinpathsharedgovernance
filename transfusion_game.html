@@ -26,6 +26,7 @@
         .difficulty-btn.active { background-color: #003087; color: white; }
         .antibody-choice-btn.selected { background-color: #fde047; }
         .antibody-choice-btn:disabled { background-color: #e5e7eb; cursor: not-allowed; }
+        .hidden-col { display: none; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -83,8 +84,11 @@
             </div>
 
             <div id="antigram-feedback" class="mt-6 p-4 rounded-lg text-lg font-semibold hidden"></div>
-            <button id="check-answer-btn" class="mt-4 bg-green-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-green-700 transition duration-300">Check Answer</button>
-            <button id="new-panel-btn" class="mt-4 bg-nhs-blue text-white font-bold py-3 px-8 rounded-lg hover:bg-nhs-dark-blue transition duration-300">New Panel</button>
+            <div class="flex justify-center items-center gap-4 mt-4">
+                <button id="enzyme-panel-btn" class="bg-yellow-400 text-black font-bold py-3 px-8 rounded-lg hover:bg-yellow-500 transition duration-300">View Enzyme Panel</button>
+                <button id="check-answer-btn" class="bg-green-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-green-700 transition duration-300">Check Answer</button>
+                <button id="new-panel-btn" class="bg-nhs-blue text-white font-bold py-3 px-8 rounded-lg hover:bg-nhs-dark-blue transition duration-300">New Panel</button>
+            </div>
         </div>
     </main>
 
@@ -101,55 +105,53 @@
             const antibodyOptionsContainer = document.getElementById('antibody-options');
             const newPanelBtn = document.getElementById('new-panel-btn');
             const checkAnswerBtn = document.getElementById('check-answer-btn');
+            const enzymePanelBtn = document.getElementById('enzyme-panel-btn');
             const antigramFeedback = document.getElementById('antigram-feedback');
             const difficultyButtons = document.querySelectorAll('.difficulty-btn');
 
-            const antigens = ['D', 'C', 'E', 'c', 'e', 'Cʷ', 'K', 'k', 'Kpᵃ', 'Kpᵇ', 'Jsᵃ', 'Jsᵇ', 'Fyᵃ', 'Fyᵇ', 'Jkᵃ', 'Jkᵇ', 'Leᵃ', 'Leᵇ', 'P₁', 'M', 'N', 'S', 's', 'Luᵃ', 'Luᵇ'];
+            const antigens = ['D', 'C', 'E', 'c', 'e', 'Cʷ', 'K', 'k', 'Fyᵃ', 'Fyᵇ', 'Jkᵃ', 'Jkᵇ', 'Leᵃ', 'Leᵇ', 'P₁', 'M', 'N', 'S', 's', 'Luᵃ', 'Luᵇ'];
             
             const panelCells = [
-                { antigens: {'D':'+','C':'+','E':'0','c':'0','e':'+','Cʷ':'0','K':'0','k':'+','Kpᵃ':'0','Kpᵇ':'+','Jsᵃ':'0','Jsᵇ':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'0','Jkᵇ':'+','Leᵃ':'0','Leᵇ':'+','P₁':'+','M':'+','N':'0','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'} },
-                { antigens: {'D':'+','C':'+','E':'0','c':'0','e':'+','Cʷ':'0','K':'0','k':'+','Kpᵃ':'0','Kpᵇ':'+','Jsᵃ':'0','Jsᵇ':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'0','Leᵃ':'+','Leᵇ':'0','P₁':'+','M':'0','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'} },
-                { antigens: {'D':'+','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Kpᵃ':'0','Kpᵇ':'+','Jsᵃ':'0','Jsᵇ':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'+','Jkᵇ':'0','Leᵃ':'0','Leᵇ':'0','P₁':'+','M':'+','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'} },
-                { antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Kpᵃ':'0','Kpᵇ':'+','Jsᵃ':'0','Jsᵇ':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'+','P₁':'+','M':'+','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'} },
-                { antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Kpᵃ':'0','Kpᵇ':'+','Jsᵃ':'0','Jsᵇ':'+','Fyᵃ':'+','Fyᵇ':'+','Jkᵃ':'0','Jkᵇ':'+','Leᵃ':'0','Leᵇ':'+','P₁':'0','M':'0','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'} },
-                { antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Kpᵃ':'0','Kpᵇ':'+','Jsᵃ':'0','Jsᵇ':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'0','Leᵇ':'+','P₁':'+','M':'0','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'} },
-                { antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Kpᵃ':'0','Kpᵇ':'+','Jsᵃ':'0','Jsᵇ':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'0','Jkᵇ':'+','Leᵃ':'0','Leᵇ':'+','P₁':'+','M':'0','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'} },
-                { antigens: {'D':'0','C':'0','E':'+','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Kpᵃ':'0','Kpᵇ':'+','Jsᵃ':'0','Jsᵇ':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'0','Jkᵇ':'+','Leᵃ':'0','Leᵇ':'+','P₁':'+','M':'+','N':'0','S':'+','s':'+','Luᵃ':'0','Luᵇ':'+'} },
-                { antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Kpᵃ':'0','Kpᵇ':'+','Jsᵃ':'0','Jsᵇ':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'0','Leᵃ':'0','Leᵇ':'+','P₁':'0','M':'+','N':'+','S':'+','s':'0','Luᵃ':'0','Luᵇ':'+'} },
-                { antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'+','k':'0','Kpᵃ':'0','Kpᵇ':'+','Jsᵃ':'0','Jsᵇ':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'0','Leᵃ':'+','Leᵇ':'+','P₁':'+','M':'+','N':'+','S':'+','s':'+','Luᵃ':'0','Luᵇ':'+'} },
-                { antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'+','k':'+','Kpᵃ':'0','Kpᵇ':'+','Jsᵃ':'0','Jsᵇ':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'0','Leᵇ':'0','P₁':'+','M':'0','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'} }
+                {antigens: {'D':'+','C':'+','E':'0','c':'0','e':'+','Cʷ':'+','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'0','Leᵇ':'+','P₁':'+','M':'+','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
+                {antigens: {'D':'+','C':'+','E':'0','c':'0','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'0','P₁':'+','M':'+','N':'0','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
+                {antigens: {'D':'+','C':'0','E':'+','c':'+','e':'0','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'+','P₁':'+','M':'0','N':'+','S':'+','s':'+','Luᵃ':'0','Luᵇ':'+'}},
+                {antigens: {'D':'0','C':'+','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'+','Jkᵇ':'0','Leᵃ':'0','Leᵇ':'+','P₁':'+','M':'+','N':'0','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
+                {antigens: {'D':'0','C':'0','E':'+','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'+','P₁':'0','M':'+','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
+                {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'+','P₁':'+','M':'+','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
+                {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'0','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'+','P₁':'+','M':'+','N':'+','S':'+','s':'+','Luᵃ':'0','Luᵇ':'+'}},
+                {antigens: {'D':'+','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'0','Leᵇ':'+','P₁':'+','M':'+','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
+                {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'0','Jkᵇ':'+','Leᵃ':'0','Leᵇ':'+','P₁':'0','M':'0','N':'+','S':'+','s':'+','Luᵃ':'0','Luᵇ':'+'}},
+                {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'+','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'0','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'+','P₁':'+','M':'+','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}},
+                {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'+','k':'+','Fyᵃ':'+','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'0','P₁':'+','M':'+','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}}
             ];
 
             const allAntibodies = [
-                { name: 'Anti-D', antigen: 'D' }, { name: 'Anti-C', antigen: 'C' }, { name: 'Anti-c', antigen: 'c' },
-                { name: 'Anti-E', antigen: 'E' }, { name: 'Anti-e', antigen: 'e' }, { name: 'Anti-K', antigen: 'K' },
-                { name: 'Anti-k', antigen: 'k' }, { name: 'Anti-Fya', antigen: 'Fyᵃ' }, { name: 'Anti-Fyb', antigen: 'Fyᵇ' },
-                { name: 'Anti-Jka', antigen: 'Jkᵃ' }, { name: 'Anti-Jkb', antigen: 'Jkᵇ' }, { name: 'Anti-S', antigen: 'S' },
-                { name: 'Anti-s', antigen: 's' }, { name: 'Anti-M', antigen: 'M' }, { name: 'Anti-N', antigen: 'N' },
-                { name: 'Anti-P1', antigen: 'P₁' }, { name: 'Anti-Lea', antigen: 'Leᵃ'}, { name: 'Anti-Leb', antigen: 'Leᵇ'}
+                { name: 'Anti-D', antigen: 'D', effect: 'enhance' }, { name: 'Anti-C', antigen: 'C', effect: 'enhance' }, 
+                { name: 'Anti-c', antigen: 'c', effect: 'enhance' }, { name: 'Anti-E', antigen: 'E', effect: 'enhance' }, 
+                { name: 'Anti-e', antigen: 'e', effect: 'enhance' }, { name: 'Anti-K', antigen: 'K', effect: 'unaffected' }, 
+                { name: 'Anti-k', antigen: 'k', effect: 'unaffected' }, { name: 'Anti-Fya', antigen: 'Fyᵃ', effect: 'destroy' }, 
+                { name: 'Anti-Fyb', antigen: 'Fyᵇ', effect: 'destroy' }, { name: 'Anti-Jka', antigen: 'Jkᵃ', effect: 'enhance' }, 
+                { name: 'Anti-Jkb', antigen: 'Jkᵇ', effect: 'enhance' }, { name: 'Anti-S', antigen: 'S', effect: 'destroy' }, 
+                { name: 'Anti-s', antigen: 's', effect: 'destroy' }, { name: 'Anti-M', antigen: 'M', effect: 'destroy' }, 
+                { name: 'Anti-N', antigen: 'N', effect: 'destroy' }, { name: 'Anti-P1', antigen: 'P₁', effect: 'unaffected' }, 
+                { name: 'Anti-Lea', antigen: 'Leᵃ', effect: 'unaffected'}, { name: 'Anti-Leb', antigen: 'Leᵇ', effect: 'unaffected'},
+                { name: 'Anti-Lua', antigen: 'Luᵃ', effect: 'unaffected'}, { name: 'Anti-Lub', antigen: 'Luᵇ', effect: 'unaffected'}
             ];
 
             let scenarios = { easy: [], medium: [], hard: [] };
             
             function createScenarios() {
-                // Easy: 1 antibody
                 scenarios.easy = allAntibodies.map(ab => [ab]);
-
-                // Medium: 2 antibodies
                 for (let i = 0; i < allAntibodies.length; i++) {
                     for (let j = i + 1; j < allAntibodies.length; j++) {
                         scenarios.medium.push([allAntibodies[i], allAntibodies[j]]);
                     }
                 }
-                
-                // Hard: 3 antibodies
-                for (let i = 0; i < allAntibodies.length; i++) {
-                    for (let j = i + 1; j < allAntibodies.length; j++) {
-                        for (let k = j + 1; k < allAntibodies.length; k++) {
-                            scenarios.hard.push([allAntibodies[i], allAntibodies[j], allAntibodies[k]]);
-                        }
-                    }
-                }
+                scenarios.hard = Array.from({length: 200}, () => [
+                    allAntibodies[Math.floor(Math.random() * allAntibodies.length)],
+                    allAntibodies[Math.floor(Math.random() * allAntibodies.length)],
+                    allAntibodies[Math.floor(Math.random() * allAntibodies.length)]
+                ].filter((v,i,a) => a.findIndex(t=>(t.name === v.name))===i)); // Unique only
             }
 
             let currentAntibodies = [];
@@ -160,47 +162,60 @@
                 antigramFeedback.classList.add('hidden');
                 selectedAntibodies = [];
                 checkAnswerBtn.disabled = false;
+                enzymePanelBtn.disabled = false;
                 
-                // Select a random scenario based on difficulty
                 const currentScenarios = scenarios[currentDifficulty];
                 currentAntibodies = currentScenarios[Math.floor(Math.random() * currentScenarios.length)];
 
-                let tableHTML = `<thead><tr><th class="w-12">Cell</th>${antigens.map(ag => `<th class="antigen-header">${ag}</th>`).join('')}<th>IAT</th></tr></thead><tbody>`;
+                let tableHTML = `<thead><tr><th class="w-12">Cell</th>${antigens.map(ag => `<th class="antigen-header">${ag}</th>`).join('')}<th>IAT</th><th class="enz-col hidden-col">ENZ</th></tr></thead><tbody>`;
                 panelCells.forEach((cell, index) => {
-                    let isReactive = false;
-                    for (const ab of currentAntibodies) {
-                        if (cell.antigens[ab.antigen] === '+') {
-                            isReactive = true;
-                            break;
+                    let iatStrength = 0;
+                    let enzStrength = 0;
+                    
+                    let reactingAbs = currentAntibodies.filter(ab => cell.antigens[ab.antigen] === '+');
+
+                    if (reactingAbs.length > 0) {
+                        iatStrength = Math.floor(Math.random() * 2) + 2; // Base strength 2+ to 3+
+                        
+                        let enzDestroyed = reactingAbs.every(ab => ab.effect === 'destroy');
+                        let enzEnhanced = reactingAbs.some(ab => ab.effect === 'enhance');
+
+                        if (enzDestroyed) {
+                            enzStrength = 0;
+                        } else {
+                            enzStrength = iatStrength;
+                            if (enzEnhanced) {
+                                enzStrength = Math.min(4, iatStrength + 1); // Enhance by 1, max 4+
+                            }
                         }
                     }
-                    const reaction = isReactive ? `${Math.floor(Math.random() * 3) + 1}+` : '0';
-                    tableHTML += `<tr><td class="font-bold">${index + 1}</td>${antigens.map(ag => `<td>${cell.antigens[ag]}</td>`).join('')}<td class="${reaction !== '0' ? 'reaction-pos' : ''}">${reaction}</td></tr>`;
+
+                    const iatReaction = iatStrength > 0 ? `${iatStrength}+` : '0';
+                    const enzReaction = enzStrength > 0 ? `${enzStrength}+` : '0';
+
+                    tableHTML += `<tr><td class="font-bold">${index + 1}</td>${antigens.map(ag => `<td>${cell.antigens[ag]}</td>`).join('')}<td class="${iatReaction !== '0' ? 'reaction-pos' : ''}">${iatReaction}</td><td class="enz-col hidden-col ${enzReaction !== '0' ? 'reaction-pos' : ''}">${enzReaction}</td></tr>`;
                 });
                 tableHTML += '</tbody>';
                 antigramTable.innerHTML = tableHTML;
                 
-                // Create answer options
                 const correctOptions = currentAntibodies.map(ab => ab.name);
                 const wrongOptions = allAntibodies.filter(ab => !correctOptions.includes(ab.name))
-                                                  .sort(() => 0.5 - Math.random()) // Shuffle
+                                                  .sort(() => 0.5 - Math.random())
                                                   .slice(0, 12 - correctOptions.length)
                                                   .map(ab => ab.name);
-
                 const displayOptions = [...correctOptions, ...wrongOptions].sort(() => 0.5 - Math.random());
                 
                 antibodyOptionsContainer.innerHTML = '';
                 displayOptions.forEach(abName => {
                     antibodyOptionsContainer.innerHTML += `<button class="antibody-choice-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">${abName}</button>`;
                 });
-
                 document.querySelectorAll('.antibody-choice-btn').forEach(btn => btn.addEventListener('click', selectAntibody));
             }
 
             function selectAntibody(event) {
                 const btn = event.target;
-                const abName = btn.textContent;
                 btn.classList.toggle('selected');
+                const abName = btn.textContent;
                 if (selectedAntibodies.includes(abName)) {
                     selectedAntibodies = selectedAntibodies.filter(ab => ab !== abName);
                 } else {
@@ -210,6 +225,7 @@
 
             function checkFinalAnswer() {
                 checkAnswerBtn.disabled = true;
+                enzymePanelBtn.disabled = true;
                 const currentAntibodyNames = currentAntibodies.map(ab => ab.name).sort();
                 const selectedAntibodyNames = selectedAntibodies.sort();
                 const isCorrect = currentAntibodyNames.length === selectedAntibodyNames.length && currentAntibodyNames.every((val, index) => val === selectedAntibodyNames[index]);
@@ -223,6 +239,7 @@
                     antigramFeedback.className = 'mt-6 p-4 rounded-lg text-lg font-semibold bg-red-100 text-red-800';
                 }
                 document.querySelectorAll('.antibody-choice-btn').forEach(btn => btn.disabled = true);
+                document.querySelectorAll('.enz-col').forEach(c => c.classList.remove('hidden-col'));
             }
             
             difficultyButtons.forEach(btn => {
@@ -234,10 +251,14 @@
                 });
             });
 
+            enzymePanelBtn.addEventListener('click', () => {
+                document.querySelectorAll('.enz-col').forEach(c => c.classList.remove('hidden-col'));
+                enzymePanelBtn.disabled = true;
+            });
+
             newPanelBtn.addEventListener('click', generatePanel);
             checkAnswerBtn.addEventListener('click', checkFinalAnswer);
             
-            // Initial setup
             document.querySelector('.difficulty-btn[data-difficulty="easy"]').classList.add('active');
             createScenarios();
             generatePanel();
