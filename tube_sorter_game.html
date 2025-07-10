@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chemistry Case Challenge - SGC</title>
+    <title>Specimen Reception: Tube Sorter - SGC</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,11 +18,15 @@
         .nhs-light-grey { background-color: #F0F4F5; }
         .nhs-text-blue { color: #005EB8; }
         .nhs-text-dark-blue { color: #003087; }
-        .dept-button {
+        .answer-button {
             transition: all 0.2s ease-in-out;
         }
-        .dept-button:hover {
+        .answer-button:hover {
             transform: translateY(-2px);
+        }
+        .answer-button:disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
         }
     </style>
 </head>
@@ -60,23 +64,21 @@
             <a href="games.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8">
                 <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Games
             </a>
-            <h2 class="text-3xl font-bold nhs-text-dark-blue mb-4">Chemistry: Test Sorter Challenge</h2>
-            <p class="text-gray-600 mb-8 max-w-2xl mx-auto">A test has been requested. To which department should the sample be sent?</p>
-
+            <h2 class="text-3xl font-bold nhs-text-dark-blue mb-4">Specimen Reception: Tube Sorter</h2>
+            
             <div class="bg-white p-6 rounded-lg shadow-md">
-                <h3 class="text-lg font-semibold text-gray-600 mb-2">Test Requested:</h3>
-                <p id="test-name" class="text-3xl md:text-4xl font-extrabold nhs-text-dark-blue mb-8 h-20 flex items-center justify-center"></p>
+                <p id="test-name" class="text-3xl md:text-4xl font-extrabold nhs-text-dark-blue mb-4 h-20 flex items-center justify-center"></p>
+                <h3 id="question-prompt" class="text-lg font-semibold text-gray-600 mb-6"></h3>
                 
-                <div id="chem-game-feedback" class="mb-6 h-10 text-2xl font-bold"></div>
+                <div id="game-feedback" class="mb-6 h-10 text-2xl font-bold"></div>
 
-                <div id="chem-department-buttons" class="grid grid-cols-2 gap-4">
-                    <!-- Department buttons will be generated here -->
-                </div>
+                <div id="answer-buttons" class="grid grid-cols-2 gap-4">
+                    </div>
             </div>
             
             <div class="mt-8 bg-white p-4 rounded-lg shadow-md">
-                <p class="text-lg">Score: <span id="chem-game-score" class="font-bold">0</span></p>
-                <button id="chem-new-game-btn" class="mt-4 bg-nhs-blue text-white font-bold py-2 px-6 rounded-lg hover:bg-nhs-dark-blue transition duration-300">Start New Game</button>
+                <p class="text-lg">Score: <span id="game-score" class="font-bold">0</span></p>
+                <button id="new-game-btn" class="mt-4 bg-nhs-blue text-white font-bold py-2 px-6 rounded-lg hover:bg-nhs-dark-blue transition duration-300">Start New Game</button>
             </div>
         </div>
     </main>
@@ -91,28 +93,156 @@
             feather.replace();
 
             const testNameEl = document.getElementById('test-name');
-            const departmentButtonsEl = document.getElementById('chem-department-buttons');
-            const feedbackEl = document.getElementById('chem-game-feedback');
-            const scoreEl = document.getElementById('chem-game-score');
-            const newGameBtn = document.getElementById('chem-new-game-btn');
+            const questionPromptEl = document.getElementById('question-prompt');
+            const answerButtonsEl = document.getElementById('answer-buttons');
+            const feedbackEl = document.getElementById('game-feedback');
+            const scoreEl = document.getElementById('game-score');
+            const newGameBtn = document.getElementById('new-game-btn');
 
             const tests = [
-                { name: 'Full Blood Count', department: 'Haematology' },
-                { name: 'Urea & Electrolytes', department: 'Chemistry' },
-                { name: 'Group & Save', department: 'Transfusion' },
-                { name: 'Anti-Nuclear Antibody (ANA)', department: 'Immunology' },
-                { name: 'Coagulation Screen', department: 'Haematology' },
-                { name: 'Liver Function Tests', department: 'Chemistry' },
-                { name: 'Crossmatch', department: 'Transfusion' },
-                { name: 'C3 / C4 Complement', department: 'Immunology' },
-                { name: 'Amylase', department: 'Chemistry' },
-                { name: 'Reticulocyte Count', department: 'Haematology' },
+                { name: '17-OH-progesterone', department: 'Clinical Biochemistry', sampleType: 'Plain serum (red top)' },
+                { name: 'ACTH', department: 'Clinical Biochemistry', sampleType: 'Separated & frozen EDTA' },
+                { name: 'ALT', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Albumin', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Aldosterone & Renin', department: 'Clinical Biochemistry', sampleType: '5mL EDTA' },
+                { name: 'Alkaline Phosphatase (ALP)', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Ammonia', department: 'Clinical Biochemistry', sampleType: '5mL Li-Hep (<30min)' },
+                { name: 'Amylase', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Androstenedione', department: 'Clinical Biochemistry', sampleType: '5mL Clotted' },
+                { name: 'Anti-Factor Xa', department: 'Haematology', sampleType: '2.7mL Citrate' },
+                { name: 'Anti-Mitochondrial Ab', department: 'Immunology', sampleType: '5mL SST/serum' },
+                { name: 'Anti-Smooth Muscle Ab', department: 'Immunology', sampleType: '5mL SST/serum' },
+                { name: 'Antibody Screen', department: 'Blood Transfusion', sampleType: '6mL EDTA' },
+                { name: 'Antithrombin', department: 'Haematology', sampleType: '2.7mL Citrate' },
+                { name: 'B12/Folate', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Bicarbonate', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Bilirubin', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Blood Film Exam', department: 'Haematology', sampleType: '4mL EDTA' },
+                { name: 'Bone Profile', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'C-Peptide', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'C-Reactive Protein (CRP)', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'C1 inhibitor', department: 'Immunology', sampleType: '10mL Clotted' },
+                { name: 'C3/C4 Complement', department: 'Immunology', sampleType: '5mL SST/serum' },
+                { name: 'CA125', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Caeruloplasmin', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Calcitonin', department: 'Clinical Biochemistry', sampleType: '5mL Li-Hep/Serum SST' },
+                { name: 'Calcium', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Carbamazepine', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Chloride', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Cholesterol', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Clotting Screen', department: 'Haematology', sampleType: '2.7mL Citrate' },
+                { name: 'Coeliac screen (Anti-TTG)', department: 'Immunology', sampleType: '5mL SST/serum' },
+                { name: 'Copper', department: 'Clinical Biochemistry', sampleType: '5mL Clotted' },
+                { name: 'Cortisol', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Creatine Kinase (CK)', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Creatinine', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Crossmatch', department: 'Blood Transfusion', sampleType: '6mL EDTA' },
+                { name: 'Cryoglobulins', department: 'Immunology', sampleType: '20mL Clotted (Warm)' },
+                { name: 'D-Dimer', department: 'Haematology', sampleType: '2.7mL Citrate' },
+                { name: 'DHEAS', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Digoxin', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Direct Antiglobulin Test (DAT)', department: 'Blood Transfusion', sampleType: '6mL EDTA' },
+                { name: 'Erythrocyte Sedimentation Rate (ESR)', department: 'Haematology', sampleType: '4mL EDTA' },
+                { name: 'Factor V Leiden', department: 'Haematology', sampleType: '4mL EDTA' },
+                { name: 'Ferritin', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Fibrinogen', department: 'Haematology', sampleType: '2.7mL Citrate' },
+                { name: 'Follicle Stimulating Hormone (FSH)', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Free T3', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Free T4', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Full Blood Count (FBC)', department: 'Haematology', sampleType: '4mL EDTA' },
+                { name: 'G6PD Screen', department: 'Haematology', sampleType: '4mL EDTA' },
+                { name: 'Gamma GT', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Glandular Fever Screen', department: 'Haematology', sampleType: '4mL EDTA' },
+                { name: 'Glucose', department: 'Clinical Biochemistry', sampleType: '2mL Fluoride/oxalate' },
+                { name: 'Group & Save', department: 'Blood Transfusion', sampleType: '6mL EDTA' },
+                { name: 'Growth Hormone', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Haptoglobin', department: 'Haematology', sampleType: '5mL SST/serum' },
+                { name: 'HbA1c', department: 'Clinical Biochemistry', sampleType: '4mL EDTA' },
+                { name: 'Homocysteine', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum (<30min)' },
+                { name: 'IGF-1', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'INR', department: 'Haematology', sampleType: '2.7mL Citrate' },
+                { name: 'Immunoglobulins (IgG, IgA, IgM)', department: 'Immunology', sampleType: '5mL SST/serum' },
+                { name: 'Insulin', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Iron', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Kleihauer', department: 'Blood Transfusion', sampleType: '6mL EDTA' },
+                { name: 'Lactate', department: 'Clinical Biochemistry', sampleType: '2mL Fluoride/oxalate' },
+                { name: 'Lactate Dehydrogenase (LDH)', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Luteinising Hormone (LH)', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Lipase', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Lithium', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Liver Function Tests (LFTs)', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Lupus Anticoagulant', department: 'Haematology', sampleType: '2 x 2.7mL Citrate' },
+                { name: 'Magnesium', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Malarial Parasites', department: 'Haematology', sampleType: '4mL EDTA' },
+                { name: 'Myeloma Screen', department: 'Clinical Biochemistry', sampleType: '5mL Clotted' },
+                { name: 'NTproBNP', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Oestradiol (E2)', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Osmolality', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Paracetamol', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Parathyroid Hormone (PTH)', department: 'Clinical Biochemistry', sampleType: '5mL EDTA' },
+                { name: 'Phenytoin', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Phosphate', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Plasma Viscosity', department: 'Haematology', sampleType: '4mL EDTA' },
+                { name: 'Potassium', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Progesterone', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Prolactin', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Prostate Specific Antigen (PSA)', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Protein C Level', department: 'Haematology', sampleType: '2.7mL Citrate' },
+                { name: 'Protein S Level', department: 'Haematology', sampleType: '2.7mL Citrate' },
+                { name: 'Reticulocyte Count', department: 'Haematology', sampleType: '4mL EDTA' },
+                { name: 'Rheumatoid Factor (RF)', department: 'Immunology', sampleType: '5mL SST/serum' },
+                { name: 'Salicylate', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Serum Free Light Chains', department: 'Immunology', sampleType: '5mL SST/serum' },
+                { name: 'Sex Hormone Binding Globulin (SHBG)', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Sickle Screen', department: 'Haematology', sampleType: '4mL EDTA' },
+                { name: 'Sodium', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Tacrolimus (FK506)', department: 'Clinical Biochemistry', sampleType: '5mL EDTA' },
+                { name: 'Testosterone', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Theophylline', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Thrombophilia Screen', department: 'Haematology', sampleType: '3 x 2.7mL Citrate' },
+                { name: 'Thyroid Antibodies', department: 'Immunology', sampleType: '5mL SST/serum' },
+                { name: 'Thyroid Stimulating Hormone (TSH)', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Total Protein', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Transferrin', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Triglycerides', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Trisomy Screening', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Troponin I', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Urea & Electrolytes', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Uric Acid (Urate)', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Valproate', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Vancomycin', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Vitamin D', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
+                { name: 'Zinc', department: 'Clinical Biochemistry', sampleType: '5mL Clotted' },
+                { name: 'Anti-dsDNA antibodies', department: 'Immunology', sampleType: '5mL SST/serum' },
+                { name: 'ANCA (MPO/PR3)', department: 'Immunology', sampleType: '5mL SST/serum' },
+                { name: 'Haemoglobinopathy Screen', department: 'Haematology', sampleType: '4mL EDTA' },
+                { name: 'Mast cell tryptase', department: 'Immunology', sampleType: '10mL Clotted' },
+                { name: 'Lymphocyte subsets', department: 'Immunology', sampleType: '4mL EDTA' },
+                { name: 'Connective tissue disease screen', department: 'Immunology', sampleType: '5mL SST/serum' }
             ];
 
-            const departments = ['Haematology', 'Chemistry', 'Transfusion', 'Immunology'];
+
+            const allDepartments = ['Haematology', 'Clinical Biochemistry', 'Blood Transfusion', 'Immunology'];
+            const allSampleTypes = [
+                '5mL SST/serum', '4mL EDTA', '6mL EDTA', '2.7mL Citrate', 
+                '2mL Fluoride/oxalate', '10mL Clotted', 'Separated & frozen EDTA', 
+                'Plain serum (red top)', '5mL Clotted', '5mL Li-Hep (<30min)', '3 x 2.7mL Citrate',
+                '2 x 2.7mL Citrate', '20mL Clotted (Warm)', '5mL SST/serum (<30min)',
+                '5mL Li-Hep/Serum SST'
+            ];
+
             let currentTest = {};
+            let currentQuestionType = '';
             let score = 0;
             let buttonsLocked = false;
+
+            function shuffle(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
+            }
 
             function startNewGame() {
                 score = 0;
@@ -124,43 +254,54 @@
                 buttonsLocked = false;
                 feedbackEl.textContent = '';
                 feedbackEl.className = 'mb-6 h-10 text-2xl font-bold';
+                
                 currentTest = tests[Math.floor(Math.random() * tests.length)];
                 testNameEl.textContent = currentTest.name;
+
+                currentQuestionType = Math.random() < 0.5 ? 'department' : 'sampleType';
+
+                if (currentQuestionType === 'department') {
+                    questionPromptEl.textContent = 'To which department should the sample be sent?';
+                    createButtons(allDepartments, currentTest.department);
+                } else {
+                    questionPromptEl.textContent = 'What is the correct sample tube for this test?';
+                    let options = shuffle([...allSampleTypes]).filter(type => type !== currentTest.sampleType).slice(0, 3);
+                    options.push(currentTest.sampleType);
+                    createButtons(shuffle(options), currentTest.sampleType);
+                }
+            }
+            
+            function createButtons(options, correctAnswer) {
+                answerButtonsEl.innerHTML = '';
+                options.forEach(opt => {
+                    const button = document.createElement('button');
+                    button.className = 'answer-button bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-3 sm:py-4 px-2 text-sm sm:text-base md:text-lg border border-gray-400 rounded shadow';
+                    button.textContent = opt;
+                    button.dataset.answer = opt;
+                    button.addEventListener('click', () => checkAnswer(opt, correctAnswer));
+                    answerButtonsEl.appendChild(button);
+                });
             }
 
-            function checkAnswer(selectedDept) {
+            function checkAnswer(selectedAnswer, correctAnswer) {
                 if (buttonsLocked) return;
                 buttonsLocked = true;
+                document.querySelectorAll('.answer-button').forEach(btn => btn.disabled = true);
 
-                if (selectedDept === currentTest.department) {
+                if (selectedAnswer === correctAnswer) {
                     feedbackEl.textContent = 'Correct!';
                     feedbackEl.className = 'mb-6 h-10 text-2xl font-bold text-green-600';
                     score++;
                 } else {
-                    feedbackEl.textContent = `Incorrect! This goes to ${currentTest.department}.`;
+                    feedbackEl.textContent = `Incorrect! It's ${correctAnswer}.`;
                     feedbackEl.className = 'mb-6 h-10 text-2xl font-bold text-red-600';
                 }
                 scoreEl.textContent = score;
-
-                setTimeout(nextRound, 2000);
-            }
-            
-            function createButtons() {
-                departmentButtonsEl.innerHTML = '';
-                departments.forEach(dept => {
-                    departmentButtonsEl.innerHTML += `
-                        <button class="dept-button bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-3 sm:py-4 px-2 text-sm sm:text-base md:text-lg border border-gray-400 rounded shadow" data-dept="${dept}">
-                            ${dept}
-                        </button>`;
-                });
-                document.querySelectorAll('.dept-button').forEach(btn => {
-                    btn.addEventListener('click', () => checkAnswer(btn.dataset.dept));
-                });
+                setTimeout(nextRound, 2500);
             }
 
             newGameBtn.addEventListener('click', startNewGame);
             
-            createButtons();
             startNewGame();
         });
    </script>
