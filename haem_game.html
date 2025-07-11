@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Haematology Match-Up - SGC</title>
+    <title>Haematology: Morphology Mastermind - SGC</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,201 +17,160 @@
         .nhs-dark-blue { background-color: #003087; }
         .nhs-light-grey { background-color: #F0F4F5; }
         .nhs-text-blue { color: #005EB8; }
-        .nhs-text-dark-blue { color: #003087; }
-        .game-card {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            transform-style: preserve-3d;
-            transition: transform 0.6s;
-            cursor: pointer;
+        .option-btn:disabled {
+            background-color: #d1d5db;
+            cursor: not-allowed;
         }
-        .game-card.flipped {
-            transform: rotateY(180deg);
-        }
-        .card-face {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 0.5rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        .card-front {
-            background-color: #005EB8;
+        .option-btn.correct {
+            background-color: #4ade80;
             color: white;
+            border-color: #22c55e;
         }
-        .card-back {
-            background-color: #fff;
-            transform: rotateY(180deg);
-            padding: 1rem;
-            text-align: center;
-        }
-        .card-back img {
-            max-width: 100%;
-            max-height: 80%;
-            object-fit: contain;
-        }
-        .game-card.matched {
-            transform: rotateY(180deg);
-            cursor: default;
-            box-shadow: 0 0 10px 3px #4ade80; /* Green glow for matched cards */
+        .option-btn.incorrect {
+            background-color: #f87171;
+            color: white;
+            border-color: #ef4444;
         }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
 
-    <header class="bg-white shadow-md sticky top-0 z-50">
-        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
-            <a href="index.html" class="cursor-pointer flex items-center space-x-3">
-                <img src="logo.jpg" alt="Clinical Pathology Shared Governance Council Logo" class="h-16 w-auto">
-            </a>
-            <nav class="hidden md:flex items-center space-x-8">
-                <a href="index.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Home</a>
-                <a href="projects.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Projects</a>
-                <a href="games.html" class="font-semibold text-nhs-blue transition duration-300">Games</a>
-                <a href="newsletters.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Newsletters</a>
-                <a href="about.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">About Us</a>
-                <a href="links.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Links</a>
-            </nav>
-            <button id="mobile-menu-button" class="md:hidden"><i data-feather="menu"></i></button>
-        </div>
-        <div id="mobile-menu" class="hidden md:hidden bg-white px-6 pb-4">
-             <a href="index.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Home</a>
-            <a href="projects.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Projects</a>
-            <a href="games.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Games</a>
-            <a href="newsletters.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Newsletters</a>
-            <a href="about.html" class="block py-2 text-gray-600 hover:nhs-text-blue">About Us</a>
-            <a href="social.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Social Media</a>
-            <a href="links.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Learning Links</a>
-            <a href="contact.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Suggestions</a>
-        </div>
-    </header>
+    <div id="header-placeholder"></div>
 
-    <main class="py-16 bg-nhs-light-grey">
-        <div class="container mx-auto px-6 max-w-4xl text-center">
+    <main class="py-16">
+        <div class="container mx-auto px-6 max-w-2xl text-center">
             <a href="games.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8">
                 <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Games
             </a>
-            <h2 class="text-3xl font-bold nhs-text-dark-blue mb-4">Haematology Match-Up</h2>
-            <p class="text-gray-600 mb-6">Flip the cards to match the blood cell image with its correct name. Good luck!</p>
-            <div class="flex justify-center items-center space-x-8 mb-6">
-                <div class="text-lg">Moves: <span id="moves-count" class="font-bold">0</span></div>
-                <button id="new-game-btn" class="bg-nhs-blue text-white font-bold py-2 px-4 rounded-lg hover:bg-nhs-dark-blue transition duration-300">New Game</button>
+            <h2 class="text-3xl font-bold nhs-text-dark-blue mb-4">Morphology Mastermind</h2>
+            <p class="text-gray-600 mb-8 max-w-2xl mx-auto">Read the description of a haematological feature and select the correct term.</p>
+
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <p class="text-lg font-semibold text-gray-700">Which feature is described as:</p>
+                <div id="description-box" class="my-4 p-4 bg-yellow-100 text-yellow-800 text-xl font-bold rounded-lg min-h-[100px] flex items-center justify-center">
+                    </div>
+                
+                <div id="answer-options" class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                    </div>
+
+                <div id="feedback-message" class="mt-6 p-4 rounded-lg text-lg font-semibold hidden"></div>
             </div>
-            <div id="game-board" class="grid grid-cols-4 gap-4 aspect-square"></div>
-            <div id="win-message" class="hidden mt-8 p-4 bg-green-100 text-green-800 rounded-lg">
-                <h3 class="font-bold text-xl">Congratulations!</h3>
-                <p>You've matched all the pairs!</p>
+
+            <div class="mt-6">
+                <p class="text-lg">Score: <span id="score" class="font-bold">0</span></p>
+                <button id="next-question-btn" class="mt-4 bg-nhs-blue text-white font-bold py-3 px-8 rounded-lg hover:bg-nhs-dark-blue transition duration-300 hidden">Next Question</button>
             </div>
         </div>
     </main>
-
-    <footer class="nhs-dark-blue text-white py-8 mt-16"><div class="container mx-auto px-6 text-center"><p>&copy; 2024 Clinical Pathology Shared Governance Council. All Rights Reserved.</p></div></footer>
+    
+    <div id="footer-placeholder"></div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
-            feather.replace();
+            const descriptionBox = document.getElementById('description-box');
+            const answerOptionsEl = document.getElementById('answer-options');
+            const feedbackMessageEl = document.getElementById('feedback-message');
+            const nextQuestionBtn = document.getElementById('next-question-btn');
+            const scoreEl = document.getElementById('score');
 
-            const gameBoard = document.getElementById('game-board');
-            const movesCountSpan = document.getElementById('moves-count');
-            const newGameBtn = document.getElementById('new-game-btn');
-            const winMessage = document.getElementById('win-message');
-
-            const haemCards = [
-                { name: 'Neutrophil', type: 'name' }, { name: 'Neutrophil', type: 'image', content: 'neutrophil.png' },
-                { name: 'Lymphocyte', type: 'name' }, { name: 'Lymphocyte', type: 'image', content: 'lymphocyte.png' },
-                { name: 'Monocyte', type: 'name' }, { name: 'Monocyte', type: 'image', content: 'monocyte.png' },
-                { name: 'Eosinophil', type: 'name' }, { name: 'Eosinophil', type: 'image', content: 'eosinophil.png' },
-                { name: 'Basophil', type: 'name' }, { name: 'Basophil', type: 'image', content: 'basophil.png' },
-                { name: 'Red Cell', type: 'name' }, { name: 'Red Cell', type: 'image', content: 'rbc.png' },
-                { name: 'Platelets', type: 'name' }, { name: 'Platelets', type: 'image', content: 'platelets.png' },
-                { name: 'Sickle Cell', type: 'name' }, { name: 'Sickle Cell', type: 'image', content: 'sickle.png' },
+            const morphologyPairs = [
+                { term: 'Spherocyte', description: 'A small, dense red cell lacking central pallor, associated with hereditary spherocytosis and autoimmune haemolytic anaemia.' },
+                { term: 'Target Cell', description: 'A red cell with a central haemoglobinised area surrounded by a pale zone and a peripheral rim of haemoglobin, seen in liver disease and thalassaemia.' },
+                { term: 'Sickle Cell', description: 'An elongated, crescent-shaped red blood cell, which is the hallmark of sickle cell anaemia.' },
+                { term: 'Howell-Jolly Body', description: 'A small, round, purple-staining nuclear remnant found in a red blood cell, often seen post-splenectomy.' },
+                { term: 'Acanthocyte (Spur Cell)', description: 'A red cell with a few, irregularly spaced spicules of varying length, associated with severe liver disease.' },
+                { term: 'Echinocyte (Burr Cell)', description: 'A red cell with numerous, short, regularly spaced projections, often an artefact or seen in uraemia.' },
+                { term: 'Schistocyte', description: 'A fragmented part of a red blood cell, characteristic of microangiopathic haemolytic anaemias like TTP or DIC.' },
+                { term: 'Rouleaux', description: 'Red cells arranged in stacks like coins, typically seen when plasma protein concentrations are high, such as in multiple myeloma.' },
+                { term: 'Hypersegmented Neutrophil', description: 'A neutrophil with six or more nuclear lobes, a classic feature of megaloblastic anaemia (B12/folate deficiency).' },
+                { term: 'Toxic Granulation', description: 'Prominent, dark-staining granules in the cytoplasm of neutrophils, indicating a response to severe infection or inflammation.' },
+                { term: 'Auer Rod', description: 'A red/pink staining, needle-like inclusion in the cytoplasm of myeloblasts, pathognomonic for Acute Myeloid Leukaemia (AML).' },
+                { term: 'Smear/Smudge Cell', description: 'A fragile lymphocyte that has been ruptured during the preparation of a blood film, characteristic of Chronic Lymphocytic Leukaemia (CLL).' },
+                { term: 'Döhle Body', description: 'A pale blue, oval inclusion in the periphery of a neutrophil\'s cytoplasm, seen in infections, burns, and pregnancy.' },
+                { term: 'Basophilic Stippling', description: 'Numerous, small, dark blue dots throughout the cytoplasm of a red cell, associated with lead poisoning and thalassaemia.' },
+                { term: 'Tear Drop Cell (Dacrocyte)', description: 'A red cell shaped like a tear drop, often seen in myelofibrosis or other bone marrow infiltrative disorders.' },
+                { term: 'Atypical Lymphocyte', description: 'A large lymphocyte with an indented nucleus and abundant, flowing cytoplasm, characteristic of infectious mononucleosis (Glandular Fever).' }
             ];
 
-            let firstCard, secondCard, lockBoard, moves, matchedPairs;
+            let currentPair = {};
+            let score = 0;
+            let usedIndices = [];
 
-            function shuffle(array) { array.sort(() => Math.random() - 0.5); }
+            function newQuestion() {
+                if (usedIndices.length === morphologyPairs.length) {
+                    usedIndices = []; // Reset if all questions have been asked
+                }
 
-            function createHaemBoard() {
-                shuffle(haemCards);
-                gameBoard.innerHTML = '';
-                winMessage.classList.add('hidden');
-                moves = 0;
-                matchedPairs = 0;
-                movesCountSpan.textContent = moves;
-                firstCard = null;
-                secondCard = null;
-                lockBoard = false;
+                let nextIndex;
+                do {
+                    nextIndex = Math.floor(Math.random() * morphologyPairs.length);
+                } while (usedIndices.includes(nextIndex));
+                
+                usedIndices.push(nextIndex);
+                currentPair = morphologyPairs[nextIndex];
 
-                haemCards.forEach(cardData => {
-                    const cardElement = document.createElement('div');
-                    cardElement.classList.add('perspective-1000');
-                    cardElement.innerHTML = `
-                        <div class="game-card" data-name="${cardData.name}">
-                            <div class="card-face card-front">
-                                <i data-feather="help-circle" class="w-10 h-10"></i>
-                            </div>
-                            <div class="card-face card-back">
-                                ${cardData.type === 'image' ? `<img src="${cardData.content}" alt="${cardData.name}">` : `<span class="font-bold text-lg">${cardData.name}</span>`}
-                            </div>
-                        </div>
-                    `;
-                    gameBoard.appendChild(cardElement);
-                    cardElement.addEventListener('click', flipCard);
+                feedbackMessageEl.classList.add('hidden');
+                nextQuestionBtn.classList.add('hidden');
+                answerOptionsEl.innerHTML = '';
+                descriptionBox.textContent = currentPair.description;
+                
+                generateOptions(currentPair.term);
+            }
+
+            function generateOptions(correctAnswer) {
+                let options = [correctAnswer];
+                while (options.length < 4) {
+                    const randomIndex = Math.floor(Math.random() * morphologyPairs.length);
+                    const randomOption = morphologyPairs[randomIndex].term;
+                    if (!options.includes(randomOption)) {
+                        options.push(randomOption);
+                    }
+                }
+
+                options.sort(() => Math.random() - 0.5); // Shuffle options
+
+                options.forEach(option => {
+                    const button = document.createElement('button');
+                    button.textContent = option;
+                    button.className = 'option-btn w-full text-left p-4 bg-gray-100 rounded-lg hover:bg-gray-200 transition border-2 border-transparent';
+                    button.addEventListener('click', () => checkAnswer(option, correctAnswer, button));
+                    answerOptionsEl.appendChild(button);
                 });
-                feather.replace();
             }
 
-            function flipCard() {
-                if (lockBoard || this.querySelector('.game-card').classList.contains('flipped')) return;
-                const card = this.querySelector('.game-card');
-                card.classList.add('flipped');
-                if (!firstCard) { firstCard = card; return; }
-                secondCard = card;
-                lockBoard = true;
-                moves++;
-                movesCountSpan.textContent = moves;
-                checkForMatch();
-            }
+            function checkAnswer(selectedOption, correctAnswer, buttonEl) {
+                document.querySelectorAll('.option-btn').forEach(btn => btn.disabled = true);
+                feedbackMessageEl.classList.remove('hidden');
+                nextQuestionBtn.classList.remove('hidden');
 
-            function checkForMatch() {
-                const isMatch = firstCard.dataset.name === secondCard.dataset.name;
-                isMatch ? disableCards() : unflipCards();
-            }
-
-            function disableCards() {
-                firstCard.parentElement.removeEventListener('click', flipCard);
-                secondCard.parentElement.removeEventListener('click', flipCard);
-                firstCard.classList.add('matched');
-                secondCard.classList.add('matched');
-                matchedPairs++;
-                resetHaemBoard();
-                if (winMessage && matchedPairs === haemCards.length / 2) {
-                    winMessage.classList.remove('hidden');
+                if (selectedOption === correctAnswer) {
+                    score++;
+                    scoreEl.textContent = score;
+                    feedbackMessageEl.textContent = 'Correct!';
+                    feedbackMessageEl.className = 'mt-6 p-4 rounded-lg text-lg font-semibold bg-green-100 text-green-800';
+                    buttonEl.classList.add('correct');
+                } else {
+                    feedbackMessageEl.textContent = `Incorrect. This describes a ${correctAnswer}.`;
+                    feedbackMessageEl.className = 'mt-6 p-4 rounded-lg text-lg font-semibold bg-red-100 text-red-800';
+                    buttonEl.classList.add('incorrect');
+                    document.querySelectorAll('.option-btn').forEach(btn => {
+                        if (btn.textContent === correctAnswer) {
+                            btn.classList.add('correct');
+                        }
+                    });
                 }
             }
 
-            function unflipCards() {
-                setTimeout(() => {
-                    firstCard.classList.remove('flipped');
-                    secondCard.classList.remove('flipped');
-                    resetHaemBoard();
-                }, 1200);
-            }
+            nextQuestionBtn.addEventListener('click', newQuestion);
 
-            function resetHaemBoard() { [firstCard, secondCard, lockBoard] = [null, null, false]; }
-
-            newGameBtn.addEventListener('click', createHaemBoard);
-            
-            createHaemBoard();
+            // Load component loader and then start the game
+            const loaderScript = document.createElement('script');
+            loaderScript.src = 'js/component-loader.js';
+            loaderScript.onload = () => {
+                newQuestion(); // Start game after components are loaded
+            };
+            document.body.appendChild(loaderScript);
         });
-   </script>
+    </script>
 </body>
 </html>
