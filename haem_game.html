@@ -74,22 +74,59 @@
             const scoreEl = document.getElementById('score');
 
             const morphologyPairs = [
-                { term: 'Spherocyte', description: 'A small, dense red cell lacking central pallor, associated with hereditary spherocytosis and autoimmune haemolytic anaemia.' },
-                { term: 'Target Cell', description: 'A red cell with a central haemoglobinised area surrounded by a pale zone and a peripheral rim of haemoglobin, seen in liver disease and thalassaemia.' },
-                { term: 'Sickle Cell', description: 'An elongated, crescent-shaped red blood cell, which is the hallmark of sickle cell anaemia.' },
-                { term: 'Howell-Jolly Body', description: 'A small, round, purple-staining nuclear remnant found in a red blood cell, often seen post-splenectomy.' },
-                { term: 'Acanthocyte (Spur Cell)', description: 'A red cell with a few, irregularly spaced spicules of varying length, associated with severe liver disease.' },
-                { term: 'Echinocyte (Burr Cell)', description: 'A red cell with numerous, short, regularly spaced projections, often an artefact or seen in uraemia.' },
-                { term: 'Schistocyte', description: 'A fragmented part of a red blood cell, characteristic of microangiopathic haemolytic anaemias like TTP or DIC.' },
-                { term: 'Rouleaux', description: 'Red cells arranged in stacks like coins, typically seen when plasma protein concentrations are high, such as in multiple myeloma.' },
-                { term: 'Hypersegmented Neutrophil', description: 'A neutrophil with six or more nuclear lobes, a classic feature of megaloblastic anaemia (B12/folate deficiency).' },
-                { term: 'Toxic Granulation', description: 'Prominent, dark-staining granules in the cytoplasm of neutrophils, indicating a response to severe infection or inflammation.' },
-                { term: 'Auer Rod', description: 'A red/pink staining, needle-like inclusion in the cytoplasm of myeloblasts, pathognomonic for Acute Myeloid Leukaemia (AML).' },
-                { term: 'Smear/Smudge Cell', description: 'A fragile lymphocyte that has been ruptured during the preparation of a blood film, characteristic of Chronic Lymphocytic Leukaemia (CLL).' },
-                { term: 'Döhle Body', description: 'A pale blue, oval inclusion in the periphery of a neutrophil\'s cytoplasm, seen in infections, burns, and pregnancy.' },
+                // Red Cell Features
+                { term: 'Red Blood Cell', description: 'A non-nucleated, biconcave disc, approximately 7-8µm in diameter, responsible for oxygen transport.' },
+                { term: 'Anisocytosis', description: 'A general term for variation in the size of red blood cells.' },
+                { term: 'Poikilocytosis', description: 'A general term for variation in the shape of red blood cells.' },
+                { term: 'Microcytes', description: 'Red cells that are smaller than normal (<7µm), with a mean cell volume (MCV) below the reference range. Associated with iron deficiency and thalassaemia.' },
+                { term: 'Macrocytes', description: 'Red cells that are larger than normal (>8µm), with a mean cell volume (MCV) above the reference range. Often seen in megaloblastic anaemia and liver disease.' },
+                { term: 'Hypochromia', description: 'Red cells with an increased area of central pallor, reflecting a reduced haemoglobin content. A classic feature of iron deficiency anaemia.' },
+                { term: 'Spherocytes', description: 'Small, spherical, dense red cells which lack central pallor. Associated with AIHA and Hereditary Spherocytosis.' },
+                { term: 'Target Cells', description: 'Cells with a central area of pallor containing a dot of haemoglobin. Associated with liver disease, thalassaemia, and post-splenectomy.' },
+                { term: 'Sickle Cells', description: 'Elongated, crescent-shaped red cells. Diagnostic for Sickle Cell Anaemia.' },
+                { term: 'Howell-Jolly Body', description: 'A small, dense, dark purple spherical inclusion within the red cell, composed of a nuclear remnant. Seen post-splenectomy.' },
+                { term: 'Schistocytes', description: 'Red cell fragments, varying in size and shape. A key feature of microangiopathic haemolytic anaemia (e.g., TTP, HUS, DIC).' },
+                { term: 'Rouleaux', description: 'Red cells adhering to one another in a pattern resembling a stack of coins. Associated with increased plasma proteins, e.g. paraproteins.' },
                 { term: 'Basophilic Stippling', description: 'Numerous, small, dark blue dots throughout the cytoplasm of a red cell, associated with lead poisoning and thalassaemia.' },
                 { term: 'Tear Drop Cell (Dacrocyte)', description: 'A red cell shaped like a tear drop, often seen in myelofibrosis or other bone marrow infiltrative disorders.' },
-                { term: 'Atypical Lymphocyte', description: 'A large lymphocyte with an indented nucleus and abundant, flowing cytoplasm, characteristic of infectious mononucleosis (Glandular Fever).' }
+                { term: 'Polychromasia', description: 'Red cells that stain shades of blue/grey with Romanowsky stains, representing young reticulocytes released early from the bone marrow.' },
+                { term: 'Pencil Cells / Elliptocytes', description: 'Elongated, oval, or cigar-shaped red cells. A classic feature of iron deficiency anaemia.' },
+                { term: 'Pappenheimer Bodies', description: 'Small, irregular, dark-staining iron granules in red blood cells, typically clustered towards the periphery. Seen in sideroblastic anaemia.' },
+                { term: 'Stomatocyte', description: 'A red cell with a slit-like, mouth-shaped area of central pallor. Can be an artefact or seen in liver disease and hereditary stomatocytosis.' },
+
+                // White Cell Features
+                { term: 'Neutrophil', description: 'A mature granulocyte with a multi-lobed nucleus (2-5 lobes) and fine, lilac-staining cytoplasmic granules.' },
+                { term: 'Lymphocyte', description: 'A mononuclear cell with a large, round nucleus that occupies most of the cell, and a thin rim of basophilic cytoplasm.' },
+                { term: 'Monocyte', description: 'The largest normal white blood cell, with an indented or kidney-bean shaped nucleus, and abundant grey-blue cytoplasm, often with vacuoles.' },
+                { term: 'Eosinophil', description: 'A granulocyte with a bi-lobed nucleus and large, prominent, eosinophilic (red-pink) cytoplasmic granules.' },
+                { term: 'Basophil', description: 'A granulocyte with a nucleus obscured by large, coarse, dark purple/black cytoplasmic granules.' },
+                { term: 'Myeloblast', description: 'The earliest recognisable granulocyte precursor, with a large nucleus, fine chromatin, prominent nucleoli, and scant, agranular basophilic cytoplasm.' },
+                { term: 'Promyelocyte', description: 'A granulocyte precursor characterised by a large nucleus and the presence of prominent, primary (azurophilic) granules in the cytoplasm.' },
+                { term: 'Myelocyte', description: 'A granulocyte precursor where the nucleus begins to flatten and specific (secondary) granules become prominent.' },
+                { term: 'Metamyelocyte', description: 'A granulocyte precursor with an indented, kidney-bean shaped nucleus, representing the stage just before the band form.' },
+                { term: 'Band Form Neutrophil', description: 'An immature neutrophil with a U-shaped or curved nucleus of uniform thickness. An increase is known as a "left shift".' },
+                { term: 'Hypersegmented Neutrophil', description: 'A neutrophil with six or more nuclear lobes, a classic feature of megaloblastic anaemia (B12/folate deficiency).' },
+                { term: 'Toxic Granulation', description: 'Prominent, dark blue/purple granules in the cytoplasm of neutrophils, indicating a response to severe infection or inflammation.' },
+                { term: 'Auer Rods', description: 'Pink/purple staining needle-like bodies seen in the cytoplasm of blast cells. Pathognomonic of Acute Myeloid Leukaemia.' },
+                { term: 'Smear/Smudge Cell', description: 'A fragile lymphocyte that has been ruptured during the preparation of a blood film, characteristic of Chronic Lymphocytic Leukaemia (CLL).' },
+                { term: 'Döhle Bodies', description: 'Pale blue, oval inclusions in the periphery of a neutrophil\'s cytoplasm, seen in infections, burns, and pregnancy.' },
+                { term: 'Atypical Lymphocyte', description: 'A large lymphocyte with an indented nucleus and abundant, flowing, often basophilic cytoplasm, characteristic of infectious mononucleosis.' },
+                { term: 'Plasma Cell', description: 'A mature B-lymphocyte with an eccentric nucleus, clumped "clock-face" chromatin, and deeply basophilic cytoplasm. Secretes antibodies.' },
+                { term: 'Hairy Cell', description: 'An abnormal lymphoid cell with fine, irregular, hair-like projections on its surface. The pathognomonic cell of Hairy Cell Leukaemia.' },
+                { term: 'Pelger-Huët Anomaly', description: 'A benign inherited condition where neutrophil nuclei are bi-lobed (pince-nez shape) or unsegmented, but functionally normal.' },
+                
+                // Platelet Features
+                { term: 'Platelet', description: 'A small, anucleated cell fragment, typically 2-3µm in diameter, that is essential for blood clotting.' },
+                { term: 'Giant Platelet', description: 'A platelet that is larger than a normal red blood cell, which can be seen in various platelet disorders like Bernard-Soulier syndrome.' },
+                { term: 'Platelet Clumping', description: 'Aggregates of platelets, which can be an in-vitro EDTA-related artefact, leading to a falsely low automated platelet count.' },
+                { term: 'Platelet Satellitism', description: 'A rare phenomenon where platelets adhere to the surface of neutrophils in an EDTA sample, creating a rosette appearance.' },
+
+                // Malaria Parasites
+                { term: 'Plasmodium falciparum', description: 'Malarial parasite characterised by multiple fine ring forms per red cell, including appliqué forms. Gametocytes are uniquely crescent or sausage-shaped.' },
+                { term: 'Plasmodium vivax', description: 'Malarial parasite that typically infects young, enlarged red cells. Trophozoites are amoeboid in shape and may show Schüffner\'s dots.' },
+                { term: 'Plasmodium ovale', description: 'Malarial parasite that characteristically infects oval-shaped red cells, which may have fimbriated edges. Schüffner\'s dots are common.' },
+                { term: 'Plasmodium malariae', description: 'Malarial parasite where the trophozoites often form a characteristic "band form" across the red cell. Infected red cells are not enlarged.' },
+                { term: 'Plasmodium knowlesi', description: 'A zoonotic malarial parasite with a 24-hour cycle that can cause severe disease. Morphologically, it can resemble either P. falciparum or P. malariae.' }
             ];
 
             let currentPair = {};
@@ -97,23 +134,15 @@
             let usedIndices = [];
 
             function newQuestion() {
-                if (usedIndices.length === morphologyPairs.length) {
-                    usedIndices = []; // Reset if all questions have been asked
-                }
-
+                if (usedIndices.length === morphologyPairs.length) { usedIndices = []; }
                 let nextIndex;
-                do {
-                    nextIndex = Math.floor(Math.random() * morphologyPairs.length);
-                } while (usedIndices.includes(nextIndex));
-                
+                do { nextIndex = Math.floor(Math.random() * morphologyPairs.length); } while (usedIndices.includes(nextIndex));
                 usedIndices.push(nextIndex);
                 currentPair = morphologyPairs[nextIndex];
-
                 feedbackMessageEl.classList.add('hidden');
                 nextQuestionBtn.classList.add('hidden');
                 answerOptionsEl.innerHTML = '';
                 descriptionBox.textContent = currentPair.description;
-                
                 generateOptions(currentPair.term);
             }
 
@@ -126,9 +155,7 @@
                         options.push(randomOption);
                     }
                 }
-
-                options.sort(() => Math.random() - 0.5); // Shuffle options
-
+                options.sort(() => Math.random() - 0.5);
                 options.forEach(option => {
                     const button = document.createElement('button');
                     button.textContent = option;
@@ -142,7 +169,6 @@
                 document.querySelectorAll('.option-btn').forEach(btn => btn.disabled = true);
                 feedbackMessageEl.classList.remove('hidden');
                 nextQuestionBtn.classList.remove('hidden');
-
                 if (selectedOption === correctAnswer) {
                     score++;
                     scoreEl.textContent = score;
@@ -150,25 +176,18 @@
                     feedbackMessageEl.className = 'mt-6 p-4 rounded-lg text-lg font-semibold bg-green-100 text-green-800';
                     buttonEl.classList.add('correct');
                 } else {
-                    feedbackMessageEl.textContent = `Incorrect. This describes a ${correctAnswer}.`;
+                    feedbackMessageEl.textContent = `Incorrect. This describes ${correctAnswer}.`;
                     feedbackMessageEl.className = 'mt-6 p-4 rounded-lg text-lg font-semibold bg-red-100 text-red-800';
                     buttonEl.classList.add('incorrect');
-                    document.querySelectorAll('.option-btn').forEach(btn => {
-                        if (btn.textContent === correctAnswer) {
-                            btn.classList.add('correct');
-                        }
-                    });
+                    document.querySelectorAll('.option-btn').forEach(btn => { if (btn.textContent === correctAnswer) { btn.classList.add('correct'); } });
                 }
             }
-
+            
             nextQuestionBtn.addEventListener('click', newQuestion);
-
-            // Initial game start
             newQuestion();
         });
     </script>
 
     <script src="js/component-loader.js"></script>
-
 </body>
 </html>
