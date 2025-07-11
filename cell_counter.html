@@ -15,36 +15,14 @@
         .nhs-dark-blue { background-color: #003087; }
         .nhs-light-grey { background-color: #F0F4F5; }
         .nhs-text-blue { color: #005EB8; }
+        .counter-grid th { text-align: right; padding-right: 0.5rem; font-size: 0.75rem; color: #4b5563; }
         .counter-row:nth-child(even) { background-color: #F9FAFB; }
-        .key-display {
-            font-size: 0.8rem;
-            font-weight: bold;
-            color: #4b5563;
-            border: 1px solid #d1d5db;
-            background-color: #f3f4f6;
-            border-radius: 0.25rem;
-            padding: 0.1rem 0.4rem;
-        }
-        .count-display {
-            font-family: 'monospace', 'ui-monospace';
-            font-size: 1.25rem;
-        }
-        .percent-display {
-            font-family: 'monospace', 'ui-monospace';
-            font-size: 1.25rem;
-            color: #6b7280;
-        }
-        .total-display {
-            font-size: 3rem;
-            font-weight: 800;
-        }
-        .complete {
-            animation: pulse 1s ease-in-out;
-        }
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
+        .key-display { font-size: 0.8rem; font-weight: bold; color: #4b5563; border: 1px solid #d1d5db; background-color: #f3f4f6; border-radius: 0.25rem; padding: 0.1rem 0.4rem; }
+        .count-display, .percent-display, .absolute-display { font-family: 'monospace', 'ui-monospace'; font-size: 1.1rem; }
+        .percent-display { color: #6b7280; }
+        .total-display { font-size: 3rem; font-weight: 800; }
+        .complete { animation: pulse 1s ease-in-out; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800">
@@ -53,33 +31,44 @@
 
     <main class="py-16">
         <div class="container mx-auto px-6">
-            <a href="games.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8">
-                <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Games
+            <a href="helpful_tools.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8">
+                <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Helpful Tools
             </a>
             <div class="text-center">
                  <h2 class="text-3xl font-bold nhs-text-dark-blue mb-4">Manual Differential Counter</h2>
-                 <p class="text-gray-600 mb-8 max-w-2xl mx-auto">Use your keyboard number keys to count the cells as you would in the lab. The percentages are calculated based on the total white cell count.</p>
+                 <p class="text-gray-600 mb-8 max-w-2xl mx-auto">Use your keyboard number keys to count cells. Enter the patient's total WBC to calculate absolute values.</p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <div class="lg:col-span-2 bg-white p-4 rounded-lg shadow-md">
-                    <div id="counter-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
-                        </div>
+                <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-white p-4 rounded-lg shadow-md">
+                         <h3 class="text-xl font-bold text-center nhs-text-dark-blue border-b pb-2">Standard Differential</h3>
+                         <table id="counter-grid-wbc" class="w-full mt-2 counter-grid">
+                            <thead><tr><th></th><th class="w-16">Count</th><th class="w-16">%</th><th class="w-20">x10⁹/L</th></tr></thead>
+                            <tbody></tbody>
+                         </table>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-md">
+                        <h3 class="text-xl font-bold text-center nhs-text-dark-blue border-b pb-2">Other Cells</h3>
+                         <table id="counter-grid-other" class="w-full mt-2 counter-grid">
+                            <thead><tr><th></th><th class="w-16">Count</th><th class="w-16">%</th><th class="w-20">x10⁹/L</th></tr></thead>
+                            <tbody></tbody>
+                         </table>
+                    </div>
                 </div>
 
                 <div class="space-y-6">
                     <div class="bg-white p-6 rounded-lg shadow-md text-center">
                         <h3 class="text-xl font-bold text-gray-700">Total WBC Counted</h3>
                         <p id="total-wbc-count" class="total-display text-nhs-blue">0</p>
-                         <div class="mt-2">
+                         <div class="mt-2 flex items-center justify-center gap-2">
                             <label for="target-count" class="text-sm font-medium text-gray-600">Target:</label>
                             <input type="number" id="target-count" value="100" class="w-20 text-center border-gray-300 rounded-md shadow-sm">
                         </div>
                     </div>
-                     <div class="bg-white p-6 rounded-lg shadow-md text-center">
-                        <h3 class="text-xl font-bold text-gray-700">Total NRBCs</h3>
-                        <p id="total-nrbc-count" class="text-2xl font-bold">0</p>
-                        <p class="text-sm text-gray-500">(per 100 WBCs)</p>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <label for="total-wbc-input" class="text-xl font-bold text-gray-700">Total WBC Count (x10⁹/L)</label>
+                        <input type="number" step="0.1" id="total-wbc-input" placeholder="e.g., 8.5" class="w-full text-center border-gray-300 rounded-md shadow-sm mt-2 text-2xl p-2">
                     </div>
                     <div class="bg-white p-6 rounded-lg shadow-md text-center">
                          <button id="reset-btn" class="w-full bg-red-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-red-700 transition duration-300">Reset Counter</button>
@@ -93,102 +82,99 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const counterGrid = document.getElementById('counter-grid');
+            const wbcGridBody = document.querySelector('#counter-grid-wbc tbody');
+            const otherGridBody = document.querySelector('#counter-grid-other tbody');
             const totalWbcCountEl = document.getElementById('total-wbc-count');
-            const totalNrbcCountEl = document.getElementById('total-nrbc-count');
             const targetCountInput = document.getElementById('target-count');
+            const totalWbcInput = document.getElementById('total-wbc-input');
             const resetBtn = document.getElementById('reset-btn');
 
-            const cellTypes = {
-                '1': { name: 'Neutrophils', count: 0, isWBC: true },
-                '2': { name: 'Lymphocytes', count: 0, isWBC: true },
-                '3': { name: 'Monocytes', count: 0, isWBC: true },
-                '4': { name: 'Eosinophils', count: 0, isWBC: true },
-                '5': { name: 'Basophils', count: 0, isWBC: true },
-                '6': { name: 'Metamyelocytes', count: 0, isWBC: true },
-                '7': { name: 'Myelocytes', count: 0, isWBC: true },
-                '8': { name: 'Promyelocytes', count: 0, isWBC: true },
-                '9': { name: 'Blasts', count: 0, isWBC: true },
-                '.': { name: 'Plasma Cells', count: 0, isWBC: true },
-                '0': { name: 'NRBCs', count: 0, isWBC: false },
+            const cellGroups = {
+                wbc: {
+                    '1': { name: 'Neutrophils', count: 0 },
+                    '2': { name: 'Lymphocytes', count: 0 },
+                    '3': { name: 'Monocytes', count: 0 },
+                    '4': { name: 'Eosinophils', count: 0 },
+                    '5': { name: 'Basophils', count: 0 },
+                },
+                other: {
+                    '6': { name: 'Metamyelocytes', count: 0 },
+                    '7': { name: 'Myelocytes', count: 0 },
+                    '8': { name: 'Promyelocytes', count: 0 },
+                    '9': { name: 'Blasts', count: 0 },
+                    '.': { name: 'Plasma Cells', count: 0 },
+                    '0': { name: 'NRBCs', count: 0 },
+                }
             };
+            
+            const allCells = {...cellGroups.wbc, ...cellGroups.other};
 
             function createCounterUI() {
-                counterGrid.innerHTML = '';
-                for (const key in cellTypes) {
-                    const cell = cellTypes[key];
-                    const row = document.createElement('div');
-                    row.className = 'counter-row grid grid-cols-4 items-center gap-2 p-2';
-                    
-                    row.innerHTML = `
-                        <div class="col-span-2 flex items-center gap-2">
-                           <span class="key-display">${key}</span>
-                           <span class="font-semibold">${cell.name}</span>
-                        </div>
-                        <div id="${key}-count" class="count-display text-right">${cell.count}</div>
-                        <div id="${key}-percent" class="percent-display text-right">0.0%</div>
-                    `;
-                    counterGrid.appendChild(row);
-                }
+                wbcGridBody.innerHTML = '';
+                otherGridBody.innerHTML = '';
+                
+                Object.entries(cellGroups.wbc).forEach(([key, cell]) => {
+                    wbcGridBody.innerHTML += `<tr class="counter-row"><td class="p-2 flex items-center gap-2"><span class="key-display">${key}</span><span class="font-semibold">${cell.name}</span></td><td id="${key}-count" class="count-display">0</td><td id="${key}-percent" class="percent-display">0.0%</td><td id="${key}-absolute" class="absolute-display">0.00</td></tr>`;
+                });
+                Object.entries(cellGroups.other).forEach(([key, cell]) => {
+                    otherGridBody.innerHTML += `<tr class="counter-row"><td class="p-2 flex items-center gap-2"><span class="key-display">${key}</span><span class="font-semibold">${cell.name}</span></td><td id="${key}-count" class="count-display">0</td><td id="${key}-percent" class="percent-display"></td><td id="${key}-absolute" class="absolute-display"></td></tr>`;
+                });
             }
             
             function updateDisplay() {
                 let totalWbcCount = 0;
-                Object.values(cellTypes).forEach(cell => {
-                    if (cell.isWBC) {
-                        totalWbcCount += cell.count;
-                    }
-                });
+                Object.values(allCells).forEach(cell => totalWbcCount += cell.count);
+                const totalNrbcs = cellGroups.other['0'].count;
+                const totalWbcForPercent = totalWbcCount - totalNrbcs;
+                const totalWbcFromInput = parseFloat(totalWbcInput.value) || 0;
 
-                for (const key in cellTypes) {
-                    const cell = cellTypes[key];
-                    document.getElementById(`${key}-count`).textContent = cell.count;
-                    
-                    if (cell.isWBC) {
-                        const percentage = totalWbcCount > 0 ? (cell.count / totalWbcCount) * 100 : 0;
-                        document.getElementById(`${key}-percent`).textContent = percentage.toFixed(1) + '%';
-                    } else {
-                         document.getElementById(`${key}-percent`).textContent = ''; // NRBCs don't have a percentage in the diff
+                for (const key in allCells) {
+                    const cell = allCells[key];
+                    const countEl = document.getElementById(`${key}-count`);
+                    const percentEl = document.getElementById(`${key}-percent`);
+                    const absoluteEl = document.getElementById(`${key}-absolute`);
+
+                    if(countEl) countEl.textContent = cell.count;
+
+                    if(key !== '0') { // Don't calculate percentage or absolute for NRBCs in this table
+                       const percentage = totalWbcForPercent > 0 ? (cell.count / totalWbcForPercent) * 100 : 0;
+                       if (percentEl) percentEl.textContent = percentage.toFixed(1) + '%';
+                       if (absoluteEl) absoluteEl.textContent = (percentage / 100 * totalWbcFromInput).toFixed(2);
                     }
                 }
 
-                totalWbcCountEl.textContent = totalWbcCount;
-                totalNrbcCountEl.textContent = cellTypes['0'].count;
-
+                totalWbcCountEl.textContent = totalWbcForPercent;
                 const target = parseInt(targetCountInput.value, 10) || 100;
-                if (totalWbcCount === target) {
-                    totalWbcCountEl.classList.add('complete', 'text-green-600');
-                } else {
-                    totalWbcCountEl.classList.remove('complete', 'text-green-600');
-                }
+                totalWbcCountEl.classList.toggle('complete', totalWbcForPercent === target);
+                totalWbcCountEl.classList.toggle('text-green-600', totalWbcForPercent === target);
             }
 
             function handleKeyPress(e) {
                 const key = e.key;
-                if (cellTypes.hasOwnProperty(key)) {
-                    e.preventDefault(); // Prevent default action (e.g., typing '.' in a field)
-                    cellTypes[key].count++;
+                if (allCells.hasOwnProperty(key)) {
+                    e.preventDefault();
+                    allCells[key].count++;
                     updateDisplay();
                 }
             }
 
             function resetCounter() {
-                 for (const key in cellTypes) {
-                    cellTypes[key].count = 0;
+                 for (const key in allCells) {
+                    allCells[key].count = 0;
                 }
+                totalWbcInput.value = '';
                 updateDisplay();
             }
 
-            // Initial Setup
             createCounterUI();
             updateDisplay();
 
-            // Event Listeners
             document.addEventListener('keydown', handleKeyPress);
             resetBtn.addEventListener('click', resetCounter);
+            totalWbcInput.addEventListener('input', updateDisplay);
+            targetCountInput.addEventListener('input', updateDisplay);
         });
     </script>
-
     <script src="js/component-loader.js"></script>
 </body>
 </html>
