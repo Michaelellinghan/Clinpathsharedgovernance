@@ -22,32 +22,7 @@
 </head>
 <body class="bg-gray-50 text-gray-800">
 
-    <header class="bg-white shadow-md sticky top-0 z-50">
-        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
-            <a href="index.html" class="cursor-pointer flex items-center space-x-3">
-                <img src="logo.jpg" alt="Clinical Pathology Shared Governance Council Logo" class="h-16 w-auto">
-            </a>
-            <nav class="hidden md:flex items-center space-x-8">
-                <a href="index.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Home</a>
-                <a href="projects.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Projects</a>
-                <a href="games.html" class="font-semibold text-nhs-blue transition duration-300">Games</a>
-                <a href="newsletters.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Newsletters</a>
-                <a href="about.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">About Us</a>
-                <a href="links.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Links</a>
-            </nav>
-            <button id="mobile-menu-button" class="md:hidden"><i data-feather="menu"></i></button>
-        </div>
-        <div id="mobile-menu" class="hidden md:hidden bg-white px-6 pb-4">
-             <a href="index.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Home</a>
-            <a href="projects.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Projects</a>
-            <a href="games.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Games</a>
-            <a href="newsletters.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Newsletters</a>
-            <a href="about.html" class="block py-2 text-gray-600 hover:nhs-text-blue">About Us</a>
-            <a href="social.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Social Media</a>
-            <a href="links.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Learning Links</a>
-            <a href="contact.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Suggestions</a>
-        </div>
-    </header>
+    <div id="header-placeholder"></div>
 
     <main class="py-16">
         <div class="container mx-auto px-6">
@@ -56,79 +31,90 @@
             </a>
             <h2 class="text-4xl font-bold text-center mb-12 nhs-text-dark-blue">Pathology Games</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <a href="transfusion_game.html" class="block bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Antibody ID Challenge</h3>
+                        <p class="text-gray-600">Use the antigrams and patient details to identify complex antibodies.</p>
+                    </div>
+                </a>
+
+                <a href="haem_game.html" class="block bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Morphology Mastermind</h3>
+                        <p class="text-gray-600">Identify haematological features from their classic descriptions.</p>
+                    </div>
+                </a>
+
+                <a href="fbc_challenge.html" class="block bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Name That Condition</h3>
+                        <p class="text-gray-600">Analyse FBC results and clinical clues to find the diagnosis.</p>
+                    </div>
+                </a>
+
                 <a href="coagulation_game.html" class="block bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
                     <div class="p-6">
                         <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Coagulation Cascade</h3>
-                        <p class="text-gray-600">A drag-and-drop challenge to place coagulation factors into pathways.</p>
+                        <p class="text-gray-600">A drag-and-drop challenge to build the coagulation pathways.</p>
                     </div>
                 </a>
+
                 <a href="disease_association_game.html" class="block bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
                     <div class="p-6">
                         <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Antibody & Disease Association</h3>
                         <p class="text-gray-600">Test your knowledge of serological markers in autoimmune diseases.</p>
                     </div>
                 </a>
-                <a href="haem_game.html" class="block bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Morphology Mastermind</h3>
-                        <p class="text-gray-600">Match the morphilogical term to its discription in this knowledge game.</p>
-                    </div>
-                </a>
-                <a href="transfusion_game.html" class="block bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Antibody ID Challenge</h3>
-                        <p class="text-gray-600">Use the antigram to identify the antibody.</p>
-                    </div>
-                </a>
-                <a href="compatibility_game.html" class="block bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Blood Group BATTLE</h3>
-                        <p class="text-gray-600">Is it a compatible transfusion? Make the call!</p>
-                    </div>
-                </a>
-                <a href="tube_sorter_game.html" class="block bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Specimen Reception: Tube Sorter</h3>
-                        <p class="text-gray-600">Sort the blood tubes into the correct departments.</p>
-                    </div>
-                </a>
+                
                 <a href="chemistry_game.html" class="block bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
                     <div class="p-6">
                         <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Clinical Chemistry Case Challenge</h3>
-                        <p class="text-gray-600">Analyse the results and solve the case.</p>
+                        <p class="text-gray-600">Analyse the biochemistry results and solve the case.</p>
                     </div>
                 </a>
+
+                <a href="tube_sorter_game.html" class="block bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Specimen Reception: Tube Sorter</h3>
+                        <p class="text-gray-600">Sort blood tubes into the correct departments or choose the right sample type.</p>
+                    </div>
+                </a>
+
+                <a href="compatibility_game.html" class="block bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Blood Group BATTLE</h3>
+                        <p class="text-gray-600">Is it a compatible transfusion? Make the right call!</p>
+                    </div>
+                </a>
+                
                 <a href="immunology_game.html" class="block bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
                     <div class="p-6">
                         <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Immunology Word Search</h3>
-                        <p class="text-gray-600">Find the hidden autoantibodies in the grid.</p>
+                        <p class="text-gray-600">Find the hidden immunology terms in the grid.</p>
                     </div>
                 </a>
+                
                 <a href="pre_analytical_game.html" class="block bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
                     <div class="p-6">
                         <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Pre-analytical Pitfalls</h3>
                         <p class="text-gray-600">Identify sample collection errors and their impact on results.</p>
                     </div>
                 </a>
+
                 <a href="lab_discussions.html" class="block bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
                     <div class="p-6">
                         <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Lab Questions</h3>
-                        <p class="text-gray-600">Get a random question of the month to discuss with collegues!</p>
+                        <p class="text-gray-600">Get a random question of the month to discuss with colleagues!</p>
                     </div>
                 </a>
-                </div>
+
+            </div>
         </div>
     </main>
 
-    <footer class="nhs-dark-blue text-white py-8 mt-16"><div class="container mx-auto px-6 text-center"><p>&copy; 2024 Clinical Pathology Shared Governance Council. All Rights Reserved.</p></div></footer>
+    <div id="footer-placeholder"></div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
-            feather.replace();
-        });
-   </script>
+    <script src="js/component-loader.js"></script>
 </body>
 </html>
