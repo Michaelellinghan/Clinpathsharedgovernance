@@ -163,14 +163,12 @@
 
             nextQuestionBtn.addEventListener('click', newQuestion);
 
-            // Load component loader and then start the game
-            const loaderScript = document.createElement('script');
-            loaderScript.src = 'js/component-loader.js';
-            loaderScript.onload = () => {
-                newQuestion(); // Start game after components are loaded
-            };
-            document.body.appendChild(loaderScript);
+            // Initial game start
+            newQuestion();
         });
     </script>
+
+    <script src="js/component-loader.js"></script>
+
 </body>
 </html>
