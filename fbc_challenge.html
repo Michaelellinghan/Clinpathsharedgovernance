@@ -46,6 +46,10 @@
 
                 <div id="answer-options" class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6"></div>
                 <div id="feedback-message" class="mt-6 p-4 rounded-lg text-lg font-semibold hidden"></div>
+                <div id="explanation-box" class="mt-4 p-4 bg-gray-100 border-l-4 border-gray-400 text-left hidden">
+                    <h4 class="font-bold text-gray-800">Explanation:</h4>
+                    <p id="explanation-text" class="text-gray-700 mt-2"></p>
+                </div>
             </div>
 
             <div class="mt-6">
@@ -65,66 +69,46 @@
             const otherResultsTable = document.getElementById('other-results-table');
             const answerOptionsEl = document.getElementById('answer-options');
             const feedbackMessageEl = document.getElementById('feedback-message');
+            const explanationBox = document.getElementById('explanation-box');
+            const explanationText = document.getElementById('explanation-text');
             const nextQuestionBtn = document.getElementById('next-question-btn');
             const scoreEl = document.getElementById('score');
 
-            const conditionTemplates = [
-                { condition: 'Iron Deficiency Anaemia', fbc: [ { p: 'Hb', v: 'Low', a: '↓' }, { p: 'MCV', v: 'Low', a: '↓' }, { p: 'MCH', v: 'Low', a: '↓' } ], other: [{p: 'Platelets', v: 'High', a: '↑'}], differentials: ['Anaemia of Chronic Disease', 'Thalassaemia Trait', 'Sideroblastic Anaemia'] },
-                { condition: 'Megaloblastic Anaemia', fbc: [ { p: 'Hb', v: 'Low', a: '↓' }, { p: 'MCV', v: 'High', a: '↑' } ], other: [{ p: 'Morphology', v: 'Hypersegmented Neutrophils & Oval Macrocytes' }], differentials: ['Liver Disease / Alcoholism', 'Myelodysplastic Syndrome', 'Aplastic Anaemia'] },
-                { condition: 'Anaemia of Chronic Disease', fbc: [ { p: 'Hb', v: 'Low', a: '↓' }, { p: 'MCV', v: 'Normal', a: '↔' } ], other: [{p: 'ESR', v: 'High', a: '↑'}], differentials: ['Iron Deficiency Anaemia', 'Haemolytic Anaemia', 'Aplastic Anaemia'] },
-                { condition: 'Acute Myeloid Leukaemia (AML)', fbc: [ { p: 'Pancytopenia', v: 'Present', a: '↓' } ], other: [{p: 'Blasts on Film', v: 'Present'}, {p: 'Morphology', v: 'Auer Rods seen'}], differentials: ['Acute Lymphoblastic Leukaemia (ALL)', 'Aplastic Anaemia', 'Myelofibrosis'] },
-                { condition: 'Acute Lymphoblastic Leukaemia (ALL)', fbc: [ { p: 'Hb', v: 'Low', a: '↓' }, { p: 'Neutrophils', v: 'Low', a: '↓' } ], other: [{p: 'Blasts on Film', v: 'Present'}, {p: 'Platelets', v: 'Low', a: '↓'}], differentials: ['Acute Myeloid Leukaemia (AML)', 'Infectious Mononucleosis', 'Aplastic Anaemia'] },
-                { condition: 'Chronic Myeloid Leukaemia (CML)', fbc: [ { p: 'WBC', v: 'Very High', a: '↑↑' }, { p: 'Basophils', v: 'High', a: '↑' } ], other: [{p: 'Morphology', v: 'Full spectrum of granulocytes ("left shift")'}], differentials: ['Leukaemoid Reaction (Severe Infection)', 'Chronic Lymphocytic Leukaemia', 'Essential Thrombocythaemia'] },
-                { condition: 'Chronic Lymphocytic Leukaemia (CLL)', fbc: [ { p: 'WBC', v: 'High', a: '↑' }, { p: 'Lymphocytes', v: 'Very High (>5.0)', a: '↑↑' }], other: [{p: 'Morphology', v: 'Smear cells present'}, {p: 'Immunophenotyping', v: 'CD5+, CD19+, CD23+'}] , differentials: ['Infectious Mononucleosis', 'Hairy Cell Leukaemia', 'Other Lymphoproliferative Disorders'] },
-                { condition: 'Bacterial Infection (Leukaemoid Reaction)', fbc: [ { p: 'WBC', v: 'High (>50.0)', a: '↑↑' }, { p: 'Neutrophils', v: 'High', a: '↑' } ], other: [{p: 'Morphology', v: 'Toxic granulation & Döhle bodies'}] , differentials: ['Chronic Myeloid Leukaemia (CML)', 'Acute Leukaemia', 'Polycythaemia Vera']},
-                { condition: 'Infectious Mononucleosis', fbc: [ { p: 'WBC', v: 'High', a: '↑' }], other: [{p: 'Morphology', v: 'Atypical lymphocytes >20%'}] , differentials: ['Chronic Lymphocytic Leukaemia (CLL)', 'Acute Lymphoblastic Leukaemia (ALL)', 'Toxoplasmosis'] },
-                { condition: 'Polycythaemia Vera', fbc: [ { p: 'Hb', v: 'High', a: '↑' }, { p: 'Hct', v: 'High', a: '↑' }, { p: 'RBC Count', v: 'High', a: '↑' } ], other: [{p: 'JAK2 V617F Mutation', v: 'Positive'}], differentials: ['Essential Thrombocythaemia', 'Secondary Polycythaemia (e.g., smoking)', 'Chronic Myeloid Leukaemia (CML)'] },
+            const scenarios = [
+                { condition: 'Iron Deficiency Anaemia', fbc: [ { p: 'Hb', v: 'Low', a: '↓' }, { p: 'MCV', v: 'Low', a: '↓' }, { p: 'MCH', v: 'Low', a: '↓' } ], other: [{p: 'Platelets', v: 'High', a: '↑'}], differentials: ['Anaemia of Chronic Disease', 'Thalassaemia Trait', 'Sideroblastic Anaemia'], explanation: 'Lack of iron impairs haemoglobin synthesis, leading to smaller (low MCV) and paler (low MCH) red cells. The bone marrow may produce more platelets in response.' },
+                { condition: 'Megaloblastic Anaemia', fbc: [ { p: 'Hb', v: 'Low', a: '↓' }, { p: 'MCV', v: 'High', a: '↑' } ], other: [{ p: 'Morphology', v: 'Hypersegmented Neutrophils & Oval Macrocytes' }], differentials: ['Liver Disease / Alcoholism', 'Myelodysplastic Syndrome', 'Aplastic Anaemia'], explanation: 'B12 or Folate deficiency impairs DNA synthesis, affecting all rapidly dividing cells. This leads to large, fragile red cells (high MCV) and ineffective haematopoiesis, causing pancytopenia.' },
+                { condition: 'Anaemia of Chronic Disease', fbc: [ { p: 'Hb', v: 'Low', a: '↓' }, { p: 'MCV', v: 'Normal', a: '↔' } ], other: [{p: 'ESR', v: 'High', a: '↑'}], differentials: ['Iron Deficiency Anaemia', 'Haemolytic Anaemia', 'Renal Failure'], explanation: 'Chronic inflammation causes the liver to produce hepcidin, which traps iron in macrophages and reduces gut absorption. This leads to a functional iron deficiency, but with normal or high iron stores (ferritin).' },
+                { condition: 'Acute Myeloid Leukaemia (AML)', fbc: [ { p: 'Pancytopenia', v: 'Present', a: '↓' } ], other: [{p: 'Blasts on Film', v: 'Present'}, {p: 'Morphology', v: 'Auer Rods seen'}], differentials: ['Acute Lymphoblastic Leukaemia (ALL)', 'Aplastic Anaemia', 'Myelofibrosis'], explanation: 'Rapid proliferation of malignant myeloblasts in the bone marrow crowds out and suppresses normal cell production, leading to anaemia, neutropenia, and thrombocytopenia.' },
+                { condition: 'Acute Lymphoblastic Leukaemia (ALL)', fbc: [ { p: 'Hb', v: 'Low', a: '↓' }, { p: 'Neutrophils', v: 'Low', a: '↓' } ], other: [{p: 'Blasts on Film', v: 'Present'}, {p: 'Platelets', v: 'Low', a: '↓'}], differentials: ['Acute Myeloid Leukaemia (AML)', 'Infectious Mononucleosis', 'Aplastic Anaemia'], explanation: 'Rapid proliferation of malignant lymphoblasts crowds out normal haematopoiesis in the bone marrow. This is the most common childhood cancer.' },
+                { condition: 'Chronic Myeloid Leukaemia (CML)', fbc: [ { p: 'WBC', v: 'Very High', a: '↑↑' }, { p: 'Basophils', v: 'High', a: '↑' } ], other: [{p: 'Morphology', v: 'Full spectrum of granulocytes ("left shift")'}], differentials: ['Leukaemoid Reaction', 'Chronic Lymphocytic Leukaemia', 'Essential Thrombocythaemia'], explanation: 'A myeloproliferative neoplasm caused by the BCR-ABL1 fusion gene, leading to uncontrolled production of all granulocytes, particularly neutrophils, and often basophilia.' },
+                { condition: 'Chronic Lymphocytic Leukaemia (CLL)', fbc: [ { p: 'WBC', v: 'High', a: '↑' }, { p: 'Lymphocytes', v: 'Very High (>5.0)', a: '↑↑' }], other: [{p: 'Morphology', v: 'Smear cells present'}, {p: 'Immunophenotyping', v: 'CD5+, CD19+, CD23+'}] , differentials: ['Infectious Mononucleosis', 'Hairy Cell Leukaemia', 'Other Lymphoproliferative Disorders'], explanation: 'A clonal proliferation of mature B-lymphocytes. These cells are fragile and often rupture during slide preparation, creating characteristic "smear cells".' },
+                { condition: 'Bacterial Infection (Neutrophilia)', fbc: [ { p: 'WBC', v: 'High', a: '↑' }, { p: 'Neutrophils', v: 'High', a: '↑' } ], other: [{p: 'Morphology', v: 'Toxic granulation & Döhle bodies'}] , differentials: ['Chronic Myeloid Leukaemia (CML)', 'Leukaemoid Reaction', 'Steroid Therapy']},
+                { condition: 'Infectious Mononucleosis', fbc: [ { p: 'WBC', v: 'High', a: '↑' }], other: [{p: 'Morphology', v: 'Atypical lymphocytes >20%'}] , differentials: ['Chronic Lymphocytic Leukaemia (CLL)', 'Acute Lymphoblastic Leukaemia (ALL)', 'Cytomegalovirus (CMV) Infection'] },
+                { condition: 'Polycythaemia Vera', fbc: [ { p: 'Hb', v: 'High', a: '↑' }, { p: 'Hct', v: 'High', a: '↑' }, { p: 'RBC Count', v: 'High', a: '↑' } ], other: [{p: 'JAK2 V617F Mutation', v: 'Positive'}], differentials: ['Essential Thrombocythaemia', 'Secondary Polycythaemia', 'Chronic Myeloid Leukaemia (CML)'] },
                 { condition: 'Aplastic Anaemia', fbc: [ { p: 'Pancytopenia', v: 'Severe', a: '↓↓' }], other: [{p: 'Reticulocytes', v: 'Very Low', a: '↓↓'}], differentials: ['Megaloblastic Anaemia', 'Acute Leukaemia', 'Hypersplenism'] },
                 { condition: 'Autoimmune Haemolytic Anaemia', fbc: [ { p: 'Hb', v: 'Low', a: '↓' }, { p: 'Reticulocytes', v: 'High', a: '↑' }], other: [{p: 'Morphology', v: 'Spherocytes present'}, {p: 'DAT', v: 'Positive'}], differentials: ['Hereditary Spherocytosis', 'Sepsis / DIC', 'Anaemia of Chronic Disease'] },
                 { condition: 'Essential Thrombocythaemia', fbc: [ { p: 'Platelets', v: 'Very High (>600)', a: '↑↑' }], other: [{p: 'Morphology', v: 'Giant/abnormal platelets'}] , differentials: ['Polycythaemia Vera', 'Reactive Thrombocytosis', 'Chronic Myeloid Leukaemia (CML)']},
                 { condition: 'Myelofibrosis', fbc: [ { p: 'Hb', v: 'Variable', a: '↕' }], other: [{p: 'Morphology', v: 'Leucoerythroblastic film with tear drop cells'}] , differentials: ['Acute Leukaemia', 'Hairy Cell Leukaemia', 'Metastatic Cancer'] },
                 { condition: 'Beta Thalassaemia Trait', fbc: [ { p: 'MCV', v: 'Very Low', a: '↓↓' }, { p: 'RBC Count', v: 'High', a: '↑' }], other: [{p: 'HbA2', v: 'High (>3.5%)', a: '↑'}], differentials: ['Iron Deficiency Anaemia', 'Alpha Thalassaemia Trait', 'Anaemia of Chronic Disease'] },
-                { condition: 'Multiple Myeloma', fbc: [ { p: 'Hb', v: 'Low', a: '↓' }], other: [{p: 'Morphology', v: 'Rouleaux formation'}, {p: 'ESR', v: 'Very High', a: '↑↑'}] , differentials: ['Waldenström Macroglobulinemia', 'Chronic Liver Disease', 'Anaemia of Chronic Disease'] },
+                { condition: 'Multiple Myeloma', fbc: [ { p: 'Hb', v: 'Low', a: '↓' }], other: [{p: 'Morphology', v: 'Rouleaux formation'}, {p: 'ESR', v: 'Very High', a: '↑↑'}] , differentials: ['Waldenström Macroglobulinemia', 'Chronic Liver Disease', 'MGUS'] },
                 { condition: 'Hairy Cell Leukaemia', fbc: [ { p: 'Pancytopenia', v: 'Present', a: '↓' }, { p: 'Monocytes', v: 'Very Low', a: '↓↓' }], other: [{p: 'Morphology', v: 'Lymphoid cells with circumferential projections'}, {p: 'Immunophenotyping', v: 'CD11c+, CD25+, CD103+'}] , differentials: ['Chronic Lymphocytic Leukaemia (CLL)', 'Myelofibrosis', 'Aplastic Anaemia'] },
                 { condition: 'Sepsis / DIC', fbc: [ { p: 'Platelets', v: 'Low', a: '↓' } ], other: [{p: 'Morphology', v: 'Schistocytes present'}, {p: 'Coagulation', v: 'Deranged'}], differentials: ['Thrombotic Thrombocytopenic Purpura (TTP)', 'Acute Leukaemia', 'Severe Liver Disease'] },
                 { condition: 'Thrombotic Thrombocytopenic Purpura (TTP)', fbc: [{ p: 'Hb', v: 'Low', a: '↓' }, {p: 'Platelets', v: 'Very Low', a: '↓↓'}], other: [{p: 'Morphology', v: 'Schistocytes present'}, {p: 'Neurological symptoms', v: 'Present'}], differentials: ['Sepsis / DIC', 'Autoimmune Haemolytic Anaemia', 'Malignant Hypertension']},
                 { condition: 'Immune Thrombocytopenic Purpura (ITP)', fbc: [{p: 'Platelets', v: 'Low', a: '↓'}], other: [{p: 'Hb', v: 'Normal', a: '↔'}, {p: 'WBC', v: 'Normal', a: '↔'}], differentials: ['Drug-induced Thrombocytopenia', 'Gestational Thrombocytopenia', 'Acute Leukaemia']},
-                { condition: 'Malaria', fbc: [{p: 'Hb', v: 'Low', a: '↓'}, {p: 'Platelets', v: 'Low', a: '↓'}], other: [{p: 'Morphology', v: 'Parasites seen in red cells'}], differentials: ['Sepsis / DIC', 'Viral Infection', 'Bartonellosis']}
+                { condition: 'Malaria', fbc: [{p: 'Hb', v: 'Low', a: '↓'}, {p: 'Platelets', v: 'Low', a: '↓'}], other: [{p: 'Morphology', v: 'Parasites seen in red cells'}], differentials: ['Sepsis / DIC', 'Viral Infection', 'Bartonellosis']},
+                { condition: 'Myelodysplastic Syndrome (MDS)', fbc: [{p: 'Cytopenias', v: 'Variable', a: '↓'}, {p: 'MCV', v: 'Normal/High', a: '↔/↑'}], other: [{p: 'Morphology', v: 'Dysplastic changes, e.g. Pelger-Huët cells'}], differentials: ['Megaloblastic Anaemia', 'Aplastic Anaemia', 'Acute Leukaemia']}
             ];
 
-            const clinicalNotePool = [ "Patient presents with fatigue and shortness of breath.", "Routine blood test in an elderly patient.", "Patient complains of headaches and dizziness.", "Patient presents with high fever and cough.", "Young adult with sore throat and swollen glands.", "Patient has a history of rheumatoid arthritis.", "Patient complains of bone pain and frequent infections.", "Patient has noted splenomegaly.", "Post-operative sample check.", "Patient with history of bruising easily.", "Pre-chemotherapy assessment.", "Patient recently returned from travel abroad." ];
-            
             let currentScenario = {};
             let score = 0;
-
-            function generateScenario() {
-                const base = JSON.parse(JSON.stringify(conditionTemplates[Math.floor(Math.random() * conditionTemplates.length)]));
-                base.clinicalNote = clinicalNotePool[Math.floor(Math.random() * clinicalNotePool.length)];
-                base.other = base.other || [];
-                
-                // Add complexity by mixing in features from other conditions
-                if (Math.random() < 0.2) { 
-                    const secondary = conditionTemplates[Math.floor(Math.random() * conditionTemplates.length)];
-                    if (base.condition !== secondary.condition) {
-                        const newClues = secondary.fbc.concat(secondary.other || []);
-                        base.other.push(newClues[Math.floor(Math.random() * newClues.length)]);
-                        base.clinicalNote += " There are also some additional complicating factors.";
-                    }
-                }
-                
-                const allParams = [...base.fbc, ...base.other];
-                base.fbc = base.fbc.filter((res, index, self) => index === self.findIndex((r) => r.p === res.p));
-                base.other = base.other.filter((res, index, self) => index === self.findIndex((r) => r.p === res.p && !base.fbc.some(fbcRes => fbcRes.p === r.p)));
-                
-                return base;
-            }
-
+            
             function newQuestion() {
-                currentScenario = generateScenario();
+                currentScenario = JSON.parse(JSON.stringify(scenarios[Math.floor(Math.random() * scenarios.length)]));
                 feedbackMessageEl.classList.add('hidden');
+                explanationBox.classList.add('hidden');
                 nextQuestionBtn.classList.add('hidden');
                 answerOptionsEl.innerHTML = '';
-                clinicalNoteBox.textContent = `Clinical Note: ${currentScenario.clinicalNote}`;
+                clinicalNoteBox.textContent = `Clinical Note: ${currentScenario.clinicalNote || 'Not specified.'}`;
                 
                 fbcResultsTable.innerHTML = '';
                 currentScenario.fbc.forEach(res => {
@@ -150,14 +134,8 @@
                 let distractors = correctScenario.differentials;
                 distractors.sort(() => Math.random() - 0.5);
                 options.push(...distractors.slice(0, 3));
-                while (options.length < 4) {
-                    const randomIndex = Math.floor(Math.random() * conditionTemplates.length);
-                    const randomOption = conditionTemplates[randomIndex].condition;
-                    if (!options.includes(randomOption)) { options.push(randomOption); }
-                }
-                
+                while (options.length < 4) { const randomIndex = Math.floor(Math.random() * scenarios.length); const randomOption = scenarios[randomIndex].condition; if (!options.includes(randomOption)) { options.push(randomOption); } }
                 options.sort(() => Math.random() - 0.5);
-
                 options.forEach(option => {
                     const button = document.createElement('button');
                     button.textContent = option;
@@ -170,7 +148,9 @@
             function checkAnswer(selectedOption, correctAnswer, buttonEl) {
                 document.querySelectorAll('.option-btn').forEach(btn => btn.disabled = true);
                 feedbackMessageEl.classList.remove('hidden');
+                explanationBox.classList.remove('hidden');
                 nextQuestionBtn.classList.remove('hidden');
+                explanationText.textContent = currentScenario.explanation;
                 if (selectedOption === correctAnswer) {
                     score++;
                     scoreEl.textContent = score;
@@ -178,7 +158,7 @@
                     feedbackMessageEl.className = 'mt-6 p-4 rounded-lg text-lg font-semibold bg-green-100 text-green-800';
                     buttonEl.classList.add('correct');
                 } else {
-                    feedbackMessageEl.textContent = `Incorrect. The primary diagnosis for this pattern is ${correctAnswer}.`;
+                    feedbackMessageEl.textContent = `Incorrect. The most likely diagnosis for this pattern is ${correctAnswer}.`;
                     feedbackMessageEl.className = 'mt-6 p-4 rounded-lg text-lg font-semibold bg-red-100 text-red-800';
                     buttonEl.classList.add('incorrect');
                     document.querySelectorAll('.option-btn').forEach(btn => { if (btn.textContent === correctAnswer) { btn.classList.add('correct'); } });
