@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Haematology Cell Counter - SGC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .nhs-blue { background-color: #005EB8; }
+        .nhs-dark-blue { background-color: #003087; }
+        .nhs-light-grey { background-color: #F0F4F5; }
+        .nhs-text-blue { color: #005EB8; }
+        .counter-row:nth-child(even) { background-color: #F9FAFB; }
+        .key-display {
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #4b5563;
+            border: 1px solid #d1d5db;
+            background-color: #f3f4f6;
+            border-radius: 0.25rem;
+            padding: 0.1rem 0.4rem;
+        }
+        .count-display {
+            font-family: 'monospace', 'ui-monospace';
+            font-size: 1.25rem;
+        }
+        .percent-display {
+            font-family: 'monospace', 'ui-monospace';
+            font-size: 1.25rem;
+            color: #6b7280;
+        }
+        .total-display {
+            font-size: 3rem;
+            font-weight: 800;
+        }
+        .complete {
+            animation: pulse 1s ease-in-out;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="header-placeholder"></div>
+
+    <main class="py-16">
+        <div class="container mx-auto px-6">
+            <a href="games.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8">
+                <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Games
+            </a>
+            <div class="text-center">
+                 <h2 class="text-3xl font-bold nhs-text-dark-blue mb-4">Manual Differential Counter</h2>
+                 <p class="text-gray-600 mb-8 max-w-2xl mx-auto">Use your keyboard number keys to count the cells as you would in the lab. The percentages are calculated based on the total white cell count.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2 bg-white p-4 rounded-lg shadow-md">
+                    <div id="counter-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
+                        </div>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                        <h3 class="text-xl font-bold text-gray-700">Total WBC Counted</h3>
+                        <p id="total-wbc-count" class="total-display text-nhs-blue">0</p>
+                         <div class="mt-2">
+                            <label for="target-count" class="text-sm font-medium text-gray-600">Target:</label>
+                            <input type="number" id="target-count" value="100" class="w-20 text-center border-gray-300 rounded-md shadow-sm">
+                        </div>
+                    </div>
+                     <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                        <h3 class="text-xl font-bold text-gray-700">Total NRBCs</h3>
+                        <p id="total-nrbc-count" class="text-2xl font-bold">0</p>
+                        <p class="text-sm text-gray-500">(per 100 WBCs)</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                         <button id="reset-btn" class="w-full bg-red-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-red-700 transition duration-300">Reset Counter</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <div id="footer-placeholder"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const counterGrid = document.getElementById('counter-grid');
+            const totalWbcCountEl = document.getElementById('total-wbc-count');
+            const totalNrbcCountEl = document.getElementById('total-nrbc-count');
+            const targetCountInput = document.getElementById('target-count');
+            const resetBtn = document.getElementById('reset-btn');
+
+            const cellTypes = {
+                '1': { name: 'Neutrophils', count: 0, isWBC: true },
+                '2': { name: 'Lymphocytes', count: 0, isWBC: true },
+                '3': { name: 'Monocytes', count: 0, isWBC: true },
+                '4': { name: 'Eosinophils', count: 0, isWBC: true },
+                '5': { name: 'Basophils', count: 0, isWBC: true },
+                '6': { name: 'Metamyelocytes', count: 0, isWBC: true },
+                '7': { name: 'Myelocytes', count: 0, isWBC: true },
+                '8': { name: 'Promyelocytes', count: 0, isWBC: true },
+                '9': { name: 'Blasts', count: 0, isWBC: true },
+                '.': { name: 'Plasma Cells', count: 0, isWBC: true },
+                '0': { name: 'NRBCs', count: 0, isWBC: false },
+            };
+
+            function createCounterUI() {
+                counterGrid.innerHTML = '';
+                for (const key in cellTypes) {
+                    const cell = cellTypes[key];
+                    const row = document.createElement('div');
+                    row.className = 'counter-row grid grid-cols-4 items-center gap-2 p-2';
+                    
+                    row.innerHTML = `
+                        <div class="col-span-2 flex items-center gap-2">
+                           <span class="key-display">${key}</span>
+                           <span class="font-semibold">${cell.name}</span>
+                        </div>
+                        <div id="${key}-count" class="count-display text-right">${cell.count}</div>
+                        <div id="${key}-percent" class="percent-display text-right">0.0%</div>
+                    `;
+                    counterGrid.appendChild(row);
+                }
+            }
+            
+            function updateDisplay() {
+                let totalWbcCount = 0;
+                Object.values(cellTypes).forEach(cell => {
+                    if (cell.isWBC) {
+                        totalWbcCount += cell.count;
+                    }
+                });
+
+                for (const key in cellTypes) {
+                    const cell = cellTypes[key];
+                    document.getElementById(`${key}-count`).textContent = cell.count;
+                    
+                    if (cell.isWBC) {
+                        const percentage = totalWbcCount > 0 ? (cell.count / totalWbcCount) * 100 : 0;
+                        document.getElementById(`${key}-percent`).textContent = percentage.toFixed(1) + '%';
+                    } else {
+                         document.getElementById(`${key}-percent`).textContent = ''; // NRBCs don't have a percentage in the diff
+                    }
+                }
+
+                totalWbcCountEl.textContent = totalWbcCount;
+                totalNrbcCountEl.textContent = cellTypes['0'].count;
+
+                const target = parseInt(targetCountInput.value, 10) || 100;
+                if (totalWbcCount === target) {
+                    totalWbcCountEl.classList.add('complete', 'text-green-600');
+                } else {
+                    totalWbcCountEl.classList.remove('complete', 'text-green-600');
+                }
+            }
+
+            function handleKeyPress(e) {
+                const key = e.key;
+                if (cellTypes.hasOwnProperty(key)) {
+                    e.preventDefault(); // Prevent default action (e.g., typing '.' in a field)
+                    cellTypes[key].count++;
+                    updateDisplay();
+                }
+            }
+
+            function resetCounter() {
+                 for (const key in cellTypes) {
+                    cellTypes[key].count = 0;
+                }
+                updateDisplay();
+            }
+
+            // Initial Setup
+            createCounterUI();
+            updateDisplay();
+
+            // Event Listeners
+            document.addEventListener('keydown', handleKeyPress);
+            resetBtn.addEventListener('click', resetCounter);
+        });
+    </script>
+
+    <script src="js/component-loader.js"></script>
+</body>
+</html>
