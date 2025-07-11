@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Haematology: Name That Condition - SGC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .nhs-blue { background-color: #005EB8; }
+        .nhs-dark-blue { background-color: #003087; }
+        .nhs-light-grey { background-color: #F0F4F5; }
+        .nhs-text-blue { color: #005EB8; }
+        .option-btn:disabled { background-color: #d1d5db; cursor: not-allowed; }
+        .option-btn.correct { background-color: #4ade80; color: white; border-color: #22c55e; }
+        .option-btn.incorrect { background-color: #f87171; color: white; border-color: #ef4444; }
+        .results-table td { padding: 0.5rem; }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="header-placeholder"></div>
+
+    <main class="py-16">
+        <div class="container mx-auto px-6 max-w-2xl text-center">
+            <a href="games.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8">
+                <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Games
+            </a>
+            <h2 class="text-3xl font-bold nhs-text-dark-blue mb-4">Name That Condition</h2>
+            <p class="text-gray-600 mb-8 max-w-2xl mx-auto">Analyse the results and clinical note to identify the most likely condition.</p>
+
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <div id="clinical-note-box" class="mb-4 p-3 bg-blue-100 text-blue-800 text-base font-medium rounded-lg"></div>
+                
+                <h3 class="text-lg font-semibold text-gray-800 mt-4 border-b">Full Blood Count</h3>
+                <table id="fbc-results-table" class="w-full text-lg my-2 results-table"></table>
+
+                <div id="other-results-container" class="hidden">
+                    <h3 class="text-lg font-semibold text-gray-800 mt-4 border-b">Further Investigations</h3>
+                    <table id="other-results-table" class="w-full text-lg my-2 results-table"></table>
+                </div>
+
+                <div id="answer-options" class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6"></div>
+                <div id="feedback-message" class="mt-6 p-4 rounded-lg text-lg font-semibold hidden"></div>
+            </div>
+
+            <div class="mt-6">
+                <p class="text-lg">Score: <span id="score" class="font-bold">0</span></p>
+                <button id="next-question-btn" class="mt-4 bg-nhs-blue text-white font-bold py-3 px-8 rounded-lg hover:bg-nhs-dark-blue transition duration-300 hidden">Next Question</button>
+            </div>
+        </div>
+    </main>
+    
+    <div id="footer-placeholder"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const clinicalNoteBox = document.getElementById('clinical-note-box');
+            const fbcResultsTable = document.getElementById('fbc-results-table');
+            const otherResultsContainer = document.getElementById('other-results-container');
+            const otherResultsTable = document.getElementById('other-results-table');
+            const answerOptionsEl = document.getElementById('answer-options');
+            const feedbackMessageEl = document.getElementById('feedback-message');
+            const nextQuestionBtn = document.getElementById('next-question-btn');
+            const scoreEl = document.getElementById('score');
+
+            const conditionTemplates = [
+                { condition: 'Iron Deficiency Anaemia', fbc: [ { p: 'Hb', v: 'Low', a: '↓' }, { p: 'MCV', v: 'Low', a: '↓' }, { p: 'MCH', v: 'Low', a: '↓' } ], other: [{p: 'Platelets', v: 'High', a: '↑'}], differentials: ['Anaemia of Chronic Disease', 'Thalassaemia Trait', 'Sideroblastic Anaemia'] },
+                { condition: 'Megaloblastic Anaemia', fbc: [ { p: 'Hb', v: 'Low', a: '↓' }, { p: 'MCV', v: 'High', a: '↑' } ], other: [{ p: 'Morphology', v: 'Hypersegmented Neutrophils & Oval Macrocytes' }], differentials: ['Liver Disease / Alcoholism', 'Myelodysplastic Syndrome', 'Aplastic Anaemia'] },
+                { condition: 'Anaemia of Chronic Disease', fbc: [ { p: 'Hb', v: 'Low', a: '↓' }, { p: 'MCV', v: 'Normal', a: '↔' } ], other: [{p: 'ESR', v: 'High', a: '↑'}], differentials: ['Iron Deficiency Anaemia', 'Haemolytic Anaemia', 'Aplastic Anaemia'] },
+                { condition: 'Acute Myeloid Leukaemia (AML)', fbc: [ { p: 'Pancytopenia', v: 'Present', a: '↓' } ], other: [{p: 'Blasts on Film', v: 'Present'}, {p: 'Morphology', v: 'Auer Rods seen'}], differentials: ['Acute Lymphoblastic Leukaemia (ALL)', 'Aplastic Anaemia', 'Myelofibrosis'] },
+                { condition: 'Acute Lymphoblastic Leukaemia (ALL)', fbc: [ { p: 'Hb', v: 'Low', a: '↓' }, { p: 'Neutrophils', v: 'Low', a: '↓' } ], other: [{p: 'Blasts on Film', v: 'Present'}, {p: 'Platelets', v: 'Low', a: '↓'}], differentials: ['Acute Myeloid Leukaemia (AML)', 'Infectious Mononucleosis', 'Aplastic Anaemia'] },
+                { condition: 'Chronic Myeloid Leukaemia (CML)', fbc: [ { p: 'WBC', v: 'Very High', a: '↑↑' }, { p: 'Basophils', v: 'High', a: '↑' } ], other: [{p: 'Morphology', v: 'Full spectrum of granulocytes ("left shift")'}], differentials: ['Leukaemoid Reaction (Severe Infection)', 'Chronic Lymphocytic Leukaemia', 'Essential Thrombocythaemia'] },
+                { condition: 'Chronic Lymphocytic Leukaemia (CLL)', fbc: [ { p: 'WBC', v: 'High', a: '↑' }, { p: 'Lymphocytes', v: 'Very High (>5.0)', a: '↑↑' }], other: [{p: 'Morphology', v: 'Smear cells present'}, {p: 'Immunophenotyping', v: 'CD5+, CD19+, CD23+'}] , differentials: ['Infectious Mononucleosis', 'Hairy Cell Leukaemia', 'Other Lymphoproliferative Disorders'] },
+                { condition: 'Bacterial Infection (Leukaemoid Reaction)', fbc: [ { p: 'WBC', v: 'High (>50.0)', a: '↑↑' }, { p: 'Neutrophils', v: 'High', a: '↑' } ], other: [{p: 'Morphology', v: 'Toxic granulation & Döhle bodies'}] , differentials: ['Chronic Myeloid Leukaemia (CML)', 'Acute Leukaemia', 'Polycythaemia Vera']},
+                { condition: 'Infectious Mononucleosis', fbc: [ { p: 'WBC', v: 'High', a: '↑' }], other: [{p: 'Morphology', v: 'Atypical lymphocytes >20%'}] , differentials: ['Chronic Lymphocytic Leukaemia (CLL)', 'Acute Lymphoblastic Leukaemia (ALL)', 'Toxoplasmosis'] },
+                { condition: 'Polycythaemia Vera', fbc: [ { p: 'Hb', v: 'High', a: '↑' }, { p: 'Hct', v: 'High', a: '↑' }, { p: 'RBC Count', v: 'High', a: '↑' } ], other: [{p: 'JAK2 V617F Mutation', v: 'Positive'}], differentials: ['Essential Thrombocythaemia', 'Secondary Polycythaemia (e.g., smoking)', 'Chronic Myeloid Leukaemia (CML)'] },
+                { condition: 'Aplastic Anaemia', fbc: [ { p: 'Pancytopenia', v: 'Severe', a: '↓↓' }], other: [{p: 'Reticulocytes', v: 'Very Low', a: '↓↓'}], differentials: ['Megaloblastic Anaemia', 'Acute Leukaemia', 'Hypersplenism'] },
+                { condition: 'Autoimmune Haemolytic Anaemia', fbc: [ { p: 'Hb', v: 'Low', a: '↓' }, { p: 'Reticulocytes', v: 'High', a: '↑' }], other: [{p: 'Morphology', v: 'Spherocytes present'}, {p: 'DAT', v: 'Positive'}], differentials: ['Hereditary Spherocytosis', 'Sepsis / DIC', 'Anaemia of Chronic Disease'] },
+                { condition: 'Essential Thrombocythaemia', fbc: [ { p: 'Platelets', v: 'Very High (>600)', a: '↑↑' }], other: [{p: 'Morphology', v: 'Giant/abnormal platelets'}] , differentials: ['Polycythaemia Vera', 'Reactive Thrombocytosis', 'Chronic Myeloid Leukaemia (CML)']},
+                { condition: 'Myelofibrosis', fbc: [ { p: 'Hb', v: 'Variable', a: '↕' }], other: [{p: 'Morphology', v: 'Leucoerythroblastic film with tear drop cells'}] , differentials: ['Acute Leukaemia', 'Hairy Cell Leukaemia', 'Metastatic Cancer'] },
+                { condition: 'Beta Thalassaemia Trait', fbc: [ { p: 'MCV', v: 'Very Low', a: '↓↓' }, { p: 'RBC Count', v: 'High', a: '↑' }], other: [{p: 'HbA2', v: 'High (>3.5%)', a: '↑'}], differentials: ['Iron Deficiency Anaemia', 'Alpha Thalassaemia Trait', 'Anaemia of Chronic Disease'] },
+                { condition: 'Multiple Myeloma', fbc: [ { p: 'Hb', v: 'Low', a: '↓' }], other: [{p: 'Morphology', v: 'Rouleaux formation'}, {p: 'ESR', v: 'Very High', a: '↑↑'}] , differentials: ['Waldenström Macroglobulinemia', 'Chronic Liver Disease', 'Anaemia of Chronic Disease'] },
+                { condition: 'Hairy Cell Leukaemia', fbc: [ { p: 'Pancytopenia', v: 'Present', a: '↓' }, { p: 'Monocytes', v: 'Very Low', a: '↓↓' }], other: [{p: 'Morphology', v: 'Lymphoid cells with circumferential projections'}, {p: 'Immunophenotyping', v: 'CD11c+, CD25+, CD103+'}] , differentials: ['Chronic Lymphocytic Leukaemia (CLL)', 'Myelofibrosis', 'Aplastic Anaemia'] },
+                { condition: 'Sepsis / DIC', fbc: [ { p: 'Platelets', v: 'Low', a: '↓' } ], other: [{p: 'Morphology', v: 'Schistocytes present'}, {p: 'Coagulation', v: 'Deranged'}], differentials: ['Thrombotic Thrombocytopenic Purpura (TTP)', 'Acute Leukaemia', 'Severe Liver Disease'] },
+                { condition: 'Thrombotic Thrombocytopenic Purpura (TTP)', fbc: [{ p: 'Hb', v: 'Low', a: '↓' }, {p: 'Platelets', v: 'Very Low', a: '↓↓'}], other: [{p: 'Morphology', v: 'Schistocytes present'}, {p: 'Neurological symptoms', v: 'Present'}], differentials: ['Sepsis / DIC', 'Autoimmune Haemolytic Anaemia', 'Malignant Hypertension']},
+                { condition: 'Immune Thrombocytopenic Purpura (ITP)', fbc: [{p: 'Platelets', v: 'Low', a: '↓'}], other: [{p: 'Hb', v: 'Normal', a: '↔'}, {p: 'WBC', v: 'Normal', a: '↔'}], differentials: ['Drug-induced Thrombocytopenia', 'Gestational Thrombocytopenia', 'Acute Leukaemia']},
+                { condition: 'Malaria', fbc: [{p: 'Hb', v: 'Low', a: '↓'}, {p: 'Platelets', v: 'Low', a: '↓'}], other: [{p: 'Morphology', v: 'Parasites seen in red cells'}], differentials: ['Sepsis / DIC', 'Viral Infection', 'Bartonellosis']}
+            ];
+
+            const clinicalNotePool = [ "Patient presents with fatigue and shortness of breath.", "Routine blood test in an elderly patient.", "Patient complains of headaches and dizziness.", "Patient presents with high fever and cough.", "Young adult with sore throat and swollen glands.", "Patient has a history of rheumatoid arthritis.", "Patient complains of bone pain and frequent infections.", "Patient has noted splenomegaly.", "Post-operative sample check.", "Patient with history of bruising easily.", "Pre-chemotherapy assessment.", "Patient recently returned from travel abroad." ];
+            
+            let currentScenario = {};
+            let score = 0;
+
+            function generateScenario() {
+                const base = JSON.parse(JSON.stringify(conditionTemplates[Math.floor(Math.random() * conditionTemplates.length)]));
+                base.clinicalNote = clinicalNotePool[Math.floor(Math.random() * clinicalNotePool.length)];
+                base.other = base.other || [];
+                
+                // Add complexity by mixing in features from other conditions
+                if (Math.random() < 0.2) { 
+                    const secondary = conditionTemplates[Math.floor(Math.random() * conditionTemplates.length)];
+                    if (base.condition !== secondary.condition) {
+                        const newClues = secondary.fbc.concat(secondary.other || []);
+                        base.other.push(newClues[Math.floor(Math.random() * newClues.length)]);
+                        base.clinicalNote += " There are also some additional complicating factors.";
+                    }
+                }
+                
+                const allParams = [...base.fbc, ...base.other];
+                base.fbc = base.fbc.filter((res, index, self) => index === self.findIndex((r) => r.p === res.p));
+                base.other = base.other.filter((res, index, self) => index === self.findIndex((r) => r.p === res.p && !base.fbc.some(fbcRes => fbcRes.p === r.p)));
+                
+                return base;
+            }
+
+            function newQuestion() {
+                currentScenario = generateScenario();
+                feedbackMessageEl.classList.add('hidden');
+                nextQuestionBtn.classList.add('hidden');
+                answerOptionsEl.innerHTML = '';
+                clinicalNoteBox.textContent = `Clinical Note: ${currentScenario.clinicalNote}`;
+                
+                fbcResultsTable.innerHTML = '';
+                currentScenario.fbc.forEach(res => {
+                    const row = fbcResultsTable.insertRow();
+                    row.innerHTML = `<td class="text-left font-semibold">${res.p}</td><td class="text-right font-bold">${res.v}</td><td class="w-8 text-center font-bold">${res.a}</td>`;
+                });
+
+                if (currentScenario.other && currentScenario.other.length > 0) {
+                    otherResultsTable.innerHTML = '';
+                    currentScenario.other.forEach(res => {
+                        const row = otherResultsTable.insertRow();
+                        row.innerHTML = `<td class="text-left font-semibold">${res.p}</td><td colspan="2" class="text-right font-bold">${res.v}</td>`;
+                    });
+                    otherResultsContainer.classList.remove('hidden');
+                } else {
+                    otherResultsContainer.classList.add('hidden');
+                }
+                generateOptions(currentScenario);
+            }
+
+            function generateOptions(correctScenario) {
+                let options = [correctScenario.condition];
+                let distractors = correctScenario.differentials;
+                distractors.sort(() => Math.random() - 0.5);
+                options.push(...distractors.slice(0, 3));
+                while (options.length < 4) {
+                    const randomIndex = Math.floor(Math.random() * conditionTemplates.length);
+                    const randomOption = conditionTemplates[randomIndex].condition;
+                    if (!options.includes(randomOption)) { options.push(randomOption); }
+                }
+                
+                options.sort(() => Math.random() - 0.5);
+
+                options.forEach(option => {
+                    const button = document.createElement('button');
+                    button.textContent = option;
+                    button.className = 'option-btn w-full text-left p-4 bg-gray-100 rounded-lg hover:bg-gray-200 transition border-2 border-transparent';
+                    button.addEventListener('click', () => checkAnswer(option, correctScenario.condition, button));
+                    answerOptionsEl.appendChild(button);
+                });
+            }
+
+            function checkAnswer(selectedOption, correctAnswer, buttonEl) {
+                document.querySelectorAll('.option-btn').forEach(btn => btn.disabled = true);
+                feedbackMessageEl.classList.remove('hidden');
+                nextQuestionBtn.classList.remove('hidden');
+                if (selectedOption === correctAnswer) {
+                    score++;
+                    scoreEl.textContent = score;
+                    feedbackMessageEl.textContent = 'Correct!';
+                    feedbackMessageEl.className = 'mt-6 p-4 rounded-lg text-lg font-semibold bg-green-100 text-green-800';
+                    buttonEl.classList.add('correct');
+                } else {
+                    feedbackMessageEl.textContent = `Incorrect. The primary diagnosis for this pattern is ${correctAnswer}.`;
+                    feedbackMessageEl.className = 'mt-6 p-4 rounded-lg text-lg font-semibold bg-red-100 text-red-800';
+                    buttonEl.classList.add('incorrect');
+                    document.querySelectorAll('.option-btn').forEach(btn => { if (btn.textContent === correctAnswer) { btn.classList.add('correct'); } });
+                }
+            }
+            
+            nextQuestionBtn.addEventListener('click', newQuestion);
+            newQuestion();
+        });
+    </script>
+
+    <script src="js/component-loader.js"></script>
+</body>
+</html>
