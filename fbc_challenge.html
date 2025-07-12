@@ -75,7 +75,7 @@
             const scoreEl = document.getElementById('score');
 
             const scenarios = [
-                 { condition: 'Iron Deficiency Anaemia', fbc: [ { p: 'Hb', v: 'Low', a: '↓' }, { p: 'MCV', v: 'Low', a: '↓' }, { p: 'MCH', v: 'Low', a: '↓' } ], other: [{p: 'Platelets', v: 'High', a: '↑'}], differentials: ['Anaemia of Chronic Disease', 'Thalassaemia Trait', 'Sideroblastic Anaemia'], explanation: 'Lack of iron impairs haemoglobin synthesis, leading to smaller (low MCV) and paler (low MCH) red cells. The bone marrow may produce more platelets in response.' },
+                { condition: 'Iron Deficiency Anaemia', fbc: [ { p: 'Hb', v: 'Low', a: '↓' }, { p: 'MCV', v: 'Low', a: '↓' }, { p: 'MCH', v: 'Low', a: '↓' } ], other: [{p: 'Platelets', v: 'High', a: '↑'}], differentials: ['Anaemia of Chronic Disease', 'Thalassaemia Trait', 'Sideroblastic Anaemia'], explanation: 'Lack of iron impairs haemoglobin synthesis, leading to smaller (low MCV) and paler (low MCH) red cells. The bone marrow may produce more platelets in response.' },
                 { condition: 'Megaloblastic Anaemia', fbc: [ { p: 'Hb', v: 'Low', a: '↓' }, { p: 'MCV', v: 'High', a: '↑' } ], other: [{ p: 'Morphology', v: 'Hypersegmented Neutrophils & Oval Macrocytes' }], differentials: ['Liver Disease / Alcoholism', 'Myelodysplastic Syndrome', 'Aplastic Anaemia'], explanation: 'B12 or Folate deficiency impairs DNA synthesis, affecting all rapidly dividing cells. This leads to large, fragile red cells (high MCV) and ineffective haematopoiesis, causing pancytopenia.' },
                 { condition: 'Anaemia of Chronic Disease', fbc: [ { p: 'Hb', v: 'Low', a: '↓' }, { p: 'MCV', v: 'Normal', a: '↔' } ], other: [{p: 'ESR', v: 'High', a: '↑'}], differentials: ['Iron Deficiency Anaemia', 'Haemolytic Anaemia', 'Renal Failure'], explanation: 'Chronic inflammation causes the liver to produce hepcidin, which traps iron in macrophages and reduces gut absorption. This leads to a functional iron deficiency, but with normal or high iron stores (ferritin).' },
                 { condition: 'Acute Myeloid Leukaemia (AML)', fbc: [ { p: 'Pancytopenia', v: 'Present', a: '↓' } ], other: [{p: 'Blasts on Film', v: 'Present'}, {p: 'Morphology', v: 'Auer Rods seen'}], differentials: ['Acute Lymphoblastic Leukaemia (ALL)', 'Aplastic Anaemia', 'Myelofibrosis'], explanation: 'Rapid proliferation of malignant myeloblasts in the bone marrow crowds out and suppresses normal cell production, leading to anaemia, neutropenia, and thrombocytopenia.' },
@@ -108,7 +108,7 @@
                 explanationBox.classList.add('hidden');
                 nextQuestionBtn.classList.add('hidden');
                 answerOptionsEl.innerHTML = '';
-                clinicalNoteBox.textContent = `Clinical Note: ${currentScenario.clinicalNote}`;
+                clinicalNoteBox.textContent = `Clinical Note: ${currentScenario.clinicalNote || 'Not specified.'}`;
                 
                 fbcResultsTable.innerHTML = '';
                 currentScenario.fbc.forEach(res => {
@@ -134,11 +134,7 @@
                 let distractors = correctScenario.differentials;
                 distractors.sort(() => Math.random() - 0.5);
                 options.push(...distractors.slice(0, 3));
-                while (options.length < 4) {
-                    const randomIndex = Math.floor(Math.random() * scenarios.length);
-                    const randomOption = scenarios[randomIndex].condition;
-                    if (!options.includes(randomOption)) { options.push(randomOption); }
-                }
+                while (options.length < 4) { const randomIndex = Math.floor(Math.random() * scenarios.length); const randomOption = scenarios[randomIndex].condition; if (!options.includes(randomOption)) { options.push(randomOption); } }
                 
                 options.sort(() => Math.random() - 0.5);
                 options.forEach(option => {
