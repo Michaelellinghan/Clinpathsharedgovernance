@@ -54,7 +54,7 @@
 
             <div class="mt-6">
                 <p class="text-lg">Score: <span id="score" class="font-bold">0</span></p>
-                <button id="next-question-btn" class="mt-4 bg-nhs-blue text-white font-bold py-3 px-8 rounded-lg hover:bg-nhs-dark-blue transition duration-300 hidden">Next Question</button>
+                <button id="next-question-btn" class="mt-4 bg-gray-800 text-white font-bold py-3 px-8 rounded-lg hover:bg-black transition duration-300 hidden">Next Question</button>
             </div>
         </div>
     </main>
@@ -75,7 +75,7 @@
             const scoreEl = document.getElementById('score');
 
             const scenarios = [
-                { condition: 'Iron Deficiency Anaemia', fbc: [ { p: 'Hb', v: 'Low', a: '↓' }, { p: 'MCV', v: 'Low', a: '↓' }, { p: 'MCH', v: 'Low', a: '↓' } ], other: [{p: 'Platelets', v: 'High', a: '↑'}], differentials: ['Anaemia of Chronic Disease', 'Thalassaemia Trait', 'Sideroblastic Anaemia'], explanation: 'Lack of iron impairs haemoglobin synthesis, leading to smaller (low MCV) and paler (low MCH) red cells. The bone marrow may produce more platelets in response.' },
+                 { condition: 'Iron Deficiency Anaemia', fbc: [ { p: 'Hb', v: 'Low', a: '↓' }, { p: 'MCV', v: 'Low', a: '↓' }, { p: 'MCH', v: 'Low', a: '↓' } ], other: [{p: 'Platelets', v: 'High', a: '↑'}], differentials: ['Anaemia of Chronic Disease', 'Thalassaemia Trait', 'Sideroblastic Anaemia'], explanation: 'Lack of iron impairs haemoglobin synthesis, leading to smaller (low MCV) and paler (low MCH) red cells. The bone marrow may produce more platelets in response.' },
                 { condition: 'Megaloblastic Anaemia', fbc: [ { p: 'Hb', v: 'Low', a: '↓' }, { p: 'MCV', v: 'High', a: '↑' } ], other: [{ p: 'Morphology', v: 'Hypersegmented Neutrophils & Oval Macrocytes' }], differentials: ['Liver Disease / Alcoholism', 'Myelodysplastic Syndrome', 'Aplastic Anaemia'], explanation: 'B12 or Folate deficiency impairs DNA synthesis, affecting all rapidly dividing cells. This leads to large, fragile red cells (high MCV) and ineffective haematopoiesis, causing pancytopenia.' },
                 { condition: 'Anaemia of Chronic Disease', fbc: [ { p: 'Hb', v: 'Low', a: '↓' }, { p: 'MCV', v: 'Normal', a: '↔' } ], other: [{p: 'ESR', v: 'High', a: '↑'}], differentials: ['Iron Deficiency Anaemia', 'Haemolytic Anaemia', 'Renal Failure'], explanation: 'Chronic inflammation causes the liver to produce hepcidin, which traps iron in macrophages and reduces gut absorption. This leads to a functional iron deficiency, but with normal or high iron stores (ferritin).' },
                 { condition: 'Acute Myeloid Leukaemia (AML)', fbc: [ { p: 'Pancytopenia', v: 'Present', a: '↓' } ], other: [{p: 'Blasts on Film', v: 'Present'}, {p: 'Morphology', v: 'Auer Rods seen'}], differentials: ['Acute Lymphoblastic Leukaemia (ALL)', 'Aplastic Anaemia', 'Myelofibrosis'], explanation: 'Rapid proliferation of malignant myeloblasts in the bone marrow crowds out and suppresses normal cell production, leading to anaemia, neutropenia, and thrombocytopenia.' },
@@ -84,31 +84,31 @@
                 { condition: 'Chronic Lymphocytic Leukaemia (CLL)', fbc: [ { p: 'WBC', v: 'High', a: '↑' }, { p: 'Lymphocytes', v: 'Very High (>5.0)', a: '↑↑' }], other: [{p: 'Morphology', v: 'Smear cells present'}, {p: 'Immunophenotyping', v: 'CD5+, CD19+, CD23+'}] , differentials: ['Infectious Mononucleosis', 'Hairy Cell Leukaemia', 'Other Lymphoproliferative Disorders'], explanation: 'A clonal proliferation of mature B-lymphocytes. These cells are fragile and often rupture during slide preparation, creating characteristic "smear cells".' },
                 { condition: 'Bacterial Infection (Neutrophilia)', fbc: [ { p: 'WBC', v: 'High', a: '↑' }, { p: 'Neutrophils', v: 'High', a: '↑' } ], other: [{p: 'Morphology', v: 'Toxic granulation & Döhle bodies'}] , differentials: ['Chronic Myeloid Leukaemia (CML)', 'Leukaemoid Reaction', 'Steroid Therapy']},
                 { condition: 'Infectious Mononucleosis', fbc: [ { p: 'WBC', v: 'High', a: '↑' }], other: [{p: 'Morphology', v: 'Atypical lymphocytes >20%'}] , differentials: ['Chronic Lymphocytic Leukaemia (CLL)', 'Acute Lymphoblastic Leukaemia (ALL)', 'Cytomegalovirus (CMV) Infection'] },
-                { condition: 'Polycythaemia Vera', fbc: [ { p: 'Hb', v: 'High', a: '↑' }, { p: 'Hct', v: 'High', a: '↑' }, { p: 'RBC Count', v: 'High', a: '↑' } ], other: [{p: 'JAK2 V617F Mutation', v: 'Positive'}], differentials: ['Essential Thrombocythaemia', 'Secondary Polycythaemia', 'Chronic Myeloid Leukaemia (CML)'] },
-                { condition: 'Aplastic Anaemia', fbc: [ { p: 'Pancytopenia', v: 'Severe', a: '↓↓' }], other: [{p: 'Reticulocytes', v: 'Very Low', a: '↓↓'}], differentials: ['Megaloblastic Anaemia', 'Acute Leukaemia', 'Hypersplenism'] },
-                { condition: 'Autoimmune Haemolytic Anaemia', fbc: [ { p: 'Hb', v: 'Low', a: '↓' }, { p: 'Reticulocytes', v: 'High', a: '↑' }], other: [{p: 'Morphology', v: 'Spherocytes present'}, {p: 'DAT', v: 'Positive'}], differentials: ['Hereditary Spherocytosis', 'Sepsis / DIC', 'Anaemia of Chronic Disease'] },
-                { condition: 'Essential Thrombocythaemia', fbc: [ { p: 'Platelets', v: 'Very High (>600)', a: '↑↑' }], other: [{p: 'Morphology', v: 'Giant/abnormal platelets'}] , differentials: ['Polycythaemia Vera', 'Reactive Thrombocytosis', 'Chronic Myeloid Leukaemia (CML)']},
-                { condition: 'Myelofibrosis', fbc: [ { p: 'Hb', v: 'Variable', a: '↕' }], other: [{p: 'Morphology', v: 'Leucoerythroblastic film with tear drop cells'}] , differentials: ['Acute Leukaemia', 'Hairy Cell Leukaemia', 'Metastatic Cancer'] },
-                { condition: 'Beta Thalassaemia Trait', fbc: [ { p: 'MCV', v: 'Very Low', a: '↓↓' }, { p: 'RBC Count', v: 'High', a: '↑' }], other: [{p: 'HbA2', v: 'High (>3.5%)', a: '↑'}], differentials: ['Iron Deficiency Anaemia', 'Alpha Thalassaemia Trait', 'Anaemia of Chronic Disease'] },
-                { condition: 'Multiple Myeloma', fbc: [ { p: 'Hb', v: 'Low', a: '↓' }], other: [{p: 'Morphology', v: 'Rouleaux formation'}, {p: 'ESR', v: 'Very High', a: '↑↑'}] , differentials: ['Waldenström Macroglobulinemia', 'Chronic Liver Disease', 'MGUS'] },
-                { condition: 'Hairy Cell Leukaemia', fbc: [ { p: 'Pancytopenia', v: 'Present', a: '↓' }, { p: 'Monocytes', v: 'Very Low', a: '↓↓' }], other: [{p: 'Morphology', v: 'Lymphoid cells with circumferential projections'}, {p: 'Immunophenotyping', v: 'CD11c+, CD25+, CD103+'}] , differentials: ['Chronic Lymphocytic Leukaemia (CLL)', 'Myelofibrosis', 'Aplastic Anaemia'] },
-                { condition: 'Sepsis / DIC', fbc: [ { p: 'Platelets', v: 'Low', a: '↓' } ], other: [{p: 'Morphology', v: 'Schistocytes present'}, {p: 'Coagulation', v: 'Deranged'}], differentials: ['Thrombotic Thrombocytopenic Purpura (TTP)', 'Acute Leukaemia', 'Severe Liver Disease'] },
-                { condition: 'Thrombotic Thrombocytopenic Purpura (TTP)', fbc: [{ p: 'Hb', v: 'Low', a: '↓' }, {p: 'Platelets', v: 'Very Low', a: '↓↓'}], other: [{p: 'Morphology', v: 'Schistocytes present'}, {p: 'Neurological symptoms', v: 'Present'}], differentials: ['Sepsis / DIC', 'Autoimmune Haemolytic Anaemia', 'Malignant Hypertension']},
-                { condition: 'Immune Thrombocytopenic Purpura (ITP)', fbc: [{p: 'Platelets', v: 'Low', a: '↓'}], other: [{p: 'Hb', v: 'Normal', a: '↔'}, {p: 'WBC', v: 'Normal', a: '↔'}], differentials: ['Drug-induced Thrombocytopenia', 'Gestational Thrombocytopenia', 'Acute Leukaemia']},
-                { condition: 'Malaria', fbc: [{p: 'Hb', v: 'Low', a: '↓'}, {p: 'Platelets', v: 'Low', a: '↓'}], other: [{p: 'Morphology', v: 'Parasites seen in red cells'}], differentials: ['Sepsis / DIC', 'Viral Infection', 'Bartonellosis']},
-                { condition: 'Myelodysplastic Syndrome (MDS)', fbc: [{p: 'Cytopenias', v: 'Variable', a: '↓'}, {p: 'MCV', v: 'Normal/High', a: '↔/↑'}], other: [{p: 'Morphology', v: 'Dysplastic changes, e.g. Pelger-Huët cells'}], differentials: ['Megaloblastic Anaemia', 'Aplastic Anaemia', 'Acute Leukaemia']}
+                { condition: 'Polycythaemia Vera', fbc: [ { p: 'Hb', v: 'High', a: '↑' }, { p: 'Hct', v: 'High', a: '↑' }, { p: 'RBC Count', v: 'High', a: '↑' } ], other: [{p: 'JAK2 V617F Mutation', v: 'Positive'}], differentials: ['Essential Thrombocythaemia', 'Secondary Polycythaemia', 'Chronic Myeloid Leukaemia (CML)'], explanation: 'A myeloproliferative neoplasm, often driven by the JAK2 mutation, causing overproduction of all cell lines, but particularly red blood cells.' },
+                { condition: 'Aplastic Anaemia', fbc: [ { p: 'Pancytopenia', v: 'Severe', a: '↓↓' }], other: [{p: 'Reticulocytes', v: 'Very Low', a: '↓↓'}], differentials: ['Megaloblastic Anaemia', 'Acute Leukaemia', 'Hypersplenism'], explanation: 'Failure of the bone marrow to produce blood cells, leading to a deficiency of all cell lines (pancytopenia) and a very low reticulocyte count, indicating no new red cell production.' },
+                { condition: 'Autoimmune Haemolytic Anaemia', fbc: [ { p: 'Hb', v: 'Low', a: '↓' }, { p: 'Reticulocytes', v: 'High', a: '↑' }], other: [{p: 'Morphology', v: 'Spherocytes present'}, {p: 'DAT', v: 'Positive'}], differentials: ['Hereditary Spherocytosis', 'Sepsis / DIC', 'Anaemia of Chronic Disease'], explanation: 'Antibodies coat the patient\'s red cells, leading to their destruction by the spleen. This causes anaemia, and the bone marrow responds by releasing many new reticulocytes. The presence of spherocytes and a positive DAT are classic findings.' },
+                { condition: 'Essential Thrombocythaemia', fbc: [ { p: 'Platelets', v: 'Very High (>600)', a: '↑↑' }], other: [{p: 'Morphology', v: 'Giant/abnormal platelets'}] , differentials: ['Polycythaemia Vera', 'Reactive Thrombocytosis', 'Chronic Myeloid Leukaemia (CML)'], explanation: 'A myeloproliferative neoplasm causing a significant overproduction of platelets from the bone marrow. It must be distinguished from a reactive rise in platelets due to inflammation or iron deficiency.'},
+                { condition: 'Myelofibrosis', fbc: [ { p: 'Hb', v: 'Variable', a: '↕' }], other: [{p: 'Morphology', v: 'Leucoerythroblastic film with tear drop cells'}] , differentials: ['Acute Leukaemia', 'Hairy Cell Leukaemia', 'Metastatic Cancer'], explanation: 'The bone marrow becomes fibrotic and scarred, forcing haematopoiesis to occur in other organs like the spleen. This pushes immature red and white cells ("leucoerythroblastic") and characteristic "tear drop" red cells into the blood.' },
+                { condition: 'Beta Thalassaemia Trait', fbc: [ { p: 'MCV', v: 'Very Low', a: '↓↓' }, { p: 'RBC Count', v: 'High', a: '↑' }], other: [{p: 'HbA2', v: 'High (>3.5%)', a: '↑'}], differentials: ['Iron Deficiency Anaemia', 'Alpha Thalassaemia Trait', 'Anaemia of Chronic Disease'], explanation: 'A genetic defect causing reduced production of beta globin chains for haemoglobin. This results in very small (low MCV) red cells, but the body compensates by producing a large number of them (high RBC count).' },
+                { condition: 'Multiple Myeloma', fbc: [ { p: 'Hb', v: 'Low', a: '↓' }], other: [{p: 'Morphology', v: 'Rouleaux formation'}, {p: 'ESR', v: 'Very High', a: '↑↑'}] , differentials: ['Waldenström Macroglobulinemia', 'Chronic Liver Disease', 'MGUS'], explanation: 'A malignancy of plasma cells, which produce vast amounts of antibody (paraprotein). This high protein level causes red cells to stick together in stacks (rouleaux) and significantly raises the ESR.' },
+                { condition: 'Hairy Cell Leukaemia', fbc: [ { p: 'Pancytopenia', v: 'Present', a: '↓' }, { p: 'Monocytes', v: 'Very Low', a: '↓↓' }], other: [{p: 'Morphology', v: 'Lymphoid cells with circumferential projections'}, {p: 'Immunophenotyping', v: 'CD11c+, CD25+, CD103+'}] , differentials: ['Chronic Lymphocytic Leukaemia (CLL)', 'Myelofibrosis', 'Aplastic Anaemia'], explanation: 'A rare B-cell leukaemia where abnormal cells with "hairy" projections infiltrate the bone marrow and spleen, causing pancytopenia and a characteristic lack of monocytes.' },
+                { condition: 'Sepsis / DIC', fbc: [ { p: 'Platelets', v: 'Low', a: '↓' } ], other: [{p: 'Morphology', v: 'Schistocytes present'}, {p: 'Coagulation', v: 'Deranged'}], differentials: ['Thrombotic Thrombocytopenic Purpura (TTP)', 'Acute Leukaemia', 'Severe Liver Disease'], explanation: 'Widespread activation of the coagulation system consumes platelets and creates micro-clots that shear red cells into fragments (schistocytes), leading to a deranged clotting screen.' },
+                { condition: 'Thrombotic Thrombocytopenic Purpura (TTP)', fbc: [{ p: 'Hb', v: 'Low', a: '↓' }, {p: 'Platelets', v: 'Very Low', a: '↓↓'}], other: [{p: 'Morphology', v: 'Schistocytes present'}, {p: 'Neurological symptoms', v: 'Present'}], differentials: ['Sepsis / DIC', 'Autoimmune Haemolytic Anaemia', 'Malignant Hypertension'], explanation: 'A medical emergency caused by a deficiency in the ADAMTS13 enzyme. Spontaneous clots form in small vessels, consuming platelets and shredding red cells, often causing neurological damage.'},
+                { condition: 'Immune Thrombocytopenic Purpura (ITP)', fbc: [{p: 'Platelets', v: 'Low', a: '↓'}], other: [{p: 'Hb', v: 'Normal', a: '↔'}, {p: 'WBC', v: 'Normal', a: '↔'}], differentials: ['Drug-induced Thrombocytopenia', 'Gestational Thrombocytopenia', 'Acute Leukaemia'], explanation: 'An autoimmune disorder where antibodies are directed against platelets. It presents as an isolated thrombocytopenia with all other FBC parameters being normal.'},
+                { condition: 'Malaria', fbc: [{p: 'Hb', v: 'Low', a: '↓'}, {p: 'Platelets', v: 'Low', a: '↓'}], other: [{p: 'Morphology', v: 'Parasites seen in red cells'}], differentials: ['Sepsis / DIC', 'Viral Infection', 'Bartonellosis'], explanation: 'The parasite infects and destroys red blood cells, causing anaemia. It also leads to a consumption of platelets, causing a characteristic thrombocytopenia.'},
+                { condition: 'Myelodysplastic Syndrome (MDS)', fbc: [{p: 'Cytopenias', v: 'Variable', a: '↓'}, {p: 'MCV', v: 'Normal/High', a: '↔/↑'}], other: [{p: 'Morphology', v: 'Dysplastic changes, e.g. Pelger-Huët cells'}], differentials: ['Megaloblastic Anaemia', 'Aplastic Anaemia', 'Acute Leukaemia'], explanation: 'A group of bone marrow failure disorders where blood cell production is disorderly and ineffective ("dysplastic"). This leads to various cytopenias and abnormal cell morphology.'}
             ];
-
+            
             let currentScenario = {};
             let score = 0;
-            
+
             function newQuestion() {
                 currentScenario = JSON.parse(JSON.stringify(scenarios[Math.floor(Math.random() * scenarios.length)]));
                 feedbackMessageEl.classList.add('hidden');
                 explanationBox.classList.add('hidden');
                 nextQuestionBtn.classList.add('hidden');
                 answerOptionsEl.innerHTML = '';
-                clinicalNoteBox.textContent = `Clinical Note: ${currentScenario.clinicalNote || 'Not specified.'}`;
+                clinicalNoteBox.textContent = `Clinical Note: ${currentScenario.clinicalNote}`;
                 
                 fbcResultsTable.innerHTML = '';
                 currentScenario.fbc.forEach(res => {
@@ -134,7 +134,12 @@
                 let distractors = correctScenario.differentials;
                 distractors.sort(() => Math.random() - 0.5);
                 options.push(...distractors.slice(0, 3));
-                while (options.length < 4) { const randomIndex = Math.floor(Math.random() * scenarios.length); const randomOption = scenarios[randomIndex].condition; if (!options.includes(randomOption)) { options.push(randomOption); } }
+                while (options.length < 4) {
+                    const randomIndex = Math.floor(Math.random() * scenarios.length);
+                    const randomOption = scenarios[randomIndex].condition;
+                    if (!options.includes(randomOption)) { options.push(randomOption); }
+                }
+                
                 options.sort(() => Math.random() - 0.5);
                 options.forEach(option => {
                     const button = document.createElement('button');
@@ -158,7 +163,7 @@
                     feedbackMessageEl.className = 'mt-6 p-4 rounded-lg text-lg font-semibold bg-green-100 text-green-800';
                     buttonEl.classList.add('correct');
                 } else {
-                    feedbackMessageEl.textContent = `Incorrect. The most likely diagnosis for this pattern is ${correctAnswer}.`;
+                    feedbackMessageEl.textContent = `Incorrect. The primary diagnosis for this pattern is ${correctAnswer}.`;
                     feedbackMessageEl.className = 'mt-6 p-4 rounded-lg text-lg font-semibold bg-red-100 text-red-800';
                     buttonEl.classList.add('incorrect');
                     document.querySelectorAll('.option-btn').forEach(btn => { if (btn.textContent === correctAnswer) { btn.classList.add('correct'); } });
