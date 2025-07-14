@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lipaemia Calculator - SGC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <style> 
+        body { font-family: 'Inter', sans-serif; } 
+        .nhs-text-blue { color: #005EB8; } 
+        .nhs-dark-blue { color: #003087; }
+        .result-box { background-color: #F0F4F5; }
+        .workings-box { background-color: #fff; border: 1px dashed #9ca3af; }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="header-placeholder"></div>
+
+    <main class="py-16">
+        <div class="container mx-auto px-6 max-w-lg">
+            <a href="helpful_tools.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8">
+                <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Helpful Tools
+            </a>
+            <div class="text-center">
+                <h2 class="text-3xl font-bold nhs-text-dark-blue mb-4">Lipaemia Correction Calculator</h2>
+                <p class="text-gray-600 mb-8">Calculate a corrected Haemoglobin (Hb) value for a lipaemic FBC sample based on the Mean Corpuscular Haemoglobin Concentration (MCHC).</p>
+            </div>
+
+            <div class="bg-white p-8 rounded-lg shadow-md space-y-6">
+                <div>
+                    <label for="original-mchc" class="block text-lg font-semibold text-gray-700">Original MCHC (g/L)</label>
+                    <input type="number" id="original-mchc" placeholder="e.g., 410" class="w-full mt-2 p-3 border border-gray-300 rounded-lg shadow-sm text-xl">
+                </div>
+                <div>
+                    <label for="original-hb" class="block text-lg font-semibold text-gray-700">Original Hb (g/L)</label>
+                    <input type="number" id="original-hb" placeholder="e.g., 135" class="w-full mt-2 p-3 border border-gray-300 rounded-lg shadow-sm text-xl">
+                </div>
+                
+                <div id="result-container" class="pt-4">
+                    <div class="result-box p-6 rounded-lg text-center">
+                        <h3 class="text-xl font-semibold text-gray-700">Corrected Haemoglobin (g/L)</h3>
+                        <p id="corrected-hb-result" class="text-4xl font-extrabold nhs-text-blue mt-2">0</p>
+                    </div>
+                </div>
+
+                <div id="workings-container" class="pt-4 hidden">
+                    <div class="workings-box p-6 rounded-lg">
+                        <h4 class="font-bold text-gray-800 mb-2">Calculation Workings:</h4>
+                        <p class="font-mono text-gray-700" id="workings-text"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 p-4 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-800 rounded-r-lg">
+                <p class="font-bold">Important: Record the original and corrected results on form TF6006 as per protocol.</p>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const originalMchcInput = document.getElementById('original-mchc');
+            const originalHbInput = document.getElementById('original-hb');
+            const correctedHbResultEl = document.getElementById('corrected-hb-result');
+            const workingsContainer = document.getElementById('workings-container');
+            const workingsTextEl = document.getElementById('workings-text');
+
+            const NORMAL_MCHC = 320; // As per the SOP
+
+            function calculateCorrectedHb() {
+                const originalMCHC = parseFloat(originalMchcInput.value);
+                const originalHb = parseFloat(originalHbInput.value);
+
+                if (!isNaN(originalMCHC) && !isNaN(originalHb) && originalMCHC > 0) {
+                    const correctedHb = originalHb * (NORMAL_MCHC / originalMCHC);
+                    correctedHbResultEl.textContent = correctedHb.toFixed(1);
+
+                    // Show workings
+                    workingsTextEl.innerHTML = `
+                        Corrected Hb = Original Hb × (Normal MCHC / Original MCHC)<br>
+                        Corrected Hb = ${originalHb} × (${NORMAL_MCHC} / ${originalMCHC})<br>
+                        Corrected Hb = ${originalHb} × ${(NORMAL_MCHC / originalMCHC).toFixed(4)}<br>
+                        <strong>Corrected Hb = ${correctedHb.toFixed(1)} g/L</strong>
+                    `;
+                    workingsContainer.classList.remove('hidden');
+
+                } else {
+                    correctedHbResultEl.textContent = '0';
+                    workingsContainer.classList.add('hidden');
+                }
+            }
+
+            originalMchcInput.addEventListener('input', calculateCorrectedHb);
+            originalHbInput.addEventListener('input', calculateCorrectedHb);
+        });
+    </script>
+    <script src="js/component-loader.js"></script>
+</body>
+</html>
