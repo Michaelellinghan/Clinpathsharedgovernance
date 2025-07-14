@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resource & Sustainability Corner - SGC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <style> 
+        body { font-family: 'Inter', sans-serif; } 
+        .nhs-text-blue { color: #005EB8; } 
+        .nhs-dark-blue { color: #003087; }
+        .info-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div id="header-placeholder"></div>
+
+    <main class="py-16">
+        <div class="container mx-auto px-6">
+            <a href="helpful_tools.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8">
+                <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Helpful Tools
+            </a>
+            <h2 class="text-4xl font-bold text-center mb-4 nhs-text-dark-blue">Resource & Sustainability Corner</h2>
+            <p class="text-lg text-gray-600 text-center mb-12 max-w-3xl mx-auto">Learn about how we can use our resources more mindfully, reduce waste, and improve efficiency. Small changes can make a big difference.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <a href="journey_of_a_sample.html" class="info-card block bg-white rounded-lg shadow-lg overflow-hidden">
+                    <div class="p-6">
+                         <div class="flex items-center text-nhs-blue mb-3">
+                            <i data-feather="truck" class="w-8 h-8"></i>
+                            <h3 class="text-xl font-semibold ml-3">The Journey of a Sample</h3>
+                        </div>
+                        <p class="text-gray-600">An insight into the resources and costs involved in every step of the sample pathway.</p>
+                    </div>
+                </a>
+
+                <a href="add_on_guide.html" class="info-card block bg-white rounded-lg shadow-lg overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex items-center text-nhs-blue mb-3">
+                            <i data-feather="plus-circle" class="w-8 h-8"></i>
+                            <h3 class="text-xl font-semibold ml-3">The Power of the Add-On Test</h3>
+                        </div>
+                        <p class="text-gray-600">A guide explaining which tests can be added to existing samples, avoiding unnecessary re-bleeds.</p>
+                    </div>
+                </a>
+
+                <a href="waste_management.html" class="info-card block bg-white rounded-lg shadow-lg overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex items-center text-nhs-blue mb-3">
+                            <i data-feather="trash-2" class="w-8 h-8"></i>
+                            <h3 class="text-xl font-semibold ml-3">Waste Management & Costs</h3>
+                        </div>
+                        <p class="text-gray-600">Learn about the correct disposal of laboratory waste and the surprising costs involved.</p>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+    <script src="js/component-loader.js"></script>
+    <script>
+        feather.replace();
+    </script>
+</body>
+</html>
