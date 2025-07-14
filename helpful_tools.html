@@ -21,10 +21,17 @@
             <h2 class="text-4xl font-bold text-center mb-12 nhs-text-dark-blue">Helpful Tools</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 
+                <a href="rejection_troubleshooter.html" class="block bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Sample Rejection Troubleshooter</h3>
+                        <p class="text-gray-600">Understand why a sample was rejected and how to prevent it next time.</p>
+                    </div>
+                </a>
+
                 <a href="lipaemia_calculator.html" class="block bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
                     <div class="p-6">
                         <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Lipaemia Calculator</h3>
-                        <p class="text-gray-600">Calculate a corrected Haemoglobin result for lipaemic samples as per NUH protocol.</p>
+                        <p class="text-gray-600">Calculate a corrected Haemoglobin result for lipaemic samples.</p>
                     </div>
                 </a>
 
@@ -38,14 +45,14 @@
                 <a href="cell_counter.html" class="block bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
                     <div class="p-6">
                         <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Manual Differential Counter</h3>
-                        <p class="text-gray-600">A keyboard-based counter for performing manual cell differentials and calculating absolute values.</p>
+                        <p class="text-gray-600">A keyboard-based counter for performing manual cell differentials.</p>
                     </div>
                 </a>
 
                 <a href="glossary.html" class="block bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
                     <div class="p-6">
                         <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Interactive Pathology Glossary</h3>
-                        <p class="text-gray-600">A comprehensive, searchable glossary of pathology terms and definitions.</p>
+                        <p class="text-gray-600">A comprehensive, searchable glossary of pathology terms.</p>
                     </div>
                 </a>
 
@@ -54,39 +61,6 @@
     </main>
 
     <div id="footer-placeholder"></div>
-    <script>
-        function loadComponent(url, placeholderId, callback) {
-            fetch(url)
-                .then(response => {
-                    if (!response.ok) throw new Error('Could not load ' + url);
-                    return response.text();
-                })
-                .then(data => {
-                    const placeholder = document.getElementById(placeholderId);
-                    if (placeholder) {
-                        const tempDiv = document.createElement('div');
-                        tempDiv.innerHTML = data;
-                        placeholder.replaceWith(...tempDiv.childNodes);
-                        if (callback) callback();
-                    }
-                })
-                .catch(error => console.error('Error loading component:', error));
-        }
-
-        loadComponent('header.html', 'header-placeholder', () => {
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            if (mobileMenuButton && mobileMenu) {
-                 mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
-            }
-            feather.replace();
-        });
-
-        loadComponent('footer.html', 'footer-placeholder');
-
-        document.addEventListener('DOMContentLoaded', () => {
-             feather.replace();
-        });
-    </script>
+    <script src="js/component-loader.js"></script>
 </body>
 </html>
