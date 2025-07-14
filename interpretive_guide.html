@@ -12,6 +12,29 @@
         .nhs-text-blue { color: #005EB8; } 
         .nhs-dark-blue { color: #003087; }
         .result-card h4 { color: #003087; }
+        .result-card {
+            transition: all 0.2s ease-in-out;
+        }
+        .tab-btn {
+            transition: all 0.2s;
+            border-bottom: 4px solid transparent;
+        }
+        .tab-btn.active {
+            border-bottom-color: #005EB8;
+            color: #005EB8;
+            font-weight: 600;
+        }
+        /* Style for the sticky header */
+        .sticky-header {
+            position: -webkit-sticky; /* For Safari */
+            position: sticky;
+            top: 0;
+            background-color: rgba(243, 244, 246, 0.95); /* bg-gray-100 with some transparency */
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            z-index: 10;
+            backdrop-filter: blur(5px); /* Frosted glass effect */
+        }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800">
@@ -19,7 +42,7 @@
     <div id="header-placeholder"></div>
 
     <main class="py-16">
-        <div class="container mx-auto px-6 max-w-3xl">
+        <div class="container mx-auto px-6 max-w-4xl">
             <a href="helpful_tools.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8">
                 <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Helpful Tools
             </a>
@@ -28,13 +51,21 @@
                 <p class="text-gray-600 mb-8">Search for a term to understand its clinical significance and appropriate next steps.</p>
             </div>
 
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <label for="comment-search" class="block text-lg font-semibold text-gray-700 mb-2">Search for a Comment or Finding:</label>
-                <input type="text" id="comment-search" placeholder="e.g., Leucoerythroblastic, Atypical Lymphocytes, Rouleaux..." class="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+             <div class="border-b border-gray-200 mb-4">
+                <nav id="glossary-tabs" class="-mb-px flex justify-center space-x-2 md:space-x-8" aria-label="Tabs">
+                    <button class="tab-btn whitespace-nowrap py-4 px-1 md:px-2 border-b-2 font-medium text-sm md:text-lg text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="haem">Haematology Film</button>
+                    <button class="tab-btn whitespace-nowrap py-4 px-1 md:px-2 border-b-2 font-medium text-sm md:text-lg text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="coag">Coagulation</button>
+                    <button class="tab-btn whitespace-nowrap py-4 px-1 md:px-2 border-b-2 font-medium text-sm md:text-lg text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="haemoglobinopathy">Haemoglobinopathy</button>
+                </nav>
+            </div>
+
+            <div class="sticky-header">
+                <label for="comment-search" class="block text-lg font-semibold text-gray-700 mb-2">Search Comments:</label>
+                <input type="text" id="comment-search" placeholder="e.g., Leucoerythroblastic, Prolonged APTT, Sickle Cell Carrier..." class="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
                 
-                <div id="results-container" class="mt-6 space-y-4">
-                     <p class="text-gray-500">Start typing to search for a comment.</p>
-                </div>
+            <div id="results-container" class="mt-6 space-y-4">
+                 <p class="text-gray-500 text-center">Start typing to search for a comment.</p>
             </div>
         </div>
     </main>
@@ -45,84 +76,131 @@
         document.addEventListener('DOMContentLoaded', () => {
             const searchInput = document.getElementById('comment-search');
             const resultsContainer = document.getElementById('results-container');
+            const tabsContainer = document.getElementById('glossary-tabs');
+            let currentTab = 'haem';
 
-            const comments = [
-                {
-                    term: 'Leucoerythroblastic Picture',
-                    meaning: 'The presence of immature red cells (NRBCs), immature white cells (e.g., myelocytes, metamyelocytes), and teardrop-shaped red cells in the peripheral blood.',
-                    causes: 'Commonly caused by bone marrow infiltration (e.g., by metastatic cancer or fibrosis) or severe bone marrow stress.',
-                    nextSteps: 'Requires urgent clinical correlation and review of previous haematology. A bone marrow biopsy is often indicated.'
-                },
-                {
-                    term: 'Atypical Lymphocytes Seen',
-                    meaning: 'Large, reactive lymphocytes are present, which are responding to an infection.',
-                    causes: 'Most commonly caused by viral infections, classically infectious mononucleosis (Glandular Fever) due to EBV. Also seen in CMV, toxoplasmosis, and other viral illnesses.',
-                    nextSteps: 'Suggest Monospot test (if appropriate for age/history) and viral serology. Clinical correlation is key.'
-                },
-                {
-                    term: 'Rouleaux Formation',
-                    meaning: 'Red blood cells are arranged in stacks, like coins.',
-                    causes: 'Caused by high levels of plasma proteins, particularly immunoglobulins or fibrinogen. Strongly associated with Multiple Myeloma, but also seen in chronic inflammation and infection.',
-                    nextSteps: 'Recommend serum protein electrophoresis and ESR to investigate for a paraprotein. Check for signs of inflammation.'
-                },
-                {
-                    term: 'Pancytopenia',
-                    meaning: 'A reduction in all major blood cell lineages: red cells (anaemia), white cells (leukopenia), and platelets (thrombocytopenia).',
-                    causes: 'A serious finding with a wide range of causes, including bone marrow failure (e.g., Aplastic Anaemia), haematological malignancy (e.g., Acute Leukaemia), severe B12/Folate deficiency, or hypersplenism.',
-                    nextSteps: 'Urgent referral to haematology for further investigation, including bone marrow aspirate and biopsy.'
-                },
-                {
-                    term: 'Schistocytes / Red Cell Fragments',
-                    meaning: 'Fragmented red blood cells are present, indicating mechanical damage within the circulation (microangiopathic haemolytic anaemia).',
-                    causes: 'A critical finding. Causes include TTP, HUS, DIC, malignant hypertension, and faulty mechanical heart valves.',
-                    nextSteps: 'This is a medical emergency. Immediate clinical correlation is required. Suggest urgent coagulation screen, renal function, and LDH.'
-                },
-                {
-                    term: 'Left Shift',
-                    meaning: 'An increase in the number of immature granulocytes (band forms, metamyelocytes, myelocytes) in the peripheral blood.',
-                    causes: 'Most commonly a reactive response to severe bacterial infection. Can also be a feature of Chronic Myeloid Leukaemia (CML), but this is usually associated with a much higher WBC and basophilia.',
-                    nextSteps: 'Correlate with clinical signs of infection and inflammatory markers like CRP. If persistent and unexplained, further investigation for a myeloproliferative disorder may be needed.'
-                }
-            ];
+            const commentsData = {
+                haem: [
+                    { term: 'Leucoerythroblastic Picture', meaning: 'The presence of immature red cells (Nucleated Red Blood Cells) and immature white cells (e.g., myelocytes, metamyelocytes) in the peripheral blood. Teardrop-shaped red cells are often also present.', causes: 'Indicates significant bone marrow disturbance. Common causes include myelofibrosis, metastatic cancer infiltrating the marrow, severe haemolysis, or overwhelming infection (sepsis).', nextSteps: 'This is a significant finding requiring urgent clinical correlation. Review previous haematology results. A bone marrow biopsy is often indicated to determine the underlying cause. Refer to haematology for review.' },
+                    { term: 'Atypical Lymphocytes Seen', meaning: 'Large, reactive lymphocytes are present. These are activated lymphocytes responding to an infection.', causes: 'Most commonly caused by viral infections, classically infectious mononucleosis (Glandular Fever) due to Epstein-Barr Virus (EBV). Also seen in Cytomegalovirus (CMV), toxoplasmosis, and other viral illnesses.', nextSteps: 'Suggest Monospot test (if appropriate for age/history) and viral serology. Clinical correlation with patient symptoms (fever, sore throat, lymphadenopathy) is key.' },
+                    { term: 'Rouleaux Formation', meaning: 'Red blood cells are arranged in stacks, like coins. This should be distinguished from red cell agglutination.', causes: 'Caused by high levels of plasma proteins, particularly immunoglobulins or fibrinogen, which reduce the negative charge on red cells. Strongly associated with Multiple Myeloma, but also seen in chronic inflammation, infection, and some cancers.', nextSteps: 'Recommend serum protein electrophoresis (SPE) and ESR to investigate for a paraprotein. Check for signs of inflammation (e.g., CRP).' },
+                    { term: 'Pancytopenia', meaning: 'A reduction in all major blood cell lineages: red cells (anaemia), white cells (leukopenia), and platelets (thrombocytopenia).', causes: 'A serious finding with a wide range of causes, including bone marrow failure (e.g., Aplastic Anaemia), haematological malignancy (e.g., Acute Leukaemia, Myelodysplastic Syndrome), severe B12/Folate deficiency, or sequestration of cells in an enlarged spleen (hypersplenism).', nextSteps: 'Urgent referral to haematology for further investigation. A bone marrow aspirate and biopsy is almost always required.' },
+                    { term: 'Schistocytes / Red Cell Fragments', meaning: 'Fragmented red blood cells are present, indicating mechanical damage to red cells within the circulation. This is a key feature of microangiopathic haemolytic anaemia (MAHA).', causes: 'A critical finding that can be a medical emergency. Causes include Thrombotic Thrombocytopenic Purpura (TTP), Haemolytic Uraemic Syndrome (HUS), Disseminated Intravascular Coagulation (DIC), malignant hypertension, and faulty mechanical heart valves.', nextSteps: 'This is a medical emergency. Immediate clinical correlation is required. Suggest urgent coagulation screen, renal function (U&Es), LDH, and bilirubin.' },
+                    { term: 'Left Shift / Neutrophil Left Shift', meaning: 'An increase in the number of immature granulocytes (band forms, metamyelocytes, myelocytes) in the peripheral blood.', causes: 'Most commonly a reactive response to severe bacterial infection or inflammation. Can also be a feature of Chronic Myeloid Leukaemia (CML), but this is usually associated with a much higher WBC and basophilia.', nextSteps: 'Correlate with clinical signs of infection and inflammatory markers like CRP. If persistent, unexplained, and associated with other abnormalities (e.g., basophilia, splenomegaly), further investigation for a myeloproliferative disorder may be needed.' },
+                    { term: 'Platelet Clumping (@PC)', meaning: 'Platelets are clumped together on the blood film, leading to a falsely low automated platelet count.', causes: 'This is an in-vitro (in the test tube) phenomenon, most commonly caused by the EDTA anticoagulant in the sample tube reacting with antibodies in the patient\'s plasma (EDTA-dependent agglutinins).', nextSteps: 'The reported platelet count is invalid. A blood film is required to confirm clumping and to estimate the platelet numbers. A repeat sample in a citrate (light blue top) tube is required for an accurate platelet count.' },
+                    { term: 'Raised MCV / Macrocytosis (@LBF)', meaning: 'The average size of the red blood cells is larger than normal. The cells may be round or oval.', causes: 'Common causes include alcohol excess, liver disease, hypothyroidism, certain medications (e.g., methotrexate, hydroxycarbamide), and B12 or folate deficiency (which typically causes oval macrocytes).', nextSteps: 'Suggest checking B12/folate levels, thyroid function tests (TFTs), and liver function tests (LFTs). Review medication history and alcohol intake.' },
+                    { term: 'Neutropenia', meaning: 'A lower-than-normal number of neutrophils in the blood, which increases the risk of infection.', causes: 'Can be physiological (e.g., benign ethnic neutropenia), viral (common in children), drug-induced, or a sign of an autoimmune condition or a serious haematological disorder affecting the bone marrow.', nextSteps: 'If the neutrophil count is <1.0 x10^9/L with no known cause, the blood film should be referred to a haematology registrar for review. Clinical context is vital.' },
+                    { term: 'Toxic Granulation in Neutrophils (@TG)', meaning: 'Neutrophils contain prominent, dark-staining granules in their cytoplasm.', causes: 'A reactive change indicating a severe inflammatory state, most commonly due to bacterial infection or sepsis. It reflects an increased production of bactericidal enzymes.', nextSteps: 'This finding supports a diagnosis of significant infection/inflammation. Correlate with clinical signs and other inflammatory markers like CRP.' },
+                    { term: 'Iron Deficient Indices (@SFE)', meaning: 'Red cell indices (low MCV, low MCH) are suggestive of iron deficiency.', causes: 'Iron deficiency anaemia.', nextSteps: 'Suggest determine iron status (e.g., ferritin level).' },
+                    { term: 'Basophilia', meaning: 'An increased number of basophils in the blood.', causes: 'This is almost always a significant finding. It is strongly associated with myeloproliferative neoplasms, particularly Chronic Myeloid Leukaemia (CML).', nextSteps: 'A blood film with a manual differential is required. Refer to haematology for review and further investigation (e.g., BCR-ABL1 gene test).' },
+                    { term: 'Monocytosis', meaning: 'An increased number of monocytes in the blood.', causes: 'Can be reactive (e.g., recovery from infection) but a persistent, isolated monocytosis can be a feature of Chronic Myelomonocytic Leukaemia (CMML) or other myelodysplastic/myeloproliferative disorders.', nextSteps: 'Refer to haematology if persistent and unexplained, especially if dysplastic features are seen in other cell lines.' },
+                    { term: 'Eosinophilia (@NE)', meaning: 'An increased number of eosinophils in the blood.', causes: 'Commonly caused by allergic conditions (atopy, asthma), parasitic infestations, or drug hypersensitivity. Less commonly, can be a feature of a haematological malignancy (hypereosinophilic syndrome).', nextSteps: 'Correlate with clinical history. If >3.5 x10^9/L and persistent, refer to haematology.' },
+                    { term: 'Spherocytes', meaning: 'Small, spherical, dense red blood cells that lack central pallor.', causes: 'Key features of Hereditary Spherocytosis and Autoimmune Haemolytic Anaemia (AIHA). Also seen in other haemolytic states.', nextSteps: 'Suggest a Direct Antiglobulin Test (DAT/Coombs test) to check for AIHA. Correlate with reticulocyte count and bilirubin to assess for haemolysis.' },
+                    { term: 'Target Cells / Codocytes (@T)', meaning: 'Red cells with a central area of haemoglobinisation, resembling a target.', causes: 'A non-specific finding, but common in liver disease, post-splenectomy, and haemoglobinopathies such as Thalassaemia and Sickle Cell Disease.', nextSteps: 'Correlate with LFTs and consider haemoglobinopathy screen if clinically indicated.' },
+                    { term: 'Howell-Jolly Bodies (@HJ)', meaning: 'Small, round, dense nuclear remnants within red blood cells.', causes: 'These are normally removed by the spleen. Their presence is a key indicator of a non-functioning spleen (hyposplenism) or a previous splenectomy.', nextSteps: 'Confirm patient\'s splenic status. If spleen is present, this finding suggests it is not working correctly (e.g., due to sickle cell disease or coeliac disease).' },
+                    { term: 'Red Cell Agglutination (@RCA2)', meaning: 'Irregular clumping of red blood cells, distinct from rouleaux.', causes: 'Usually caused by cold-reacting IgM antibodies (cold agglutinins). Can be associated with Mycoplasma infection, lymphoma, or be idiopathic.', nextSteps: 'Warm the sample to 37°C and re-analyse. If agglutination persists, it is difficult to obtain an accurate FBC. A blood film is essential.' }
+                ],
+                coag: [
+                    { term: 'Prolonged APTT (@PAPT)', meaning: 'The activated partial thromboplastin time, a measure of the intrinsic coagulation pathway, is longer than the reference range.', causes: 'Common causes include heparin therapy, presence of a lupus anticoagulant, clotting factor deficiencies (e.g., Haemophilia A/B), liver disease, or DIC.', nextSteps: 'Suggest repeat in the first instance to rule out pre-analytical error. Correlate with clinical picture (bleeding?) and medication history (heparin?). Further tests (e.g., mixing studies, factor assays) may follow if confirmed.' },
+                    { term: 'Short APTT / Activated Sample (@ACS)', meaning: 'The APTT is shorter than the reference range.', causes: 'This is usually a pre-analytical issue indicating the sample was "activated" during a difficult venepuncture, or is underfilled. It has no clinical significance in terms of hypercoagulability.', nextSteps: 'Note short APTT. ? Activated / poor quality sample. Suggest repeat if a valid result is required.' },
+                    { term: 'Lupus Anticoagulant Positive (@LAP)', meaning: 'Testing is suggestive of the presence of a Lupus Anticoagulant.', causes: 'These are autoantibodies that paradoxically prolong clotting tests in the lab but are associated with an increased risk of thrombosis in the body. Can be transient (e.g., post-infection) or persistent (associated with autoimmune diseases like SLE).', nextSteps: 'Results suggestive of the presence of a Lupus Anticoagulant. Please repeat in 12 weeks time to confirm result, as transient antibodies are common.' },
+                    { term: 'Factor V Leiden Heterozygous (@LGHT)', meaning: 'The patient has one copy of the Factor V Leiden gene mutation.', causes: 'This is the most common inherited cause of thrombophilia (an increased tendency to form blood clots).', nextSteps: 'This confers a moderately increased lifetime risk of venous thromboembolism (VTE), which is further increased by other risk factors (e.g., surgery, pregnancy, oral contraceptive pill).' },
+                    { term: 'Prothrombin G20210A Heterozygous (@PGHT)', meaning: 'The patient has one copy of the prothrombin gene mutation.', causes: 'This is the second most common inherited cause of thrombophilia.', nextSteps: 'This confers a moderately increased lifetime risk of venous thromboembolism (VTE). Clinical management depends on personal and family history of thrombosis.' },
+                    { term: 'Protein C Deficiency (@PC1 / @PC2)', meaning: 'The level or function of Protein C, a natural anticoagulant, is reduced.', causes: 'Can be inherited or acquired (e.g., due to liver disease, warfarin therapy, or severe infection).', nextSteps: 'Results consistent with Protein C Deficiency. This increases the risk of VTE. Family studies and correlation with clinical history are recommended.' },
+                    { term: 'Protein S Deficiency (@PSD)', meaning: 'The level or function of Protein S, a natural anticoagulant, is reduced.', causes: 'Can be inherited or acquired (e.g., due to pregnancy, oral contraceptive use, liver disease).', nextSteps: 'Results consistent with Protein S Deficiency. This increases the risk of VTE. It is important to exclude acquired causes before making a diagnosis of an inherited deficiency.' },
+                    { term: 'Antithrombin Deficiency (@AT1 / @AT2)', meaning: 'The level or function of Antithrombin, a key natural anticoagulant, is reduced.', causes: 'A rare but potent inherited cause of thrombophilia. Can also be acquired (e.g., liver disease, nephrotic syndrome).', nextSteps: 'Results consistent with Antithrombin Deficiency. This confers a high risk of VTE. Family studies and specialist haematology input are required.' },
+                    { term: 'Heparin Contamination (@HCON)', meaning: 'The coagulation sample has been contaminated with heparin, usually from a line flush.', causes: 'Contamination of the sample during collection.', nextSteps: 'Results are invalid and suggestive of heparin contamination. Suggest repeat sample, ensuring it is not drawn from a line containing heparin.' },
+                    { term: 'D-Dimer Result Interpretation (@DD)', meaning: 'D-Dimer is a degradation product of a fibrin clot.', causes: 'Elevated in many conditions including DVT, PE, DIC, recent surgery, trauma, infection, inflammation, cancer, and pregnancy. It has a high negative predictive value.', nextSteps: 'A result of <500 ug/L (or age-adjusted cut-off) is considered a negative predictor for DVT/PE if the pre-test clinical probability (e.g., Wells score) is low.' },
+                    { term: 'Factor XII Deficiency (@XII)', meaning: 'A deficiency of clotting factor XII.', causes: 'Usually an incidental laboratory finding.', nextSteps: 'Results consistent with Factor XII Deficiency. This is not associated with a bleeding tendency and requires no specific treatment.' }
+                ],
+                haemoglobinopathy: [
+                    { term: 'No Abnormality Detected (@HNON / @HNOA)', meaning: 'The analysis shows a normal haemoglobin pattern.', causes: 'Normal genetic makeup for haemoglobin.', nextSteps: 'No evidence of sickle haemoglobin or other common haemoglobin variant or of thalassaemia. For antenatal screening, testing of the baby’s biological father is not required based on this result.' },
+                    { term: 'Sickle Cell Carrier / Trait (@HAS)', meaning: 'Results are consistent with Sickle Cell Carrier (HbAS). The individual has one gene for normal haemoglobin (HbA) and one for sickle haemoglobin (HbS).', causes: 'This is an inherited genetic condition. It is not an illness, but carriers can have complications in situations of severe oxygen deprivation.', nextSteps: 'This is an important finding for genetic counselling. For antenatal screening, testing of the baby’s biological father is recommended to assess the risk of the baby having Sickle Cell Disease (HbSS).' },
+                    { term: 'Hb C Carrier / Trait (@HAC)', meaning: 'Results are consistent with Haemoglobin C Carrier (HbAC). The individual has one gene for HbA and one for HbC.', causes: 'An inherited genetic condition. It is a benign condition.', nextSteps: 'Important for genetic counselling. For antenatal screening, testing of the baby’s biological father is recommended to assess the risk of the baby having HbSC disease or HbC disease.' },
+                    { term: 'Hb D Carrier / Trait (@HAD)', meaning: 'Results are consistent with Haemoglobin D Carrier (HbAD).', causes: 'An inherited genetic condition. It is a benign condition.', nextSteps: 'Important for genetic counselling. For antenatal screening, testing of the baby’s biological father is recommended to assess the risk of the baby having HbSD disease.' },
+                    { term: 'Hb E Carrier / Trait (@HAE)', meaning: 'Results are consistent with Haemoglobin E Carrier (HbAE). Often associated with mild microcytosis.', causes: 'An inherited genetic condition. It is a benign condition but can interact with beta thalassaemia.', nextSteps: 'Important for genetic counselling. For antenatal screening, testing of the baby’s biological father is recommended to assess the risk of the baby having HbE/Beta Thalassaemia disease.' },
+                    { term: 'Beta Thalassaemia Trait (@HBT1)', meaning: 'Results are consistent with being a carrier for beta thalassaemia. Characterised by microcytic (low MCV) red cells and a raised HbA2 level (>3.5%).', causes: 'An inherited genetic condition caused by a faulty beta-globin gene, leading to reduced production of normal adult haemoglobin (HbA).', nextSteps: 'Possible co-existent alpha thalassaemia and/or iron deficiency should be considered. For antenatal screening, testing of the baby’s biological father is required to assess the risk of the baby having Thalassaemia Major.' },
+                    { term: 'Borderline HbA2 (@RA2)', meaning: 'The level of Haemoglobin A2 is in the borderline range (e.g., 3.0-3.5%).', causes: 'The cause is uncertain. It could represent a mild beta thalassaemia trait, or be influenced by other factors.', nextSteps: 'Beta thalassaemia cannot be excluded. Consider other causes of a raised HbA2 level. Suggest checking haematinics and thyroid function. A repeat sample may be suggested.' },
+                    { term: 'Alpha Thalassaemia Trait (@HATA)', meaning: 'The red cell indices are microcytic and/or hypochromic, but the HbA2 level is normal or low, suggesting possible alpha thalassaemia.', causes: 'An inherited condition caused by deletion of one or two of the four alpha-globin genes. Iron deficiency can give a similar picture.', nextSteps: 'Possible alpha thalassaemia and/or iron deficiency. No evidence of sickle haemoglobin or beta thalassaemia. Suggest checking iron status to exclude iron deficiency as the cause of the microcytosis.' },
+                    { term: 'Hereditary Persistence of Foetal Haemoglobin (HPFH) (@HPFH)', meaning: 'The level of foetal haemoglobin (HbF) is persistently elevated into adulthood.', causes: 'A group of inherited conditions where the switch from foetal to adult haemoglobin production is incomplete. Generally a benign condition.', nextSteps: 'This is usually an incidental finding. When co-inherited with sickle cell or thalassaemia traits, it can modify the clinical picture, often for the better.' },
+                    { term: 'Delta Beta (δβ) Thalassaemia Trait', meaning: 'Results show a significantly raised HbF level (typically 5-20%) with microcytic red cells and a normal or low HbA2.', causes: 'An inherited condition where there is faulty production of both the delta and beta globin chains.', nextSteps: 'This is a benign carrier state, but it is important for genetic counselling. For antenatal screening, testing of the baby’s biological father is required.' },
+                    { term: 'Sickle Cell Disease (HbSS)', meaning: 'Results are consistent with Sickle Cell Anaemia. The analysis shows predominantly HbS with no HbA.', causes: 'An inherited condition where the individual has two copies of the sickle haemoglobin gene.', nextSteps: 'This is a major clinical diagnosis. The patient should be under the care of a specialist haematology team.' },
+                    { term: 'Hb SC Disease (@HSC)', meaning: 'Results are consistent with Haemoglobin SC Disease. The analysis shows approximately equal amounts of HbS and HbC.', causes: 'An inherited condition where the individual has one gene for HbS and one for HbC.', nextSteps: 'This is a clinically significant sickling disorder, although often milder than HbSS. The patient should be under the care of a specialist haematology team.' }
+                ]
+            };
 
-            function renderResults() {
-                const query = searchInput.value.toLowerCase();
-                if (!query) {
-                    resultsContainer.innerHTML = '<p class="text-gray-500">Start typing to search for a comment.</p>';
-                    return;
-                }
-
-                const filtered = comments.filter(c => c.term.toLowerCase().includes(query) || c.meaning.toLowerCase().includes(query) || c.causes.toLowerCase().includes(query));
-                
-                if (filtered.length === 0) {
-                    resultsContainer.innerHTML = '<p class="text-gray-500">No matching comments found.</p>';
+            function renderResults(filteredComments) {
+                if (filteredComments.length === 0) {
+                    resultsContainer.innerHTML = '<p class="text-center text-gray-500">No matching comments found.</p>';
                     return;
                 }
 
                 resultsContainer.innerHTML = '';
-                filtered.forEach(item => {
+                filteredComments.forEach(item => {
                     const card = document.createElement('div');
-                    card.className = 'result-card p-4 border rounded-lg bg-white shadow';
+                    card.className = 'result-card p-6 border rounded-lg bg-white shadow-lg';
                     card.innerHTML = `
-                        <h3 class="text-xl font-bold text-gray-800">${item.term}</h3>
-                        <div class="mt-4">
-                            <h4 class="font-semibold">What it means:</h4>
-                            <p class="text-gray-700">${item.meaning}</p>
+                        <h3 class="text-xl font-bold text-gray-800 flex items-center">
+                            <i data-feather="message-square" class="w-6 h-6 mr-3 nhs-text-blue"></i>
+                            ${item.term}
+                        </h3>
+                        <div class="mt-4 pl-9">
+                            <h4 class="font-semibold text-lg nhs-dark-blue">What it means:</h4>
+                            <p class="text-gray-700 mt-1">${item.meaning}</p>
                         </div>
-                        <div class="mt-4">
-                            <h4 class="font-semibold">Common Causes:</h4>
-                            <p class="text-gray-700">${item.causes}</p>
+                        <div class="mt-4 pl-9">
+                            <h4 class="font-semibold text-lg nhs-dark-blue">Common Causes:</h4>
+                            <p class="text-gray-700 mt-1">${item.causes}</p>
                         </div>
-                        <div class="mt-4">
-                            <h4 class="font-semibold">Next Steps / Correlation:</h4>
-                            <p class="text-gray-700">${item.nextSteps}</p>
+                        <div class="mt-4 pl-9">
+                            <h4 class="font-semibold text-lg nhs-dark-blue">Next Steps / Correlation:</h4>
+                            <p class="text-gray-700 mt-1">${item.nextSteps}</p>
                         </div>
                     `;
                     resultsContainer.appendChild(card);
                 });
+                feather.replace();
             }
+
+            function filterAndRender() {
+                const query = searchInput.value.toLowerCase().trim();
+                const activeGlossary = commentsData[currentTab] || [];
+                
+                if (!query) {
+                    resultsContainer.innerHTML = '<p class="text-gray-500 text-center">Start typing to search for a comment.</p>';
+                    return;
+                }
+
+                const filtered = activeGlossary.filter(c => 
+                    c.term.toLowerCase().includes(query) || 
+                    c.meaning.toLowerCase().includes(query) || 
+                    c.causes.toLowerCase().includes(query) ||
+                    c.nextSteps.toLowerCase().includes(query)
+                );
+                
+                renderResults(filtered);
+            }
+
+            function switchTab(tab) {
+                currentTab = tab;
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.tab === tab);
+                });
+                searchInput.value = ''; // Clear search on tab switch
+                resultsContainer.innerHTML = '<p class="text-gray-500 text-center">Start typing to search for a comment.</p>';
+            }
+
+            tabsContainer.addEventListener('click', (e) => {
+                if (e.target.matches('.tab-btn')) {
+                    switchTab(e.target.dataset.tab);
+                }
+            });
             
-            searchInput.addEventListener('input', renderResults);
+            searchInput.addEventListener('input', filterAndRender);
+
+            // Initial setup
+            switchTab('haem');
+            feather.replace();
         });
     </script>
     <script src="js/component-loader.js"></script>
