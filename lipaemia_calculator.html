@@ -20,42 +20,66 @@
     <div id="header-placeholder"></div>
 
     <main class="py-16">
-        <div class="container mx-auto px-6 max-w-lg">
+        <div class="container mx-auto px-6 max-w-2xl">
             <a href="helpful_tools.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8">
                 <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Helpful Tools
             </a>
             <div class="text-center">
                 <h2 class="text-3xl font-bold nhs-text-dark-blue mb-4">Lipaemia Correction Calculator</h2>
-                <p class="text-gray-600 mb-8">Calculate a corrected Haemoglobin (Hb) value for a lipaemic FBC sample based on the Mean Corpuscular Haemoglobin Concentration (MCHC).</p>
+                <p class="text-gray-600 mb-8">Calculates a corrected Haemoglobin and red cell indices for a lipaemic FBC sample as per the NUH protocol.</p>
             </div>
 
-            <div class="bg-white p-8 rounded-lg shadow-md space-y-6">
-                <div>
-                    <label for="original-mchc" class="block text-lg font-semibold text-gray-700">Original MCHC (g/L)</label>
-                    <input type="number" id="original-mchc" placeholder="e.g., 410" class="w-full mt-2 p-3 border border-gray-300 rounded-lg shadow-sm text-xl">
+            <div class="bg-white p-8 rounded-lg shadow-md space-y-4">
+                <h3 class="text-xl font-bold text-gray-700 border-b pb-2">Enter Original FBC Results</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="wb-hb" class="block font-semibold text-gray-700">Whole Blood Hb (g/L)</label>
+                        <input type="number" id="wb-hb" placeholder="e.g., 140" class="w-full mt-1 p-3 border border-gray-300 rounded-lg text-lg">
+                    </div>
+                    <div>
+                        <label for="plasma-hb" class="block font-semibold text-gray-700">Plasma Hb (g/L)</label>
+                        <input type="number" id="plasma-hb" placeholder="e.g., 25" class="w-full mt-1 p-3 border border-gray-300 rounded-lg text-lg">
+                    </div>
+                    <div>
+                        <label for="hct" class="block font-semibold text-gray-700">HCT (L/L)</label>
+                        <input type="number" id="hct" step="0.01" placeholder="e.g., 0.45" class="w-full mt-1 p-3 border border-gray-300 rounded-lg text-lg">
+                    </div>
+                    <div>
+                        <label for="rbc" class="block font-semibold text-gray-700">RBC (x10¹²/L)</label>
+                        <input type="number" id="rbc" step="0.01" placeholder="e.g., 4.50" class="w-full mt-1 p-3 border border-gray-300 rounded-lg text-lg">
+                    </div>
                 </div>
-                <div>
-                    <label for="original-hb" class="block text-lg font-semibold text-gray-700">Original Hb (g/L)</label>
-                    <input type="number" id="original-hb" placeholder="e.g., 135" class="w-full mt-2 p-3 border border-gray-300 rounded-lg shadow-sm text-xl">
-                </div>
-                
-                <div id="result-container" class="pt-4">
-                    <div class="result-box p-6 rounded-lg text-center">
-                        <h3 class="text-xl font-semibold text-gray-700">Corrected Haemoglobin (g/L)</h3>
-                        <p id="corrected-hb-result" class="text-4xl font-extrabold nhs-text-blue mt-2">0</p>
+
+                <div id="result-container" class="pt-4 space-y-4">
+                    <h3 class="text-xl font-bold text-gray-700 border-b pb-2">Calculated Corrected Results</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="result-box p-4 rounded-lg text-center">
+                            <h4 class="font-semibold text-gray-700">Corrected Hb (g/L)</h4>
+                            <p id="corrected-hb" class="text-3xl font-extrabold nhs-text-blue mt-1">0</p>
+                        </div>
+                        <div class="result-box p-4 rounded-lg text-center">
+                            <h4 class="font-semibold text-gray-700">Corrected MCH (pg)</h4>
+                            <p id="corrected-mch" class="text-3xl font-extrabold nhs-text-blue mt-1">0</p>
+                        </div>
+                        <div class="result-box p-4 rounded-lg text-center">
+                            <h4 class="font-semibold text-gray-700">Corrected MCHC (g/L)</h4>
+                            <p id="corrected-mchc" class="text-3xl font-extrabold nhs-text-blue mt-1">0</p>
+                        </div>
                     </div>
                 </div>
 
                 <div id="workings-container" class="pt-4 hidden">
-                    <div class="workings-box p-6 rounded-lg">
-                        <h4 class="font-bold text-gray-800 mb-2">Calculation Workings:</h4>
-                        <p class="font-mono text-gray-700" id="workings-text"></p>
+                    <div class="workings-box p-6 rounded-lg space-y-4">
+                        <h4 class="font-bold text-gray-800">Calculation Workings:</h4>
+                        <p class="font-mono text-gray-700 text-sm" id="workings-hb"></p>
+                        <p class="font-mono text-gray-700 text-sm" id="workings-mch"></p>
+                        <p class="font-mono text-gray-700 text-sm" id="workings-mchc"></p>
                     </div>
                 </div>
             </div>
 
             <div class="mt-8 p-4 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-800 rounded-r-lg">
-                <p class="font-bold">Important: Record the original and corrected results on form TF6006 as per protocol.</p>
+                <p class="font-bold">Important: Record all original and corrected results, including the calculations, on form TF6006.</p>
             </div>
         </div>
     </main>
@@ -64,39 +88,58 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const originalMchcInput = document.getElementById('original-mchc');
-            const originalHbInput = document.getElementById('original-hb');
-            const correctedHbResultEl = document.getElementById('corrected-hb-result');
-            const workingsContainer = document.getElementById('workings-container');
-            const workingsTextEl = document.getElementById('workings-text');
+            const inputs = {
+                wbHb: document.getElementById('wb-hb'),
+                plasmaHb: document.getElementById('plasma-hb'),
+                hct: document.getElementById('hct'),
+                rbc: document.getElementById('rbc')
+            };
 
-            const NORMAL_MCHC = 320; // As per the SOP
+            const results = {
+                hb: document.getElementById('corrected-hb'),
+                mch: document.getElementById('corrected-mch'),
+                mchc: document.getElementById('corrected-mchc')
+            };
+            
+            const workings = {
+                container: document.getElementById('workings-container'),
+                hb: document.getElementById('workings-hb'),
+                mch: document.getElementById('workings-mch'),
+                mchc: document.getElementById('workings-mchc')
+            };
 
-            function calculateCorrectedHb() {
-                const originalMCHC = parseFloat(originalMchcInput.value);
-                const originalHb = parseFloat(originalHbInput.value);
+            function calculate() {
+                const wbHb = parseFloat(inputs.wbHb.value);
+                const plasmaHb = parseFloat(inputs.plasmaHb.value);
+                const hct = parseFloat(inputs.hct.value);
+                const rbc = parseFloat(inputs.rbc.value);
 
-                if (!isNaN(originalMCHC) && !isNaN(originalHb) && originalMCHC > 0) {
-                    const correctedHb = originalHb * (NORMAL_MCHC / originalMCHC);
-                    correctedHbResultEl.textContent = correctedHb.toFixed(1);
-
-                    // Show workings
-                    workingsTextEl.innerHTML = `
-                        Corrected Hb = Original Hb × (Normal MCHC / Original MCHC)<br>
-                        Corrected Hb = ${originalHb} × (${NORMAL_MCHC} / ${originalMCHC})<br>
-                        Corrected Hb = ${originalHb} × ${(NORMAL_MCHC / originalMCHC).toFixed(4)}<br>
-                        <strong>Corrected Hb = ${correctedHb.toFixed(1)} g/L</strong>
-                    `;
-                    workingsContainer.classList.remove('hidden');
-
-                } else {
-                    correctedHbResultEl.textContent = '0';
-                    workingsContainer.classList.add('hidden');
+                if ([wbHb, plasmaHb, hct, rbc].some(isNaN)) {
+                    results.hb.textContent = '0';
+                    results.mch.textContent = '0';
+                    results.mchc.textContent = '0';
+                    workings.container.classList.add('hidden');
+                    return;
                 }
+
+                // Calculations
+                const correctedHb = wbHb - (plasmaHb * (1 - hct));
+                const correctedMch = (rbc > 0) ? correctedHb / rbc : 0;
+                const correctedMchc = (hct > 0) ? correctedHb / hct : 0;
+
+                // Display Results
+                results.hb.textContent = correctedHb.toFixed(1);
+                results.mch.textContent = correctedMch.toFixed(1);
+                results.mchc.textContent = correctedMchc.toFixed(0);
+
+                // Display Workings
+                workings.hb.innerHTML = `<strong>Corrected Hb</strong> = ${wbHb} - [${plasmaHb} × (1 - ${hct})] = <strong>${correctedHb.toFixed(1)} g/L</strong>`;
+                workings.mch.innerHTML = `<strong>Corrected MCH</strong> = ${correctedHb.toFixed(1)} / ${rbc} = <strong>${correctedMch.toFixed(1)} pg</strong>`;
+                workings.mchc.innerHTML = `<strong>Corrected MCHC</strong> = ${correctedHb.toFixed(1)} / ${hct} = <strong>${correctedMchc.toFixed(0)} g/L</strong>`;
+                workings.container.classList.remove('hidden');
             }
 
-            originalMchcInput.addEventListener('input', calculateCorrectedHb);
-            originalHbInput.addEventListener('input', calculateCorrectedHb);
+            Object.values(inputs).forEach(input => input.addEventListener('input', calculate));
         });
     </script>
     <script src="js/component-loader.js"></script>
