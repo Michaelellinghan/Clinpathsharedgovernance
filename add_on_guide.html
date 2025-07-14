@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add-On Test Guide - SGC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <style> 
+        body { font-family: 'Inter', sans-serif; } 
+        .nhs-text-blue { color: #005EB8; } 
+        .nhs-dark-blue { color: #003087; }
+        .table-container {
+            overflow-x: auto;
+        }
+        .impact-card {
+            background-color: #F0F4F5;
+            border-left: 5px solid #005EB8;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="header-placeholder"></div>
+
+    <main class="py-16">
+        <div class="container mx-auto px-6 max-w-5xl">
+            <a href="sustainability_corner.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8">
+                <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Sustainability Corner
+            </a>
+            
+            <div class="text-center">
+                <h2 class="text-4xl font-bold nhs-text-dark-blue mb-4">The Power of the Add-On Test</h2>
+                <p class="text-lg text-gray-700 max-w-3xl mx-auto">A guide to sample stability for add-on requests. Avoiding a re-bleed saves time, resources, and improves the patient experience.</p>
+            </div>
+
+            <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="impact-card p-6 rounded-lg shadow">
+                    <div class="flex items-center mb-3">
+                        <i data-feather="user-check" class="w-8 h-8 text-nhs-blue"></i>
+                        <h3 class="text-2xl font-semibold nhs-dark-blue ml-3">Better for the Patient</h3>
+                    </div>
+                    <p class="text-gray-700">Every unnecessary venepuncture is an uncomfortable experience for the patient. For those with difficult venous access, children, or needle-phobic individuals, avoiding a redraw significantly improves their quality of care and perception of our service.</p>
+                </div>
+                <div class="impact-card p-6 rounded-lg shadow">
+                     <div class="flex items-center mb-3">
+                        <i data-feather="dollar-sign" class="w-8 h-8 text-nhs-blue"></i>
+                        <h3 class="text-2xl font-semibold nhs-dark-blue ml-3">Better for the Trust</h3>
+                    </div>
+                    <p class="text-gray-700">Each blood draw has a cost. While it seems small, the cumulative cost of staff time (phlebotomist, porter, lab staff) and consumables (needle, holder, tubes, bag) is estimated at **£5 - £7 per collection**. Using an existing sample is a direct and simple way to save money.</p>
+                </div>
+            </div>
+
+            <div class="mt-12 bg-white p-8 rounded-lg shadow-lg">
+                <div class="mb-6">
+                    <label for="test-search" class="block text-lg font-semibold text-gray-700 mb-2">Search Stability Guide:</label>
+                    <input type="text" id="test-search" placeholder="e.g., U&E, FBC, Coagulation Screen..." class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-nhs-blue focus:outline-none">
+                </div>
+
+                <!-- Biochemistry Table -->
+                <div class="mb-12">
+                    <h3 class="text-2xl font-semibold nhs-dark-blue mb-4">Biochemistry Add-Ons</h3>
+                    <div class="table-container rounded-lg border">
+                        <table class="min-w-full divide-y divide-gray-200" id="biochem-table">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Test</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tube Type</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Max Stability Post-Collection</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <!-- Rows will be inserted by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Haematology Table -->
+                <div>
+                    <h3 class="text-2xl font-semibold nhs-dark-blue mb-4">Haematology Add-Ons</h3>
+                     <div class="table-container rounded-lg border">
+                        <table class="min-w-full divide-y divide-gray-200" id="haem-table">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Test</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tube Type</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Max Stability Post-Collection</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <!-- Rows will be inserted by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                 <div class="mt-8 p-4 bg-yellow-50 border-l-4 border-yellow-500 text-yellow-800 rounded-r-lg">
+                    <p><strong class="font-semibold">Important Note:</strong> These stability times assume the sample has been correctly stored at room temperature (unless specified otherwise) and has not been compromised. Most samples are routinely disposed of after 3 days. Always check with the relevant department if unsure.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script>
+        const biochemData = [
+            { test: 'Amylase', tube: 'Serum (Gold Top)', stability: '7 days' },
+            { test: 'Bicarbonate', tube: 'Serum (Red Top)', stability: '1 hour' },
+            { test: 'Bone Profile', tube: 'Serum (Gold Top)', stability: '4 days (Phosphate most unstable)' },
+            { test: 'Calcium', tube: 'Serum (Gold Top)', stability: '7 days' },
+            { test: 'CK (Creatine Kinase)', tube: 'Serum (Gold Top)', stability: '7 days' },
+            { test: 'CRP', tube: 'Serum (Gold Top)', stability: '7 days' },
+            { test: 'Ferritin', tube: 'Serum (Gold Top)', stability: '5 days' },
+            { test: 'Glucose', tube: 'Fluoride Oxalate (Grey Top)', stability: '7 days' },
+            { test: 'Iron', tube: 'Serum (Gold Top)', stability: '7 days' },
+            { test: 'Lactate', tube: 'Fluoride Oxalate (Grey Top)', stability: '3 days' },
+            { test: 'LDH', tube: 'Serum (Gold Top)', stability: '4 days' },
+            { test: 'LFTs (Liver Function)', tube: 'Serum (Gold Top)', stability: '1 day (Bilirubin most unstable)' },
+            { test: 'Lipids', tube: 'Serum (Gold Top)', stability: '7 days' },
+            { test: 'Phosphate', tube: 'Serum (Gold Top)', stability: '4 days' },
+            { test: 'PSA', tube: 'Serum (Gold Top)', stability: '5 days' },
+            { test: 'TFTs (Thyroid Function)', tube: 'Serum (Gold Top)', stability: '7 days' },
+            { test: 'Troponin I', tube: 'Serum (Gold Top)', stability: '24 hours' },
+            { test: 'U&E (Urea & Electrolytes)', tube: 'Serum (Gold Top)', stability: '12 hours (K+ most unstable)' },
+            { test: 'U&E (without Potassium)', tube: 'Serum (Gold Top)', stability: '7 days' }
+        ];
+
+        const haemData = [
+            { test: 'APTT (for Heparin monitoring)', tube: 'Citrate (Blue Top)', stability: '2 hours' },
+            { test: 'Blood Film', tube: 'EDTA (Purple Top)', stability: '8 hours' },
+            { test: 'Coagulation Screen (PT/APTT)', tube: 'Citrate (Blue Top)', stability: '6 hours' },
+            { test: 'D-Dimers', tube: 'Citrate (Blue Top)', stability: '6 hours' },
+            { test: 'ESR', tube: 'EDTA (Purple Top)', stability: '24 hours (if stored at 4°C)' },
+            { test: 'Fibrinogen (Clauss)', tube: 'Citrate (Blue Top)', stability: '6 hours' },
+            { test: 'Full Blood Count (FBC)', tube: 'EDTA (Purple Top)', stability: '8 hours' },
+            { test: 'Glandular Fever Screen', tube: 'EDTA (Purple Top)', stability: '48 hours' },
+            { test: 'G6PD Screen', tube: 'EDTA (Purple Top)', stability: '7 days' },
+            { test: 'Haemoglobinopathy Screen', tube: 'EDTA (Purple Top)', stability: '7 days' },
+            { test: 'INR (for Warfarin monitoring)', tube: 'Citrate (Blue Top)', stability: '6 hours' },
+            { test: 'Malarial Parasites (Film)', tube: 'EDTA (Purple Top)', stability: '4 hours' },
+            { test: 'Malarial Parasites (Rapid Test)', tube: 'EDTA (Purple Top)', stability: '3 days' },
+            { test: 'Plasma Viscosity (PV)', tube: 'EDTA (Purple Top)', stability: '48 hours (RT) / 7 days (separated)' },
+            { test: 'Reticulocyte Count', tube: 'EDTA (Purple Top)', stability: '8 hours' },
+            { test: 'Zinc Protoporphyrin (ZPP)', tube: 'EDTA (Purple Top)', stability: '7 days' }
+        ];
+
+        function populateTable(tableId, data) {
+            const tableBody = document.querySelector(`#${tableId} tbody`);
+            tableBody.innerHTML = '';
+            data.forEach(item => {
+                const row = `
+                    <tr class="data-row">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${item.test}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${item.tube}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${item.stability}</td>
+                    </tr>
+                `;
+                tableBody.innerHTML += row;
+            });
+        }
+
+        function filterTables() {
+            const query = document.getElementById('test-search').value.toLowerCase();
+            
+            const filterData = (data) => data.filter(item => item.test.toLowerCase().includes(query) || item.tube.toLowerCase().includes(query));
+
+            populateTable('biochem-table', filterData(biochemData));
+            populateTable('haem-table', filterData(haemData));
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            populateTable('biochem-table', biochemData);
+            populateTable('haem-table', haemData);
+
+            document.getElementById('test-search').addEventListener('input', filterTables);
+            
+            feather.replace();
+            const script = document.createElement('script');
+            script.src = 'js/component-loader.js';
+            document.body.appendChild(script);
+        });
+    </script>
+</body>
+</html>
