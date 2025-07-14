@@ -3,86 +3,221 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Waste Management - SGC</title>
+    <title>NUH Pathology: A Guide to Waste Management</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-    <style> 
-        body { font-family: 'Inter', sans-serif; } 
-        .nhs-text-blue { color: #005EB8; } 
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .nhs-text-blue { color: #005EB8; }
         .nhs-dark-blue { color: #003087; }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 450px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800">
-
+    
     <div id="header-placeholder"></div>
 
-    <main class="py-16">
+    <main class="py-12">
         <div class="container mx-auto px-6 max-w-4xl">
-            <a href="sustainability_corner.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8">
-                <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Sustainability Corner
-            </a>
             
-            <div class="bg-white p-8 rounded-lg shadow-lg">
-                <h2 class="text-3xl font-bold nhs-text-dark-blue mb-4">A Guide to Waste Management</h2>
-                <p class="text-gray-700 mb-6 text-lg">
-                    Disposing of laboratory waste correctly is crucial for safety, compliance, and cost-effectiveness. Using the wrong bin can be surprisingly expensive and has a significant environmental impact.
+            <div class="text-center mb-12">
+                 <a href="sustainability_corner.html" class="inline-flex items-center text-nhs-blue font-semibold mb-8">
+                    <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Sustainability Corner
+                </a>
+                 <h1 class="text-4xl md:text-5xl font-extrabold nhs-dark-blue mb-2">A Guide to Waste Management</h1>
+                 <p class="text-lg text-gray-700">Helping Pathology save money and protect the environment.</p>
+            </div>
+            
+            <div class="bg-white p-8 rounded-lg shadow-lg mb-12">
+                <h2 class="text-3xl font-bold text-center nhs-dark-blue mb-2">The True Cost of Our Bins</h2>
+                <p class="max-w-3xl mx-auto text-center text-gray-700 mb-8">
+                    Using the wrong bin is one of the biggest sources of preventable cost in the Trust. The price to dispose of waste varies dramatically depending on the stream. This chart shows the average cost to dispose of one tonne of waste, based on NUH policy.
                 </p>
-
-                <div class="space-y-8 mt-8">
-                    <div>
-                        <h3 class="text-2xl font-semibold text-orange-600 border-b-2 border-orange-500 pb-2 mb-4 flex items-center">
-                            <i data-feather="trash-2" class="w-6 h-6 mr-3"></i>Orange Clinical Waste Stream
-                        </h3>
-                        <p class="mb-4">This stream is for waste contaminated with blood or other bodily fluids that is <strong>not</strong> chemically contaminated and does <strong>not</strong> contain medicines. This waste is sent for alternative treatment (e.g., autoclaving) before disposal.</p>
-                        <p class="font-bold text-lg">Approximate Cost per Bin: <span class="text-orange-600">£15 - £25</span></p>
-                        <ul class="list-disc list-inside mt-2 space-y-1 text-gray-700">
-                            <li>Used sample tubes (EDTA, Serum, Heparin etc.)</li>
-                            <li>Contaminated gloves and PPE</li>
-                            <li>Blood product packaging</li>
-                            <li>Used sample swabs</li>
-                            <li>Contaminated bench roll</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h3 class="text-2xl font-semibold text-yellow-600 border-b-2 border-yellow-500 pb-2 mb-4 flex items-center">
-                             <i data-feather="alert-octagon" class="w-6 h-6 mr-3"></i>Yellow Clinical Waste Stream
-                        </h3>
-                        <p class="mb-4">This stream is for highly infectious waste or waste contaminated with certain chemicals or medicines. This waste <strong>must be sent for incineration</strong>, which is an energy-intensive and expensive process.</p>
-                        <p class="font-bold text-lg">Approximate Cost per Bin: <span class="text-yellow-600">£40 - £60</span></p>
-                        <ul class="list-disc list-inside mt-2 space-y-1 text-gray-700">
-                            <li>Waste from isolation areas for certain high-risk infectious diseases.</li>
-                            <li>Items contaminated with cytotoxic or cytostatic medicines.</li>
-                            <li>Sharps contaminated with medicinal products.</li>
-                            <li>Discarded medicinal vials.</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h3 class="text-2xl font-semibold text-gray-800 border-b-2 border-gray-700 pb-2 mb-4 flex items-center">
-                             <i data-feather="archive" class="w-6 h-6 mr-3"></i>Domestic / 'Black Bag' Waste
-                        </h3>
-                        <p class="mb-4">This is for general, non-clinical waste. Using this correctly for non-contaminated items is the most cost-effective and environmentally friendly option. It avoids unnecessary treatment or incineration.</p>
-                        <p class="font-bold text-lg">Approximate Cost per Bin: <span class="text-gray-800">£3 - £5</span></p>
-                        <ul class="list-disc list-inside mt-2 space-y-1 text-gray-700">
-                            <li>Paper towels and outer cardboard packaging</li>
-                            <li>Non-contaminated stationery</li>
-                            <li>Food wrappers and drink cans</li>
-                            <li>Uncontaminated plastic packaging</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="mt-8 p-6 bg-blue-100 border-l-4 border-blue-500 text-blue-800 rounded-r-lg">
-                    <p class="font-bold text-xl">The Bottom Line:</p>
-                    <p class="mt-2">Placing a single non-infectious, non-contaminated item in a yellow stream bin means the whole bin must be incinerated at a high cost. Every item placed in the correct bin makes a significant financial and environmental difference. Think before you throw!</p>
+                <div class="chart-container">
+                    <canvas id="wasteCostBarChart"></canvas>
                 </div>
             </div>
+
+            <div id="waste-streams-container" class="space-y-10">
+                <!-- Waste stream details will be injected here by JavaScript -->
+            </div>
+            
+            <div class="mt-12 p-6 bg-blue-100 border-l-4 border-nhs-blue text-blue-800 rounded-r-lg">
+                <p class="font-bold text-xl">The Bottom Line:</p>
+                <p class="mt-2">Placing a single non-infectious, non-contaminated item in a yellow stream bin means the whole bin must be incinerated at a high cost. Every item placed in the correct bin makes a significant financial and environmental difference. Think before you throw!</p>
+            </div>
+
         </div>
     </main>
-
+    
     <div id="footer-placeholder"></div>
-    <script src="js/component-loader.js"></script>
+
     <script>
-        feather.replace();
+        // --- DATA ---
+        // Data for waste streams including descriptions, examples, and costs, based on NUH SOPs.
+        const wasteStreams = [
+            {
+                title: "Waste for Incineration",
+                icon: "alert-octagon",
+                bag: "Yellow Bag / Yellow-lidded Sharps Bin",
+                color: "yellow-600",
+                borderColor: "yellow-500",
+                description: "This stream is for waste that <strong>must be incinerated</strong> due to chemical or medicinal contamination. This is our most expensive waste stream and should be used with care.",
+                costPerTonne: 600,
+                costPerBin: "£4 - £6",
+                examples: [
+                    "Waste contaminated with chemicals or medicines (except cytotoxic).",
+                    "All sharps (needles, slides, broken glass from lab).",
+                    "Known highly infectious laboratory waste.",
+                    "Blood gas analyser cartridges."
+                ]
+            },
+            {
+                title: "Infectious Clinical Waste",
+                icon: "biohazard",
+                bag: "Orange Bag",
+                color: "orange-600",
+                borderColor: "orange-500",
+                description: "For waste contaminated with blood or other bodily fluids that is known or believed to be infectious. This waste is sent for alternative treatment (e.g., autoclaving) to render it safe before disposal.",
+                costPerTonne: 420,
+                costPerBin: "£3 - £4",
+                examples: [
+                    "Used sample tubes (EDTA, Serum, Citrate etc.)",
+                    "Contaminated gloves, aprons, and other PPE.",
+                    "Blood product packaging.",
+                    "Used sample swabs and plastic pasteurs.",
+                    "Contaminated bench roll and consumables."
+                ]
+            },
+            {
+                title: "Offensive Waste",
+                icon: "wind",
+                bag: "Tiger Stripe Bag (Yellow with Black Stripes)",
+                color: "yellow-800",
+                borderColor: "yellow-700",
+                description: "For non-infectious waste that may be unpleasant (e.g., contains body fluids but from a non-infectious source). A much cheaper alternative to orange/yellow streams.",
+                costPerTonne: 300,
+                costPerBin: "£2 - £3",
+                examples: [
+                    "Used PPE (gloves, masks) from non-infectious areas.",
+                    "Non-infectious incontinence pads.",
+                    "Non-infectious wound dressings.",
+                    "Empty, non-contaminated urine containers."
+                ]
+            },
+            {
+                title: "General / 'Black Bag' Waste",
+                icon: "archive",
+                bag: "Black Bag",
+                color: "gray-800",
+                borderColor: "gray-700",
+                description: "This is for general, non-clinical waste. Using this correctly for non-contaminated items is the most cost-effective and environmentally friendly option.",
+                costPerTonne: 160,
+                costPerBin: "Less than £1.50",
+                examples: [
+                    "Paper towels and outer cardboard packaging.",
+                    "Non-contaminated stationery.",
+                    "Food wrappers and drink cans.",
+                    "Uncontaminated plastic packaging."
+                ]
+            },
+            {
+                title: "Recycling & Cardboard",
+                icon: "recycle",
+                bag: "Clear Bag / Designated Cardboard Bin",
+                color: "green-600",
+                borderColor: "green-500",
+                description: "For clean, non-contaminated recyclable materials. Cardboard should be flattened and placed in designated large bins.",
+                costPerTonne: 40,
+                costPerBin: "Less than £0.50",
+                examples: [
+                    "Clean plastic bottles and cans.",
+                    "Non-confidential paper and office waste.",
+                    "Flattened reagent and delivery boxes.",
+                    "Newspapers and magazines."
+                ]
+            }
+        ];
+
+        // --- RENDER WASTE STREAMS ---
+        const container = document.getElementById('waste-streams-container');
+        wasteStreams.forEach(stream => {
+            const streamHtml = `
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-2xl font-semibold text-${stream.color} border-b-2 border-${stream.borderColor} pb-2 mb-4 flex items-center">
+                        <i data-feather="${stream.icon}" class="w-6 h-6 mr-3"></i>${stream.title}
+                    </h3>
+                    <p class="font-semibold mb-4">${stream.bag}</p>
+                    <p class="mb-4 text-gray-700">${stream.description}</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <h4 class="font-bold text-lg">Examples:</h4>
+                            <ul class="list-disc list-inside mt-2 space-y-1 text-gray-600">
+                                ${stream.examples.map(ex => `<li>${ex}</li>`).join('')}
+                            </ul>
+                        </div>
+                        <div class="self-center text-center md:text-right">
+                             <p class="font-bold text-lg">Approx. Cost per Bin: <span class="text-${stream.color}">${stream.costPerBin}</span></p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.innerHTML += streamHtml;
+        });
+
+        // --- CHART.JS ---
+        const wasteCostData = {
+            labels: wasteStreams.map(s => s.title).reverse(),
+            datasets: [{
+                label: 'Average Cost per Tonne (£)',
+                data: wasteStreams.map(s => s.costPerTonne).reverse(),
+                backgroundColor: wasteStreams.map(s => {
+                    const colorMap = { 'yellow-600': '#D97706', 'orange-600': '#F59E0B', 'yellow-800': '#B45309', 'gray-800': '#1F2937', 'green-600': '#059669' };
+                    return colorMap[s.color] || '#6B7280';
+                }).reverse(),
+                borderColor: '#1F2937',
+                borderWidth: 1
+            }]
+        };
+
+        const wasteCostCtx = document.getElementById('wasteCostBarChart').getContext('2d');
+        new Chart(wasteCostCtx, {
+            type: 'bar',
+            data: wasteCostData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y',
+                scales: {
+                    x: { beginAtZero: true, title: { display: true, text: 'Average Cost per Tonne (£)', color: '#003087' }, ticks: { color: '#005EB8' }},
+                    y: { ticks: { color: '#005EB8' } }
+                },
+                plugins: { legend: { display: false } }
+            }
+        });
+
+        // Load feather icons and component loader
+        document.addEventListener('DOMContentLoaded', function() {
+            feather.replace();
+            const script = document.createElement('script');
+            script.src = 'js/component-loader.js';
+            document.body.appendChild(script);
+        });
     </script>
 </body>
 </html>
