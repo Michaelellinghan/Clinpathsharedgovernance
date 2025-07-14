@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample Rejection Troubleshooter - SGC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <style> 
+        body { font-family: 'Inter', sans-serif; } 
+        .nhs-text-blue { color: #005EB8; } 
+        .nhs-dark-blue { color: #003087; }
+        .reason-btn { transition: all 0.2s; }
+        .reason-btn.active { background-color: #005EB8; color: white; transform: scale(1.05); }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="header-placeholder"></div>
+
+    <main class="py-16">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <a href="helpful_tools.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8">
+                <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Helpful Tools
+            </a>
+            <div class="text-center">
+                <h2 class="text-3xl font-bold nhs-text-dark-blue mb-4">Sample Rejection Troubleshooter</h2>
+                <p class="text-gray-600 mb-8">Select a rejection reason to see common causes and prevention tips.</p>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-lg font-semibold text-gray-700 mb-4">Select Rejection Reason:</h3>
+                <div id="rejection-buttons" class="flex flex-wrap justify-center gap-4">
+                    </div>
+
+                <div id="troubleshooter-display" class="mt-8 hidden">
+                    <h3 id="rejection-title" class="text-2xl font-bold nhs-dark-blue mb-4 border-b pb-2"></h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="text-xl font-semibold text-gray-800 mb-2">Common Causes</h4>
+                            <ul id="causes-list" class="space-y-2 list-disc list-inside text-gray-700"></ul>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-semibold text-gray-800 mb-2">Prevention Tips</h4>
+                            <ul id="prevention-list" class="space-y-2 list-disc list-inside text-gray-700"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const buttonContainer = document.getElementById('rejection-buttons');
+            const displayContainer = document.getElementById('troubleshooter-display');
+            const titleEl = document.getElementById('rejection-title');
+            const causesListEl = document.getElementById('causes-list');
+            const preventionListEl = document.getElementById('prevention-list');
+
+            const rejectionReasons = {
+                'haemolysed': {
+                    title: 'Haemolysed Sample',
+                    causes: [ 'Difficult venepuncture / traumatic draw.', 'Using too fine a needle for the collection.', 'Forcing blood into the tube from a syringe.', 'Shaking the sample tube too vigorously instead of gently inverting.', 'Leaving a tourniquet on for too long.' ],
+                    prevention: [ 'Ensure a smooth venepuncture with a good flow.', 'Use an appropriate gauge needle for the vein.', 'Allow vacuum tubes to fill automatically.', 'Gently invert tubes 5-10 times to mix; do not shake.', 'Release tourniquet as soon as blood flow is established.' ]
+                },
+                'clotted': {
+                    title: 'Clotted Sample',
+                    causes: [ 'Insufficient or delayed mixing of anticoagulant tubes (e.g., EDTA, Citrate).', 'Slow blood collection, allowing clotting to begin.', 'Incorrect order of draw (drawing an SST tube before a citrate tube).', 'Patient has a high platelet count or is hypercoagulable.' ],
+                    prevention: [ 'Gently invert anticoagulant tubes 5-10 times immediately after collection.', 'Ensure a swift collection once the vein is punctured.', 'Follow the correct order of draw.', 'Be aware of patient status and mix thoroughly.' ]
+                },
+                'insufficient': {
+                    title: 'Insufficient Sample (QNS)',
+                    causes: [ 'Vein collapsing during the draw.', 'Losing the vein part-way through collection.', 'Patient has difficult venous access.', 'Incorrect tube chosen for the volume of blood required.' ],
+                    prevention: [ 'Ensure correct tube selection before starting.', 'Use appropriate techniques for difficult access (e.g., butterfly needle).', 'For citrate tubes, ensure the tube is filled to the mark to maintain the correct blood-to-anticoagulant ratio.' ]
+                },
+                'mislabeled': {
+                    title: 'Mislabeled / Unlabeled Sample',
+                    causes: [ 'Sample was not labelled at the patient\'s bedside.', 'Incorrect patient details used.', 'Label is illegible or damaged.', 'Discrepancy between the sample label and the request form.' ],
+                    prevention: [ 'ALWAYS label the tube immediately after collection at the patient\'s side.', 'Confirm patient identity using at least two unique identifiers.', 'Ensure handwriting is clear and the label is securely attached.', 'Cross-reference all details with the request form before sending.' ]
+                }
+            };
+
+            function displayInfo(reasonKey) {
+                const reason = rejectionReasons[reasonKey];
+                if (!reason) return;
+
+                titleEl.textContent = reason.title;
+                causesListEl.innerHTML = reason.causes.map(item => `<li>${item}</li>`).join('');
+                preventionListEl.innerHTML = reason.prevention.map(item => `<li>${item}</li>`).join('');
+                
+                displayContainer.classList.remove('hidden');
+                
+                document.querySelectorAll('.reason-btn').forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.reason === reasonKey);
+                });
+            }
+
+            Object.keys(rejectionReasons).forEach(key => {
+                const reason = rejectionReasons[key];
+                const button = document.createElement('button');
+                button.className = 'reason-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-6 rounded-lg';
+                button.textContent = reason.title;
+                button.dataset.reason = key;
+                button.addEventListener('click', () => displayInfo(key));
+                buttonContainer.appendChild(button);
+            });
+
+        });
+    </script>
+    <script src="js/component-loader.js"></script>
+</body>
+</html>
