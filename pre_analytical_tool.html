@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pre-analytical Query Tool - SGC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <style> 
+        body { font-family: 'Inter', sans-serif; } 
+        .nhs-text-blue { color: #005EB8; } 
+        .nhs-dark-blue { color: #003087; }
+        #requirements-display ul { list-style-type: none; padding-left: 0; }
+        #requirements-display li { 
+            display: flex;
+            align-items: center;
+            background-color: #F0F4F5; 
+            margin-bottom: 0.75rem; 
+            padding: 1rem; 
+            border-radius: 0.5rem; 
+            border-left: 4px solid #005EB8; 
+        }
+        #requirements-display li i {
+            margin-right: 1rem;
+            color: #005EB8;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="header-placeholder"></div>
+
+    <main class="py-16">
+        <div class="container mx-auto px-6 max-w-3xl">
+            <a href="helpful_tools.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8">
+                <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Helpful Tools
+            </a>
+            <div class="text-center">
+                <h2 class="text-3xl font-bold nhs-dark-blue mb-4">Pre-analytical Query Tool</h2>
+                <p class="text-gray-600 mb-8">Search for any test in the directory to view its specific sample requirements and turnaround times.</p>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <label for="test-search" class="block text-lg font-semibold text-gray-700 mb-2">Search for a Test:</label>
+                <input type="text" id="test-search" list="test-list" placeholder="e.g., Amylase, Troponin, FBC..." class="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                <datalist id="test-list"></datalist>
+
+                <div id="requirements-display" class="mt-6 min-h-[100px]">
+                    <p class="text-gray-500">Select a test from the list to see its requirements.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('test-search');
+            const dataList = document.getElementById('test-list');
+            const display = document.getElementById('requirements-display');
+
+            const testRequirements = [
+                // Fully Exhaustive List with Labs
+                { name: 'y-Glutamyl Transferase (GGT)', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 60 mins (ED), 180 mins (Inpatient), 24 hours (GP)'] },
+                { name: '17- OH-progesterone (17-OHP)', lab: 'Other (Referred)', reqs: ['Sample: Plain serum (red top) ONLY', 'Turnaround: 14 days'] },
+                { name: '3-Hydroxybutyrate & Free fatty acids', lab: 'Chemistry', reqs: ['Sample: Fluoride-oxalate', 'Turnaround: 7 days'] },
+                { name: '5-Hydroxyindole-acetic acid (5-HIAA)', lab: 'Other (Referred)', reqs: ['Sample: 24h urine in acid bottle', 'Turnaround: 14 days'] },
+                { name: '7-Dehydrocholesterol', lab: 'Other (Referred)', reqs: ['Sample: 5 mL Li-Hep, 5mL EDTA', 'Turnaround: 28 days'] },
+                { name: 'ACTH', lab: 'Chemistry', reqs: ['Sample: 4mL EDTA, separated and frozen immediately.', 'Patient must be rested for 30 minutes prior to collection.', 'Send on ice and inform lab.', 'Turnaround: 7 days'] },
+                { name: 'Acylcarnitine', lab: 'Other (Referred)', reqs: ['Sample: 500µL plasma or 1mL blood or 4 spots min', 'Turnaround: 21 days'] },
+                { name: 'ADA Deaminase', lab: 'Other (Referred)', reqs: ['Sample: 5mL Clotted', 'Turnaround: 12 days'] },
+                { name: 'Alanine Transaminase (ALT)', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 60 mins (ED), 180 mins (Inpatient), 24 hours (GP)'] },
+                { name: 'Albumin', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 60 mins (ED), 180 mins (Inpatient), 24 hours (GP)'] },
+                { name: 'Alcohol', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 60 mins (ED), 180 mins (Inpatient), 24 hours (GP)'] },
+                { name: 'Aldosterone & Renin', lab: 'Chemistry', reqs: ['Sample: 5mL EDTA, separated within 6 hours', 'Turnaround: 14 days'] },
+                { name: 'Alkaline Phosphatase (ALP)', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 60 mins (ED), 180 mins (Inpatient), 24 hours (GP)'] },
+                { name: 'Alkaline Phosphatase Isoenzymes', lab: 'Chemistry', reqs: ['Sample: 2mL Serum/ 5mL SST', 'Turnaround: 7 days'] },
+                { name: 'Alpha 1 Acid Glycoprotein (A1AG)', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 24 hours'] },
+                { name: 'Alpha fetoprotein (AFP)', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 24 hours'] },
+                { name: 'Alpha-1-Antitrypsin (A1AT)', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 24 hours'] },
+                { name: 'Aluminium', lab: 'Other (Referred)', reqs: ['Sample: 1mL Li-Hep', 'Turnaround: 21 days'] },
+                { name: 'Amino Acids (Plasma)', lab: 'Chemistry', reqs: ['Sample: 1mL Li-Hep', 'Turnaround: 7 days'] },
+                { name: 'Amino Acids (Urine)', lab: 'Chemistry', reqs: ['Sample: Min 6mL fresh urine', 'Turnaround: 7 days'] },
+                { name: 'Amino Acids (CSF)', lab: 'Chemistry', reqs: ['Sample: Plain universal', 'Turnaround: 7 days'] },
+                { name: 'Amiodarone', lab: 'Other (Referred)', reqs: ['Sample: 1mL EDTA', 'Turnaround: 10 days'] },
+                { name: 'Amitriptyline', lab: 'Other (Referred)', reqs: ['Sample: 1mL EDTA', 'Turnaround: 10 days'] },
+                { name: 'Ammonia', lab: 'Chemistry', reqs: ['Sample: 5mL Li-Hep on ice', 'Must be received by the lab within 30 minutes.', 'Inform lab staff before sending.', 'Turnaround: 60 minutes'] },
+                { name: 'Amylase', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 60 mins (ED), 180 mins (Inpatient), 24 hours (GP)'] },
+                { name: 'Androstenedione', lab: 'Other (Referred)', reqs: ['Sample: 5mL Clotted', 'Turnaround: 7 days'] },
+                { name: 'Angiotensin Converting Enzyme (ACE)', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 7 days'] },
+                { name: 'Anti Basal Ganglion Antibodies', lab: 'Other (Referred)', reqs: ['Sample: 5mL Clotted', 'Turnaround: 4-8 weeks'] },
+                { name: 'Anti Factor Xa', lab: 'H&TRL', reqs: ['Sample: 1 x 2.7mL Citrate', 'Turnaround: Contact Laboratory'] },
+                { name: 'Anti-Acetylcholine Receptor Abs', lab: 'Other (Referred)', reqs: ['Sample: 5mL Clotted', 'Turnaround: 21 days'] },
+                { name: 'Anti-Adrenal Abs', lab: 'Immunology', reqs: ['Sample: 5mL Clotted', 'Turnaround: 7 days'] },
+                { name: 'Anti-Beta-2-Glycoprotein Abs', lab: 'Immunology', reqs: ['Sample: 5mL Clotted', 'Turnaround: 14 days'] },
+                { name: 'Anti-C1q', lab: 'Other (Referred)', reqs: ['Sample: 5mL Clotted', 'Turnaround: 21 days'] },
+                { name: 'Anti-Cardiac Muscle Abs', lab: 'Other (Referred)', reqs: ['Sample: 5mL Clotted', 'Turnaround: 21 days'] },
+                { name: 'Anti-Cardiolipin Abs', lab: 'Immunology', reqs: ['Sample: 5mL Clotted', 'Turnaround: 7 days'] },
+                { name: 'Anti-CCP', lab: 'Immunology', reqs: ['Sample: 5mL Clotted', 'Turnaround: 7 days'] },
+                { name: 'Anti-Centromere Abs', lab: 'Immunology', reqs: ['Sample: 5mL Clotted', 'Turnaround: 3 days'] },
+                { name: 'Anti-dsDNA abs', lab: 'Immunology', reqs: ['Sample: 5mL Clotted', 'Turnaround: 7 days'] },
+                { name: 'Anti-GAD', lab: 'Other (Referred)', reqs: ['Sample: 5mL Clotted', 'Turnaround: 21 days'] },
+                { name: 'Anti-Ganglioside Abs', lab: 'Other (Referred)', reqs: ['Sample: 5mL Clotted', 'Turnaround: 21 days'] },
+                { name: 'Anti-glomerular basement membrane (GBM)', lab: 'Immunology', reqs: ['Sample: 5mL Clotted', 'Turnaround: <48 hours (Mon-Fri)'] },
+                { name: 'Anti-Glycolipid Abs', lab: 'Other (Referred)', reqs: ['Sample: 5mL Clotted', 'Turnaround: 21 days'] },
+                { name: 'Anti-histone', lab: 'Immunology', reqs: ['Sample: 5mL Clotted', 'Turnaround: 7 days'] },
+                { name: 'Anti-IA-2', lab: 'Other (Referred)', reqs: ['Sample: 5mL Clotted', 'Turnaround: 21 days'] },
+                { name: 'Anti-Infliximab Antibody', lab: 'Other (Referred)', reqs: ['Sample: 5mL Clotted', 'Turnaround: 19 days'] },
+                { name: 'Anti-Intrinsic Factor Abs', lab: 'Immunology', reqs: ['Sample: 5mL Clotted', 'Turnaround: 14 days'] },
+                { name: 'Anti-LG1/AntiCASPR2', lab: 'Immunology', reqs: ['Sample: 5mL Clotted', 'Turnaround: 7 days'] },
+                { name: 'Anti-MAG', lab: 'Other (Referred)', reqs: ['Sample: 5mL Clotted', 'Turnaround: 21 days'] },
+                { name: 'Anti-Musk antibodies', lab: 'Other (Referred)', reqs: ['Sample: 5mL Clotted', 'Turnaround: 26 days'] },
+                { name: 'Anti-neuronal (cerebellar) Abs', lab: 'Immunology', reqs: ['Sample: 5mL Clotted', 'Turnaround: 7 days'] },
+                { name: 'Anti-neutrophil cytoplasmic Abs (ANCA)', lab: 'Immunology', reqs: ['Sample: 5mL Clotted', 'Turnaround: 3 days'] },
+                { name: 'Anti-NMDA', lab: 'Immunology', reqs: ['Sample: 5mL Clotted', 'Turnaround: 7 days'] },
+                { name: 'Anti-NMO (Aquaporin 4)', lab: 'Other (Referred)', reqs: ['Sample: 5mL Clotted', 'Turnaround: 21 days'] },
+                { name: 'Anti-PLA2R', lab: 'Immunology', reqs: ['Sample: 5mL Clotted', 'Turnaround: 7 days'] },
+                { name: 'Anti-Skeletal Muscle Abs', lab: 'Other (Referred)', reqs: ['Sample: 5mL Clotted', 'Turnaround: 21 days'] },
+                { name: 'Anti-SLA abs', lab: 'Immunology', reqs: ['Sample: 5mL Clotted', 'Turnaround: 7 days'] },
+                { name: 'Anti-TPO (TPO Ab)', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 7 days'] },
+                { name: 'Anti-TTG', lab: 'Immunology', reqs: ['Sample: 5mL Clotted', 'Turnaround: 3 days'] },
+                { name: 'Antithrombin', lab: 'H&TRL', reqs: ['Sample: 1 x 2.7mL Citrate', 'Turnaround: 7 days'] },
+                { name: 'Arsenic', lab: 'Other (Referred)', reqs: ['Sample: 10mL fresh urine or 5mL EDTA / lithium heparin whole blood', 'Turnaround: 28 days'] },
+                { name: 'Arylsulphatase A', lab: 'Other (Referred)', reqs: ['Sample: 5mL Li-Hep whole blood', 'Turnaround: 8 weeks'] },
+                { name: 'Aspartate Transaminase (AST)', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 60 mins (ED), 180 mins (Inpatient), 24 hours (GP)'] },
+                { name: 'Atenolol', lab: 'Other (Referred)', reqs: ['Sample: 1mL EDTA', 'Turnaround: 10 days'] },
+                { name: 'Autoimmune liver screen', lab: 'Immunology', reqs: ['Sample: 5mL Clotted', 'Turnaround: 3 days'] },
+                { name: 'Beta-2-microglobulin', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 24 hours'] },
+                { name: 'Bicarbonate', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 60 mins (ED), 180 mins (Inpatient), 24 hours (GP)'] },
+                { name: 'Bile Acids', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 60 mins (ED), 180 mins (Inpatient), 24 hours (GP)'] },
+                { name: 'Bilirubin (Total & Conjugated)', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 60 mins (ED), 180 mins (Inpatient), 24 hours (GP)'] },
+                { name: 'Biotinidase', lab: 'Chemistry', reqs: ['Sample: 500µl Serum/Li-Hep plasma', 'Turnaround: 7 days'] },
+                { name: 'Bone Profile', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 60 mins (ED), 180 mins (Inpatient), 24 hours (GP)'] },
+                { name: 'C1 inhibitor (total and functional)', lab: 'Other (Referred)', reqs: ['Sample: 10 mL Clotted', 'Turnaround: 21 days'] },
+                { name: 'C2', lab: 'Other (Referred)', reqs: ['Sample: 5mL Clotted', 'Turnaround: 25 days'] },
+                { name: 'C3/C4', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 24 hours'] },
+                { name: 'C3D', lab: 'Immunology', reqs: ['Sample: EDTA plasma, separated within 1 hour', 'Turnaround: 21 days'] },
+                { name: 'C3 Nephritic Factor', lab: 'Immunology', reqs: ['Sample: 5mL Clotted', 'Turnaround: 21 days'] },
+                { name: 'C5-C9', lab: 'Other (Referred)', reqs: ['Sample: Separated and frozen within 1-2 hours', 'Turnaround: 40 days'] },
+                { name: 'CA125', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 24 hours'] },
+                { name: 'CA153', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 24 hours'] },
+                { name: 'CA199', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 24 hours'] },
+                { name: 'Caeruloplasmin', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 24 hours'] },
+                { name: 'Calcitonin', lab: 'Other (Referred)', reqs: ['Sample: 5mL Li-Hep/Serum SST, to lab within 10 mins', 'Turnaround: 7 days'] },
+                { name: 'Calcium (adjusted)', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 60 mins (ED), 180 mins (Inpatient), 24 hours (GP)'] },
+                { name: 'Carbamazepine', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 60 mins (ED), 180 mins (Inpatient), 24 hours (GP)'] },
+                { name: 'Carbohydrate Deficient Glycoprotein Syndrome', lab: 'Other (Referred)', reqs: ['Sample: 2mL Serum', 'Turnaround: 21 Days'] },
+                { name: 'Carcinoembryonic Antigen (CEA)', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 24 hours'] },
+                { name: 'Carnitine', lab: 'Other (Referred)', reqs: ['Sample: 300µL Plasma', 'Turnaround: 21 Days'] },
+                { name: 'Catecholamines (Urine)', lab: 'Other (Referred)', reqs: ['Sample: 24h Acidified urine sample', 'Turnaround: 14 days'] },
+                { name: 'CH50/CH100 / AP50', lab: 'Other (Referred)', reqs: ['Sample: Separated and frozen within 2 hours', 'Turnaround: 28 days'] },
+                { name: 'Chlordiazepoxide', lab: 'Other (Referred)', reqs: ['Sample: 1mL EDTA', 'Turnaround: 10 days'] },
+                { name: 'Chloride', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 60 mins (ED), 180 mins (Inpatient), 24 hours (GP)'] },
+                { name: 'Chlorpromazine', lab: 'Other (Referred)', reqs: ['Sample: 1mL EDTA', 'Turnaround: 15 days'] },
+                { name: 'Cholesterol', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 60 mins (ED), 180 mins (Inpatient), 24 hours (GP)'] },
+                { name: 'Cholinesterase for Organophosphate Poisoning', lab: 'Other (Referred)', reqs: ['Sample: 5mL Li-Hep', 'Turnaround: 14 days'] },
+                { name: 'Cholinesterase for Suxamethonium Sensitivity', lab: 'Other (Referred)', reqs: ['Sample: 5mL serum/clotted', 'Turnaround: 14 Days'] },
+                { name: 'Cholinesterase Genotype', lab: 'Other (Referred)', reqs: ['Sample: 4mL EDTA Whole Blood', 'Turnaround: 28 Days'] },
+                { name: 'Cholinesterase Phenotype/activity', lab: 'Other (Referred)', reqs: ['Sample: 4mL Whole Blood / 0.5mL serum / plasma', 'Turnaround: 28 Days'] },
+                { name: 'Chromium', lab: 'Other (Referred)', reqs: ['Sample: 1 ml trace element free (blue top) EDTA or Sodium Heparin whole blood', 'Turnaround: 14 days'] },
+                { name: 'Ciclosporin', lab: 'Chemistry', reqs: ['Sample: 5mL EDTA', 'Turnaround: 24 hours'] },
+                { name: 'CK (Creatine Kinase)', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 60 mins (ED), 180 mins (Inpatient), 24 hours (GP)'] },
+                { name: 'Clobazam', lab: 'Other (Referred)', reqs: ['Sample: 1mL EDTA', 'Turnaround: 10 days'] },
+                { name: 'Clomipramine', lab: 'Other (Referred)', reqs: ['Sample: 1mL EDTA', 'Turnaround: 15 days'] },
+                { name: 'Clonazepam', lab: 'Other (Referred)', reqs: ['Sample: 1mL EDTA', 'Turnaround: 10 days'] },
+                { name: 'Clozapine', lab: 'Chemistry', reqs: ['Sample: 1mL EDTA', 'Turnaround: 7 days'] },
+                { name: 'Coagulation Screen (PT/APTT)', lab: 'Haematology', reqs: ['Sample: 2.7mL Citrate (must be correctly filled)', 'Turnaround: 4 hours (Routine), 1 hour (Urgent)'] },
+                { name: 'Cobalt', lab: 'Other (Referred)', reqs: ['Sample: 1 ml trace element free (blue top) EDTA or Sodium Heparin whole blood', 'Turnaround: 14 days'] },
+                { name: 'Cocaine (&BE)', lab: 'Other (Referred)', reqs: ['Sample: 1mL EDTA', 'Turnaround: 10 days'] },
+                { name: 'Codeine', lab: 'Other (Referred)', reqs: ['Sample: 1mL EDTA', 'Turnaround: 10 days'] },
+                { name: 'Cold Agglutinins', lab: 'Immunology', reqs: ['Sample: 6mL EDTA.', 'MUST be maintained at 37°C.', 'Use a heel warmer or transport in a warm container.'] },
+                { name: 'Connective tissue disease screen', lab: 'Immunology', reqs: ['Sample: 5mL Clotted', 'Turnaround: 3 days'] },
+                { name: 'Copper', lab: 'Chemistry', reqs: ['Sample: 5mL Clotted (Not SST tube)', 'Turnaround: 7 days'] },
+                { name: 'Copper in Urine', lab: 'Chemistry', reqs: ['Sample: 24 hour or random collection, acidified or plain', 'Turnaround: 14 days'] },
+                { name: 'Cortisol (serum)', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 24 hours'] },
+                { name: 'Cortisol (Urine)', lab: 'Other (Referred)', reqs: ['Sample: 24h Plain', 'Turnaround: 14 days'] },
+                { name: 'C-Peptide', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum, to lab within 6 hours', 'Turnaround: 7 days'] },
+                { name: 'C-Peptide (Urine)', lab: 'Chemistry', reqs: ['Sample: Boric Acid Preserved Urine in universal container', 'Turnaround: 7 days'] },
+                { name: 'C-Reactive Protein (CRP)', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 60 mins (ED), 180 mins (Inpatient), 24 hours (GP)'] },
+                { name: 'Creatinine', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 60 mins (ED), 180 mins (Inpatient), 24 hours (GP)'] },
+                { name: 'Creatinine Clearance', lab: 'Chemistry', reqs: ['Sample: 24h plain or acidic Urine collection plus 2mL Clotted / Li-Hep or 5mL SST', 'Turnaround: 24 hours'] },
+                { name: 'Crossmatch', lab: 'Blood Transfusion', reqs: ['Sample: 6mL EDTA', 'Turnaround: 90 minutes (Urgent)', 'Strict sample labelling criteria apply.'] },
+                { name: 'Cryoglobulins', lab: 'Immunology', reqs: ['Sample: 20mL Clotted (Red Top), MUST be maintained at 37°C.', 'Use a heel warmer or transport in a warm container.', 'Turnaround: 15 days'] },
+                { name: 'CSF Neurotransmitters', lab: 'Other (Referred)', reqs: ['Sample: Special containers, contact lab', 'Turnaround: 30 working days'] },
+                { name: 'CTx', lab: 'Other (Referred)', reqs: ['Sample: 2mL EDTA', 'Turnaround: 10 days'] },
+                { name: 'Cystine (Urine)', lab: 'Chemistry', reqs: ['Sample: 24hr Plain', 'Turnaround: 7 days'] },
+                { name: 'D-Dimer', lab: 'Haematology', reqs: ['Sample: 2.7mL Citrate (must be correctly filled)', 'Turnaround: 4 hours'] },
+                { name: 'Dehydroepiandrosterone sulphate (DHEAS)', lab: 'Other (Referred)', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 7 days'] },
+                { name: 'Desipramine', lab: 'Other (Referred)', reqs: ['Sample: 1mL EDTA', 'Turnaround: 15 days'] },
+                { name: 'Diazepam', lab: 'Other (Referred)', reqs: ['Sample: 1mL EDTA', 'Turnaround: 10 days'] },
+                { name: 'Digoxin', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum, at least 6h after dose', 'Turnaround: 60 mins (ED), 180 mins (Inpatient), 24 hours (GP)'] },
+                { name: 'Dihydrocodeine', lab: 'Other (Referred)', reqs: ['Sample: 1mL EDTA', 'Turnaround: 10 days'] },
+                { name: 'Direct Antiglobulin Test (DAT)', lab: 'Blood Transfusion', reqs: ['Sample: 6mL EDTA', 'Turnaround: Routine'] },
+                { name: 'Dothiepin', lab: 'Other (Referred)', reqs: ['Sample: 1mL EDTA', 'Turnaround: 10 days'] },
+                { name: 'Drug Screen (Blood)', lab: 'Other (Referred)', reqs: ['Sample: 2mL EDTA', 'Turnaround: 10 days'] },
+                { name: 'Drug Screen (Urine)', lab: 'Other (Referred)', reqs: ['Sample: 10mL Random', 'Turnaround: 10 days'] },
+                { name: 'Elastase (Faecal/Pancreatic)', lab: 'Other (Referred)', reqs: ['Sample: 1g Faeces', 'Turnaround: 28 Days'] },
+                { name: 'Erythropoietin', lab: 'Other (Referred)', reqs: ['Sample: 0.3mL Serum', 'Turnaround: 10 days'] },
+                { name: 'ESR', lab: 'Haematology', reqs: ['Sample: 4mL EDTA', 'Turnaround: 24 hours'] },
+                { name: 'Ethanediol (Ethylene Glycol)', lab: 'Chemistry', reqs: ['Sample: 2mL Fluoride/oxalate', 'Turnaround: 24 hours'] },
+                { name: 'Factor V Leiden', lab: 'Haematology', reqs: ['Sample: 2.7mL Citrate or 4mL EDTA', 'Turnaround: 2 weeks'] },
+                { name: 'Faecal Alpha-1-Antitrypsin', lab: 'Other (Referred)', reqs: ['Sample: 1g Faeces', 'Turnaround: 5 days'] },
+                { name: 'Faecal Calprotectin', lab: 'Other (Referred)', reqs: ['Sample: 1g Faeces', 'Turnaround: 10 days'] },
+                { name: 'Faecal Sugars', lab: 'Chemistry', reqs: ['Sample: Pea size amount of fresh faeces', 'Turnaround: 7 days'] },
+                { name: 'Fat Microscopy', lab: 'Other (Referred)', reqs: ['Sample: 1-2ml Faeces', 'Turnaround: 2 days'] },
+                { name: 'Fentanyl', lab: 'Other (Referred)', reqs: ['Sample: 1mL EDTA', 'Turnaround: 10 days'] },
+                { name: 'Ferritin', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 24 hours'] },
+                { name: 'Fibrinogen', lab: 'Haematology', reqs: ['Sample: 2.7mL Citrate', 'Turnaround: 4 hours'] },
+                { name: 'Fluoxetine', lab: 'Other (Referred)', reqs: ['Sample: 1mL EDTA', 'Turnaround: 10 days'] },
+                { name: 'Folate', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 24 hours'] },
+                { name: 'Follicle Stimulating Hormone (FSH)', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 24 hours'] },
+                { name: 'Free Androgen Index (FAI)', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 24 hours'] },
+                { name: 'Full Blood Count (FBC)', lab: 'Haematology', reqs: ['Sample: 4mL EDTA', 'Turnaround: 180 minutes (Routine), 60 minutes (Urgent)'] },
+                { name: 'GAL-1-PUT Screen (Galactosaemia screen)', lab: 'Chemistry', reqs: ['Sample: 1mL Li-Hep Whole Blood', 'Turnaround: 3 days'] },
+                { name: 'Gastrin', lab: 'Other (Referred)', reqs: ['Sample: 5mL Clotted', 'Turnaround: 7 days'] },
+                { name: 'Gentamicin', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 60 mins (ED), 180 mins (Inpatient), 24 hours (GP)'] },
+                { name: 'Glandular Fever Screen', lab: 'Haematology', reqs: ['Sample: 4mL EDTA', 'Turnaround: 24 hours'] },
+                { name: 'Glucose', lab: 'Chemistry', reqs: ['Sample: 2mL Fluoride/Oxalate (Grey top)', 'Turnaround: 60 mins (ED), 180 mins (Inpatient), 24 hours (GP)'] },
+                { name: 'Glucose (CSF)', lab: 'Chemistry', reqs: ['Sample: 2mL Fluoride/oxalate', 'Turnaround: 60 minutes (ED)'] },
+                { name: 'Glucose 6 Phosphate Dehydrogenase (G6PD) screen', lab: 'Haematology', reqs: ['Sample: 4mL EDTA', 'Turnaround: 5 days'] },
+                { name: 'Glucose Tolerance Tests (OGTT)', lab: 'Chemistry', reqs: ['Sample: Multiple Fluoride/oxalate', 'Turnaround: Varies'] },
+                { name: 'Group & Save', lab: 'Blood Transfusion', reqs: ['Sample: 6mL EDTA', 'Turnaround: 90 minutes (Urgent), Routine varies', 'Strict sample labelling criteria apply.'] },
+                { name: 'Growth Hormone', lab: 'Other (Referred)', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 7 days'] },
+                { name: 'Gut Hormone Screen', lab: 'Other (Referred)', reqs: ['Sample: 4mL EDTA sent on ice', 'Turnaround: 28 days'] },
+                { name: 'Haemoglobinopathy screen', lab: 'Haemoglobinopathy', reqs: ['Sample: 4mL EDTA', 'Turnaround: 3 days (Antenatal), 3-8 weeks (Diagnostic)'] },
+                { name: 'Haptoglobin', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 24 hours'] },
+                { name: 'HbA1c', lab: 'Chemistry', reqs: ['Sample: 4mL EDTA', 'Turnaround: 48 hours'] },
+                { name: 'Heparin Induced Thrombocytopenia (HIT) screen', lab: 'H&TRL', reqs: ['Sample: 5mL Clotted', 'Turnaround: Discuss with Medical Haematology Staff'] },
+                { name: 'Hexosaminidase A', lab: 'Other (Referred)', reqs: ['Sample: 5mL EDTA Whole Blood', 'Turnaround: 28 Days'] },
+                { name: 'High Density Lipoprotein (HDL)', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 60 mins (ED)'] },
+                { name: 'Homocysteine', lab: 'Other (Referred)', reqs: ['Sample: 5mL SST/serum - to lab within 30 mins', 'Turnaround: 7 days'] },
+                { name: 'Human Chorionic Gonadotrophin (HCG)', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 24 hours'] },
+                { name: 'Hydroxyproline', lab: 'Other (Referred)', reqs: ['Sample: 24hr urine', 'Turnaround: 28 days'] },
+                { name: 'IgA deficiency', lab: 'Other (Referred)', reqs: ['Sample: 5mL Clotted', 'Turnaround: 19 days'] },
+                { name: 'IgD', lab: 'Other (Referred)', reqs: ['Sample: 5mL Clotted', 'Turnaround: 21 days'] },
+                { name: 'IgE - Allergen Specific (RAST)', lab: 'Immunology', reqs: ['Sample: 20mL Clotted', 'Turnaround: 7 days'] },
+                { name: 'IgE – Total', lab: 'Immunology', reqs: ['Sample: 10mL Clotted', 'Turnaround: 10 days'] },
+                { name: 'IgG Enterocyte antibodies', lab: 'Other (Referred)', reqs: ['Sample: 5mL Clotted', 'Turnaround: 10 days'] },
+                { name: 'IgG subclasses', lab: 'Other (Referred)', reqs: ['Sample: 5mL Clotted', 'Turnaround: 14 days'] },
+                { name: 'Imipramine', lab: 'Other (Referred)', reqs: ['Sample: 1mL EDTA', 'Turnaround: 10 days'] },
+                { name: 'Immunofixation (serum)', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 5 days'] },
+                { name: 'Immunoglobulins (IgG, IgA, IgM)', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 24-72 hours'] },
+                { name: 'Inborn Error Screen', lab: 'Chemistry', reqs: ['Sample: Minimum 6mL fresh random urine and 1mL Li/Hep blood', 'Turnaround: 7 days'] },
+                { name: 'INR', lab: 'Haematology', reqs: ['Sample: 2.7mL Citrate', 'Turnaround: 4 hours'] },
+                { name: 'Insulin', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum, to lab within 6 hours', 'Turnaround: 7 days'] },
+                { name: 'Insulin-like Growth Factor 1 (IGF-1)', lab: 'Other (Referred)', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 7 days'] },
+                { name: 'Iron', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 60 mins (ED), 180 mins (Inpatient), 24 hours (GP)'] },
+                { name: 'Isotransferrin (beta-transferrin)', lab: 'Other (Referred)', reqs: ['Sample: 5mL Clotted', 'Turnaround: 48 hours (Mon-Fri)'] },
+                { name: 'Ketamine (blood)', lab: 'Other (Referred)', reqs: ['Sample: 1mL EDTA', 'Turnaround: 10 days'] },
+                { name: 'Kleihauer Test', lab: 'Antenatals', reqs: ['Sample: 6mL EDTA', 'Turnaround: Routine', 'Used to estimate feto-maternal haemorrhage.'] },
+                { name: 'Lacosamide', lab: 'Other (Referred)', reqs: ['Sample: 250uL Serum Trough Level', 'Turnaround: 15 days'] },
+                { name: 'Lactate', lab: 'Chemistry', reqs: ['Sample: 2mL Fluoride/Oxalate on ice.', 'Send on ice and inform lab.', 'Turnaround: 60 mins (ED), 180 mins (Inpatient), 24 hours (GP)'] },
+                { name: 'Lactate Dehydrogenase (LDH)', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 60 mins (ED), 180 mins (Inpatient), 24 hours (GP)'] },
+                { name: 'Lactate in CSF', lab: 'Chemistry', reqs: ['Sample: 2mL Fluoride/oxalate', 'Turnaround: 60 mins (ED)'] },
+                { name: 'Lamotrigine', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 4 days'] },
+                { name: 'Laxative Screen', lab: 'Other (Referred)', reqs: ['Sample: 20mL fresh urine', 'Turnaround: 14 days'] },
+                { name: 'Lead', lab: 'Other (Referred)', reqs: ['Sample: 5mL EDTA', 'Turnaround: 14 days'] },
+                { name: 'Levetiracetam', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 4 days'] },
+                { name: 'LH (Luteinising Hormone)', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 24 hours'] },
+                { name: 'Lipase', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 60 mins (ED), 180 mins (Inpatient), 24 hours (GP)'] },
+                { name: 'Lipids', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 60 mins (ED), 180 mins (Inpatient), 24 hours (GP)'] },
+                { name: 'Lithium', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 60 mins (ED), 180 mins (Inpatient), 24 hours (GP)'] },
+                { name: 'Liver Function Tests (LFT)', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 60 mins (ED), 180 mins (Inpatient), 24 hours (GP)'] },
+                { name: 'Lupus Anticoagulant', lab: 'H&TRL', reqs: ['Sample: 2 x 2.7mL Citrate', 'Turnaround: 7 days'] },
+                { name: 'Lymphocyte subsets (CD4 etc.)', lab: 'Immunology', reqs: ['Sample: EDTA, <24 hours old, not refrigerated', 'Turnaround: Processed daily (Mon-Fri)'] },
+                { name: 'Lysosomal enzymes', lab: 'Other (Referred)', reqs: ['Sample: 5mL EDTA Whole Blood', 'Turnaround: 28 Days'] },
+                { name: 'Magnesium', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 60 mins (ED), 180 mins (Inpatient), 24 hours (GP)'] },
+                { name: 'Malaria parasites', lab: 'Haematology', reqs: ['Sample: 4mL EDTA', 'Turnaround: 4 hours'] },
+                { name: 'Manganese', lab: 'Other (Referred)', reqs: ['Sample: 1 ml trace element free (blue top) EDTA or Sodium Heparin whole blood', 'Turnaround: 10 days'] },
+                { name: 'Mannan binding lectin', lab: 'Other (Referred)', reqs: ['Sample: 5mL Clotted', 'Turnaround: 21 days'] },
+                { name: 'Mast cell tryptase', lab: 'Immunology', reqs: ['Sample: 5mL Clotted', 'Turnaround: 10 days'] },
+                { name: 'MDMA', lab: 'Other (Referred)', reqs: ['Sample: 1mL EDTA', 'Turnaround: 10 days'] },
+                { name: 'Mercury', lab: 'Other (Referred)', reqs: ['Sample: 5mL Li-Hep whole blood or urine', 'Turnaround: 28 days'] },
+                { name: 'Metanephrines', lab: 'Other (Referred)', reqs: ['Sample: 24hr Urine Acidified collection', 'Turnaround: 14 days'] },
+                { name: 'Methadone & EDDP', lab: 'Other (Referred)', reqs: ['Sample: 1mL EDTA', 'Turnaround: 10 days'] },
+                { name: 'Methanol', lab: 'Chemistry', reqs: ['Sample: 2mL Fluoride/oxalate', 'Turnaround: 3 days'] },
+                { name: 'Methotrexate (MTX)', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 60 minutes (ED)'] },
+                { name: 'Microalbumin (ACR)', lab: 'Chemistry', reqs: ['Sample: 10mL Fresh urine', 'Turnaround: 24 hours'] },
+                { name: 'Morphine (free & total)', lab: 'Other (Referred)', reqs: ['Sample: 2mL EDTA', 'Turnaround: 10 days'] },
+                { name: 'Mucopolysaccharide Electrophoresis and Glycosaminoglycans', lab: 'Chemistry', reqs: ['Sample: Minimum 6mL fresh random urine', 'Turnaround: 7 days'] },
+                { name: 'Myeloma Screen', lab: 'Chemistry', reqs: ['Sample: 5mL Clotted', 'Turnaround: Up to 5 days'] },
+                { name: 'Myositis antibodies', lab: 'Immunology', reqs: ['Sample: 5mL Clotted', 'Turnaround: 7 days'] },
+                { name: 'Neopterin', lab: 'Other (Referred)', reqs: ['Sample: 10mL fresh urine', 'Turnaround: 14 days'] },
+                { name: 'Neuroblastoma screen', lab: 'Other (Referred)', reqs: ['Sample: 5mL acidified random urine', 'Turnaround: 14 days'] },
+                { name: 'Nortriptyline', lab: 'Other (Referred)', reqs: ['Sample: 1mL EDTA', 'Turnaround: 10 days'] },
+                { name: 'NTproBNP', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 4 hours'] },
+                { name: 'Oestradiol (E2)', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 24 hours'] },
+                { name: 'Olanzapine', lab: 'Other (Referred)', reqs: ['Sample: 1mL EDTA', 'Turnaround: 10 days'] },
+                { name: 'Oligoclonal bands', lab: 'Other (Referred)', reqs: ['Sample: 5mL Clotted', 'Turnaround: 7 days'] },
+                { name: 'Oligosaccharides (Urine)', lab: 'Chemistry', reqs: ['Sample: 6mL Fresh Urine', 'Turnaround: 7 days'] },
+                { name: 'Osmolality (Serum)', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 60 mins (ED), 180 mins (Inpatient), 24 hours (GP)'] },
+                { name: 'Osmolality (Urine)', lab: 'Chemistry', reqs: ['Sample: 20mL Fresh Urine', 'Turnaround: 24 hours'] },
+                { name: 'Ovarian Antibodies', lab: 'Other (Referred)', reqs: ['Sample: 5mL Clotted', 'Turnaround: 10 days'] },
+                { name: 'Oxalate (Urine)', lab: 'Other (Referred)', reqs: ['Sample: 24h acidified urine', 'Turnaround: 28 days'] },
+                { name: 'P1NP (Procollagen I Extension Peptide)', lab: 'Other (Referred)', reqs: ['Sample: 5mL Clotted', 'Turnaround: 14 days'] },
+                { name: 'P3NP(Procollagen III N-terminal Peptide)', lab: 'Other (Referred)', reqs: ['Sample: 5mL SST', 'Turnaround: 7 days'] },
+                { name: 'Paracetamol', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 60 mins (ED), 180 mins (Inpatient), 24 hours (GP)'] },
+                { name: 'Paraquat (Diquat)', lab: 'Other (Referred)', reqs: ['Sample: 10mL fresh urine within 4 hours of ingestion', 'Turnaround: Contact Lab'] },
+                { name: 'Parathyroid antibodies', lab: 'Other (Referred)', reqs: ['Sample: 5mL Clotted', 'Turnaround: 10 days'] },
+                { name: 'Parathyroid Hormone (PTH)', lab: 'Chemistry', reqs: ['Sample: 5mL EDTA', 'Sample must be separated promptly.', 'Turnaround: 24 hours'] },
+                { name: 'Paroxetine', lab: 'Other (Referred)', reqs: ['Sample: 1mL EDTA', 'Turnaround: 10 days'] },
+                { name: 'Peroxisomal Enzymes', lab: 'Other (Referred)', reqs: ['Sample: 5mL EDTA Whole Blood', 'Turnaround: 28 days'] },
+                { name: 'Phenobarbitone', lab: 'Other (Referred)', reqs: ['Sample: 250 uL Serum Trough Level', 'Turnaround: 2-3 days'] },
+                { name: 'Phenylalanine/Tyrosine', lab: 'Chemistry', reqs: ['Sample: 100µL Lith-Hep Plasma', 'Turnaround: 3 days'] },
+                { name: 'Phenytoin', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 60 mins (ED), 180 mins (Inpatient), 24 hours (GP)'] },
+                { name: 'Phosphate', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 60 mins (ED), 180 mins (Inpatient), 24 hours (GP)'] },
+                { name: 'Plasma Viscosity', lab: 'Haematology', reqs: ['Sample: 4mL EDTA', 'Turnaround: 7 days'] },
+                { name: 'Porphobilinogen (Urine)', lab: 'Chemistry', reqs: ['Sample: 20mL for full screen', 'Turnaround: 24 hours'] },
+                { name: 'Porphyria Tests', lab: 'Other (Referred)', reqs: ['Sample: Varies', 'Turnaround: 21-28 days'] },
+                { name: 'Porphyrins (Blood)', lab: 'Other (Referred)', reqs: ['Sample: 5mL EDTA.', 'MUST be protected from light. Wrap in tin foil or use a black bag.', 'Turnaround: 21 Days'] },
+                { name: 'Porphyrins (Faeces)', lab: 'Other (Referred)', reqs: ['Sample: 5g-10g Faeces, protected from light', 'Turnaround: 15 days'] },
+                { name: 'Porphyrins (Urine)', lab: 'Chemistry', reqs: ['Sample: 10mL Urine, protected from light', 'Turnaround: 7 days'] },
+                { name: 'Potassium', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 60 mins (ED), 180 mins (Inpatient), 24 hours (GP)'] },
+                { name: 'Potassium (Whole blood)', lab: 'Chemistry', reqs: ['Sample: 2mL Li-Hep', 'Turnaround: 60 mins (ED)'] },
+                { name: 'Pregnancy Test (Blood)', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 24 hours'] },
+                { name: 'Progesterone', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 24 hours'] },
+                { name: 'Prolactin', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 24 hours'] },
+                { name: 'Propranolol', lab: 'Other (Referred)', reqs: ['Sample: 1mL EDTA', 'Turnaround: 10 days'] },
+                { name: 'Prostate Specific Antigen (PSA)', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 24 hours'] },
+                { name: 'Protein (Total)', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 60 mins (ED), 180 mins (Inpatient), 24 hours (GP)'] },
+                { name: 'Protein C', lab: 'H&TRL', reqs: ['Sample: 2.7mL Citrate', 'Turnaround: 7 days'] },
+                { name: 'Protein S', lab: 'H&TRL', reqs: ['Sample: 2.7mL Citrate', 'Turnaround: 7 days'] },
+                { name: 'Protein: Creatinine Ratio (PCR)', lab: 'Chemistry', reqs: ['Sample: 20mL Fresh Urine', 'Turnaround: 24 hours'] },
+                { name: 'Purine and Pyrimidine Confirmation', lab: 'Other (Referred)', reqs: ['Sample: 5mL Thymol preserved urine, 5mL EDTA Blood', 'Turnaround: 28 Days'] },
+                { name: 'Purine and Pyrimidine Screen', lab: 'Other (Referred)', reqs: ['Sample: 1mL urine', 'Turnaround: 28 Days'] },
+                { name: 'Quetiapine', lab: 'Other (Referred)', reqs: ['Sample: 1mL EDTA', 'Turnaround: 10 days'] },
+                { name: 'Reducing substances (Faeces)', lab: 'Chemistry', reqs: ['Sample: Pea size amount of fresh faeces', 'Turnaround: 7 days'] },
+                { name: 'Reducing substances (Urine)', lab: 'Chemistry', reqs: ['Sample: 6mL fresh random urine', 'Turnaround: 7 days'] },
+                { name: 'Renal Stone Analysis', lab: 'Other (Referred)', reqs: ['Sample: Stone in universal container', 'Turnaround: 14-21 days'] },
+                { name: 'Reticulocyte Count', lab: 'Haematology', reqs: ['Sample: 4mL EDTA', 'Turnaround: 24 hours'] },
+                { name: 'Rheumatoid Factor (RF)', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 24 hours'] },
+                { name: 'Salicylate', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 60 mins (ED), 180 mins (Inpatient), 24 hours (GP)'] },
+                { name: 'Salivary Gland antibody', lab: 'Other (Referred)', reqs: ['Sample: 5mL Clotted', 'Turnaround: 15 days'] },
+                { name: 'SARS-CoV2 Spike Antibody (COVS)', lab: 'Other (Referred)', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 5 days'] },
+                { name: 'Selenium', lab: 'Chemistry', reqs: ['Sample: 5mL Clotted (Not SST tube)', 'Turnaround: 7 days'] },
+                { name: 'Serum Adalimumab', lab: 'Other (Referred)', reqs: ['Sample: 5mL Clotted', 'Turnaround: 19 days'] },
+                { name: 'Serum amyloid', lab: 'Other (Referred)', reqs: ['Sample: 5mL Clotted', 'Turnaround: 21 days'] },
+                { name: 'Serum Free Light Chains', lab: 'Chemistry', reqs: ['Sample: 5mL serum or SST', 'Turnaround: 5 days'] },
+                { name: 'Serum Infliximab', lab: 'Other (Referred)', reqs: ['Sample: 5mL Clotted', 'Turnaround: 19 days'] },
+                { name: 'Sex Hormone Binding Globulin (SHBG)', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 24 hours'] },
+                { name: 'Sickle Solubility Test', lab: 'Haematology', reqs: ['Sample: 4mL EDTA', 'Turnaround: 24 hours (Urgent available)'] },
+                { name: 'Sirolimus', lab: 'Chemistry', reqs: ['Sample: 5mL EDTA', 'Turnaround: 24 hours'] },
+                { name: 'Skin-Reactive Abs', lab: 'Immunology', reqs: ['Sample: 5mL Clotted', 'Turnaround: 7 days'] },
+                { name: 'Sodium', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 60 mins (ED), 180 mins (Inpatient), 24 hours (GP)'] },
+                { name: 'Specific microbial (functional) antibodies', lab: 'Immunology', reqs: ['Sample: 5mL Clotted', 'Turnaround: 7 days'] },
+                { name: 'Stiripentol', lab: 'Other (Referred)', reqs: ['Sample: 200uL Clotted', 'Turnaround: 14 days'] },
+                { name: 'Sweat Test', lab: 'Chemistry', reqs: ['Sample: Request via Careflow', 'Turnaround: N/A'] },
+                { name: 'Tacrolimus (FK506)', lab: 'Chemistry', reqs: ['Sample: 5mL EDTA', 'Turnaround: 24 hours'] },
+                { name: 'Testosterone', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 24 hours'] },
+                { name: 'Theophylline', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 60 mins (ED), 180 mins (Inpatient), 24 hours (GP)'] },
+                { name: 'Thrombin Time (TT)', lab: 'Haematology', reqs: ['Sample: 2.7mL Citrate', 'Turnaround: 4 hours'] },
+                { name: 'Thrombophilia Screen', lab: 'H&TRL', reqs: ['Sample: 3 x 2.7mL Citrate', 'Turnaround: 10 days'] },
+                { name: 'Thyroglobulin', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 7 days'] },
+                { name: 'Thyroid Function Tests (TFTs)', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 24 hours'] },
+                { name: 'Tobramycin', lab: 'Chemistry', reqs: ['Sample: 5mL SST', 'Turnaround: 24 hours'] },
+                { name: 'Topiramate', lab: 'Other (Referred)', reqs: ['Sample: 250ul Serum Trough Level', 'Turnaround: 15 days'] },
+                { name: 'Total Protein', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 60 mins (ED), 180 mins (Inpatient), 24 hours (GP)'] },
+                { name: 'Total Protein (CSF)', lab: 'Chemistry', reqs: ['Sample: 0.5mL Plain Tube', 'Turnaround: 60 mins (ED)'] },
+                { name: 'Total Protein (Other Fluids)', lab: 'Chemistry', reqs: ['Sample: Fresh specimen In Universal-5mL', 'Turnaround: 60 mins (ED)'] },
+                { name: 'Tramadol', lab: 'Other (Referred)', reqs: ['Sample: 1mL EDTA', 'Turnaround: 10 days'] },
+                { name: 'Transferrin', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 24 hours'] },
+                { name: 'Transferrin Iso-electric Focusing', lab: 'Other (Referred)', reqs: ['Sample: 2mL Clotted or Li-Hep', 'Turnaround: 21 days'] },
+                { name: 'Triglycerides', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 60 mins (ED), 180 mins (Inpatient), 24 hours (GP)'] },
+                { name: 'Troponin I', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 60 minutes (ED), 180 minutes (other)'] },
+                { name: 'TSH antibodies', lab: 'Other (Referred)', reqs: ['Sample: 5mL Clotted', 'Turnaround: 10 days'] },
+                { name: 'Urea & Electrolytes (U&E)', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 60 mins (ED), 180 mins (Inpatient), 24 hours (GP)'] },
+                { name: 'Uric Acid (Urate)', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 60 mins (ED), 180 mins (Inpatient), 24 hours (GP)'] },
+                { name: 'Urine Calcium', lab: 'Chemistry', reqs: ['Sample: 24h Acid or Plain', 'Turnaround: 24 hours'] },
+                { name: 'Urine Chloride', lab: 'Chemistry', reqs: ['Sample: 24h Plain', 'Turnaround: 24 hours'] },
+                { name: 'Urine Creatinine', lab: 'Chemistry', reqs: ['Sample: 24h Plain/ 10mL random', 'Turnaround: 24 hours'] },
+                { name: 'Urine Magnesium', lab: 'Chemistry', reqs: ['Sample: 24h Acid or Plain', 'Turnaround: 24 hours'] },
+                { name: 'Urine Phosphate', lab: 'Chemistry', reqs: ['Sample: 24h Acid or Plain', 'Turnaround: 24 hours'] },
+                { name: 'Urine Potassium', lab: 'Chemistry', reqs: ['Sample: 24h Plain', 'Turnaround: 24 hours'] },
+                { name: 'Urine Protein', lab: 'Chemistry', reqs: ['Sample: 24h Plain', 'Turnaround: 24 hours'] },
+                { name: 'Urine sodium', lab: 'Chemistry', reqs: ['Sample: 24h Plain', 'Turnaround: 24 hours'] },
+                { name: 'Urine Thiosulphate', lab: 'Other (Referred)', reqs: ['Sample: 6mL fresh random urine', 'Turnaround: 14-21 days'] },
+                { name: 'Urine Urate', lab: 'Chemistry', reqs: ['Sample: 24h Neutral', 'Turnaround: 24 hours'] },
+                { name: 'Urine Urea', lab: 'Chemistry', reqs: ['Sample: 24h Plain', 'Turnaround: 24 hours'] },
+                { name: 'Valproate', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 24 hours'] },
+                { name: 'Vancomycin', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 60 mins (ED), 180 mins (Inpatient), 24 hours (GP)'] },
+                { name: 'Vasoactive Intestinal Peptide (VIP)', lab: 'Other (Referred)', reqs: ['Sample: Special trasylol tubes, contact lab', 'Turnaround: 28 days'] },
+                { name: 'Very Long Chain Fatty Acids (VLCFA)', lab: 'Other (Referred)', reqs: ['Sample: 500µL Li-Hep', 'Turnaround: 21 Days'] },
+                { name: 'Vitamin A', lab: 'Other (Referred)', reqs: ['Sample: 2mL Clotted, protected from light', 'Turnaround: 7 days'] },
+                { name: 'Vitamin B1 (Thiamine)', lab: 'Other (Referred)', reqs: ['Sample: Contact Lab', 'Turnaround: 28 days'] },
+                { name: 'Vitamin B12', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 24 hours'] },
+                { name: 'Vitamin B2', lab: 'Other (Referred)', reqs: ['Sample: 5mL EDTA/lithium heparin whole blood, protected from light', 'Turnaround: 28 days'] },
+                { name: 'Vitamin B3 (Riboflavin)', lab: 'Other (Referred)', reqs: ['Sample: Contact Lab', 'Turnaround: 28 days'] },
+                { name: 'Vitamin B6 (Pyridoxine)', lab: 'Other (Referred)', reqs: ['Sample: Contact Lab', 'Turnaround: 28 days'] },
+                { name: 'Vitamin C', lab: 'Other (Referred)', reqs: ['Sample: Contact Lab', 'Turnaround: 56 days'] },
+                { name: 'Vitamin D', lab: 'Chemistry', reqs: ['Sample: 5mL SST/serum', 'Turnaround: 24 hours'] },
+                { name: 'Vitamin E', lab: 'Other (Referred)', reqs: ['Sample: 2mL Clotted, protected from light', 'Turnaround: 7 days'] },
+                { name: 'Voltage gated calcium channel antibodies', lab: 'Other (Referred)', reqs: ['Sample: 5mL Clotted', 'Turnaround: 21 days'] },
+                { name: 'Voltage gated potassium channel antibodies', lab: 'Other (Referred)', reqs: ['Sample: 5mL Clotted', 'Turnaround: 21 days'] },
+                { name: 'Warfarin', lab: 'Other (Referred)', reqs: ['Sample: 1mL SST', 'Turnaround: 15 days'] },
+                { name: 'White Cell Cystine', lab: 'Chemistry', reqs: ['Sample: 5mL Li-Hep Whole blood', 'Turnaround: 14 days'] },
+                { name: 'White Cell Enzymes', lab: 'Other (Referred)', reqs: ['Sample: 5mL EDTA Whole blood', 'Turnaround: 30 days'] },
+                { name: 'Xanthochromia in CSF', lab: 'Chemistry', reqs: ['Sample: CSF in plain universal, protected from light', 'Turnaround: Contact Lab'] },
+                { name: 'Zinc', lab: 'Chemistry', reqs: ['Sample: 5mL Clotted (Not SST)', 'Turnaround: 7 days'] },
+                { name: 'Zinc in urine', lab: 'Chemistry', reqs: ['Sample: 24 Acid or plain 10mL random', 'Turnaround: 14 days'] },
+                { name: 'Zinc Protoporphyrin (ZPP)', lab: 'Haematology', reqs: ['Sample: 4mL EDTA', 'Turnaround: 48 hours'] },
+                { name: 'Zonisamide', lab: 'Other (Referred)', reqs: ['Sample: 250uL Serum Trough Level', 'Turnaround: 15 days'] }
+            ];
+
+            // Populate datalist for autocomplete
+            testRequirements.sort((a, b) => a.name.localeCompare(b.name)).forEach(item => {
+                const option = document.createElement('option');
+                option.value = item.name;
+                dataList.appendChild(option);
+            });
+
+            function showRequirements() {
+                const query = searchInput.value.toLowerCase();
+                const match = testRequirements.find(item => item.name.toLowerCase() === query);
+
+                if (match) {
+                    let html = `<ul>`;
+                    // Add lab info first
+                    html += `<li><i data-feather="thermometer"></i><span>Lab: ${match.lab}</span></li>`;
+                    match.reqs.forEach(r => {
+                        let icon = 'info';
+                        if (r.toLowerCase().includes('sample:')) icon = 'droplet';
+                        if (r.toLowerCase().includes('turnaround:')) icon = 'clock';
+                        if (r.toLowerCase().includes('must') || r.toLowerCase().includes('strict') || r.toLowerCase().includes('contact lab')) icon = 'alert-triangle';
+                        html += `<li><i data-feather="${icon}"></i><span>${r}</span></li>`;
+                    });
+                    html += `</ul>`;
+                    display.innerHTML = html;
+                    feather.replace();
+                } else {
+                    display.innerHTML = '<p class="text-gray-500">Select a valid test from the list to see its requirements.</p>';
+                }
+            }
+
+            searchInput.addEventListener('input', showRequirements);
+            // Initial call to render icons on page load
+            feather.replace();
+        });
+    </script>
+</body>
+</html>
