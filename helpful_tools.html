@@ -7,7 +7,18 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-    <style> body { font-family: 'Inter', sans-serif; } .nhs-text-blue { color: #005EB8; } .nhs-text-dark-blue { color: #003087; } </style>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .nhs-text-blue { color: #005EB8; }
+        .nhs-dark-blue { color: #003087; }
+        .tool-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+    </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
 
@@ -18,41 +29,56 @@
             <a href="index.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8">
                 <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Home
             </a>
-            <h2 class="text-4xl font-bold text-center mb-12 nhs-text-dark-blue">Helpful Tools</h2>
+            <h2 class="text-4xl font-bold text-center mb-12 nhs-text-dark-blue">Helpful Laboratory Tools</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 
-                <a href="rejection_troubleshooter.html" class="block bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
+                <a href="pre_analytical_tool.html" class="tool-card block bg-white rounded-lg shadow-lg overflow-hidden">
                     <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Sample Rejection Troubleshooter</h3>
-                        <p class="text-gray-600">Understand why a sample was rejected and how to prevent it next time.</p>
+                        <div class="flex items-center text-nhs-blue mb-3">
+                            <i data-feather="search" class="w-8 h-8"></i>
+                            <h3 class="text-xl font-semibold ml-3">Pre-analytical Query Tool</h3>
+                        </div>
+                        <p class="text-gray-600">Instantly find sample requirements and turnaround times for any test in our directory.</p>
                     </div>
                 </a>
 
-                <a href="lipaemia_calculator.html" class="block bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
+                <a href="interpretive_comment_guide.html" class="tool-card block bg-white rounded-lg shadow-lg overflow-hidden">
                     <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Lipaemia Calculator</h3>
-                        <p class="text-gray-600">Calculate a corrected Haemoglobin result for lipaemic samples.</p>
+                        <div class="flex items-center text-nhs-blue mb-3">
+                            <i data-feather="message-circle" class="w-8 h-8"></i>
+                            <h3 class="text-xl font-semibold ml-3">Interpretive Comment Guide</h3>
+                        </div>
+                        <p class="text-gray-600">A searchable database to understand the meaning and next steps for common report comments.</p>
                     </div>
                 </a>
 
-                <a href="pre_analytical_tool.html" class="block bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Pre-analytical Query Tool</h3>
-                        <p class="text-gray-600">Quickly find sample requirements for specific laboratory tests.</p>
+                <a href="pathology_glossary.html" class="tool-card block bg-white rounded-lg shadow-lg overflow-hidden">
+                     <div class="p-6">
+                        <div class="flex items-center text-nhs-blue mb-3">
+                            <i data-feather="book-open" class="w-8 h-8"></i>
+                            <h3 class="text-xl font-semibold ml-3">Interactive Pathology Glossary</h3>
+                        </div>
+                        <p class="text-gray-600">A comprehensive A-Z guide to all the key terms and definitions used in the laboratory.</p>
                     </div>
                 </a>
 
-                <a href="cell_counter.html" class="block bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Manual Differential Counter</h3>
-                        <p class="text-gray-600">A keyboard-based counter for performing manual cell differentials.</p>
+                <a href="sample_rejection_troubleshooter.html" class="tool-card block bg-white rounded-lg shadow-lg overflow-hidden">
+                     <div class="p-6">
+                        <div class="flex items-center text-nhs-blue mb-3">
+                            <i data-feather="x-octagon" class="w-8 h-8"></i>
+                            <h3 class="text-xl font-semibold ml-3">Sample Rejection Troubleshooter</h3>
+                        </div>
+                        <p class="text-gray-600">Understand why samples are rejected and learn how to prevent common collection errors.</p>
                     </div>
                 </a>
-
-                <a href="glossary.html" class="block bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Interactive Pathology Glossary</h3>
-                        <p class="text-gray-600">A comprehensive, searchable glossary of pathology terms.</p>
+                
+                <a href="sustainability_corner.html" class="tool-card block bg-white rounded-lg shadow-lg overflow-hidden">
+                     <div class="p-6">
+                        <div class="flex items-center text-nhs-blue mb-3">
+                            <i data-feather="leaf" class="w-8 h-8"></i>
+                            <h3 class="text-xl font-semibold ml-3">Resource & Sustainability Corner</h3>
+                        </div>
+                        <p class="text-gray-600">Promoting the mindful and efficient use of laboratory resources and reducing our environmental impact.</p>
                     </div>
                 </a>
 
@@ -62,5 +88,8 @@
 
     <div id="footer-placeholder"></div>
     <script src="js/component-loader.js"></script>
+    <script>
+        feather.replace();
+    </script>
 </body>
 </html>
