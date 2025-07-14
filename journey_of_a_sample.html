@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Journey of a Sample - SGC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <style> 
+        body { font-family: 'Inter', sans-serif; } 
+        .nhs-text-blue { color: #005EB8; } 
+        .nhs-dark-blue { color: #003087; }
+        
+        /* Timeline styles */
+        .timeline-container {
+            position: relative;
+            padding-left: 50px; /* Space for the timeline line and icons */
+        }
+        .timeline-line {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            bottom: 20px;
+            width: 4px;
+            background-color: #A1C9F4; /* A lighter NHS blue */
+            border-radius: 2px;
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2.5rem; /* 40px */
+        }
+        .timeline-icon {
+            position: absolute;
+            left: -30px;
+            top: 0;
+            width: 40px;
+            height: 40px;
+            background-color: #005EB8;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid #F0F4F5; /* A very light blue-grey */
+        }
+        .timeline-content {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="header-placeholder"></div>
+
+    <main class="py-16">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <a href="sustainability_corner.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8">
+                <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Sustainability Corner
+            </a>
+            
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold nhs-dark-blue mb-4">The Journey of a Sample</h2>
+                <p class="text-lg text-gray-700 max-w-3xl mx-auto">From the patient's arm to the final report, every sample consumes valuable resources. Understanding this journey helps us appreciate the importance of getting it right first time.</p>
+            </div>
+
+            <div class="timeline-container">
+                <div class="timeline-line"></div>
+
+                <!-- Step 1: Collection -->
+                <div class="timeline-item">
+                    <div class="timeline-icon"><i data-feather="user-plus"></i></div>
+                    <div class="timeline-content">
+                        <h3 class="text-2xl font-semibold nhs-dark-blue mb-2">Step 1: The Request & Collection</h3>
+                        <p class="text-gray-700">The process begins with a clinical need. A request is made, and a trained phlebotomist collects the sample from the patient.</p>
+                        <div class="mt-4 pt-4 border-t">
+                            <h4 class="font-bold text-gray-800">Resources Used:</h4>
+                            <ul class="list-disc list-inside text-gray-600 mt-2">
+                                <li><strong>Staff Time:</strong> Phlebotomist/Nurse time, Clerical time.</li>
+                                <li><strong>Consumables:</strong> Needle, tube holder, vacutainer tube(s), alcohol wipe, gauze, plaster, transport bag.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Transport -->
+                <div class="timeline-item">
+                    <div class="timeline-icon"><i data-feather="truck"></i></div>
+                    <div class="timeline-content">
+                        <h3 class="text-2xl font-semibold nhs-dark-blue mb-2">Step 2: Transport to the Lab</h3>
+                        <p class="text-gray-700">The sample must be transported safely and quickly to the laboratory to ensure its integrity.</p>
+                        <div class="mt-4 pt-4 border-t">
+                            <h4 class="font-bold text-gray-800">Resources Used:</h4>
+                            <ul class="list-disc list-inside text-gray-600 mt-2">
+                                <li><strong>Pneumatic Tube System:</strong> Significant electrical energy consumption.</li>
+                                <li><strong>Portering Service:</strong> Staff time and wages.</li>
+                                <li><strong>Van Transport (for GP practices):</strong> Fuel, vehicle maintenance, driver's time.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Reception & Preparation -->
+                <div class="timeline-item">
+                    <div class="timeline-icon"><i data-feather="log-in"></i></div>
+                    <div class="timeline-content">
+                        <h3 class="text-2xl font-semibold nhs-dark-blue mb-2">Step 3: Laboratory Reception & Preparation</h3>
+                        <p class="text-gray-700">The sample arrives, is checked against the request, and booked into the Laboratory Information Management System (LIMS).</p>
+                         <div class="mt-4 pt-4 border-t">
+                            <h4 class="font-bold text-gray-800">Resources Used:</h4>
+                            <ul class="list-disc list-inside text-gray-600 mt-2">
+                                <li><strong>Staff Time:</strong> MLA/AP time for booking-in and sorting.</li>
+                                <li><strong>Electricity:</strong> Power for centrifuges (for serum/plasma), computers, and barcode scanners.</li>
+                                <li><strong>Asset Use:</strong> High-speed centrifuges are expensive assets that require regular maintenance.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4: Analysis -->
+                <div class="timeline-item">
+                    <div class="timeline-icon"><i data-feather="cpu"></i></div>
+                    <div class="timeline-content">
+                        <h3 class="text-2xl font-semibold nhs-dark-blue mb-2">Step 4: Analysis</h3>
+                        <p class="text-gray-700">The sample is processed on a highly complex, automated analyser.</p>
+                         <div class="mt-4 pt-4 border-t">
+                            <h4 class="font-bold text-gray-800">Resources Used:</h4>
+                            <ul class="list-disc list-inside text-gray-600 mt-2">
+                                <li><strong>High-Value Asset:</strong> Analysers cost tens to hundreds of thousands of pounds and have expensive service contracts.</li>
+                                <li><strong>Reagents & Consumables:</strong> Every test uses specific, costly reagents, diluents, and cleaning fluids.</li>
+                                <li><strong>Quality Control:</strong> QC material must be run every day to ensure accuracy, consuming further reagents.</li>
+                                <li><strong>Electricity & Water:</strong> Analysers are significant consumers of power and purified water.</li>
+                                <li><strong>Estimated Cost per FBC/U&E:</strong> ~£1.00 - £3.00 in direct analytical costs.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 5: Validation & Reporting -->
+                <div class="timeline-item">
+                    <div class="timeline-icon"><i data-feather="check-square"></i></div>
+                    <div class="timeline-content">
+                        <h3 class="text-2xl font-semibold nhs-dark-blue mb-2">Step 5: Validation & Reporting</h3>
+                        <p class="text-gray-700">A qualified Biomedical Scientist reviews the result, checks for errors, and validates it. Abnormal results may require further interpretation or referral.</p>
+                         <div class="mt-4 pt-4 border-t">
+                            <h4 class="font-bold text-gray-800">Resources Used:</h4>
+                            <ul class="list-disc list-inside text-gray-600 mt-2">
+                                <li><strong>Highly Skilled Staff Time:</strong> The expertise of a registered BMS is essential for ensuring the quality and safety of every result.</li>
+                                <li><strong>IT Infrastructure:</strong> Servers and software (LIMS) are needed to manage and store millions of patient results securely.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 6: Storage & Disposal -->
+                <div class="timeline-item">
+                    <div class="timeline-icon"><i data-feather="archive"></i></div>
+                    <div class="timeline-content">
+                        <h3 class="text-2xl font-semibold nhs-dark-blue mb-2">Step 6: Storage & Disposal</h3>
+                        <p class="text-gray-700">After analysis, samples are stored for a set period in large, refrigerated units before being disposed of as clinical waste.</p>
+                         <div class="mt-4 pt-4 border-t">
+                            <h4 class="font-bold text-gray-800">Resources Used:</h4>
+                            <ul class="list-disc list-inside text-gray-600 mt-2">
+                                <li><strong>Cold Storage:</strong> Walk-in fridges consume a large amount of electricity 24/7 to keep samples viable for add-on tests.</li>
+                                <li><strong>Clinical Waste Disposal:</strong> Disposing of thousands of samples per day is a major operational cost.</li>
+                                <li><strong>Cost of Waste:</strong> A single bin of clinical waste can cost **over £20** to dispose of correctly.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+             <div class="mt-12 p-6 bg-blue-100 border-l-4 border-blue-500 text-blue-800 rounded-r-lg">
+                <p class="font-bold text-xl">The Hidden Cost of a Single Sample:</p>
+                <p class="mt-2">When you combine consumables, staff time, transport, energy, and waste, the true cost of a single "routine" blood test is far more than just the reagents. Every rejected sample that requires a redraw multiplies this cost. **Getting it right first time matters.**</p>
+            </div>
+
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            feather.replace();
+            const script = document.createElement('script');
+            script.src = 'js/component-loader.js';
+            document.body.appendChild(script);
+        });
+    </script>
+</body>
+</html>
