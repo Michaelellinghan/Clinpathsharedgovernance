@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pathology Glossary - SGC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .nhs-text-blue { color: #005EB8; }
+        .nhs-dark-blue { color: #003087; }
+        .tab-btn {
+            transition: all 0.2s;
+            border-bottom: 4px solid transparent;
+        }
+        .tab-btn.active {
+            border-bottom-color: #005EB8;
+            color: #005EB8;
+        }
+        .az-filter-btn.active {
+            background-color: #005EB8;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="header-placeholder"></div>
+
+    <main class="py-16">
+        <div class="container mx-auto px-6">
+            <a href="helpful_tools.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8">
+                <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Helpful Tools
+            </a>
+            <h2 class="text-4xl font-bold text-center mb-4 nhs-text-dark-blue">Interactive Pathology Glossary</h2>
+            <p class="text-lg text-gray-600 text-center mb-8">Search for terms or use the A-Z filter to browse.</p>
+            
+            <div class="border-b border-gray-200 mb-4">
+                <nav id="glossary-tabs" class="-mb-px flex justify-center space-x-8" aria-label="Tabs">
+                    <button class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="haem">Haematology</button>
+                    <button class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="trans">Transfusion</button>
+                    <button class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="chem">Chemistry</button>
+                    <button class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="imm">Immunology</button>
+                </nav>
+            </div>
+
+            <div class="sticky top-0 bg-gray-100 py-4 z-10">
+                <input type="text" id="search-input" placeholder="Type to search for a term..." class="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                <div id="az-filter-container" class="mt-4 flex flex-wrap justify-center gap-1">
+                    </div>
+            </div>
+
+            <div id="glossary-container" class="mt-8">
+                </div>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const glossaryContainer = document.getElementById('glossary-container');
+            const searchInput = document.getElementById('search-input');
+            const azFilterContainer = document.getElementById('az-filter-container');
+            const tabsContainer = document.getElementById('glossary-tabs');
+
+            // --- Comprehensive Glossary Data ---
+            const glossaries = {
+                haem: [
+                { term: 'Acanthocyte (Spur Cell)', definition: 'An erythrocyte with a few, irregularly spaced spicules of varying length.' },
+                { term: 'Achromia', definition: 'The central pallor of an erythrocyte that is greater than one-third of the cell diameter.' },
+                { term: 'Agglutination', definition: 'The clumping of red blood cells due to an antigen-antibody reaction.' },
+                { term: 'Anisocytosis', definition: 'Significant variation in the size of erythrocytes.' },
+                { term: 'Auer Rod', definition: 'An eosinophilic, needle-like inclusion in the cytoplasm of myeloblasts; pathognomonic for acute myeloid leukemia (AML).' },
+                { term: 'Atypical Lymphocyte', definition: 'A lymphocyte that is larger than a normal lymphocyte, with a less condensed and sometimes indented nucleus, and abundant, often basophilic cytoplasm. Associated with viral infections, especially infectious mononucleosis.' },
+                { term: 'Band Neutrophil', definition: 'A granulocyte with a U-shaped or curved nucleus of uniform thickness; the stage of neutrophil maturation just before the segmented neutrophil.' },
+                { term: 'Basophil', definition: 'A granulocyte containing large, coarse, dark purple/black granules that typically obscure the nucleus.' },
+                { term: 'Basophilic Stippling', definition: 'The presence of small, dark blue-staining granules (precipitated RNA) distributed throughout the erythrocyte. Associated with lead poisoning and thalassemias.' },
+                { term: 'Blast', definition: 'The earliest recognizable hematopoietic precursor cell. Myeloblasts have a large nucleus, fine chromatin, and prominent nucleoli. Lymphoblasts have scant cytoplasm and less distinct nucleoli.' },
+                { term: 'Blister Cell', definition: 'An erythrocyte with a single vacuole or with two adjacent vacuoles, resembling a blister on the skin.' },
+                { term: 'Cabot Ring', definition: 'A rare, thin, ring-like or figure-eight-shaped inclusion in an erythrocyte. May be seen in megaloblastic anemia and other severe anemias.' },
+                { term: 'Codocyte (Target Cell)', definition: 'An erythrocyte with a central area of hemoglobinization surrounded by a pale zone and a peripheral rim of hemoglobin.' },
+                { term: 'Dacrocyte (Teardrop Cell)', definition: 'An erythrocyte shaped like a teardrop or pear. Associated with myelofibrosis and other infiltrative bone marrow disorders.' },
+                { term: 'Döhle Body', definition: 'A pale blue, oval or spindle-shaped inclusion in the cytoplasm of neutrophils, consisting of remnants of rough endoplasmic reticulum. Seen in infections and inflammatory states.' },
+                { term: 'Drepanocyte (Sickle Cell)', definition: 'An elongated, crescent-shaped erythrocyte resulting from the polymerization of hemoglobin S under low oxygen conditions.' },
+                { term: 'Echinocyte (Burr Cell)', definition: 'An erythrocyte with numerous, short, blunt, evenly spaced spicules on its surface. Can be an artifact or associated with uremia and liver disease.' },
+                { term: 'Elliptocyte (Ovalocyte)', definition: 'An elliptical or oval-shaped erythrocyte. A few are nonspecific, but large numbers are seen in hereditary elliptocytosis and severe iron deficiency.' },
+                { term: 'Eosinophil', definition: 'A granulocyte with a bilobed nucleus and large, prominent, eosinophilic (red-pink) cytoplasmic granules.' },
+                { term: 'Hairy Cell', definition: 'An abnormal lymphoid cell with fine, irregular, hair-like cytoplasmic projections. The characteristic cell of hairy cell leukemia.' },
+                { term: 'Heinz Body', definition: 'An inclusion within an erythrocyte composed of denatured hemoglobin. Not visible on a Wright-stained smear; requires a supravital stain like crystal violet.' },
+                { term: 'Helmet Cell (Keratocyte)', definition: 'A type of schistocyte in the shape of a helmet, resulting from the removal of a vacuole by the spleen.' },
+                { term: 'Howell-Jolly Body', definition: 'A small, round, dense, dark purple inclusion in an erythrocyte, representing a remnant of nuclear DNA. Commonly seen after splenectomy.' },
+                { term: 'Hypersegmented Neutrophil', definition: 'A neutrophil with six or more nuclear lobes. A classic feature of megaloblastic anemia.' },
+                { term: 'Hypochromia', definition: 'A decreased concentration of hemoglobin in the red blood cell, resulting in an increased area of central pallor.' },
+                { term: 'Left Shift', definition: 'An increase in the number of immature granulocytes (such as band neutrophils, metamyelocytes, and myelocytes) in the peripheral blood.' },
+                { term: 'Leukoerythroblastic Reaction', definition: 'The presence of immature granulocytes, immature erythrocytes (NRBCs), and teardrop-shaped red cells in the peripheral blood.'},
+                { term: 'Lymphocyte', definition: 'A mononuclear leukocyte with a large, round, densely stained nucleus and a scant rim of cytoplasm.' },
+                { term: 'Macrocytosis', definition: 'The presence of abnormally large red blood cells (macrocytes), often associated with an elevated MCV.' },
+                { term: 'Megakaryocyte', definition: 'A very large bone marrow cell with a multilobulated nucleus, responsible for producing platelets.'},
+                { term: 'Metamyelocyte', definition: 'A granulocyte precursor with an indented, kidney-bean shaped nucleus; the stage after the myelocyte.' },
+                { term: 'Microcytosis', definition: 'The presence of abnormally small red blood cells (microcytes), often associated with a decreased MCV.' },
+                { term: 'Monocyte', definition: 'The largest normal peripheral blood leukocyte, characterized by an indented or convoluted nucleus, fine chromatin, and abundant blue-gray cytoplasm that may contain vacuoles.' },
+                { term: 'Myelocyte', definition: 'A granulocyte precursor with a round or slightly flattened nucleus and the first appearance of specific (secondary) cytoplasmic granules.' },
+                { term: 'Neutrophil', definition: 'The most common type of granulocyte, with a multi-lobed nucleus and fine, neutral-staining cytoplasmic granules.' },
+                { term: 'Nucleated Red Blood Cell (NRBC)', definition: 'An immature red blood cell that still contains a nucleus. Also known as an erythroblast or normoblast.'},
+                { term: 'Pappenheimer Bodies', definition: 'Small, irregular, dark-staining granules of iron, typically found in clusters near the periphery of an erythrocyte. Visible on a Wright stain.' },
+                { term: 'Plasma Cell', definition: 'A mature, antibody-producing B lymphocyte with an eccentric nucleus, clumped "clock-face" chromatin, and a deeply basophilic cytoplasm.' },
+                { term: 'Platelet', definition: 'A small, anucleated cell fragment derived from megakaryocytes, essential for blood clotting.' },
+                { term: 'Poikilocytosis', definition: 'Significant variation in the shape of erythrocytes.' },
+                { term: 'Polychromasia', definition: 'Erythrocytes that exhibit a blue-gray tinge when stained, indicating they are young cells (reticulocytes) containing residual RNA.' },
+                { term: 'Promyelocyte', definition: 'A granulocyte precursor characterized by a large nucleus and prominent primary (azurophilic) cytoplasmic granules.' },
+                { term: 'Pyknosis', definition: 'The condensation of chromatin in the nucleus of a cell undergoing necrosis or apoptosis, resulting in a small, dense, and dark nucleus.'},
+                { term: 'Reticulocyte', definition: 'An immature erythrocyte that has lost its nucleus but still contains residual RNA, visible with a supravital stain.'},
+                { term: 'Rouleaux', definition: 'Erythrocytes arranged in stacks or chains like coins, caused by high concentrations of plasma proteins.' },
+                { term: 'Schistocyte', definition: 'A fragmented erythrocyte, resulting from mechanical damage within the circulation.' },
+                { term: 'Smudge Cell', definition: 'The nuclear remnant of a fragile lymphocyte that has been ruptured during the preparation of a blood smear. Commonly associated with CLL.' },
+                { term: 'Spherocyte', definition: 'A small, spherical, dense erythrocyte that lacks central pallor. Associated with hereditary spherocytosis and autoimmune hemolytic anemia.' },
+                { term: 'Stomatocyte', definition: 'An erythrocyte with a slit-like, mouth-shaped area of central pallor.' },
+                { term: 'Toxic Granulation', definition: 'Prominent, dark-staining granules in the cytoplasm of neutrophils, representing an exaggerated granule production in response to severe infection or inflammation.' },
+                { term: 'Vacuolization', description: 'The presence of one or more vacuoles in the cytoplasm of a cell, often seen in neutrophils during sepsis or monocytes during phagocytosis.' }
+                ],
+                trans: [
+                    { term: 'Alloantibody', definition: 'An antibody formed in response to, and reacting with, an antigen from a genetically different individual of the same species.' },
+                    { term: 'Antigram', definition: 'The chart provided by a manufacturer that shows the antigenic profile of the reagent red cells in an antibody identification panel.' },
+                    { term: 'Apheresis', definition: 'A process in which the blood of a donor or patient is passed through an apparatus that separates out one particular constituent and returns the remainder to the circulation.' },
+                    { term: 'Autoantibody', definition: 'An antibody produced by an individual that reacts with their own red cell antigens.' },
+                    { term: 'Bio-Rad', definition: 'A manufacturer of blood transfusion testing platforms and reagents, often using column agglutination technology.' },
+                    { term: 'Blood Component', definition: 'Any therapeutic product derived from human blood, including red cells, platelets, fresh frozen plasma, and cryoprecipitate.' },
+                    { term: 'Cold Agglutinin', definition: 'An antibody, typically of the IgM class, that is optimally reactive at temperatures below 37°C.' },
+                    { term: 'Compatibility Testing (Crossmatch)', definition: 'The testing of a patient\'s serum/plasma with donor red cells to ensure that no clinically significant antibodies are present that could cause a transfusion reaction.' },
+                    { term: 'Cryoprecipitate', definition: 'A blood component prepared from plasma that contains fibrinogen, factor VIII, von Willebrand factor, factor XIII and fibronectin.' },
+                    { term: 'Direct Antiglobulin Test (DAT)', definition: 'A test used to detect in-vivo sensitisation of red blood cells with immunoglobulin and/or complement.' },
+                    { term: 'Elution', definition: 'A technique that dissociates antibodies from sensitised red blood cells, allowing for their identification.' },
+                    { term: 'Enzyme Technique', definition: 'The use of proteolytic enzymes (like ficin or papain) to treat red cells, which enhances or destroys certain blood group antigens, aiding in antibody identification.' },
+                    { term: 'Fresh Frozen Plasma (FFP)', definition: 'The plasma removed from a unit of whole blood and frozen, containing all coagulation factors.' },
+                    { term: 'Haemovigilance', definition: 'A set of surveillance procedures covering the whole transfusion chain, from the donation to the follow-up of recipients, intended to collect and assess information on unexpected or undesirable effects.' },
+                    { term: 'Indirect Antiglobulin Test (IAT)', definition: 'A test used to detect in-vitro sensitisation of red blood cells, used for antibody screening and identification.' },
+                    { term: 'Phenotype', definition: 'The observable characteristics of an organism, such as the expression of blood group antigens on a red cell.' },
+                    { term: 'Platelets', definition: 'A blood component containing platelets, used to treat or prevent bleeding in patients with thrombocytopenia or platelet function defects.' },
+                    { term: 'Red Blood Cells (component)', definition: 'A blood component containing concentrated red cells, used to treat anaemia and restore oxygen-carrying capacity.' },
+                    { term: 'SHOT (Serious Hazards of Transfusion)', definition: 'The UK\'s independent, professionally-led haemovigilance scheme.' }
+                ],
+                chem: [
+                    { term: 'Alanine Aminotransferase (ALT)', definition: 'An enzyme found predominantly in the liver; a key marker of hepatocellular injury.' },
+                    { term: 'Albumin', definition: 'The most abundant protein in plasma, responsible for maintaining osmotic pressure. Low levels can indicate liver or kidney disease, or malnutrition.' },
+                    { term: 'Alkaline Phosphatase (ALP)', definition: 'An enzyme associated with the liver biliary ducts and bone; raised levels often indicate cholestasis or bone disease.' },
+                    { term: 'Amylase', definition: 'An enzyme produced by the pancreas and salivary glands that digests carbohydrates. Markedly high levels are indicative of acute pancreatitis.' },
+                    { term: 'Bilirubin', definition: 'A yellow pigment formed from the breakdown of haemoglobin. High levels cause jaundice and can indicate liver disease or haemolysis.' },
+                    { term: 'C-Reactive Protein (CRP)', definition: 'An acute-phase protein that rises dramatically in response to inflammation and infection.' },
+                    { term: 'Creatine Kinase (CK)', definition: 'An enzyme found in muscle, heart, and brain tissue. High levels are a key marker of muscle damage, including myocardial infarction.' },
+                    { term: 'Creatinine', definition: 'A waste product from muscle metabolism that is filtered by the kidneys. A key marker of renal function.' },
+                    { term: 'Electrolytes (U&Es)', definition: 'A panel of tests measuring key ions in the blood, typically including Sodium (Na), Potassium (K), Urea, and Creatinine.' },
+                    { term: 'eGFR (estimated Glomerular Filtration Rate)', definition: 'A calculation based on the creatinine level, age, sex, and ethnicity, used to assess kidney function.' },
+                    { term: 'Glucose', definition: 'The primary sugar used by the body for energy. Its level is tightly controlled; high levels are a hallmark of diabetes mellitus.' },
+                    { term: 'HbA1c (Glycated Haemoglobin)', definition: 'A measure of the average blood glucose level over the preceding 2-3 months, used for diagnosing and monitoring diabetes.' },
+                    { term: 'Lipid Profile', definition: 'A panel of tests including total cholesterol, HDL cholesterol, LDL cholesterol, and triglycerides, used to assess cardiovascular risk.' },
+                    { term: 'Liver Function Tests (LFTs)', definition: 'A panel of tests including ALT, ALP, bilirubin, and albumin, used to assess liver health.' },
+                    { term: 'Troponin', definition: 'A protein complex involved in muscle contraction. Cardiac-specific forms (Troponin I or T) are highly sensitive and specific markers for myocardial infarction.' },
+                    { term: 'Urea', definition: 'A waste product of protein metabolism, produced by the liver and cleared by the kidneys. Used alongside creatinine to assess renal function.' }
+                ],
+                imm: [
+                    { term: 'ANCA (Anti-Neutrophil Cytoplasmic Antibody)', definition: 'Autoantibodies against antigens in the cytoplasm of neutrophils. c-ANCA targets PR3 and p-ANCA targets MPO, associated with systemic vasculitis.' },
+                    { term: 'Anti-CCP (Anti-Cyclic Citrullinated Peptide)', definition: 'An autoantibody that is highly specific for Rheumatoid Arthritis.' },
+                    { term: 'Anti-dsDNA (Anti-double-stranded DNA)', definition: 'An autoantibody highly specific for Systemic Lupus Erythematosus (SLE), often associated with lupus nephritis.' },
+                    { term: 'Anti-Nuclear Antibody (ANA)', definition: 'A screening test for autoantibodies that target contents of the cell nucleus. A positive result is common in many autoimmune diseases, but not specific.' },
+                    { term: 'Autoimmunity', definition: 'A condition where the body\'s immune system mistakenly attacks its own tissues.' },
+                    { term: 'Complement', definition: 'A system of plasma proteins that can be activated directly by pathogens or by antibodies, leading to a cascade that helps eliminate the pathogen. C3 and C4 are commonly measured components.' },
+                    { term: 'Immunofluorescence', definition: 'A laboratory technique using fluorescently-labelled antibodies to detect specific antigens or antibodies in a patient sample.' },
+                    { term: 'Immunoglobulins (IgG, IgA, IgM)', definition: 'Antibodies. IgG is the most abundant and provides long-term immunity. IgA is found in mucosal secretions. IgM is the first antibody produced in an immune response.' },
+                    { term: 'Rheumatoid Factor (RF)', definition: 'An autoantibody directed against the Fc portion of IgG. It is found in many patients with Rheumatoid Arthritis, but is not specific.' },
+                    { term: 'Serum Free Light Chains', definition: 'Immunoglobulin light chains (kappa and lambda) that are not bound to heavy chains. An abnormal ratio is a key marker for Multiple Myeloma and other plasma cell disorders.' },
+                    { term: 'Tissue Transglutaminase (tTG) Antibody', definition: 'An autoantibody, typically of the IgA class, that is highly sensitive and specific for Coeliac Disease.' }
+                ]
+            };
+            
+            let currentTab = 'haem';
+
+            function renderGlossary(terms) {
+                glossaryContainer.innerHTML = '';
+                if (!terms || terms.length === 0) {
+                    glossaryContainer.innerHTML = '<p class="text-gray-500">No terms found.</p>';
+                    return;
+                }
+                const grouped = terms.reduce((acc, term) => {
+                    const firstLetter = term.term[0].toUpperCase();
+                    if (!acc[firstLetter]) acc[firstLetter] = [];
+                    acc[firstLetter].push(term);
+                    return acc;
+                }, {});
+                for (const letter of Object.keys(grouped).sort()) {
+                    const letterHeader = document.createElement('h3');
+                    letterHeader.className = 'text-3xl font-bold nhs-text-dark-blue mt-8 mb-4 border-b-2 pb-2';
+                    letterHeader.textContent = letter;
+                    glossaryContainer.appendChild(letterHeader);
+                    grouped[letter].forEach(item => {
+                        const entry = document.createElement('div');
+                        entry.className = 'mb-4';
+                        entry.innerHTML = `<h4 class="text-xl font-semibold nhs-text-blue">${item.term}</h4><p class="text-gray-700">${item.definition}</p>`;
+                        glossaryContainer.appendChild(entry);
+                    });
+                }
+            }
+
+            function filterTerms() {
+                const query = searchInput.value.toLowerCase();
+                const currentGlossary = glossaries[currentTab] || [];
+                const filtered = currentGlossary.filter(item => item.term.toLowerCase().includes(query) || item.definition.toLowerCase().includes(query));
+                renderGlossary(filtered);
+            }
+            
+            function createAZFilter() {
+                azFilterContainer.innerHTML = ''; // Clear existing buttons
+                'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(letter => {
+                    const button = document.createElement('button');
+                    button.className = 'az-filter-btn px-3 py-1 text-sm font-bold bg-white border rounded hover:bg-gray-200';
+                    button.textContent = letter;
+                    button.addEventListener('click', () => {
+                        document.querySelectorAll('.az-filter-btn').forEach(btn => btn.classList.remove('active'));
+                        button.classList.add('active');
+                        const currentGlossary = glossaries[currentTab] || [];
+                        const filtered = currentGlossary.filter(item => item.term.toUpperCase().startsWith(letter));
+                        renderGlossary(filtered);
+                    });
+                    azFilterContainer.appendChild(button);
+                });
+            }
+            
+            function switchTab(tab) {
+                currentTab = tab;
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.tab === tab);
+                });
+                searchInput.value = '';
+                renderGlossary(glossaries[tab]);
+                createAZFilter();
+            }
+
+            // --- INITIALIZATION ---
+            tabsContainer.addEventListener('click', (e) => {
+                if (e.target.matches('.tab-btn')) {
+                    switchTab(e.target.dataset.tab);
+                }
+            });
+            searchInput.addEventListener('input', filterTerms);
+            
+            // Initial load
+            switchTab('haem');
+        });
+    </script>
+
+    <script src="js/component-loader.js"></script>
+</body>
+</html>
