@@ -11,8 +11,24 @@
         body { font-family: 'Inter', sans-serif; } 
         .nhs-text-blue { color: #005EB8; } 
         .nhs-dark-blue { color: #003087; }
-        .reason-btn { transition: all 0.2s; }
-        .reason-btn.active { background-color: #005EB8; color: white; transform: scale(1.05); }
+        .reason-btn { 
+            transition: all 0.2s ease-in-out; 
+            border: 2px solid transparent;
+        }
+        .reason-btn.active { 
+            background-color: #005EB8; 
+            color: white; 
+            transform: scale(1.05); 
+            box-shadow: 0 4px 14px 0 rgba(0, 94, 184, 0.39);
+        }
+        .reason-btn:hover {
+            transform: translateY(-2px);
+        }
+        #troubleshooter-display {
+            border-top: 2px solid #e5e7eb;
+            padding-top: 2rem;
+            margin-top: 2rem;
+        }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800">
@@ -20,31 +36,40 @@
     <div id="header-placeholder"></div>
 
     <main class="py-16">
-        <div class="container mx-auto px-6 max-w-4xl">
+        <div class="container mx-auto px-6 max-w-5xl">
             <a href="helpful_tools.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8">
                 <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Helpful Tools
             </a>
             <div class="text-center">
-                <h2 class="text-3xl font-bold nhs-text-dark-blue mb-4">Sample Rejection Troubleshooter</h2>
-                <p class="text-gray-600 mb-8">Select a rejection reason to see common causes and prevention tips.</p>
+                <h2 class="text-4xl font-bold nhs-text-dark-blue mb-4">Sample Rejection Troubleshooter</h2>
+                <p class="text-lg text-gray-600 mb-8">A practical guide to understanding and preventing common sample collection errors.</p>
             </div>
 
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <h3 class="text-lg font-semibold text-gray-700 mb-4">Select Rejection Reason:</h3>
+            <div class="bg-white p-8 rounded-xl shadow-lg">
+                <h3 class="text-xl font-semibold text-gray-800 mb-6 text-center">Select a Rejection Reason:</h3>
                 <div id="rejection-buttons" class="flex flex-wrap justify-center gap-4">
-                    </div>
+                    <!-- Buttons will be generated here -->
+                </div>
 
                 <div id="troubleshooter-display" class="mt-8 hidden">
-                    <h3 id="rejection-title" class="text-2xl font-bold nhs-dark-blue mb-4 border-b pb-2"></h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div>
-                            <h4 class="text-xl font-semibold text-gray-800 mb-2">Common Causes</h4>
-                            <ul id="causes-list" class="space-y-2 list-disc list-inside text-gray-700"></ul>
+                    <div class="flex items-center mb-6">
+                        <i id="rejection-icon" class="w-10 h-10 mr-4 nhs-text-blue"></i>
+                        <h3 id="rejection-title" class="text-3xl font-bold nhs-dark-blue"></h3>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <h4 class="text-xl font-semibold text-gray-800 mb-3 flex items-center"><i data-feather="x-circle" class="w-5 h-5 mr-2 text-red-600"></i>Common Causes</h4>
+                            <ul id="causes-list" class="space-y-2 list-disc list-inside text-gray-700 pl-2"></ul>
                         </div>
-                        <div>
-                            <h4 class="text-xl font-semibold text-gray-800 mb-2">Prevention Tips</h4>
-                            <ul id="prevention-list" class="space-y-2 list-disc list-inside text-gray-700"></ul>
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <h4 class="text-xl font-semibold text-gray-800 mb-3 flex items-center"><i data-feather="check-circle" class="w-5 h-5 mr-2 text-green-600"></i>Prevention Tips</h4>
+                            <ul id="prevention-list" class="space-y-2 list-disc list-inside text-gray-700 pl-2"></ul>
                         </div>
+                    </div>
+                     <div class="mt-8 bg-yellow-50 p-4 rounded-lg">
+                        <h4 class="text-xl font-semibold text-gray-800 mb-3 flex items-center"><i data-feather="alert-triangle" class="w-5 h-5 mr-2 text-yellow-600"></i>Why It Matters (Lab & Clinical Impact)</h4>
+                        <p id="impact-text" class="text-gray-700 pl-2"></p>
                     </div>
                 </div>
             </div>
@@ -58,29 +83,124 @@
             const buttonContainer = document.getElementById('rejection-buttons');
             const displayContainer = document.getElementById('troubleshooter-display');
             const titleEl = document.getElementById('rejection-title');
+            const iconEl = document.getElementById('rejection-icon');
             const causesListEl = document.getElementById('causes-list');
             const preventionListEl = document.getElementById('prevention-list');
+            const impactTextEl = document.getElementById('impact-text');
 
             const rejectionReasons = {
                 'haemolysed': {
                     title: 'Haemolysed Sample',
-                    causes: [ 'Difficult venepuncture / traumatic draw.', 'Using too fine a needle for the collection.', 'Forcing blood into the tube from a syringe.', 'Shaking the sample tube too vigorously instead of gently inverting.', 'Leaving a tourniquet on for too long.' ],
-                    prevention: [ 'Ensure a smooth venepuncture with a good flow.', 'Use an appropriate gauge needle for the vein.', 'Allow vacuum tubes to fill automatically.', 'Gently invert tubes 5-10 times to mix; do not shake.', 'Release tourniquet as soon as blood flow is established.' ]
+                    icon: 'droplet',
+                    causes: [
+                        'Difficult venepuncture (e.g., probing for a vein, slow draw).',
+                        'Using too fine a needle (<23g) for the vein, causing excessive shear stress on red cells.',
+                        'Forcefully expelling blood from a syringe into a vacuum tube.',
+                        'Vigorous shaking of the sample tube instead of gentle inversion.',
+                        'Leaving a tourniquet on for an extended period (>1 minute), causing venous stasis.',
+                        'Contamination with water, alcohol, or other chemicals from the skin or equipment.',
+                        'Extreme temperatures during transport (freezing or overheating).',
+                        'Patient conditions causing fragile red cells (e.g., some haemolytic anaemias).'
+                    ],
+                    prevention: [
+                        'Ensure a smooth, clean venepuncture with a good blood flow. Anchor the vein well.',
+                        'Use an appropriate gauge needle (21g is standard for adults).',
+                        'If using a syringe, pull the plunger back slowly and steadily.',
+                        'When transferring from a syringe, remove the needle and the tube cap, and allow blood to run gently down the side of the tube.',
+                        'Gently invert tubes the required number of times (e.g., 8-10 for EDTA); do NOT shake.',
+                        'Release the tourniquet as soon as blood flow is established.',
+                        'Ensure the venepuncture site is completely dry after cleaning.',
+                        'Transport samples at ambient temperature unless otherwise specified.'
+                    ],
+                    impact: 'Haemolysis releases intracellular components into the plasma/serum. This falsely elevates results for Potassium, LDH, AST, and Magnesium, potentially leading to incorrect diagnosis and inappropriate treatment. It can also interfere with many other chemistry and immunoassay tests, rendering the sample useless.'
                 },
                 'clotted': {
                     title: 'Clotted Sample',
-                    causes: [ 'Insufficient or delayed mixing of anticoagulant tubes (e.g., EDTA, Citrate).', 'Slow blood collection, allowing clotting to begin.', 'Incorrect order of draw (drawing an SST tube before a citrate tube).', 'Patient has a high platelet count or is hypercoagulable.' ],
-                    prevention: [ 'Gently invert anticoagulant tubes 5-10 times immediately after collection.', 'Ensure a swift collection once the vein is punctured.', 'Follow the correct order of draw.', 'Be aware of patient status and mix thoroughly.' ]
+                    icon: 'grid',
+                    causes: [
+                        'Insufficient or delayed mixing of anticoagulant tubes (e.g., EDTA, Citrate).',
+                        'Slow blood collection, allowing the clotting cascade to begin before mixing.',
+                        'Incorrect order of draw (e.g., drawing a serum tube before a citrate tube can cause additive carryover).',
+                        'Patient has a very high platelet count or is hypercoagulable.',
+                        'Difficult draw causing tissue factor activation in the sample.'
+                    ],
+                    prevention: [
+                        'Gently invert anticoagulant tubes 8-10 times immediately after collection. This is the single most important step.',
+                        'Ensure a swift, clean collection once the vein is punctured.',
+                        'Follow the correct order of draw: Blood cultures, Citrate (blue), Serum (gold/red), Heparin (green), EDTA (purple), Fluoride (grey).',
+                        'Be aware of patient status and ensure thorough mixing for those with high platelet counts.',
+                        'If the draw is slow, be extra vigilant with immediate mixing.'
+                    ],
+                    impact: 'Clots consume platelets and clotting factors, making FBC and coagulation results completely inaccurate and unreliable. Small, unnoticed clots can block the probes on laboratory analysers, causing instrument downtime and delaying other patient results.'
                 },
                 'insufficient': {
                     title: 'Insufficient Sample (QNS)',
-                    causes: [ 'Vein collapsing during the draw.', 'Losing the vein part-way through collection.', 'Patient has difficult venous access.', 'Incorrect tube chosen for the volume of blood required.' ],
-                    prevention: [ 'Ensure correct tube selection before starting.', 'Use appropriate techniques for difficult access (e.g., butterfly needle).', 'For citrate tubes, ensure the tube is filled to the mark to maintain the correct blood-to-anticoagulant ratio.' ]
+                    icon: 'minus-circle',
+                    causes: [
+                        'Vein collapsing during the draw.',
+                        'Losing the position of the needle in the vein part-way through collection.',
+                        'Patient has difficult venous access (e.g., small, fragile, or deep veins).',
+                        'Incorrect tube chosen for the tests requested (e.g., needing to fill multiple tubes from one draw).',
+                        'Loss of vacuum in the collection tube.'
+                    ],
+                    prevention: [
+                        'Plan the collection: know what tubes are needed and have them ready.',
+                        'Use appropriate techniques for difficult access (e.g., a butterfly needle may provide better control).',
+                        'Anchor the vein securely to prevent it from rolling.',
+                        'For citrate (blue top) tubes, it is CRITICAL that the tube is filled to the mark to maintain the correct 9:1 blood-to-anticoagulant ratio. An underfilled tube will be rejected for all coagulation testing.'
+                    ],
+                    impact: 'An insufficient sample means not all requested tests can be performed. For coagulation tubes, the wrong blood-to-anticoagulant ratio makes results invalid. For all samples, it necessitates a redraw, causing delays in diagnosis and treatment, and a poor experience for the patient.'
                 },
                 'mislabeled': {
                     title: 'Mislabeled / Unlabeled Sample',
-                    causes: [ 'Sample was not labelled at the patient\'s bedside.', 'Incorrect patient details used.', 'Label is illegible or damaged.', 'Discrepancy between the sample label and the request form.' ],
-                    prevention: [ 'ALWAYS label the tube immediately after collection at the patient\'s side.', 'Confirm patient identity using at least two unique identifiers.', 'Ensure handwriting is clear and the label is securely attached.', 'Cross-reference all details with the request form before sending.' ]
+                    icon: 'user-x',
+                    causes: [
+                        'Sample was not labelled at the patient\'s bedside immediately after collection.',
+                        'Pre-labelling tubes before the draw.',
+                        'Incorrect patient details used (e.g., from another patient\'s notes).',
+                        'Label is illegible, damaged, or has incomplete information.',
+                        'Discrepancy between the sample label and the request form details.'
+                    ],
+                    prevention: [
+                        'The GOLDEN RULE: ALWAYS label the tube immediately after collection, at the patient\'s side.',
+                        'Confirm patient identity using at least two unique identifiers (e.g., full name and date of birth) verbally and by checking their wristband.',
+                        'Never pre-label tubes away from the patient.',
+                        'Ensure handwriting is clear and the label is securely attached without obscuring the sample window.',
+                        'Cross-reference all details with the request form before sending the sample to the lab.'
+                    ],
+                    impact: 'This is the most serious type of pre-analytical error. A mislabeled sample could lead to a catastrophic outcome for a patient, such as receiving the wrong blood type in a transfusion. The laboratory has a zero-tolerance policy for mislabeled or unlabeled samples; they will always be rejected to ensure patient safety.'
+                },
+                'wrong_tube': {
+                    title: 'Wrong Tube Type',
+                    icon: 'refresh-cw',
+                    causes: [
+                        'Lack of familiarity with the tests required and the corresponding tube colours.',
+                        'Accidentally picking up the wrong tube from the trolley.',
+                        'Not checking the departmental handbook or test directory before collection.'
+                    ],
+                    prevention: [
+                        'Always confirm the correct tube type for the requested tests before venepuncture. Use a guide if unsure.',
+                        'Example: Chemistry (U&Es, LFTs) needs a serum (gold top) or heparin (green top) tube. Sending an EDTA (purple top) is wrong because the EDTA chelates calcium, making the calcium result falsely zero and the potassium result falsely very high.',
+                        'Example: Coagulation tests (PT, APTT) MUST be in a citrate (light blue top) tube.',
+                        'Organise your collection trolley to keep different tube types clearly separated.'
+                    ],
+                    impact: 'The additives in each tube are specific for the tests being performed. Using the wrong tube will lead to completely erroneous results or will make the analysis impossible. The sample will always be rejected, requiring a patient redraw.'
+                },
+                'delay_transit': {
+                    title: 'Delay in Transit / Old Sample',
+                    icon: 'clock',
+                    causes: [
+                        'Sample not sent to the laboratory promptly after collection.',
+                        'Sample left on a ward trolley or in a collection point for an extended period.',
+                        'Transport delays from off-site locations.',
+                        'Forgetting to arrange for a sample to be sent to the lab.'
+                    ],
+                    prevention: [
+                        'Send all samples to the laboratory as soon as possible after collection via the pneumatic tube system or portering service.',
+                        'Have a clear process for ensuring samples collected are dispatched promptly.',
+                        'For specific time-sensitive tests (e.g., Ammonia, ACTH), the lab must be pre-alerted and the sample sent immediately on ice.'
+                    ],
+                    impact: 'Many analytes are unstable. Delays can cause falsely high potassium levels (as it leaks from red cells), falsely low glucose levels (as it is consumed by cells), and degradation of clotting factors, making results unreliable. The sample will be rejected if it is too old for the requested tests.'
                 }
             };
 
@@ -89,26 +209,30 @@
                 if (!reason) return;
 
                 titleEl.textContent = reason.title;
+                iconEl.innerHTML = feather.icons[reason.icon].toSvg({ class: 'w-10 h-10 nhs-text-blue'});
                 causesListEl.innerHTML = reason.causes.map(item => `<li>${item}</li>`).join('');
                 preventionListEl.innerHTML = reason.prevention.map(item => `<li>${item}</li>`).join('');
+                impactTextEl.textContent = reason.impact;
                 
                 displayContainer.classList.remove('hidden');
                 
                 document.querySelectorAll('.reason-btn').forEach(btn => {
                     btn.classList.toggle('active', btn.dataset.reason === reasonKey);
                 });
+                feather.replace(); // Re-run feather to render new icons
             }
 
             Object.keys(rejectionReasons).forEach(key => {
                 const reason = rejectionReasons[key];
                 const button = document.createElement('button');
-                button.className = 'reason-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-6 rounded-lg';
+                button.className = 'reason-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-3 px-6 rounded-lg shadow-sm';
                 button.textContent = reason.title;
                 button.dataset.reason = key;
                 button.addEventListener('click', () => displayInfo(key));
                 buttonContainer.appendChild(button);
             });
-
+            
+            feather.replace(); // Initial icon render
         });
     </script>
     <script src="js/component-loader.js"></script>
