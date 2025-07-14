@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interpretive Comment Guide - SGC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <style> 
+        body { font-family: 'Inter', sans-serif; } 
+        .nhs-text-blue { color: #005EB8; } 
+        .nhs-dark-blue { color: #003087; }
+        .result-card h4 { color: #003087; }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="header-placeholder"></div>
+
+    <main class="py-16">
+        <div class="container mx-auto px-6 max-w-3xl">
+            <a href="helpful_tools.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8">
+                <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Helpful Tools
+            </a>
+            <div class="text-center">
+                <h2 class="text-3xl font-bold nhs-text-dark-blue mb-4">Interpretive Comment Guide</h2>
+                <p class="text-gray-600 mb-8">Search for a term to understand its clinical significance and appropriate next steps.</p>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <label for="comment-search" class="block text-lg font-semibold text-gray-700 mb-2">Search for a Comment or Finding:</label>
+                <input type="text" id="comment-search" placeholder="e.g., Leucoerythroblastic, Atypical Lymphocytes, Rouleaux..." class="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                
+                <div id="results-container" class="mt-6 space-y-4">
+                     <p class="text-gray-500">Start typing to search for a comment.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('comment-search');
+            const resultsContainer = document.getElementById('results-container');
+
+            const comments = [
+                {
+                    term: 'Leucoerythroblastic Picture',
+                    meaning: 'The presence of immature red cells (NRBCs), immature white cells (e.g., myelocytes, metamyelocytes), and teardrop-shaped red cells in the peripheral blood.',
+                    causes: 'Commonly caused by bone marrow infiltration (e.g., by metastatic cancer or fibrosis) or severe bone marrow stress.',
+                    nextSteps: 'Requires urgent clinical correlation and review of previous haematology. A bone marrow biopsy is often indicated.'
+                },
+                {
+                    term: 'Atypical Lymphocytes Seen',
+                    meaning: 'Large, reactive lymphocytes are present, which are responding to an infection.',
+                    causes: 'Most commonly caused by viral infections, classically infectious mononucleosis (Glandular Fever) due to EBV. Also seen in CMV, toxoplasmosis, and other viral illnesses.',
+                    nextSteps: 'Suggest Monospot test (if appropriate for age/history) and viral serology. Clinical correlation is key.'
+                },
+                {
+                    term: 'Rouleaux Formation',
+                    meaning: 'Red blood cells are arranged in stacks, like coins.',
+                    causes: 'Caused by high levels of plasma proteins, particularly immunoglobulins or fibrinogen. Strongly associated with Multiple Myeloma, but also seen in chronic inflammation and infection.',
+                    nextSteps: 'Recommend serum protein electrophoresis and ESR to investigate for a paraprotein. Check for signs of inflammation.'
+                },
+                {
+                    term: 'Pancytopenia',
+                    meaning: 'A reduction in all major blood cell lineages: red cells (anaemia), white cells (leukopenia), and platelets (thrombocytopenia).',
+                    causes: 'A serious finding with a wide range of causes, including bone marrow failure (e.g., Aplastic Anaemia), haematological malignancy (e.g., Acute Leukaemia), severe B12/Folate deficiency, or hypersplenism.',
+                    nextSteps: 'Urgent referral to haematology for further investigation, including bone marrow aspirate and biopsy.'
+                },
+                {
+                    term: 'Schistocytes / Red Cell Fragments',
+                    meaning: 'Fragmented red blood cells are present, indicating mechanical damage within the circulation (microangiopathic haemolytic anaemia).',
+                    causes: 'A critical finding. Causes include TTP, HUS, DIC, malignant hypertension, and faulty mechanical heart valves.',
+                    nextSteps: 'This is a medical emergency. Immediate clinical correlation is required. Suggest urgent coagulation screen, renal function, and LDH.'
+                },
+                {
+                    term: 'Left Shift',
+                    meaning: 'An increase in the number of immature granulocytes (band forms, metamyelocytes, myelocytes) in the peripheral blood.',
+                    causes: 'Most commonly a reactive response to severe bacterial infection. Can also be a feature of Chronic Myeloid Leukaemia (CML), but this is usually associated with a much higher WBC and basophilia.',
+                    nextSteps: 'Correlate with clinical signs of infection and inflammatory markers like CRP. If persistent and unexplained, further investigation for a myeloproliferative disorder may be needed.'
+                }
+            ];
+
+            function renderResults() {
+                const query = searchInput.value.toLowerCase();
+                if (!query) {
+                    resultsContainer.innerHTML = '<p class="text-gray-500">Start typing to search for a comment.</p>';
+                    return;
+                }
+
+                const filtered = comments.filter(c => c.term.toLowerCase().includes(query) || c.meaning.toLowerCase().includes(query) || c.causes.toLowerCase().includes(query));
+                
+                if (filtered.length === 0) {
+                    resultsContainer.innerHTML = '<p class="text-gray-500">No matching comments found.</p>';
+                    return;
+                }
+
+                resultsContainer.innerHTML = '';
+                filtered.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'result-card p-4 border rounded-lg bg-white shadow';
+                    card.innerHTML = `
+                        <h3 class="text-xl font-bold text-gray-800">${item.term}</h3>
+                        <div class="mt-4">
+                            <h4 class="font-semibold">What it means:</h4>
+                            <p class="text-gray-700">${item.meaning}</p>
+                        </div>
+                        <div class="mt-4">
+                            <h4 class="font-semibold">Common Causes:</h4>
+                            <p class="text-gray-700">${item.causes}</p>
+                        </div>
+                        <div class="mt-4">
+                            <h4 class="font-semibold">Next Steps / Correlation:</h4>
+                            <p class="text-gray-700">${item.nextSteps}</p>
+                        </div>
+                    `;
+                    resultsContainer.appendChild(card);
+                });
+            }
+            
+            searchInput.addEventListener('input', renderResults);
+        });
+    </script>
+    <script src="js/component-loader.js"></script>
+</body>
+</html>
