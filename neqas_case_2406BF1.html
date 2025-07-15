@@ -20,10 +20,14 @@
         .feature-label:has(.feature-checkbox:disabled) { cursor: not-allowed; color: #6b7280; }
         .highlight-correct { background-color: #dcfce7; color: #166534; }
         /* Modal Styles */
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.8); align-items: center; justify-content: center; }
-        .modal-content { margin: auto; display: block; max-width: 90%; max-height: 90%; transition: transform 0.2s ease; cursor: zoom-in; }
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.85); align-items: center; justify-content: center; }
+        .modal-content { margin: auto; display: block; max-width: 85%; max-height: 85%; transition: transform 0.2s ease; cursor: zoom-in; }
         .modal-content.zoomed { transform: scale(2); cursor: zoom-out; }
         .modal-close { position: absolute; top: 15px; right: 35px; color: #f1f1f1; font-size: 40px; font-weight: bold; transition: 0.3s; cursor: pointer; }
+        .modal-nav { cursor: pointer; position: absolute; top: 50%; width: auto; padding: 16px; margin-top: -22px; color: white; font-weight: bold; font-size: 20px; transition: 0.3s ease; user-select: none; background-color: rgba(0,0,0,0.3); }
+        .modal-nav:hover { background-color: rgba(0,0,0,0.8); }
+        .modal-prev { left: 0; border-radius: 0 3px 3px 0; }
+        .modal-next { right: 0; border-radius: 3px 0 0 3px; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -67,29 +71,44 @@
                     <div class="bg-white p-6 rounded-lg shadow-md">
                         <h3 class="text-2xl font-semibold nhs-text-dark-blue border-b pb-2 mb-4">Case Information</h3>
                         <div id="initial-info">
-                            <p><strong>Patient:</strong> 37-year-old female.</p>
+                            <p><strong>Patient:</strong> 24-year-old male.</p>
                             <table class="w-full results-table mt-2">
-                                <tr><td>Hb</td><td class="font-mono text-right">51 g/L</td></tr>
-                                <tr><td>WBC</td><td class="font-mono text-right">41.2 x10⁹/L</td></tr>
-                                <tr><td>Platelets</td><td class="font-mono text-right">91 x10⁹/L</td></tr>
+                                <tr><td>Hb</td><td class="font-mono text-right">85 g/L</td></tr>
+                                <tr><td>WBC</td><td class="font-mono text-right">18.1 x10⁹/L</td></tr>
+                                <tr><td>Platelets</td><td class="font-mono text-right">357 x10⁹/L</td></tr>
                             </table>
                         </div>
                         <div id="full-case-details" class="hidden mt-4 pt-4 border-t">
                              <div class="space-y-4">
                                 <h4 class="font-bold">Full Blood Count</h4>
                                 <table class="w-full results-table">
-                                    <tr><td>MCV</td><td class="font-mono text-right">82.6 fL</td></tr>
-                                    <tr><td>Hct</td><td class="font-mono text-right">0.147 L/L</td></tr>
-                                    <tr><td>NRBCs</td><td class="font-mono text-right">0.5 x10⁹/L</td></tr>
+                                    <tr><td>RBC</td><td class="font-mono text-right">2.73 x10¹²/L</td></tr>
+                                    <tr><td>Hct</td><td class="font-mono text-right">0.241 L/L</td></tr>
+                                    <tr><td>MCV</td><td class="font-mono text-right">88.3 fL</td></tr>
+                                    <tr><td>MCH</td><td class="font-mono text-right">31.1 pg</td></tr>
+                                    <tr><td>MCHC</td><td class="font-mono text-right">353 g/L</td></tr>
+                                    <tr><td>RDW</td><td class="font-mono text-right">24.4 %</td></tr>
+                                    <tr><td>Neutrophils</td><td class="font-mono text-right">9.1 x10⁹/L</td></tr>
+                                    <tr><td>Lymphocytes</td><td class="font-mono text-right">3.5 x10⁹/L</td></tr>
+                                    <tr><td>Monocytes</td><td class="font-mono text-right">1.7 x10⁹/L</td></tr>
+                                    <tr><td>Eosinophils</td><td class="font-mono text-right">3.7 x10⁹/L</td></tr>
+                                    <tr><td>Basophils</td><td class="font-mono text-right">0.1 x10⁹/L</td></tr>
+                                    <tr><td>NRBCs</td><td class="font-mono text-right">0.22 x10⁹/L</td></tr>
                                 </table>
-                                <h4 class="font-bold">Coagulation</h4>
+                                <h4 class="font-bold">Biochemistry</h4>
                                 <table class="w-full results-table">
-                                    <tr><td>PT</td><td class="font-mono text-right">38.5 secs</td></tr>
-                                    <tr><td>APTT</td><td class="font-mono text-right">37.7 secs</td></tr>
-                                    <tr><td>Fibrinogen</td><td class="font-mono text-right">0.41 g/L</td></tr>
+                                    <tr><td>Bilirubin</td><td class="font-mono text-right">52 µmol/L</td></tr>
+                                    <tr><td>Adjusted Calcium</td><td class="font-mono text-right">2.34 mmol/L</td></tr>
+                                    <tr><td>Creatinine</td><td class="font-mono text-right">43 µmol/L</td></tr>
                                 </table>
-                                <h4 class="font-bold">Cytogenetics</h4>
-                                <p>PML::RARA [t(15;17)] fusion POSITIVE.</p>
+                                <h4 class="font-bold">HPLC Results</h4>
+                                <table class="w-full results-table">
+                                    <tr><td>Hb F</td><td class="font-mono text-right">6.5%</td></tr>
+                                    <tr><td>Hb A2</td><td class="font-mono text-right">4.1%</td></tr>
+                                    <tr><td>Hb S</td><td class="font-mono text-right">85.2%</td></tr>
+                                </table>
+                                <p class="text-sm">Note: No haemoglobin A present.</p>
+                                <img src="morphology/2403BF1/HPLC.jpg" alt="HPLC trace for case 2406BF1" class="rounded-md w-full h-auto mt-2 shadow">
                             </div>
                         </div>
                     </div>
@@ -98,7 +117,7 @@
                         <div class="mb-6">
                             <h4 class="font-semibold text-lg">Red Cell Picture</h4>
                             <div id="red-cell-container" class="cursor-pointer">
-                                <img id="red-cell-img" src="morphologyimages/2403BF1/red cells.JPG" alt="Overall red cell picture for case" class="rounded-md w-full h-auto mt-2 shadow">
+                                <img id="red-cell-img" src="morphology/2403BF1/red cells.JPG" alt="Overall red cell picture for case" class="rounded-md w-full h-auto mt-2 shadow">
                             </div>
                         </div>
                         <div>
@@ -134,6 +153,15 @@
                             </div>
                         </div>
 
+                        <div class="mb-6">
+                            <h4 class="text-lg font-bold">Expert Selected Morphology</h4>
+                            <div id="expert-images-container" class="grid grid-cols-3 gap-2 mt-2">
+                                 <img src="morphology/2403BF1/expert1.jpg" alt="Expert selected image 1" class="expert-img rounded-md w-full h-auto cursor-pointer">
+                                 <img src="morphology/2403BF1/expert2.jpg" alt="Expert selected image 2" class="expert-img rounded-md w-full h-auto cursor-pointer">
+                                 <img src="morphology/2403BF1/expert3.jpg" alt="Expert selected image 3" class="expert-img rounded-md w-full h-auto cursor-pointer">
+                            </div>
+                        </div>
+
                         <div>
                             <h4 class="text-lg font-bold">Top 10 Peer-Reported Features</h4>
                             <table class="w-full text-left mt-2 text-sm">
@@ -151,6 +179,8 @@
 
     <div id="image-modal" class="modal">
         <span class="modal-close" id="modal-close-btn">&times;</span>
+        <a class="modal-prev modal-nav" id="modal-prev-btn">&#10094;</a>
+        <a class="modal-next modal-nav" id="modal-next-btn">&#10095;</a>
         <img class="modal-content" id="modal-img">
     </div>
 
@@ -176,33 +206,28 @@
 
             // --- Page Data for Case ---
             const imageFilenames = ["LY_338592.jpg","LY_338593.jpg","LY_338594.jpg","LY_338595.jpg","LY_338597.jpg","LY_338615.jpg","LY_338622.jpg","LY_338625.jpg","LY_338631.jpg","LY_338647.jpg","LY_338648.jpg","LY_338663.jpg","LY_338670.jpg","LY_338672.jpg","LY_338673.jpg","LY_338686.jpg","LY_338689.jpg","LY_338690.jpg","LY_338701.jpg","LY_338707.jpg","LY_338720.jpg","LY_338728.jpg","LY_338732.jpg","LY_338733.jpg","LY_338741.jpg","LY_338742.jpg","LY_338747.jpg","LY_338748.jpg","LY_338749.jpg","LY_338758.jpg","LY_338770.jpg","LY_338771.jpg","LY_338783.jpg","LY_338785.jpg","LY_338795.jpg","LY_338796.jpg","LY_338799.jpg","LY_338800.jpg","MMY_195925.jpg","MMY_338667.jpg","MO_195758.jpg","MO_195768.jpg","MO_195812.jpg","MO_195895.jpg","MO_195915.jpg","MO_195934.jpg","MO_195945.jpg","MO_195946.jpg","MO_338605.jpg","MO_338611.jpg","MO_338612.jpg","MO_338634.jpg","MO_338646.jpg","MO_338649.jpg","MO_338652.jpg","MO_338679.jpg","MO_338685.jpg","MO_338729.jpg","MO_338777.jpg","MO_338779.jpg","MO_338803.jpg","MY_195769.jpg","SNE_195750.jpg","SNE_195751.jpg","SNE_195754.jpg","SNE_195755.jpg","SNE_195756.jpg","SNE_195760.jpg","SNE_195763.jpg","SNE_195764.jpg","SNE_195767.jpg","SNE_195771.jpg","SNE_195774.jpg","SNE_195776.jpg","SNE_195777.jpg","SNE_195778.jpg","SNE_195784.jpg","SNE_195786.jpg","SNE_195791.jpg","SNE_195793.jpg","SNE_195794.jpg","SNE_195795.jpg","SNE_195796.jpg","SNE_195797.jpg","SNE_195800.jpg","SNE_195804.jpg","SNE_195805.jpg","SNE_195806.jpg","SNE_195807.jpg","SNE_195809.jpg","SNE_195816.jpg","SNE_195817.jpg","SNE_195820.jpg","SNE_195822.jpg","SNE_195826.jpg","SNE_195830.jpg","SNE_195834.jpg","SNE_195837.jpg","SNE_195839.jpg","SNE_195842.jpg","SNE_195844.jpg","SNE_195847.jpg","SNE_195852.jpg","SNE_195854.jpg","SNE_195855.jpg","SNE_195857.jpg","SNE_195858.jpg","SNE_195860.jpg","SNE_195862.jpg","SNE_195868.jpg","SNE_195870.jpg","SNE_195871.jpg","SNE_195872.jpg","SNE_195874.jpg","SNE_195875.jpg","SNE_195876.jpg","SNE_195881.jpg","SNE_195882.jpg","SNE_195884.jpg","SNE_195885.jpg","SNE_195887.jpg","SNE_195889.jpg","SNE_195890.jpg","SNE_195892.jpg","SNE_195897.jpg","SNE_195898.jpg","SNE_195900.jpg","SNE_195902.jpg","SNE_195904.jpg","SNE_195907.jpg","SNE_195912.jpg","SNE_195913.jpg","SNE_195916.jpg","SNE_195918.jpg","SNE_195919.jpg","SNE_195930.jpg","SNE_195932.jpg","SNE_195933.jpg","SNE_195936.jpg","SNE_195939.jpg","SNE_195942.jpg","SNE_195943.jpg","SNE_195944.jpg","SNE_195947.jpg","SNE_195951.jpg","SNE_195952.jpg","SNE_195955.jpg","SNE_195959.jpg","SNE_338598.jpg","SNE_338599.jpg","SNE_338601.jpg","SNE_338602.jpg","SNE_338606.jpg","SNE_338607.jpg","SNE_338609.jpg","SNE_338613.jpg","SNE_338614.jpg","SNE_338617.jpg","SNE_338618.jpg","SNE_338619.jpg","SNE_338624.jpg","SNE_338626.jpg","SNE_338627.jpg","SNE_338632.jpg","SNE_338633.jpg","SNE_338636.jpg","SNE_338637.jpg","SNE_338640.jpg","SNE_338644.jpg","SNE_338645.jpg","SNE_338650.jpg","SNE_338651.jpg","SNE_338653.jpg","SNE_338656.jpg","SNE_338657.jpg","SNE_338658.jpg","SNE_338659.jpg","SNE_338660.jpg","SNE_338661.jpg","SNE_338664.jpg","SNE_338666.jpg","SNE_338669.jpg","SNE_338671.jpg","SNE_338676.jpg","SNE_338677.jpg","SNE_338681.jpg","SNE_338683.jpg","SNE_338684.jpg","SNE_338688.jpg","SNE_338693.jpg","SNE_338694.jpg","SNE_338696.jpg","SNE_338698.jpg","SNE_338700.jpg","SNE_338703.jpg","SNE_338705.jpg","SNE_338706.jpg","SNE_338708.jpg","SNE_338709.jpg","SNE_338713.jpg","SNE_338715.jpg","SNE_338716.jpg","SNE_338717.jpg","SNE_338718.jpg","SNE_338721.jpg","SNE_338724.jpg","SNE_338725.jpg","SNE_338730.jpg","SNE_338731.jpg","SNE_338735.jpg","SNE_338739.jpg","SNE_338746.jpg","SNE_338750.jpg","SNE_338751.jpg","SNE_338752.jpg","SNE_338754.jpg","SNE_338757.jpg","SNE_338759.jpg","SNE_338760.jpg","SNE_338761.jpg","SNE_338762.jpg","SNE_338763.jpg","SNE_338765.jpg","SNE_338766.jpg","SNE_338767.jpg","SNE_338768.jpg","SNE_338773.jpg","SNE_338774.jpg","SNE_338778.jpg","SNE_338780.jpg","SNE_338781.jpg","SNE_338784.jpg","SNE_338787.jpg","SNE_338791.jpg","SNE_338793.jpg","SNE_338794.jpg","SNE_338798.jpg","SNE_338801.jpg","UI_338635.jpg","UI_338704.jpg","UI_338711.jpg","UI_338712.jpg","UI_338722.jpg","UI_338734.jpg","UI_338764.jpg","UI_338792.jpg","VLY_195792.jpg","VLY_195843.jpg","VLY_195863.jpg","VLY_195896.jpg","VLY_195906.jpg","VLY_195938.jpg","VLY_195940.jpg"];
+            const expertComment = "It was fairly clear from the film that this was some form of sickle cell disease, either sickle cell anaemia (SS) or a compound heterozygous state. There was no hypochromia or microcytosis so S/β thalassaemia was quite unlikely. Sickle cell disease (or drepanocytosis) was suggested by 225 participants, sickle cell anaemia by 102, sickle cell/haemoglobin C by 35, either sickle cell anaemia or sickle cell/haemoglobin C by 35 and sickle cell/thalassaemia by 15. Sickle cells were very infrequent but boat-shaped cells were present and their presence should always lead to a careful search for sickle cells. Alarmingly, seven participants actually reported sickle cells but nevertheless suggested a diagnosis of sickle trait; this is a serious error. It is very reasonable to point out that the features of hyposplenism are present but it is not necessary to postulate previous splenectomy since the hyposplenism of sickle cell disease is usually due to recurrent infarction of the spleen leading to fibrosis and atrophy. Note that the increase in haemoglobin A2 is not due to β thalassaemia; the increase is partly a true increase, seen in sickle cell anaemia, and partly post-translationally modified S. A number of participants did not appreciate the possibility of sickle cell disease and reported a variety of conditions including myeloproliferative neoplasms. In addition to the features of sickle cell disease, eosinophilia was present without any clues as to the likely cause. It should be reported and investigation is clearly indicated. The morphology of the mature eosinophils does not help to distinguish reactive from neoplastic causes. We do not have information on the cause in this patient. It is useful to reflect on the terms we are using, which differ between countries. Sickle cell anaemia is unambiguous and means homozygosity for haemoglobin S (SS). Sickle cell disease is ambiguous, sometimes used as a synonym for sickle cell anaemia and sometimes as a generic term encompassing also the compound heterozygous states that lead to similar clinicopathological feature; if using this term in a laboratory report or in a publication it is important to make clear what you mean by it.";
+            const topPeerFeatures = [{"feature":"Eosinophilia","count":435},{"feature":"Sickle Cells","count":428},{"feature":"Nucleated RBCs","count":368},{"feature":"Target Cells","count":293},{"feature":"Polychromatic Cells","count":270},{"feature":"Howell-Jolly Bodies","count":237},{"feature":"Boat-shaped Cells","count":98},{"feature":"Platelet Clumps","count":89},{"feature":"Poikilocytes","count":57},{"feature":"Hypochromic Cells","count":53}];
+            const morphologyFeatures = {"Red Cell Features":["Microcytes","Hypochromic Cells","Polychromatic Cells","Mixed Cell Population (Dimorphic)","Poikilocytes","Target Cells","Echinocytes/Crenated Cells","Fragments/Schistocytes","Sickle Cells","Spherocytes","Rouleaux","Basophilic Stippling","Nucleated RBCs","Acanthocytes","Tear Drop Poikilocytes","Keratocytes/Bite Cells","Boat-shaped Cells","Howell-Jolly Bodies"],"White Cell Features":["Eosinophilia","Band Form Neutrophils","Toxic Granulation","Hypogranular/Agranular Cytoplasm (Neutrophils)","Blast Cells","Promyelocytes","Prolymphocytes","Myelocytes","Smear/Smudge Cells","Atypical/Suspect Reactive Lymphocytes","Reactive/Plasmacytoid Lymphocytes","Cleft Nuclei","Plasma Cells","Auer Rods","Basophilia","Neutropenia","Lymphocytosis","Lymphopenia","Abnormal/Suspect Neoplastic Lymphocytes","Large Granular Lymphocytes","Left Shift","Pseudo-Pelger Cells","Promonocytes"],"Platelet Features":["Thrombocytosis","Thrombocytopenia","Large/Giant Platelets","Platelet Anisocytosis","Platelet Clumps"]};
             
-            const expertComment = "This case indicates how difficult it can be to think of the possibility of the correct diagnosis in the absence of clinical history and ethnic origin. The diagnoses offered by participants were: haemoglobinopathy and/or thalassaemia 228 participants including 62 who specifically mentioned haemoglobin H disease; haemoglobinopathy and/or iron deficiency 92 participants; iron deficiency, possibly complicated by something else 49 participants. If we look at both the Hb we have been given and the blood film, the degree of morphological abnormality is too great for straightforward iron deficiency. This brings us to haemoglobin H disease. My congratulations to the 62 participants who suggested this in their differential diagnosis. The polychromasia is also something expected in haemoglobin H disease, which has a haemolytic element to the pathogenesis of the anaemia.";
-
-            const topPeerFeatures = [
-                { feature: "Eosinophilia", count: 435 },
-                { feature: "Sickle Cells", count: 428 },
-                { feature: "Nucleated RBCs", count: 368 },
-                { feature: "Target Cells", count: 293 },
-                { feature: "Polychromatic Cells", count: 270 },
-                { feature: "Howell-Jolly Bodies", count: 237 },
-                { feature: "Boat-shaped Cells", count: 98 },
-                { feature: "Platelet Clumps", count: 89 },
-                { feature: "Poikilocytes", count: 57 },
-                { feature: "Hypochromic Cells", count: 53 }
-            ];
-
-            const morphologyFeatures = {
-                "Red Cell Features": ["Microcytes", "Hypochromic Cells", "Polychromatic Cells", "Mixed Cell Population (Dimorphic)", "Poikilocytes", "Target Cells", "Echinocytes/Crenated Cells", "Fragments/Schistocytes", "Sickle Cells", "Spherocytes", "Rouleaux", "Basophilic Stippling", "Nucleated RBCs", "Acanthocytes", "Tear Drop Poikilocytes", "Keratocytes/Bite Cells", "Boat-shaped Cells", "Howell-Jolly Bodies"],
-                "White Cell Features": ["Eosinophilia", "Band Form Neutrophils", "Toxic Granulation", "Hypogranular/Agranular Cytoplasm (Neutrophils)", "Blast Cells", "Promyelocytes", "Prolymphocytes", "Myelocytes", "Smear/Smudge Cells", "Atypical/Suspect Reactive Lymphocytes", "Reactive/Plasmacytoid Lymphocytes", "Cleft Nuclei", "Plasma Cells", "Auer Rods", "Basophilia", "Neutropenia", "Lymphocytosis", "Lymphopenia", "Abnormal/Suspect Neoplastic Lymphocytes", "Large Granular Lymphocytes", "Left Shift", "Pseudo-Pelger Cells", "Promonocytes"],
-                "Platelet Features": ["Thrombocytosis", "Thrombocytopenia", "Large/Giant Platelets", "Platelet Anisocytosis", "Platelet Clumps"]
-            };
-
-            // --- Populate UI Elements ---
+            // --- UI Element References ---
             const checklistContainer = document.getElementById('feature-checklist');
             const galleryContainer = document.getElementById('wbc-gallery');
-            const imagePath = 'morphologyimages/2403BF1/';
-            
+            const revealBtn = document.getElementById('reveal-btn');
+            const analysisSection = document.getElementById('analysis-section');
+            const fullDetailsSection = document.getElementById('full-case-details');
+            const modal = document.getElementById('image-modal');
+            const modalImg = document.getElementById('modal-img');
+            const closeModalBtn = document.getElementById('modal-close-btn');
+            const prevBtn = document.getElementById('modal-prev-btn');
+            const nextBtn = document.getElementById('modal-next-btn');
+            const redCellContainer = document.getElementById('red-cell-container');
+
+            let currentImageIndex = 0;
+            const imagePath = 'morphology/2403BF1/';
+            const allGalleryImages = [document.getElementById('red-cell-img').src, ...imageFilenames.map(name => imagePath + name), ...Array.from(document.querySelectorAll('.expert-img')).map(img => img.src)];
+
+            // --- UI Population ---
             for (const category in morphologyFeatures) {
                 let categoryHtml = `<h4 class="font-bold mt-4 text-gray-700">${category}</h4>`;
                 morphologyFeatures[category].forEach(feature => {
@@ -219,19 +244,40 @@
                 galleryContainer.appendChild(img);
             });
             
-            // --- Event Listeners & Logic ---
-            const revealBtn = document.getElementById('reveal-btn');
-            const analysisSection = document.getElementById('analysis-section');
-            const fullDetailsSection = document.getElementById('full-case-details');
-            const checkboxes = document.querySelectorAll('.feature-checkbox');
-            const modal = document.getElementById('image-modal');
-            const modalImg = document.getElementById('modal-img');
-            const closeModalBtn = document.getElementById('modal-close-btn');
-            const redCellContainer = document.getElementById('red-cell-container');
+            // --- Event Logic ---
+            const openModal = (startIndex) => {
+                currentImageIndex = startIndex;
+                modal.style.display = "flex";
+                modalImg.src = allGalleryImages[currentImageIndex];
+                modalImg.classList.remove('zoomed');
+            };
+
+            const showImage = (newIndex) => {
+                currentImageIndex = (newIndex + allGalleryImages.length) % allGalleryImages.length;
+                modalImg.src = allGalleryImages[currentImageIndex];
+                modalImg.classList.remove('zoomed');
+            };
+            
+            redCellContainer.addEventListener('click', () => openModal(0));
+            
+            Array.from(galleryContainer.children).forEach((thumb, index) => {
+                thumb.addEventListener('click', () => openModal(index + 1)); // +1 to account for red cell image at index 0
+            });
+
+            document.querySelectorAll('.expert-img').forEach((thumb, index) => {
+                const expertStartIndex = 1 + imageFilenames.length + index; // Start after red cell and WBC gallery
+                thumb.addEventListener('click', () => openModal(expertStartIndex));
+            });
+
+            prevBtn.addEventListener('click', (e) => { e.stopPropagation(); showImage(currentImageIndex - 1); });
+            nextBtn.addEventListener('click', (e) => { e.stopPropagation(); showImage(currentImageIndex + 1); });
+            closeModalBtn.onclick = () => { modal.style.display = "none"; };
+            modal.addEventListener('click', (e) => { if (e.target === modal) modal.style.display = "none"; });
+            modalImg.addEventListener('click', (e) => { e.stopPropagation(); e.target.classList.toggle('zoomed'); });
 
             revealBtn.addEventListener('click', () => {
-                const userChoices = Array.from(checkboxes).filter(cb => cb.checked).map(cb => cb.dataset.feature);
-                checkboxes.forEach(cb => cb.disabled = true);
+                const userChoices = Array.from(document.querySelectorAll('.feature-checkbox')).filter(cb => cb.checked).map(cb => cb.dataset.feature);
+                document.querySelectorAll('.feature-checkbox').forEach(cb => cb.disabled = true);
                 revealBtn.disabled = true;
                 revealBtn.classList.add('opacity-50', 'cursor-not-allowed');
 
@@ -247,7 +293,7 @@
                 analysisSection.classList.remove('hidden');
                 fullDetailsSection.classList.remove('hidden');
             });
-
+            
             checklistContainer.addEventListener('change', (e) => {
                 if (e.target.type === 'checkbox') {
                     if (document.querySelectorAll('.feature-checkbox:checked').length > 5) {
@@ -255,33 +301,6 @@
                         alert('You can select a maximum of five features.');
                     }
                 }
-            });
-
-            const openModal = (src) => {
-                modal.style.display = "flex";
-                modalImg.src = src;
-                modalImg.classList.remove('zoomed'); // Reset zoom on new image
-            };
-
-            galleryContainer.addEventListener('click', (e) => {
-                if (e.target.tagName === 'IMG') openModal(e.target.src);
-            });
-
-            redCellContainer.addEventListener('click', (e) => {
-                if (e.target.tagName === 'IMG') openModal(e.target.src);
-            });
-
-            closeModalBtn.onclick = () => { modal.style.display = "none"; }
-            
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    modal.style.display = "none";
-                }
-            });
-
-            modalImg.addEventListener('click', (e) => {
-                e.stopPropagation(); // Prevent modal from closing when clicking the image
-                e.target.classList.toggle('zoomed');
             });
         });
     </script>
