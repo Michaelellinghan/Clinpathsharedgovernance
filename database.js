@@ -32,18 +32,471 @@ const SGC_DATA = {
     ],
 
     "glossary": {
-        "haematology": [
-            { "term": "Anaemia", "definition": "A condition where the number of red blood cells or the amount of haemoglobin in the blood is lower than normal." },
-            { "term": "Auer Rod", "definition": "An eosinophilic, needle-like inclusion in the cytoplasm of myeloblasts; a definitive sign of acute myeloid leukaemia (AML)." }
-        ],
-        "chemistry": [
-            { "term": "Acidosis", "definition": "A condition where there is too much acid in the body fluids, resulting in a pH below the normal range." },
-            { "term": "Albumin", "definition": "The most common protein in blood plasma. It maintains osmotic pressure and transports various substances." }
-        ],
-        "immunology": [
-            { "term": "Antibody", "definition": "A protein produced by the immune system's B-cells in response to a foreign substance (antigen)." }
-        ]
-    },
+        haem: [
+                    // A
+                    { term: 'Acanthocyte (Spur Cell)', definition: 'An erythrocyte (red blood cell) with a few, irregularly spaced spikes of varying length. Associated with severe liver disease.' },
+                    { term: 'Activated Clotting Time (ACT)', definition: 'A point-of-care test used to monitor high-dose heparin therapy, commonly during cardiac surgery.'},
+                    { term: 'Acute Leukaemia', definition: 'A rapidly progressing cancer of the blood-forming tissues, characterized by the proliferation of immature blast cells.'},
+                    { term: 'Agglutination', definition: 'The clumping of red blood cells, usually due to an antigen-antibody reaction. Can interfere with automated cell counts.' },
+                    { term: 'Agranulocytosis', definition: 'A severe and dangerous reduction in the number of granulocytes (a type of white blood cell), leading to a high risk of infection.'},
+                    { term: 'Anaemia', definition: 'A condition where the number of red blood cells or the amount of haemoglobin in the blood is lower than normal, leading to reduced oxygen transport.' },
+                    { term: 'Anaemia of Chronic Disease', definition: 'A type of anaemia that affects people who have conditions associated with chronic inflammation, such as infections, autoimmune diseases, or cancer.'},
+                    { term: 'Anisocytosis', definition: 'Significant variation in the size of erythrocytes. Indicated by a high Red Cell Distribution Width (RDW).' },
+                    { term: 'Anticoagulant', definition: 'A substance that prevents blood from clotting. Examples include EDTA and Citrate, which are used in sample tubes.' },
+                    { term: 'Anti-Factor Xa Assay', definition: 'A laboratory test used to measure the level of certain anticoagulants, such as Low Molecular Weight Heparin (LMWH) and Direct Oral Anticoagulants (DOACs).'},
+                    { term: 'Antithrombin', definition: 'A protein in the blood that inhibits coagulation by inactivating thrombin and other clotting factors. Deficiency increases the risk of thrombosis.'},
+                    { term: 'Aplastic Anaemia', definition: 'A rare and serious condition where the bone marrow fails to produce enough of all three types of blood cells: red cells, white cells, and platelets.'},
+                    { term: 'APTT (Activated Partial Thromboplastin Time)', definition: 'A test that measures the time it takes for a clot to form. It assesses the intrinsic and common pathways of coagulation and is used to monitor heparin therapy.' },
+                    { term: 'Auer Rod', definition: 'An eosinophilic, needle-like inclusion in the cytoplasm of myeloblasts; a definitive sign of acute myeloid leukaemia (AML).' },
+                    { term: 'Atypical Lymphocyte', definition: 'A lymphocyte that is larger than normal, with changes to its nucleus and cytoplasm. Often seen in response to viral infections, especially glandular fever (infectious mononucleosis).' },
+                    // B
+                    { term: 'Band Neutrophil', definition: 'An immature neutrophil with a U-shaped or curved nucleus. An increased number (a "left shift") suggests an active infection.' },
+                    { term: 'Basophil', definition: 'A type of white blood cell (granulocyte) containing large, dark purple granules. Involved in allergic reactions.' },
+                    { term: 'Basophilia', definition: 'An increased number of basophils in the blood. Can be seen in myeloproliferative neoplasms like Chronic Myeloid Leukaemia (CML).'},
+                    { term: 'Basophilic Stippling', definition: 'The presence of small, dark blue-staining dots (precipitated RNA) throughout an erythrocyte. Associated with lead poisoning and certain types of anaemia.' },
+                    { term: 'Blast', definition: 'The earliest and most immature recognisable cell in a blood cell line. Their presence in peripheral blood is abnormal and often indicates leukaemia.' },
+                    { term: 'Bleeding Time', definition: 'An older clinical test that measured the time taken for bleeding to stop after a small, standardized incision. Largely replaced by other platelet function tests.'},
+                    { term: 'Blood Film (or Smear)', definition: 'A drop of blood spread thinly on a glass slide, which is then stained and examined microscopically to assess cell morphology.' },
+                    { term: 'Bone Marrow Aspirate', definition: 'A procedure to remove a small sample of the liquid part of the bone marrow for microscopic examination.'},
+                    { term: 'Bone Marrow Trephine', definition: 'A procedure to remove a small, solid core of bone marrow tissue. It provides information about the structure and cellularity of the marrow.'},
+                    // C
+                    { term: 'Cabot Ring', definition: 'A rare, thin, ring-like or figure-eight shaped inclusion in a red blood cell. Its significance is unclear but can be seen in severe anaemias.'},
+                    { term: 'CD Markers (Cluster of Differentiation)', definition: 'Molecules on the surface of cells that are used to identify and characterize different cell types, particularly white blood cells. Essential for diagnosing leukaemias and lymphomas.'},
+                    { term: 'Chronic Leukaemia', definition: 'A slowly progressing cancer of the blood-forming tissues, characterized by the proliferation of more mature, but still abnormal, blood cells.'},
+                    { term: 'Chronic Myeloid Leukaemia (CML)', definition: 'A type of myeloproliferative neoplasm characterized by the overproduction of granulocytes, often associated with the Philadelphia chromosome.'},
+                    { term: 'Citrate', definition: 'The anticoagulant used in light blue-topped tubes for coagulation testing. It works by binding calcium but in a reversible way.'},
+                    { term: 'Clotting Factors', definition: 'A group of proteins in the blood that work together in a cascade to form a blood clot. Deficiencies lead to bleeding disorders like haemophilia.'},
+                    { term: 'Coagulation', definition: 'The process of blood clotting, involving a complex cascade of protein interactions (clotting factors).' },
+                    { term: 'Coagulation Screen', definition: 'A set of initial tests to investigate a potential bleeding disorder, typically including Prothrombin Time (PT) and Activated Partial Thromboplastin Time (APTT).' },
+                    { term: 'Codocyte (Target Cell)', definition: 'An erythrocyte with a central spot of haemoglobin, resembling a target. Seen in liver disease and haemoglobinopathies like thalassaemia.' },
+                    // D
+                    { term: 'Dacrocyte (Teardrop Cell)', definition: 'An erythrocyte shaped like a teardrop. Associated with myelofibrosis and other conditions where the bone marrow is infiltrated.' },
+                    { term: 'D-Dimer', definition: 'A small protein fragment present in the blood after a blood clot is degraded by fibrinolysis. A key test used to help rule out thrombosis (e.g., DVT or PE).' },
+                    { term: 'DIC (Disseminated Intravascular Coagulation)', definition: 'A serious condition where the blood clotting process is activated throughout the body, leading to widespread clotting and subsequent bleeding.' },
+                    { term: 'Differential Count', definition: 'The percentage and absolute number of each type of white blood cell in a blood sample.'},
+                    { term: 'Döhle Body', definition: 'A pale blue inclusion in the cytoplasm of neutrophils, consisting of remnants of cellular structures. A non-specific sign of infection or inflammation.'},
+                    { term: 'Drepanocyte (Sickle Cell)', definition: 'An elongated, crescent-shaped erythrocyte that forms when Haemoglobin S polymerises under low oxygen conditions. The hallmark of Sickle Cell Anaemia.' },
+                    { term: 'Dyserythropoiesis', definition: 'Abnormal red blood cell development in the bone marrow, a feature of myelodysplastic syndromes.'},
+                    // E
+                    { term: 'Echinocyte (Burr Cell)', definition: 'An erythrocyte with many, short, evenly spaced spikes on its surface. Can be an artefact of storage or associated with kidney failure (uraemia) and liver disease.' },
+                    { term: 'EDTA (Ethylenediaminetetraacetic acid)', definition: 'An anticoagulant used in purple-topped blood tubes. It works by binding calcium, which is essential for clotting. It is the standard sample for a Full Blood Count.' },
+                    { term: 'Elliptocyte (Ovalocyte)', definition: 'An elliptical or oval-shaped erythrocyte. Large numbers are seen in hereditary elliptocytosis.' },
+                    { term: 'Eosinophil', definition: 'A type of white blood cell with a two-lobed nucleus and large, pink-red granules. Associated with allergic reactions and parasitic infections.' },
+                    { term: 'Eosinophilia', definition: 'An increased number of eosinophils in the blood.'},
+                    { term: 'Erythroblast', definition: 'Any of the nucleated cells that are precursors to mature red blood cells (erythrocytes). See also Nucleated Red Blood Cell.'},
+                    { term: 'Erythrocyte', definition: 'A mature red blood cell. A biconcave disc without a nucleus, containing haemoglobin to transport oxygen.'},
+                    { term: 'Erythropoiesis', definition: 'The process of producing red blood cells in the bone marrow.'},
+                    { term: 'Erythropoietin (EPO)', definition: 'A hormone produced by the kidneys that stimulates the bone marrow to produce more red blood cells.'},
+                    { term: 'ESR (Erythrocyte Sedimentation Rate)', definition: 'A non-specific test that measures the rate at which red blood cells settle in a tube of blood. An elevated ESR indicates inflammation.' },
+                    { term: 'Essential Thrombocythaemia (ET)', definition: 'A myeloproliferative neoplasm characterized by a sustained high platelet count.'},
+                    // F
+                    { term: 'Factor V Leiden', definition: 'A specific genetic mutation in clotting factor V, which is the most common inherited cause of thrombophilia.'},
+                    { term: 'Ferritin', definition: 'A protein that stores iron in the body. A low ferritin level is the most sensitive indicator of iron deficiency.'},
+                    { term: 'Fibrin', definition: 'An insoluble protein that forms a mesh-like network to form the basis of a blood clot.'},
+                    { term: 'Fibrinogen', definition: 'A soluble plasma protein (Factor I) that is converted into insoluble fibrin strands during blood clotting, forming the mesh of the clot.' },
+                    { term: 'Fibrinolysis', definition: 'The process of breaking down a blood clot once it is no longer needed.'},
+                    { term: 'Flow Cytometry', definition: 'A laboratory technique that analyzes the physical and chemical characteristics of cells as they pass through a laser beam. Essential for immunophenotyping.'},
+                    { term: 'Folate', definition: 'A B-vitamin necessary for the production of red blood cells. Deficiency causes megaloblastic anaemia.'},
+                    { term: 'Full Blood Count (FBC)', definition: 'A routine blood test that provides information about the different types and numbers of cells in the blood: red cells, white cells, and platelets.' },
+                    // G
+                    { term: 'G6PD (Glucose-6-Phosphate Dehydrogenase)', definition: 'An enzyme that protects red blood cells from damage. Deficiency can lead to haemolytic anaemia when exposed to certain triggers.'},
+                    { term: 'Glandular Fever (Infectious Mononucleosis)', definition: 'An illness caused by the Epstein-Barr virus (EBV), characterized by the presence of atypical lymphocytes in the blood.'},
+                    { term: 'Granulocyte', definition: 'A category of white blood cells that have granules in their cytoplasm, including neutrophils, eosinophils, and basophils.'},
+                    // H
+                    { term: 'Haematocrit (HCT) or Packed Cell Volume (PCV)', definition: 'The proportion of the blood that is made up of red blood cells, expressed as a percentage or a decimal.' },
+                    { term: 'Haematinics', definition: 'Substances required for the production of red blood cells, primarily iron, vitamin B12, and folate.'},
+                    { term: 'Haematopoiesis', definition: 'The formation and development of all types of blood cells from stem cells in the bone marrow.'},
+                    { term: 'Haemoglobin (Hb)', definition: 'The iron-containing protein in red blood cells that transports oxygen from the lungs to the rest of the body.' },
+                    { term: 'Haemoglobin Electrophoresis', definition: 'A laboratory test that separates the different types of haemoglobin in a blood sample, used to diagnose haemoglobinopathies like sickle cell anaemia and thalassaemia.'},
+                    { term: 'Haemoglobinopathy', definition: 'A group of inherited disorders affecting the structure or production of haemoglobin.'},
+                    { term: 'Haemolysis', definition: 'The rupture or destruction of red blood cells, which releases haemoglobin into the plasma. Can occur in the body (in vivo) or during sample collection/handling (in vitro).' },
+                    { term: 'Haemolytic Anaemia', definition: 'A type of anaemia caused by the premature destruction of red blood cells.'},
+                    { term: 'Haemophilia', definition: 'An inherited bleeding disorder where the blood does not clot properly due to a deficiency in a specific clotting factor (Factor VIII for Haemophilia A, Factor IX for Haemophilia B).'},
+                    { term: 'Haemostasis', definition: 'The physiological process that stops bleeding at the site of an injury, while maintaining normal blood flow elsewhere.'},
+                    { term: 'Hairy Cell Leukaemia', definition: 'A rare, slow-growing cancer of the blood in which the bone marrow makes too many B-lymphocytes that appear "hairy" under a microscope.'},
+                    { term: 'Heinz Body', definition: 'An inclusion within a red blood cell composed of denatured haemoglobin. Not visible on a standard blood film, requires a special stain.'},
+                    { term: 'Heparin', definition: 'An anticoagulant drug used to treat and prevent blood clots. Its effect is monitored using the APTT or Anti-Factor Xa assay.'},
+                    { term: 'Hereditary Spherocytosis', definition: 'An inherited condition affecting the red blood cell membrane, causing the cells to be spherical instead of biconcave, leading to their premature destruction in the spleen.'},
+                    { term: 'Howell-Jolly Body', definition: 'A small, round, dark purple remnant of nuclear DNA inside an erythrocyte. Normally removed by the spleen, so their presence suggests the spleen is absent or not working properly.' },
+                    { term: 'Hypercoagulable State', definition: 'Another term for thrombophilia, an increased tendency for blood to clot.'},
+                    { term: 'Hypersegmented Neutrophil', definition: 'A neutrophil with six or more nuclear lobes. A classic feature of megaloblastic anaemia (due to B12 or folate deficiency).' },
+                    { term: 'Hypochromia', definition: 'A decreased concentration of haemoglobin in the red blood cell, resulting in an increased area of central pallor. A feature of iron deficiency anaemia.'},
+                    // I
+                    { term: 'Idiopathic Thrombocytopenic Purpura (ITP)', definition: 'An autoimmune disorder where the immune system destroys the body\'s own platelets, leading to a low platelet count.'},
+                    { term: 'Immunophenotyping', definition: 'A laboratory process that uses antibodies to identify cells based on the types of antigens or markers on their surface. Crucial for classifying leukaemias.'},
+                    { term: 'INR (International Normalised Ratio)', definition: 'A standardised calculation based on the Prothrombin Time (PT) result, used to monitor the effectiveness of warfarin anticoagulant therapy.' },
+                    { term: 'Iron Deficiency Anaemia', definition: 'The most common type of anaemia, caused by a lack of iron, which is necessary to produce haemoglobin.'},
+                    // J
+                    { term: 'JAK2 Mutation', definition: 'A genetic mutation commonly found in patients with myeloproliferative neoplasms, such as polycythaemia vera and essential thrombocythaemia.'},
+                    // K
+                    { term: 'Keratocyte (Helmet Cell)', definition: 'A fragmented red blood cell with two horn-like projections, resulting from mechanical damage.'},
+                    // L
+                    { term: 'Left Shift', definition: 'An increase in the number of immature granulocytes (such as band neutrophils and metamyelocytes) in the peripheral blood, typically indicating a response to infection.'},
+                    { term: 'Leucocyte', definition: 'Another term for a white blood cell (WBC).' },
+                    { term: 'Leucocytosis', definition: 'A higher-than-normal number of white blood cells in the blood.'},
+                    { term: 'Leucopenia', definition: 'A lower-than-normal number of white blood cells in the blood.'},
+                    { term: 'Leukaemia', definition: 'Cancer of the blood-forming tissues, including the bone marrow, resulting in the overproduction of abnormal white blood cells.' },
+                    { term: 'Leukoerythroblastic Picture', definition: 'The presence of immature red cells (NRBCs) and immature white cells (e.g., myelocytes) in the peripheral blood. Suggests significant bone marrow stress or infiltration.'},
+                    { term: 'Lupus Anticoagulant', definition: 'An antibody that interferes with coagulation tests in the laboratory but paradoxically causes an increased risk of thrombosis in the body.'},
+                    { term: 'Lymphocyte', definition: 'A type of white blood cell responsible for the adaptive immune response. Includes T-cells and B-cells.' },
+                    { term: 'Lymphocytosis', definition: 'A higher-than-normal number of lymphocytes in the blood.'},
+                    { term: 'Lymphoma', definition: 'Cancer that begins in the lymphocytes of the immune system.' },
+                    // M
+                    { term: 'Macrocytosis', definition: 'A condition where red blood cells are larger than normal, indicated by a high Mean Cell Volume (MCV).' },
+                    { term: 'Malaria', definition: 'An infectious disease caused by Plasmodium parasites, transmitted by mosquitoes. The parasites infect and destroy red blood cells.'},
+                    { term: 'MCH (Mean Cell Haemoglobin)', definition: 'The average amount (mass) of haemoglobin in a single red blood cell.' },
+                    { term: 'MCHC (Mean Cell Haemoglobin Concentration)', definition: 'The average concentration of haemoglobin inside a single red blood cell.' },
+                    { term: 'MCV (Mean Cell Volume)', definition: 'The average size (volume) of the red blood cells.' },
+                    { term: 'Megakaryocyte', definition: 'A very large cell in the bone marrow that is responsible for producing platelets.'},
+                    { term: 'Megaloblastic Anaemia', definition: 'A type of macrocytic anaemia characterized by large, immature, and dysfunctional red blood cells (megaloblasts) in the bone marrow, typically caused by vitamin B12 or folate deficiency.'},
+                    { term: 'Metamyelocyte', definition: 'An immature granulocyte, the stage of development between a myelocyte and a band neutrophil.'},
+                    { term: 'Microcytosis', definition: 'A condition where red blood cells are smaller than normal, indicated by a low Mean Cell Volume (MCV). Often caused by iron deficiency.' },
+                    { term: 'Monocyte', definition: 'The largest type of white blood cell. They are phagocytes that circulate in the blood before migrating into tissues to become macrophages.' },
+                    { term: 'Monocytosis', definition: 'An increased number of monocytes in the blood.'},
+                    { term: 'Multiple Myeloma', definition: 'A cancer of plasma cells, a type of white blood cell in the bone marrow. It is characterized by the production of a large amount of abnormal antibody (paraprotein).'},
+                    { term: 'Myeloblast', definition: 'The earliest identifiable precursor of the granulocytic series in the bone marrow.'},
+                    { term: 'Myelocyte', definition: 'An immature granulocyte, the stage of development between a promyelocyte and a metamyelocyte.'},
+                    { term: 'Myelodysplastic Syndrome (MDS)', definition: 'A group of disorders caused by poorly formed or dysfunctional blood cells in the bone marrow. Can progress to acute leukaemia.'},
+                    { term: 'Myelofibrosis', definition: 'A serious bone marrow disorder where the marrow is replaced by fibrous scar tissue, leading to severe anaemia and an enlarged spleen.'},
+                    { term: 'Myeloproliferative Neoplasm (MPN)', definition: 'A group of diseases in which the bone marrow produces too many red cells, white cells, or platelets. Includes CML, polycythaemia vera, essential thrombocythaemia, and myelofibrosis.'},
+                    // N
+                    { term: 'Neutropenia', definition: 'A lower-than-normal number of neutrophils in the blood, which increases the risk of infection.' },
+                    { term: 'Neutrophil', definition: 'The most common type of white blood cell. They are a key part of the innate immune system and are the first responders to infection.' },
+                    { term: 'Neutrophilia', definition: 'A higher-than-normal number of neutrophils in the blood, often in response to infection.'},
+                    { term: 'Normoblast', definition: 'Another term for a nucleated red blood cell (erythroblast).'},
+                    { term: 'Nucleated Red Blood Cell (NRBC)', definition: 'An immature red blood cell that still contains a nucleus. Their presence in adult peripheral blood is abnormal.'},
+                    // P
+                    { term: 'Pancytopenia', definition: 'A reduction in the number of all three major blood cell types: red cells, white cells, and platelets.' },
+                    { term: 'Pappenheimer Bodies', definition: 'Small, irregular granules of iron seen inside red blood cells on a standard blood film.'},
+                    { term: 'Pernicious Anaemia', definition: 'A type of megaloblastic anaemia caused by an autoimmune condition that prevents the absorption of vitamin B12.'},
+                    { term: 'Petechiae', definition: 'Pinpoint, round spots that appear on the skin as a result of bleeding. Can be a sign of a low platelet count.'},
+                    { term: 'Philadelphia Chromosome', definition: 'A specific genetic abnormality in chromosome 22, characteristically associated with Chronic Myeloid Leukaemia (CML).'},
+                    { term: 'Plasma', definition: 'The liquid component of blood, in which the blood cells are suspended. It contains proteins, electrolytes, and clotting factors.'},
+                    { term: 'Plasma Cell', definition: 'A fully differentiated B-lymphocyte that produces antibodies. Normally found in the bone marrow, not the peripheral blood.'},
+                    { term: 'Plasmin', definition: 'An enzyme that degrades fibrin clots during fibrinolysis.'},
+                    { term: 'Platelet (Thrombocyte)', definition: 'A small, anucleated cell fragment derived from megakaryocytes, essential for blood clotting.' },
+                    { term: 'Platelet Function Assay (PFA)', definition: 'A laboratory test used to screen for abnormalities in platelet function.'},
+                    { term: 'Poikilocytosis', definition: 'Significant variation in the shape of erythrocytes.' },
+                    { term: 'Polychromasia', definition: 'Erythrocytes that have a blue-grey tinge on a stained blood film, indicating they are young cells (reticulocytes) that have just been released from the bone marrow.' },
+                    { term: 'Polycythaemia Vera (PV)', definition: 'A myeloproliferative neoplasm characterized by the overproduction of red blood cells, leading to thick blood.'},
+                    { term: 'Promyelocyte', definition: 'An immature granulocyte, the stage of development between a myeloblast and a myelocyte.'},
+                    { term: 'Protein C', definition: 'A vitamin K-dependent protein that acts as a natural anticoagulant. Deficiency increases the risk of thrombosis.'},
+                    { term: 'Protein S', definition: 'A vitamin K-dependent protein that acts as a cofactor for Protein C. Deficiency increases the risk of thrombosis.'},
+                    { term: 'Prothrombin Time (PT)', definition: 'A test that measures the time it takes for a clot to form. It assesses the extrinsic and common pathways of coagulation.' },
+                    { term: 'Purpura', definition: 'Purple-coloured spots and patches that occur on the skin, mucous membranes, and lining of organs, caused by bleeding from small blood vessels.'},
+                    // R
+                    { term: 'Red Cell Distribution Width (RDW)', definition: 'A measurement of the variation in the size of red blood cells (anisocytosis).'},
+                    { term: 'Reticulocyte', definition: 'An immature red blood cell. An increased reticulocyte count indicates that the bone marrow is actively producing more red blood cells, often in response to anaemia or bleeding.' },
+                    { term: 'Rouleaux', definition: 'Erythrocytes arranged in stacks like coins, often caused by high concentrations of plasma proteins, such as in multiple myeloma.' },
+                    // S
+                    { term: 'Schistocyte', definition: 'A fragmented erythrocyte, which can indicate mechanical damage within the circulation (microangiopathic haemolytic anaemia).' },
+                    { term: 'Serum', definition: 'The liquid component of blood that remains after the blood has clotted. It is plasma without the clotting factors.'},
+                    { term: 'Sickle Cell Anaemia', definition: 'An inherited haemoglobinopathy where individuals have two copies of the gene for Haemoglobin S, leading to the formation of sickle-shaped red cells.'},
+                    { term: 'Sideroblastic Anaemia', definition: 'A type of anaemia in which the body has enough iron but is unable to incorporate it into haemoglobin, leading to iron accumulating in the mitochondria of red cell precursors (ring sideroblasts).'},
+                    { term: 'Smudge Cell (Smear Cell)', definition: 'The fragile remnant of a lymphocyte that has ruptured during the preparation of a blood film. Commonly seen in Chronic Lymphocytic Leukaemia (CLL).'},
+                    { term: 'Spherocyte', definition: 'A small, spherical, dense erythrocyte that lacks the usual central pale area. Can be caused by hereditary conditions or autoimmune haemolytic anaemia.' },
+                    { term: 'Stomatocyte', definition: 'A red blood cell with a slit-like, mouth-shaped area of central pallor.'},
+                    // T
+                    { term: 'Thalassaemia', definition: 'A group of inherited blood disorders characterised by reduced or absent synthesis of one of the globin chains that make up haemoglobin.' },
+                    { term: 'Thrombin Time (TT)', definition: 'A coagulation test that measures the time it takes for a clot to form in the plasma of a blood sample containing anticoagulant, after an excess of thrombin has been added.'},
+                    { term: 'Thrombocytopenia', definition: 'A lower-than-normal number of platelets in the blood, which can lead to an increased risk of bleeding.' },
+                    { term: 'Thrombocytosis', definition: 'A higher-than-normal number of platelets in the blood, which can lead to an increased risk of clotting.' },
+                    { term: 'Thrombophilia', definition: 'A condition where the blood has an increased tendency to form clots.' },
+                    { term: 'Thrombosis', definition: 'The formation of a blood clot inside a blood vessel, obstructing the flow of blood through the circulatory system.'},
+                    { term: 'Thrombotic Thrombocytopenic Purpura (TTP)', definition: 'A rare blood disorder where blood clots form in small blood vessels throughout the body, leading to a low platelet count and organ damage.'},
+                    { term: 'Toxic Granulation', definition: 'Prominent, dark-staining granules in the cytoplasm of neutrophils, indicating a severe inflammatory response or infection.'},
+                    // V
+                    { term: 'Vitamin B12', definition: 'A vitamin essential for the production of red blood cells and the function of the nervous system. Deficiency causes megaloblastic anaemia and neurological problems.'},
+                    { term: 'Von Willebrand Disease', definition: 'The most common inherited bleeding disorder, caused by a deficiency or defect in von Willebrand factor, a protein that helps platelets stick to blood vessel walls and carries Factor VIII.'},
+                    { term: 'Von Willebrand Factor (vWF)', definition: 'A blood glycoprotein involved in haemostasis. It is deficient or defective in von Willebrand disease.'},
+                    // W
+                    { term: 'Warfarin', definition: 'An oral anticoagulant drug that works by inhibiting vitamin K-dependent clotting factors. Monitored using the INR.'},
+                    { term: 'White Blood Cell (WBC)', definition: 'A cell of the immune system involved in defending the body against infectious disease and foreign invaders. Also known as a leucocyte.'}
+                ],
+                trans: [
+                    // A
+                    { term: 'A, B, O Antigens', definition: 'Carbohydrate structures on the surface of red blood cells that determine the ABO blood group.' },
+                    { term: 'ABO Group', definition: 'The most important blood group system, determining whether a person has A, B, AB, or O type blood based on the antigens present on their red cells.' },
+                    { term: 'Adsorption', definition: 'A laboratory technique to remove specific antibodies from a patient\'s serum by incubating it with red cells that have the corresponding antigen.' },
+                    { term: 'Alloantibody', definition: 'An antibody formed in response to an antigen from a genetically different individual of the same species (e.g., an antibody formed after a blood transfusion or pregnancy).' },
+                    { term: 'Alloimmunisation', definition: 'The process by which an individual produces an immune response (alloantibody) to foreign antigens after exposure through transfusion, transplant, or pregnancy.' },
+                    { term: 'Antibody', definition: 'A protein produced by the immune system that identifies and neutralises foreign objects like bacteria and viruses, or in transfusion, foreign red cell antigens.' },
+                    { term: 'Antibody Identification', definition: 'The laboratory process of determining the specific identity of a red cell antibody detected in a patient\'s plasma.' },
+                    { term: 'Antibody Screen', definition: 'A test performed on a patient\'s plasma to detect the presence of any unexpected, clinically significant red cell alloantibodies.' },
+                    { term: 'Antigen', definition: 'A substance, usually a protein or carbohydrate on the surface of a red blood cell, that can trigger an immune response.' },
+                    { term: 'Antiglobulin Reagent (Coombs\' Reagent)', definition: 'A reagent containing antibodies that bind to human immunoglobulins or complement, used in the DAT and IAT to detect sensitisation of red cells.' },
+                    { term: 'Anti-D Immunoglobulin', definition: 'A solution of antibodies against the RhD antigen, given to RhD-negative mothers to prevent them from becoming sensitised to an RhD-positive baby\'s blood.' },
+                    { term: 'Apheresis', definition: 'A process where a donor\'s blood is passed through a machine that separates out a specific component (like platelets or plasma), with the rest of the blood being returned to the donor.' },
+                    { term: 'Autoantibody', definition: 'An antibody produced by an individual that reacts with their own red cell antigens, which can cause autoimmune haemolytic anaemia.' },
+                    { term: 'Autologous Control', definition: 'A control used in antibody identification where the patient\'s own plasma is tested against their own red cells to check for the presence of an autoantibody.' },
+                    // B
+                    { term: 'Blood Bank', definition: 'The department in a hospital where blood components are stored and where pre-transfusion testing is performed. Also known as the Transfusion Laboratory.' },
+                    { term: 'Blood Component', definition: 'Any therapeutic product derived from a donation of human blood, such as Red Cells, Platelets, Fresh Frozen Plasma (FFP), or Cryoprecipitate.' },
+                    { term: 'Blood Group', definition: 'A classification of blood based on the presence or absence of inherited antigenic substances on the surface of red blood cells. There are over 40 different blood group systems.' },
+                    { term: 'Bombay Phenotype', definition: 'A rare blood type where individuals lack the H antigen, which is the precursor for A and B antigens. They appear as group O but have potent anti-H and can only be transfused with other Bombay blood.' },
+                    // C
+                    { term: 'Clinically Significant Antibody', definition: 'A red cell antibody that is known to cause a transfusion reaction or Haemolytic Disease of the Fetus and Newborn (HDFN).' },
+                    { term: 'CMV (Cytomegalovirus)', definition: 'A common virus that can be transmitted through blood transfusion. CMV-negative blood is given to at-risk patients, such as pregnant women and immunocompromised individuals.' },
+                    { term: 'Cold Agglutinin', definition: 'An antibody, typically of the IgM class, that is most reactive at temperatures below 37°C. Can interfere with testing and, if potent, cause Cold Agglutinin Disease.' },
+                    { term: 'Column Agglutination Technology (CAT)', definition: 'A method for blood grouping and antibody screening that uses microtubes containing a gel matrix to trap agglutinated red cells.' },
+                    { term: 'Compatibility Testing (Crossmatch)', definition: 'The final check before transfusion, where the patient\'s plasma is tested against the donor red cells to ensure they are compatible.' },
+                    { term: 'Cryoprecipitate', definition: 'A blood component prepared from Fresh Frozen Plasma. It is rich in specific clotting factors, particularly Fibrinogen, Factor VIII, and von Willebrand Factor.' },
+                    // D
+                    { term: 'Delayed Haemolytic Transfusion Reaction (DHTR)', definition: 'A transfusion reaction that occurs days or weeks after the transfusion, caused by an anamnestic (memory) immune response to a red cell antigen.' },
+                    { term: 'Direct Antiglobulin Test (DAT)', definition: 'A test used to detect if a patient\'s red blood cells have been coated with antibodies or complement in vivo (inside the body). A positive DAT can indicate autoimmune haemolytic anaemia or a transfusion reaction.' },
+                    { term: 'Donation Number', definition: 'A unique number assigned to each unit of donated blood, essential for traceability from donor to recipient.' },
+                    { term: 'Duffy System', definition: 'A blood group system (antigens Fya and Fyb). Duffy-negative individuals have some resistance to certain types of malaria.' },
+                    // E
+                    { term: 'Electronic Issue (Electronic Crossmatch)', definition: 'A computer-based system that replaces the need for a serological crossmatch for eligible patients, allowing for the safe release of ABO-compatible blood.' },
+                    { term: 'Elution', definition: 'A laboratory technique used to remove antibodies that are attached to red blood cells. The resulting fluid (eluate) can then be tested to identify the antibody.' },
+                    // F
+                    { term: 'Febrile Non-Haemolytic Transfusion Reaction (FNHTR)', definition: 'The most common type of transfusion reaction, characterized by a rise in temperature, usually caused by cytokines released from white blood cells in the stored blood component.' },
+                    { term: 'Fresh Frozen Plasma (FFP)', definition: 'The plasma separated from a unit of whole blood and frozen. It contains all the coagulation factors and is used to treat bleeding in patients with clotting factor deficiencies.' },
+                    // G
+                    { term: 'Genotyping', definition: 'A laboratory method to determine the specific genes an individual has for blood group antigens, particularly useful when serological testing is difficult.' },
+                    { term: 'Group and Screen (G&S)', definition: 'A standard pre-transfusion test request that involves determining the patient\'s ABO and RhD group and screening their plasma for any unexpected antibodies.' },
+                    // H
+                    { term: 'H Antigen', definition: 'The precursor substance on red cells from which A and B antigens are made. Group O individuals have a large amount of H antigen.' },
+                    { term: 'Haemolytic Disease of the Fetus and Newborn (HDFN)', definition: 'A condition where maternal antibodies cross the placenta and destroy the fetus\'s or newborn\'s red blood cells.' },
+                    { term: 'Haemovigilance', definition: 'A set of surveillance procedures covering the whole transfusion chain, from donation to recipient follow-up, to monitor and report adverse events and reactions.' },
+                    // I
+                    { term: 'IgG (Immunoglobulin G)', definition: 'The main class of antibodies involved in secondary immune responses. Most clinically significant red cell alloantibodies are IgG and can cross the placenta.' },
+                    { term: 'IgM (Immunoglobulin M)', definition: 'A large antibody that is produced first in an immune response. "Naturally occurring" anti-A and anti-B are typically IgM and cannot cross the placenta.' },
+                    { term: 'Indirect Antiglobulin Test (IAT)', definition: 'A test used to detect antibodies in a patient\'s plasma (in vitro). It is the basis of the antibody screen and antibody identification.' },
+                    { term: 'Irradiated Blood', definition: 'Blood components that have been exposed to gamma radiation to prevent transfusion-associated graft-versus-host disease (TA-GvHD) in at-risk patients.' },
+                    // K
+                    { term: 'Kell System', definition: 'An important blood group system. The K antigen is highly immunogenic, and anti-K is a common and clinically significant antibody.' },
+                    { term: 'Kidd System', definition: 'A blood group system (antigens Jka and Jkb). Kidd antibodies are notorious for being weak and disappearing from the circulation, making them a common cause of delayed haemolytic transfusion reactions.' },
+                    { term: 'Kleihauer Test', definition: 'A test used to measure the amount of fetal haemoglobin that has passed into the maternal bloodstream, to calculate the required dose of Anti-D immunoglobulin after a potential sensitising event.' },
+                    // L
+                    { term: 'Leucodepletion', definition: 'The process of removing white blood cells from blood components before transfusion to reduce the risk of certain transfusion reactions.' },
+                    { term: 'Lewis System', definition: 'A unique blood group system where the antigens are not an integral part of the red cell membrane but are adsorbed from the plasma.' },
+                    // M
+                    { term: 'Major Haemorrhage Protocol', definition: 'A hospital-wide protocol to ensure the rapid and coordinated delivery of blood components and other support to a patient with life-threatening bleeding.' },
+                    { term: 'Maximum Surgical Blood Ordering Schedule (MSBOS)', definition: 'A schedule that provides guidance on the number of units of blood to typically crossmatch for various surgical procedures, aiming to reduce unnecessary crossmatching.' },
+                    { term: 'MNS System', definition: 'A complex blood group system with M, N, S, and s antigens. Anti-M and anti-N are usually cold-reacting and not clinically significant, while anti-S and anti-s can be.' },
+                    // P
+                    { term: 'Panel', definition: 'A set of 11 to 20 reagent red cells with known antigen profiles, used for antibody identification.' },
+                    { term: 'Phenotype', definition: 'The set of observable characteristics of an individual, such as their expressed blood group antigens (e.g., C, c, E, e, K).' },
+                    { term: 'Plasma', definition: 'The liquid component of blood. See also Fresh Frozen Plasma (FFP).' },
+                    { term: 'Platelets', definition: 'A blood component used to treat or prevent bleeding in patients with a low platelet count or dysfunctional platelets.' },
+                    // R
+                    { term: 'Red Blood Cells (Component)', definition: 'A blood component consisting of concentrated red cells, used to treat anaemia and improve oxygen-carrying capacity.' },
+                    { term: 'Rh System', definition: 'A complex blood group system with many antigens, the most important of which is the D antigen. Individuals are either RhD positive or RhD negative.' },
+                    // S
+                    { term: 'Sensitising Event', definition: 'Any event where an RhD-negative mother may be exposed to RhD-positive fetal red cells, potentially causing her to produce anti-D antibodies.' },
+                    { term: 'Serology', definition: 'The scientific study of serum and other body fluids, particularly with regard to antigen-antibody reactions.' },
+                    { term: 'SHOT (Serious Hazards of Transfusion)', definition: 'The UK\'s independent, professionally-led haemovigilance scheme, which collects and analyses data on adverse events related to blood transfusion.' },
+                    // T
+                    { term: 'TACO (Transfusion-Associated Circulatory Overload)', definition: 'A transfusion reaction caused by transfusing a volume of blood that the recipient\'s circulatory system cannot cope with, leading to heart failure and pulmonary oedema.' },
+                    { term: 'TRALI (Transfusion-Related Acute Lung Injury)', definition: 'A rare but serious transfusion reaction where the patient develops acute lung injury, thought to be caused by antibodies in the donor plasma reacting with the recipient\'s white blood cells.' },
+                    { term: 'Traceability', definition: 'The ability to trace a unit of blood from the donor to its final recipient and vice versa. A legal requirement for all blood components.' },
+                    { term: 'Transfusion Reaction', definition: 'Any adverse event associated with the transfusion of blood or blood components. Can range from mild (e.g., fever) to severe and life-threatening (e.g., acute haemolytic reaction).' },
+                    // U
+                    { term: 'Universal Donor', definition: 'An individual with group O, RhD-negative blood. Their red cells lack A, B, and D antigens, so they can be transfused to patients of most other blood types in an emergency.' },
+                    { term: 'Universal Recipient', definition: 'An individual with group AB, RhD-positive blood. Their plasma lacks anti-A and anti-B, so they can receive red cells from most other blood types.' },
+                    // W
+                    { term: 'Warm Autoimmune Haemolytic Anaemia (WAIHA)', definition: 'An autoimmune condition caused by an IgG autoantibody that reacts optimally at 37°C, leading to the destruction of the patient\'s own red cells.' },
+                    { term: 'Washed Red Cells', definition: 'Red cells that have been washed in saline to remove most of the plasma, used for patients who have had severe allergic reactions to plasma proteins.' },
+                    { term: 'Whole Blood', definition: 'Blood that has been collected from a donor and has not been separated into its different components.' }
+                ],
+                chem: [
+                    // A
+                    { term: 'Acid-Base Balance', definition: 'The mechanism by which the body maintains the pH of its fluids within a narrow, normal range. Primarily involves the lungs and kidneys.' },
+                    { term: 'Acidosis', definition: 'A condition where there is too much acid in the body fluids, resulting in a pH below the normal range.' },
+                    { term: 'ACTH (Adrenocorticotropic Hormone)', definition: 'A hormone produced by the pituitary gland that stimulates the adrenal glands to produce cortisol.' },
+                    { term: 'Alanine Aminotransferase (ALT)', definition: 'An enzyme found mainly in the liver. A high level in the blood is a key marker of liver cell injury.' },
+                    { term: 'Albumin', definition: 'The most common protein in blood plasma. It maintains osmotic pressure and transports various substances. Low levels can indicate liver disease, kidney disease, or malnutrition.' },
+                    { term: 'Alkaline Phosphatase (ALP)', definition: 'An enzyme found in the liver (biliary ducts), bone, and other tissues. High levels can indicate blocked bile ducts, liver disease, or bone disorders.' },
+                    { term: 'Alkalosis', definition: 'A condition where there is too much base (or not enough acid) in the body fluids, resulting in a pH above the normal range.' },
+                    { term: 'Alpha-1 Antitrypsin', definition: 'A protein made by the liver that protects the lungs from damage. Deficiency is a genetic condition that increases the risk of lung and liver disease.' },
+                    { term: 'Amylase', definition: 'An enzyme that helps digest carbohydrates, produced mainly by the pancreas and salivary glands. Very high levels are a sign of acute pancreatitis.' },
+                    { term: 'Anion Gap', definition: 'A calculated value representing the difference between measured cations (positively charged ions) and anions (negatively charged ions) in the blood. It is useful for evaluating metabolic acidosis.' },
+                    { term: 'Aspartate Aminotransferase (AST)', definition: 'An enzyme found in the liver, heart, and other muscles. Along with ALT, it is a marker of liver cell injury.' },
+                    // B
+                    { term: 'Bicarbonate (HCO3-)', definition: 'A key component of the body\'s acid-base buffering system, regulated by the kidneys. It is part of the Urea & Electrolytes (U&E) profile.' },
+                    { term: 'Bilirubin', definition: 'A yellow substance formed from the breakdown of red blood cells. It is processed by the liver. High levels cause jaundice and can indicate liver disease or increased red cell destruction (haemolysis).' },
+                    { term: 'Blood Gas Analysis', definition: 'A test performed on arterial blood to measure the levels of oxygen, carbon dioxide, and the blood\'s pH. It assesses respiratory and metabolic function.' },
+                    { term: 'BNP (B-type Natriuretic Peptide)', definition: 'A hormone released by the heart in response to stretching, such as in heart failure. A high level is a key marker for diagnosing and assessing the severity of heart failure.' },
+                    { term: 'Bone Profile', definition: 'A group of tests to assess bone health, typically including calcium, phosphate, albumin, and alkaline phosphatase (ALP).' },
+                    // C
+                    { term: 'C-Peptide', definition: 'A substance released from the pancreas along with insulin. Measuring C-peptide levels can help determine how much insulin the body is producing.' },
+                    { term: 'C-Reactive Protein (CRP)', definition: 'A protein made by the liver that is released into the bloodstream during inflammation. It is a sensitive but non-specific marker of inflammation and infection.' },
+                    { term: 'Caeruloplasmin', definition: 'The main copper-carrying protein in the blood. Low levels are a feature of Wilson\'s disease, a genetic disorder of copper metabolism.' },
+                    { term: 'Calcitonin', definition: 'A hormone produced by the thyroid gland that is involved in calcium regulation. It is also used as a tumour marker for medullary thyroid cancer.' },
+                    { term: 'Calcium', definition: 'A mineral essential for bone health, muscle function, and nerve signalling. Blood levels are tightly controlled. Results are often "adjusted" for the albumin level.' },
+                    { term: 'Chloride (Cl-)', definition: 'An electrolyte that works with sodium to maintain the body\'s fluid balance.' },
+                    { term: 'Cholesterol', definition: 'A type of fat (lipid) in the blood. High levels of certain types of cholesterol are a risk factor for cardiovascular disease.' },
+                    { term: 'Cortisol', definition: 'A steroid hormone produced by the adrenal glands, often called the "stress hormone". It has many functions, including regulating metabolism and the immune response.' },
+                    { term: 'Creatine Kinase (CK)', definition: 'An enzyme found in muscle tissue, including the heart. High levels indicate muscle damage, such as from injury, strenuous exercise, or a heart attack.' },
+                    { term: 'Creatinine', definition: 'A waste product from muscle activity that is filtered from the blood by the kidneys. Its level is a key indicator of how well the kidneys are working.' },
+                    { term: 'Creatinine Clearance', definition: 'A test that compares the creatinine level in urine with the creatinine level in blood, to estimate the glomerular filtration rate (GFR).' },
+                    // D
+                    { term: 'Diabetes Mellitus', definition: 'A chronic condition characterized by high levels of glucose in the blood, caused by either insufficient insulin production or the body\'s inability to use insulin effectively.' },
+                    { term: 'Digoxin', definition: 'A medication used to treat heart failure and certain irregular heartbeats. Its level in the blood must be monitored to ensure it is within the therapeutic range.' },
+                    // E
+                    { term: 'eGFR (estimated Glomerular Filtration Rate)', definition: 'A calculation based on the blood creatinine level, age, sex, and sometimes ethnicity. It provides an estimate of how much blood the kidneys are filtering per minute and is the main measure of kidney function.' },
+                    { term: 'Electrolytes', definition: 'Minerals in the body that have an electric charge, such as sodium, potassium, and chloride. They are vital for many bodily functions. See U&Es.' },
+                    { term: 'Endocrinology', definition: 'The branch of medicine concerned with the endocrine glands and hormones.' },
+                    // F
+                    { term: 'Ferritin', definition: 'A protein that stores iron within cells. A blood ferritin test is the most accurate way to assess the body\'s total iron stores.' },
+                    { term: 'Folate', definition: 'A B-vitamin essential for cell growth and metabolism. Deficiency can cause megaloblastic anaemia.' },
+                    { term: 'FSH (Follicle-Stimulating Hormone)', definition: 'A hormone produced by the pituitary gland that plays a key role in sexual development and reproduction.' },
+                    // G
+                    { term: 'Gamma-Glutamyl Transferase (GGT)', definition: 'An enzyme found mainly in the liver. High levels are often associated with alcohol consumption or conditions that block the bile ducts.' },
+                    { term: 'Gastrin', definition: 'A hormone that stimulates the stomach to release gastric acid. Very high levels can be a sign of certain tumours (gastrinomas).' },
+                    { term: 'Glucose', definition: 'The main type of sugar in the blood, used by the body for energy. High levels are a sign of diabetes mellitus.' },
+                    { term: 'Growth Hormone (GH)', definition: 'A hormone produced by the pituitary gland that stimulates growth, cell reproduction, and regeneration.' },
+                    // H
+                    { term: 'HbA1c (Glycated Haemoglobin)', definition: 'A test that measures the average blood glucose level over the past 2-3 months by looking at the amount of glucose attached to haemoglobin. Used to diagnose and monitor diabetes.' },
+                    { term: 'HDL (High-Density Lipoprotein)', definition: 'Often called "good" cholesterol, it helps remove excess cholesterol from the body.' },
+                    { term: 'Hormone', definition: 'A chemical messenger produced by an endocrine gland that travels through the bloodstream to target cells or organs.' },
+                    // I
+                    { term: 'Immunoassay', definition: 'A laboratory technique that uses the specificity of an antigen-antibody reaction to measure the concentration of a substance in a sample.' },
+                    { term: 'Insulin', definition: 'A hormone produced by the pancreas that allows the body to use glucose for energy. It is central to the regulation of carbohydrate and fat metabolism.' },
+                    { term: 'Iron', definition: 'A mineral essential for the production of haemoglobin and the transport of oxygen in the blood.' },
+                    // K
+                    { term: 'Ketones', definition: 'Substances produced when the body breaks down fat for energy, which can happen when there is not enough insulin to use glucose. High levels can lead to diabetic ketoacidosis (DKA).' },
+                    // L
+                    { term: 'Lactate', definition: 'A substance produced by the body during anaerobic metabolism (when oxygen levels are low). High levels can indicate severe infection (sepsis), shock, or intense exercise.' },
+                    { term: 'Lactate Dehydrogenase (LDH)', definition: 'An enzyme found in almost all body tissues. High levels are non-specific but can indicate tissue damage somewhere in the body.' },
+                    { term: 'LDL (Low-Density Lipoprotein)', definition: 'Often called "bad" cholesterol, high levels can lead to a build-up of plaque in the arteries.' },
+                    { term: 'LH (Luteinizing Hormone)', definition: 'A hormone produced by the pituitary gland that is crucial for reproduction.' },
+                    { term: 'Lipase', definition: 'An enzyme made by the pancreas to help digest fats. Like amylase, very high levels are a sign of acute pancreatitis.' },
+                    { term: 'Lipid Profile', definition: 'A group of tests to assess cardiovascular risk, typically including total cholesterol, HDL cholesterol, LDL cholesterol, and triglycerides.' },
+                    { term: 'Lithium', definition: 'A medication used to treat bipolar disorder. Its level in the blood must be closely monitored to ensure it is effective but not toxic.' },
+                    { term: 'Liver Function Tests (LFTs)', definition: 'A panel of blood tests to assess liver health, usually including ALT, ALP, GGT, bilirubin, and albumin.' },
+                    // M
+                    { term: 'Magnesium (Mg2+)', definition: 'An electrolyte important for muscle and nerve function, and many enzymatic reactions.' },
+                    // O
+                    { term: 'Osmolality', definition: 'A measure of the concentration of all the chemical particles dissolved in the fluid part of the blood. It is used to evaluate the body\'s water balance.' },
+                    // P
+                    { term: 'Paracetamol', definition: 'A common painkiller that can cause severe liver damage in overdose. Blood levels are measured to guide treatment.' },
+                    { term: 'Parathyroid Hormone (PTH)', definition: 'A hormone produced by the parathyroid glands that regulates calcium and phosphate levels in the blood.' },
+                    { term: 'pH', definition: 'A measure of the acidity or alkalinity of a solution. Blood pH is tightly maintained between 7.35 and 7.45.' },
+                    { term: 'Phosphate', definition: 'A mineral that works with calcium to build strong bones and teeth. Regulated by the kidneys.' },
+                    { term: 'Pituitary Gland', definition: 'A small gland at the base of the brain that produces many important hormones, often called the "master gland".' },
+                    { term: 'Point-of-Care Testing (POCT)', definition: 'Diagnostic testing performed at or near the site of patient care, such as a bedside glucose test.' },
+                    { term: 'Potassium (K+)', definition: 'An electrolyte essential for nerve and muscle function, especially the heart. The kidneys regulate its level, and both high and low levels can be dangerous.' },
+                    { term: 'Prolactin', definition: 'A hormone produced by the pituitary gland, primarily known for its role in enabling milk production.' },
+                    { term: 'Protein Electrophoresis', definition: 'A laboratory test that separates proteins in the blood based on their size and electrical charge. Used to detect abnormal proteins like paraproteins.' },
+                    { term: 'PSA (Prostate-Specific Antigen)', definition: 'A protein produced by the prostate gland. An elevated level may indicate prostate cancer or other prostate conditions.' },
+                    // S
+                    { term: 'Salicylate', definition: 'A substance found in aspirin. Blood levels are measured in cases of suspected overdose.' },
+                    { term: 'Sodium (Na+)', definition: 'An electrolyte that helps maintain the balance of fluids in the body and is crucial for nerve and muscle function.' },
+                    { term: 'Spectrophotometry', definition: 'A common laboratory method for measuring the concentration of a substance by determining how much light it absorbs.' },
+                    { term: 'SST (Serum Separator Tube)', definition: 'A type of blood collection tube (usually with a gold top) containing a gel that separates the serum from the clotted blood cells after centrifugation.' },
+                    // T
+                    { term: 'Testosterone', definition: 'The primary male sex hormone, responsible for the development of male reproductive tissues and secondary sexual characteristics.' },
+                    { term: 'Therapeutic Drug Monitoring (TDM)', definition: 'The measurement of specific drug concentrations in the blood to ensure they are within a range that is both effective and non-toxic.' },
+                    { term: 'Thyroid Gland', definition: 'A gland in the neck that produces hormones (T4 and T3) which regulate the body\'s metabolism.' },
+                    { term: 'Thyroid Function Tests (TFTs)', definition: 'A set of tests to assess thyroid gland function, typically including TSH (Thyroid Stimulating Hormone) and Free T4 (Thyroxine).' },
+                    { term: 'Thyroxine (T4)', definition: 'The main hormone produced by the thyroid gland.' },
+                    { term: 'Transferrin', definition: 'A protein that transports iron in the blood.' },
+                    { term: 'Triglycerides', definition: 'A type of fat (lipid) found in the blood. High levels are a risk factor for cardiovascular disease.' },
+                    { term: 'Triiodothyronine (T3)', definition: 'The more active thyroid hormone, mostly formed from the conversion of T4 in the body\'s tissues.' },
+                    { term: 'Troponin', definition: 'A protein found in heart muscle. When the heart muscle is damaged, troponin is released into the bloodstream. It is a very sensitive and specific marker for a heart attack (myocardial infarction).' },
+                    { term: 'TSH (Thyroid-Stimulating Hormone)', definition: 'A hormone produced by the pituitary gland that tells the thyroid gland to produce more thyroid hormones. It is the primary test for assessing thyroid function.' },
+                    { term: 'Tumour Marker', definition: 'A substance produced by a tumour or by the body in response to a tumour, which can be detected in the blood, urine, or body tissues. Examples include PSA and CA-125.' },
+                    // U
+                    { term: 'Urea', definition: 'A waste product from the breakdown of protein, made in the liver and removed from the blood by the kidneys. Along with creatinine, it is used to assess kidney function.' },
+                    { term: 'Uric Acid (Urate)', definition: 'A waste product from the breakdown of purines (found in many foods and body cells). High levels can cause crystals to form in the joints, leading to gout.' },
+                    { term: 'U&Es (Urea and Electrolytes)', definition: 'A common blood test panel that measures kidney function and electrolyte balance, typically including Urea, Creatinine, Sodium, and Potassium.' },
+                    // V
+                    { term: 'Vitamin D', definition: 'A vitamin essential for absorbing calcium and promoting bone growth. Deficiency is common and can lead to bone problems.' }
+                ],
+                imm: [
+                    // A
+                    { term: 'Adjuvant', definition: 'A substance that enhances the body\'s immune response to an antigen, often included in vaccines.' },
+                    { term: 'Allergen', definition: 'A substance (like pollen, dust mites, or certain foods) that can trigger an allergic reaction in susceptible individuals.' },
+                    { term: 'Allergy', definition: 'An exaggerated immune response to a substance that is normally harmless.' },
+                    { term: 'Anaphylaxis', definition: 'A severe, potentially life-threatening, whole-body allergic reaction.' },
+                    { term: 'ANCA (Anti-Neutrophil Cytoplasmic Antibody)', definition: 'Autoantibodies that target proteins within neutrophils. Associated with types of systemic vasculitis like Granulomatosis with Polyangiitis (GPA) and Microscopic Polyangiitis (MPA).' },
+                    { term: 'Anti-CCP (Anti-Cyclic Citrullinated Peptide)', definition: 'An autoantibody that is highly specific for Rheumatoid Arthritis and can be present early in the disease.' },
+                    { term: 'Anti-dsDNA (Anti-double-stranded DNA)', definition: 'An autoantibody that is very specific for Systemic Lupus Erythematosus (SLE) and is often linked to kidney involvement (lupus nephritis).' },
+                    { term: 'Anti-Nuclear Antibody (ANA)', definition: 'A screening test for autoantibodies that target components of the cell nucleus. A positive result is common in many autoimmune diseases but lacks specificity.' },
+                    { term: 'Antigen-Presenting Cell (APC)', definition: 'A cell (such as a macrophage or dendritic cell) that displays foreign antigens on its surface to activate T-lymphocytes.' },
+                    { term: 'Apoptosis', definition: 'Programmed cell death, a normal process by which the body eliminates unwanted or damaged cells.' },
+                    { term: 'Autoantibody', definition: 'An antibody produced by the immune system that mistakenly targets the individual\'s own cells or tissues.' },
+                    { term: 'Autoimmune Disease', definition: 'A condition in which the body\'s immune system attacks its own healthy tissues.' },
+                    // B
+                    { term: 'B-Lymphocyte (B-Cell)', definition: 'A type of lymphocyte that matures in the bone marrow and is responsible for producing antibodies (humoral immunity).' },
+                    // C
+                    { term: 'C1 Inhibitor', definition: 'A protein that regulates the complement system. Deficiency (either quantitative or functional) causes Hereditary Angioedema (HAE).' },
+                    { term: 'CD4+ T-Cell (Helper T-Cell)', definition: 'A type of T-lymphocyte that helps coordinate the immune response by activating other immune cells. These are the cells targeted by the HIV virus.' },
+                    { term: 'CD8+ T-Cell (Cytotoxic T-Cell)', definition: 'A type of T-lymphocyte that can directly kill infected cells or tumour cells.' },
+                    { term: 'Cell-Mediated Immunity', definition: 'The arm of the immune system that involves the activation of phagocytes, cytotoxic T-cells, and the release of various cytokines, rather than antibodies.' },
+                    { term: 'Chemokine', definition: 'A type of cytokine that directs the migration of white blood cells to sites of infection or inflammation.' },
+                    { term: 'Coeliac Disease', definition: 'An autoimmune disorder where eating gluten causes the immune system to attack the small intestine. Diagnosed with tests for tTG and EMA antibodies.' },
+                    { term: 'Complement System', definition: 'A group of plasma proteins that "complement" the action of antibodies in destroying pathogens. C3 and C4 are the most commonly measured components.' },
+                    { term: 'Connective Tissue Disease', definition: 'A group of autoimmune disorders that affect the tissues providing support and structure to the body, such as SLE, scleroderma, and Sjögren\'s syndrome.' },
+                    { term: 'Cryoglobulin', definition: 'Proteins (usually immunoglobulins) that precipitate or gel at cold temperatures. Associated with various conditions including infections and autoimmune diseases.' },
+                    { term: 'Cytokine', definition: 'A broad category of small proteins that are important in cell signalling, particularly in the immune system. They include interleukins and interferons.' },
+                    // D
+                    { term: 'Dendritic Cell', definition: 'A specialized type of antigen-presenting cell that is a key link between the innate and adaptive immune systems.' },
+                    // E
+                    { term: 'ELISA (Enzyme-Linked Immunosorbent Assay)', definition: 'A common laboratory technique used to detect and quantify substances such as antibodies, antigens, and hormones.' },
+                    { term: 'ENA (Extractable Nuclear Antigens)', definition: 'A panel of tests to identify the specific target of an Anti-Nuclear Antibody (ANA), which helps in diagnosing specific connective tissue diseases (e.g., anti-Ro, anti-La, anti-Sm).' },
+                    { term: 'Endomysial Antibody (EMA)', definition: 'An autoantibody, detected by immunofluorescence, that is highly specific for coeliac disease.' },
+                    // F
+                    { term: 'Flow Cytometry', definition: 'A technique used to analyze the characteristics of cells, such as counting CD4 cells in HIV patients or classifying leukaemias.' },
+                    // H
+                    { term: 'Histamine', definition: 'A chemical released by mast cells and basophils during an allergic reaction, causing symptoms like itching, swelling, and vasodilation.' },
+                    { term: 'HLA (Human Leukocyte Antigen)', definition: 'A group of genes that code for proteins on the surface of cells that are essential for the immune system to recognize foreign invaders. Important in organ transplantation and associated with certain autoimmune diseases.' },
+                    { term: 'Humoral Immunity', definition: 'The arm of the immune system that is mediated by antibodies produced by B-lymphocytes.' },
+                    { term: 'Hypersensitivity', definition: 'An undesirable and exaggerated immune reaction, such as an allergy or autoimmune response.' },
+                    // I
+                    { term: 'IgA (Immunoglobulin A)', definition: 'The main class of antibody found in mucous membranes, saliva, and tears. It provides protection at mucosal surfaces.' },
+                    { term: 'IgE (Immunoglobulin E)', definition: 'The class of antibody associated with allergic reactions. It binds to mast cells and basophils, triggering the release of histamine.' },
+                    { term: 'IgG (Immunoglobulin G)', definition: 'The most abundant class of antibody in the blood. It provides long-term immunity and is the only class that can cross the placenta.' },
+                    { term: 'IgM (Immunoglobulin M)', definition: 'The first class of antibody produced in response to a new infection. It is a large molecule and is very effective at activating the complement system.' },
+                    { term: 'Immune Complex', definition: 'A complex formed by the binding of an antibody to a soluble antigen. Large amounts can deposit in tissues and cause inflammation, such as in lupus nephritis.' },
+                    { term: 'Immunodeficiency', definition: 'A state in which the immune system\'s ability to fight infectious disease and cancer is compromised or entirely absent.' },
+                    { term: 'Immunofixation', definition: 'A technique used to identify the type of immunoglobulin that makes up a paraprotein (e.g., IgG kappa, IgA lambda).' },
+                    { term: 'Immunofluorescence', definition: 'A laboratory technique using fluorescently-labelled antibodies to visualise the presence and pattern of specific antigens or autoantibodies in patient samples.' },
+                    { term: 'Immunoglobulin', definition: 'Another name for an antibody. The main classes are IgG, IgA, IgM, IgD, and IgE.' },
+                    { term: 'Immunosuppression', definition: 'The reduction of the activation or efficacy of the immune system, for example, by drugs given to prevent organ transplant rejection.' },
+                    { term: 'Innate Immunity', definition: 'The non-specific, first line of defence of the immune system, which includes physical barriers, phagocytic cells, and the complement system.' },
+                    { term: 'Interferon', definition: 'A type of cytokine that has antiviral properties and can modulate the immune response.' },
+                    { term: 'Interleukin', definition: 'A group of cytokines that act as chemical signals between white blood cells.' },
+                    // L
+                    { term: 'Lymph Node', definition: 'Small, bean-shaped structures that are part of the lymphatic system and filter harmful substances. They contain immune cells that are ready to respond to infection.' },
+                    // M
+                    { term: 'Macrophage', definition: 'A large phagocytic cell found in tissues, derived from blood monocytes. It engulfs pathogens and cellular debris.' },
+                    { term: 'Mast Cell', definition: 'A cell found in connective tissue that releases histamine and other inflammatory mediators during an allergic reaction.' },
+                    { term: 'Mast Cell Tryptase', definition: 'An enzyme released from mast cells during an allergic reaction. Measuring its level can help confirm if a patient has had an anaphylactic reaction.' },
+                    { term: 'Memory Cell', definition: 'A long-lived lymphocyte (T or B cell) that "remembers" a specific antigen, allowing for a faster and stronger immune response upon re-exposure.' },
+                    { term: 'MHC (Major Histocompatibility Complex)', definition: 'The genetic region that codes for HLA proteins. See HLA.' },
+                    { term: 'Monoclonal Gammopathy of Undetermined Significance (MGUS)', definition: 'A condition where an abnormal paraprotein is present in the blood, but there are no signs of multiple myeloma or other related diseases.' },
+                    { term: 'Multiple Myeloma', definition: 'A cancer of plasma cells in the bone marrow, which produce a large amount of a single, abnormal immunoglobulin (a paraprotein).' },
+                    // N
+                    { term: 'Natural Killer (NK) Cell', definition: 'A type of lymphocyte of the innate immune system that can kill tumour cells and virus-infected cells without prior sensitisation.' },
+                    // O
+                    { term: 'Opsonisation', definition: 'The process by which a pathogen is marked for ingestion and destruction by a phagocyte. Antibodies and complement proteins can act as opsonins.' },
+                    // P
+                    { term: 'Paraprotein (Monoclonal Protein)', definition: 'An abnormal immunoglobulin produced by a single clone of plasma cells. Its presence can indicate conditions like MGUS or multiple myeloma.' },
+                    { term: 'Phagocytosis', definition: 'The process by which a cell, such as a macrophage or neutrophil, engulfs a solid particle to form an internal vesicle known as a phagosome.' },
+                    { term: 'Plasma Cell', definition: 'A fully differentiated B-lymphocyte that is specialized in producing and secreting large quantities of antibodies.' },
+                    { term: 'Primary Immunodeficiency', definition: 'An immunodeficiency that is caused by a genetic defect, present from birth.' },
+                    // R
+                    { term: 'RAST (Radioallergosorbent test)', definition: 'A term often used generically to refer to a blood test for specific IgE, which helps determine if a person is allergic to a particular substance.' },
+                    { term: 'Rheumatoid Arthritis', definition: 'A chronic autoimmune disorder that primarily affects the joints, causing inflammation, pain, and damage. Associated with RF and anti-CCP antibodies.' },
+                    { term: 'Rheumatoid Factor (RF)', definition: 'An autoantibody (usually IgM) that targets the Fc portion of a person\'s own IgG. It is often found in patients with Rheumatoid Arthritis but can be seen in other conditions.' },
+                    // S
+                    { term: 'Secondary Immunodeficiency', definition: 'An immunodeficiency that is acquired as a result of another condition, such as HIV infection, malnutrition, or immunosuppressive drugs.' },
+                    { term: 'Serum Free Light Chains', definition: 'Immunoglobulin light chains (kappa and lambda) that circulate in the blood unbound to heavy chains. The ratio of kappa to lambda is a very sensitive test for plasma cell disorders like multiple myeloma.' },
+                    { term: 'Sjögren\'s Syndrome', definition: 'An autoimmune disease that primarily affects the glands that produce tears and saliva, leading to dry eyes and a dry mouth. Associated with anti-Ro and anti-La antibodies.' },
+                    { term: 'Systemic Lupus Erythematosus (SLE)', definition: 'A chronic autoimmune disease that can affect many parts of the body, including the skin, joints, kidneys, and brain. Characterised by the presence of autoantibodies, especially ANA and anti-dsDNA.' },
+                    { term: 'Systemic Sclerosis (Scleroderma)', definition: 'An autoimmune disease characterized by the hardening and tightening of the skin and connective tissues. Associated with specific autoantibodies like anti-centromere and anti-Scl-70.' },
+                    // T
+                    { term: 'T-Lymphocyte (T-Cell)', definition: 'A type of lymphocyte that matures in the thymus and is central to cell-mediated immunity. Includes helper T-cells and cytotoxic T-cells.' },
+                    { term: 'Tissue Transglutaminase (tTG) Antibody', definition: 'An autoantibody (usually IgA) that is a highly sensitive and specific marker for Coeliac Disease.' },
+                    { term: 'Tolerance', definition: 'The state of unresponsiveness of the immune system to substances or tissues that have the potential to induce an immune response. Central tolerance prevents the immune system from attacking itself.' },
+                    // V
+                    { term: 'Vaccine', definition: 'A biological preparation that provides active acquired immunity to a particular infectious disease.' },
+                    { term: 'Vasculitis', definition: 'Inflammation of the blood vessels. ANCA testing is crucial for diagnosing certain types of small vessel vasculitis.' }
+                ]
+            };
 
     "learningLinks": {
         "general": [
