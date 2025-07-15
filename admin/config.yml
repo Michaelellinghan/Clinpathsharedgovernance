@@ -1,0 +1,88 @@
+# The backend configuration tells Netlify CMS how to connect to your GitHub repository.
+backend:
+  name: git-gateway
+  branch: main # Or master, or whatever your main branch is called
+
+# This is for uploading images or other files.
+media_folder: "assets/images" # Where to store uploaded files
+public_folder: "/assets/images" # The public URL for the above folder
+
+# This is the most important part. The "collections" define all the content
+# that you can edit in the CMS. I have created a collection for each
+# page and data list from your website.
+collections:
+  # This is a "file" collection, which means all the data for your pages
+  # will be stored in one single file. This is great for site-wide settings
+  # and page content.
+  - name: "pages"
+    label: "Website Pages & Content"
+    files:
+      - name: "content"
+        label: "All Website Content"
+        file: "src/_data/content.json" # All content will be saved here
+        fields:
+          # Each field here corresponds to a section in your old database.js
+          - { label: "Home Page", name: "page_index", widget: "object", fields: [
+              { label: "Title", name: "title", widget: "string" },
+              { label: "Introduction", name: "intro", widget: "text" },
+              { label: "Homepage Cards", name: "cards", widget: "list", fields: [
+                  { label: "Icon", name: "icon", widget: "string" },
+                  { label: "Title", name: "title", widget: "string" },
+                  { label: "Description", name: "description", widget: "string" },
+                  { label: "URL", name: "url", widget: "string" }
+              ]}
+          ]}
+          - { label: "About Page", name: "page_about", widget: "object", fields: [
+              { label: "Title", name: "title", widget: "string" },
+              { label: "Shared Governance Title", name: "shared_governance_title", widget: "string" },
+              { label: "Shared Governance Intro", name: "shared_governance_intro", widget: "text" },
+              { label: "Council Mission", name: "council_mission", widget: "text" }
+          ]}
+          - { label: "Contact Page", name: "page_contact", widget: "object", fields: [
+              { label: "Title", name: "title", widget: "string" },
+              { label: "Intro Text", name: "intro_text", widget: "text" },
+              { label: "Chair Name", name: "chair_name", widget: "string" },
+              { label: "Chair Email", name: "chair_email", widget: "string" }
+          ]}
+          - { label: "Council Members", name: "members", widget: "list", fields: [
+              { label: "Name", name: "name", widget: "string" },
+              { label: "Department", name: "department", widget: "string" },
+              { label: "Email", name: "email", widget: "string" },
+              { label: "Image", name: "image_url", widget: "image", required: false }
+          ]}
+          - { label: "Newsletters", name: "newsletters", widget: "list", fields: [
+              { label: "Title", name: "title", widget: "string" },
+              { label: "URL", name: "url", widget: "string" }
+          ]}
+          - { label: "Learning Links", name: "learning_links", widget: "object", fields: [
+              { label: "General", name: "general", widget: "list", fields: [
+                  { label: "Name", name: "name", widget: "string" },
+                  { label: "URL", name: "url", widget: "string" },
+                  { label: "Description", name: "description", widget: "string" }
+              ]},
+              { label: "Haematology", name: "haematology", widget: "list", fields: [
+                  { label: "Name", name: "name", widget: "string" },
+                  { label: "URL", name: "url", widget: "string" },
+                  { label: "Description", name: "description", widget: "string" }
+              ]},
+              { label: "Transfusion", name: "transfusion", widget: "list", fields: [
+                  { label: "Name", name: "name", widget: "string" },
+                  { label: "URL", name: "url", widget: "string" },
+                  { label: "Description", name: "description", widget: "string" }
+              ]},
+              { label: "Chemistry", name: "chemistry", widget: "list", fields: [
+                  { label: "Name", name: "name", widget: "string" },
+                  { label: "URL", name: "url", widget: "string" },
+                  { label: "Description", name: "description", widget: "string" }
+              ]},
+              { label: "Immunology", name: "immunology", widget: "list", fields: [
+                  { label: "Name", name: "name", widget: "string" },
+                  { label: "URL", name: "url", widget: "string" },
+                  { label: "Description", name: "description", widget: "string" }
+              ]}
+          ]}
+          # Add other pages and tools here following the same pattern
+          - { label: "Lab Discussion Questions", name: "game_lab_discussions", widget: "object", fields: [
+              { label: "Title", name: "title", widget: "string" },
+              { label: "Questions", name: "questions", widget: "list", field: { label: "Question", name: "question", widget: "string" }}
+          ]}
