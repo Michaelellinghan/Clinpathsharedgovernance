@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGC Content Editor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <header class="bg-gray-800 text-white shadow-md">
+        <div class="container mx-auto px-6 py-4">
+            <h1 class="text-xl font-bold">SGC Content Editor</h1>
+        </div>
+    </header>
+
+    <main class="py-10">
+        <div class="container mx-auto px-6">
+            <div class="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-6" role="alert">
+                <p class="font-bold">How to Use This Page</p>
+                <ol class="list-decimal list-inside mt-2">
+                    <li>Make any changes you need to the text in the box below.</li>
+                    <li>When you're finished, click the "Prepare & Copy Content" button.</li>
+                    <li>Open the `database.js` file in your code editor or on GitHub.</li>
+                    <li>Delete all the old text in `database.js` and paste the new content from your clipboard.</li>
+                    <li>Save the `database.js` file. Your website will now be updated.</li>
+                </ol>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <label for="content-editor" class="block text-lg font-semibold text-gray-700 mb-2">Master Content File Editor</label>
+                <textarea id="content-editor" class="w-full h-screen p-4 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none font-mono text-sm"></textarea>
+                <button id="copy-btn" class="mt-4 w-full bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition duration-300">Prepare & Copy Content</button>
+            </div>
+        </div>
+    </main>
+
+    <script src="database.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const editor = document.getElementById('content-editor');
+            const copyBtn = document.getElementById('copy-btn');
+
+            // Check if SGC_DATA exists from the loaded script
+            if (typeof SGC_DATA !== 'undefined') {
+                // Convert the object to a nicely formatted string and display it in the textarea
+                const formattedString = JSON.stringify(SGC_DATA, null, 2);
+                editor.value = formattedString;
+            } else {
+                editor.value = "Error: Could not load database.js. Please ensure the file exists and is in the same directory.";
+            }
+
+            copyBtn.addEventListener('click', () => {
+                try {
+                    // Get the text from the editor
+                    const editorText = editor.value;
+                    // Re-wrap it as a JavaScript variable assignment
+                    const fullFileContent = `const SGC_DATA = ${editorText};`;
+
+                    // Copy to clipboard
+                    navigator.clipboard.writeText(fullFileContent).then(() => {
+                        alert('Content copied to clipboard!\n\nNow open your `database.js` file and replace its contents with what you just copied.');
+                    }).catch(err => {
+                        console.error('Could not copy text: ', err);
+                        alert('Failed to copy content. Please copy it manually from the text box.');
+                    });
+
+                } catch (e) {
+                    alert('The text in the editor is not valid. Please check for errors.');
+                    console.error('Error parsing content:', e);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
