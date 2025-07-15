@@ -1,5 +1,5 @@
 
-{
+const SGC_DATA = {
     // =================================================================
     // CORE PAGE CONTENT
     // =================================================================
@@ -755,3 +755,4 @@
         "peer_features": [ { "feature": "Eosinophilia", "count": 435 }, { "feature": "Sickle Cells", "count": 428 } ],
         "morphology_features": { "Red Cell Features": ["Microcytes", "Hypochromic Cells"], "White Cell Features": ["Eosinophilia", "Band Form Neutrophils"], "Platelet Features": ["Thrombocytosis", "Large/Giant Platelets"] }
     }
+            };
