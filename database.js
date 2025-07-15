@@ -1,669 +1,755 @@
 const SGC_DATA = {
     // =================================================================
-    // DATA LISTS (for content that is repeated, like lists or tables)
+    // CORE PAGE CONTENT
     // =================================================================
+    "page_index": {
+        "title": "NUH Clinical Pathology Shared Governance",
+        "intro": "Discover our projects, read our latest news, and find helpful resources from the Nottingham University Hospitals Clinical Pathology team.",
+        "cards": [
+            { "icon": "clipboard", "title": "Our Projects", "description": "See the initiatives we're working on.", "url": "projects.html" },
+            { "icon": "play-circle", "title": "Pathology Games", "description": "Test your knowledge with our fun, interactive games.", "url": "games.html" },
+            { "icon": "tool", "title": "Helpful Tools", "description": "Practical utilities to help with day-to-day tasks.", "url": "helpful_tools.html" },
+            { "icon": "file-text", "title": "Newsletters", "description": "Catch up on the latest news from the council.", "url": "newsletters.html" },
+            { "icon": "users", "title": "About Us", "description": "Learn about our council and what we do.", "url": "about.html" },
+            { "icon": "book-open", "title": "Learning Links", "description": "Useful resources for professional development.", "url": "links.html" },
+            { "icon": "instagram", "title": "Social Media", "description": "Videos promoting our role as Biomedical Scientists.", "url": "social.html" },
+            { "icon": "send", "title": "Suggestions", "description": "Have an idea for a project? Let us know.", "url": "contact.html" }
+        ]
+    },
+    "page_about": {
+        "title": "About Us & The Council",
+        "shared_governance_title": "What is Shared Governance?",
+        "shared_governance_intro": "Shared Governance is a model of empowerment that gives staff a direct voice in the decisions that affect their working lives and the quality of patient care. It moves away from traditional top-down management, creating a partnership between frontline staff and leadership.",
+        "council_mission": "Through councils like ours, team members can take ownership of clinical practice, shape policies, and drive improvements from the ground up. We are proud to be the first non-patient-facing, Pathology-specific Shared Governance Council in the UK, pioneering this approach to enhance our services and empower our dedicated scientific and support staff."
+    },
+    "page_contact": {
+        "title": "Have a Suggestion?",
+        "intro_text": "Your ideas are important to us. If you have a suggestion for a new project or an improvement, we'd love to hear from you. Please get in touch with the council chair.",
+        "chair_name": "Michael Ellingham",
+        "chair_email": "michael.ellingham@nhs.net"
+    },
+    "page_projects_landing": {
+        "title": "Our Projects",
+        "projects": [
+            { "title": "Patient Interviews & Tours", "description": "Learn more about our patient-focused initiatives.", "url": "patient_interviews.html", "image": "interview.jpeg" },
+            { "title": "Laboratory Video Tours", "description": "Discover our video series for wards and GPs.", "url": "video_tours.html", "image": "lab.jpg" },
+            { "title": "Garden Project", "description": "See how we're creating a space for wellbeing.", "url": "garden_project.html", "image": "garden.jpg" }
+        ]
+    },
+    "page_patient_interviews": {
+        "title": "Patient Interviews & Tours",
+        "intro": "This project aims to bridge the gap between the laboratory and the patient experience. By sharing patient stories and providing lab tours, we can better understand the impact of our work and find new ways to improve patient care.",
+        "interview_title": "Patient Interviews",
+        "tours_title": "Harvey's Lab Tours",
+        "tours_intro": "Here are some prior tours provided by the laboratory via Harvey's Gang (now Harvey's Lab Tours).",
+        "harvey_links": [
+            { "title": "Young patient becomes a ‘trainee biomedical scientist’ (Nov 2019)", "description": "Read about seven-year-old Evie's tour of the labs at QMC.", "url": "https://www.nuh.nhs.uk/news/young-patient-becomes-a-trainee-biomedical-scientist-at-queens-medical-centre-3549/" },
+            { "title": "Daughter with rare condition can be 'happy and confident' (Nov 2023)", "description": "A recent tour for a young girl to help her understand her treatment.", "url": "https://www.nottinghampost.com/news/local-news/rare-condition-daughter-can-happy-8946245" },
+            { "title": "Pathologists help 13-year old boy overcome fear of blood tests (May 2018)", "description": "The story of the very first Harvey's Gang tour at NUH.", "url": "https://www.nuh.nhs.uk/news/pathologists-at-nuh-help-13year-old-boy-with-rare-illness-overcome-fear-of-blood-tests-2728/" }
+        ]
+    },
+    "page_nikki_story": {
+        "title": "Nikki Fretwell's Story",
+        "article_title": "Newsletter Article",
+        "content_html": "<p class=\"font-bold text-lg\">Dialysis is something I do. It doesn’t define me.</p><p>Recently, pathology had the privilege of meeting a phenomenal woman. Her name is Nikki Fretwell...</p>"
+    },
+    "page_video_tours": {
+        "title": "Laboratory Video Tours",
+        "intro": "We're curating a series of videos for each department in Clinical Pathology to teach the wards and GPs what we do and what they can do to help us improve patient care. These short, engaging videos will cover key aspects of the pathology process, from sample collection to result interpretation, providing a valuable educational resource for clinical staff.",
+        "chemistry_video_url": "https://www.canva.com/design/DAGrMNYRfp8/pHyUmUFeWLuQibuvzMzubg/view?embed"
+    },
+    "page_social": {
+        "title": "Social Media Showcase",
+        "intro": "We're looking for staff to help us create a series of videos for all departments, promoting our role and what we do in the lab. Please send us your videos to help kick-start this exciting project!",
+        "submit_email": "mailto:michael.ellingham@nhs.net?subject=SGC%20Video%20Submission",
+        "videos": [
+            { "title": "A Day in the Life (TikTok)", "description": "A great short video showcasing the work of Biomedical Scientists.", "url": "https://vm.tiktok.com/ZNdBGuPcg/", "thumbnail": "tiktok-thumbnail.jpg", "type": "link" },
+            { "title": "\"Biomedical Science is like medicine but easier\"", "description": "A Q&A short addressing this common misconception.", "url": "https://www.youtube.com/embed/4AI7y--kvs0", "type": "embed" },
+            { "title": "All about blood smears (Part 1)", "description": "A quick and informative look at creating blood smears in the lab.", "url": "https://www.youtube.com/embed/vjMLVGA2JuU", "type": "embed" },
+            { "title": "Q&A with a BMS Apprentice", "description": "An insightful Q&A session with an NHS apprentice Biomedical Scientist.", "url": "https://www.youtube.com/embed/Z2yLTLG2xN8", "type": "embed" }
+        ]
+    },
+    "page_sustainability_corner": {
+        "title": "Resource & Sustainability Corner",
+        "intro": "Learn about how we can use our resources more mindfully, reduce waste, and improve efficiency. Small changes can make a big difference.",
+        "links": [
+            { "icon": "truck", "title": "The Journey of a Sample", "description": "An insight into the resources and costs involved in every step of the sample pathway.", "url": "journey_of_a_sample.html" },
+            { "icon": "plus-circle", "title": "The Power of the Add-On Test", "description": "A guide explaining which tests can be added to existing samples, avoiding unnecessary re-bleeds.", "url": "add_on_guide.html" },
+            { "icon": "trash-2", "title": "Waste Management & Costs", "description": "Learn about the correct disposal of laboratory waste and the surprising costs involved.", "url": "waste_management.html" }
+        ]
+    },
+    "page_journey_of_a_sample": {
+        "title": "The Journey of a Sample",
+        "intro": "From the patient's arm to the final report, every sample consumes valuable resources. Understanding this journey helps us appreciate the importance of getting it right first time.",
+        "steps": [
+            { "icon": "user-plus", "title": "Step 1: The Request & Collection", "description": "The process begins with a clinical need. A request is made, and a trained phlebotomist collects the sample from the patient.", "resources": ["Staff Time: Phlebotomist/Nurse time, Clerical time.", "Consumables: Needle, tube holder, vacutainer tube(s), alcohol wipe, gauze, plaster, transport bag."] },
+            { "icon": "truck", "title": "Step 2: Transport to the Lab", "description": "The sample must be transported safely and quickly to the laboratory to ensure its integrity.", "resources": ["Pneumatic Tube System: Significant electrical energy consumption.", "Portering Service: Staff time and wages.", "Van Transport (for GP practices): Fuel, vehicle maintenance, driver's time."] },
+            { "icon": "log-in", "title": "Step 3: Laboratory Reception & Preparation", "description": "The sample arrives, is checked against the request, and booked into the Laboratory Information Management System (LIMS).", "resources": ["Staff Time: MLA/AP time for booking-in and sorting.", "Electricity: Power for centrifuges (for serum/plasma), computers, and barcode scanners.", "Asset Use: High-speed centrifuges are expensive assets that require regular maintenance."] },
+            { "icon": "cpu", "title": "Step 4: Analysis", "description": "The sample is processed on a highly complex, automated analyser.", "resources": ["High-Value Asset: Analysers cost tens to hundreds of thousands of pounds and have expensive service contracts.", "Reagents & Consumables: Every test uses specific, costly reagents, diluents, and cleaning fluids.", "Quality Control: QC material must be run every day to ensure accuracy, consuming further reagents.", "Electricity & Water: Analysers are significant consumers of power and purified water.", "Estimated Cost per FBC/U&E: ~£1.00 - £3.00 in direct analytical costs."] },
+            { "icon": "check-square", "title": "Step 5: Validation & Reporting", "description": "A qualified Biomedical Scientist reviews the result, checks for errors, and validates it. Abnormal results may require further interpretation or referral.", "resources": ["Highly Skilled Staff Time: The expertise of a registered BMS is essential for ensuring the quality and safety of every result.", "IT Infrastructure: Servers and software (LIMS) are needed to manage and store millions of patient results securely."] },
+            { "icon": "archive", "title": "Step 6: Storage & Disposal", "description": "After analysis, samples are stored for a set period in large, refrigerated units before being disposed of as clinical waste.", "resources": ["Cold Storage: Walk-in fridges consume a large amount of electricity 24/7 to keep samples viable for add-on tests.", "Clinical Waste Disposal: Disposing of thousands of samples per day is a major operational cost.", "Cost of Waste: A single bin of clinical waste can cost **over £20** to dispose of correctly."] }
+        ],
+        "summary": "When you combine consumables, staff time, transport, energy, and waste, the true cost of a single \"routine\" blood test is far more than just the reagents. Every rejected sample that requires a redraw multiplies this cost. **Getting it right first time matters.**"
+    },
+    "page_waste_management": {
+        "title": "A Guide to Waste Management",
+        "intro": "Helping Pathology save money and protect the environment.",
+        "chart_title": "The True Cost of Our Bins",
+        "chart_intro": "Using the wrong bin is one of the biggest sources of preventable cost in the Trust. The price to dispose of waste varies dramatically depending on the stream. This chart shows the average cost to dispose of one tonne of waste, based on NUH policy.",
+        "streams": [
+            { "title": "Waste for Incineration", "icon": "alert-octagon", "bag": "Yellow Bag / Yellow-lidded Sharps Bin", "color": "yellow-600", "description": "This stream is for waste that <strong>must be incinerated</strong> due to chemical or medicinal contamination. This is our most expensive waste stream and should be used with care.", "costPerTonne": 600, "costPerBin": "£4 - £6", "examples": ["Waste contaminated with chemicals or medicines (except cytotoxic).", "All sharps (needles, slides, broken glass from lab).", "Known highly infectious laboratory waste.", "Blood gas analyser cartridges."] },
+            { "title": "Infectious Clinical Waste", "icon": "biohazard", "bag": "Orange Bag", "color": "orange-600", "description": "For waste contaminated with blood or other bodily fluids that is known or believed to be infectious. This waste is sent for alternative treatment (e.g., autoclaving) to render it safe before disposal.", "costPerTonne": 420, "costPerBin": "£3 - £4", "examples": ["Used sample tubes (EDTA, Serum, Citrate etc.)", "Contaminated gloves, aprons, and other PPE.", "Blood product packaging.", "Used sample swabs and plastic pasteurs.", "Contaminated bench roll and consumables."] },
+            { "title": "Offensive Waste", "icon": "wind", "bag": "Tiger Stripe Bag (Yellow with Black Stripes)", "color": "yellow-800", "description": "For non-infectious waste that may be unpleasant (e.g., contains body fluids but from a non-infectious source). A much cheaper alternative to orange/yellow streams.", "costPerTonne": 300, "costPerBin": "£2 - £3", "examples": ["Used PPE (gloves, masks) from non-infectious areas.", "Non-infectious incontinence pads.", "Non-infectious wound dressings.", "Empty, non-contaminated urine containers."] },
+            { "title": "General / 'Black Bag' Waste", "icon": "archive", "bag": "Black Bag", "color": "gray-800", "description": "This is for general, non-clinical waste. Using this correctly for non-contaminated items is the most cost-effective and environmentally friendly option.", "costPerTonne": 160, "costPerBin": "Less than £1.50", "examples": ["Paper towels and outer cardboard packaging.", "Non-contaminated stationery.", "Food wrappers and drink cans.", "Uncontaminated plastic packaging."] },
+            { "title": "Recycling & Cardboard", "icon": "recycle", "bag": "Clear Bag / Designated Cardboard Bin", "color": "green-600", "description": "For clean, non-contaminated recyclable materials. Cardboard should be flattened and placed in designated large bins.", "costPerTonne": 40, "costPerBin": "Less than £0.50", "examples": ["Clean plastic bottles and cans.", "Non-confidential paper and office waste.", "Flattened reagent and delivery boxes.", "Newspapers and magazines."] }
+        ],
+        "summary": "Placing a single non-infectious, non-contaminated item in a yellow stream bin means the whole bin must be incinerated at a high cost. Every item placed in the correct bin makes a significant financial and environmental difference. Think before you throw!"
+    },
 
+    // =================================================================
+    // DATA LISTS
+    // =================================================================
     "members": [
-        {
-            "name": "Michael Ellingham",
-            "department": "Haematology & Blood Transfusion",
-            "email": "Michael.ellingham@nhs.net"
-        },
-        {
-            "name": "Katarzyna Fijalkowska",
-            "department": "Haematology & Blood Transfusion",
-            "email": "katarzyna.fijalkowska@nhs.net"
-        },
-        {
-            "name": "Akwasi Boakye",
-            "department": "Immunology",
-            "email": "akwasi.boakye1@nhs.net"
-        },
-        {
-            "name": "Yasmin Dixon",
-            "department": "Chemistry",
-            "email": "yasmin.dixon1@nhs.net"
-        },
-        {
-            "name": "Matthew Rodgers",
-            "department": "Chemistry",
-            "email": "matthew.rodgers6@nhs.net"
-        }
+        { "name": "Michael Ellingham", "department": "Haematology & Blood Transfusion", "email": "Michael.ellingham@nhs.net", "image_url": "placeholder.jpg" },
+        { "name": "Katarzyna Fijalkowska", "department": "Haematology & Blood Transfusion", "email": "katarzyna.fijalkowska@nhs.net", "image_url": "placeholder.jpg" },
+        { "name": "Akwasi Boakye", "department": "Immunology", "email": "akwasi.boakye1@nhs.net", "image_url": "placeholder.jpg" },
+        { "name": "Yasmin Dixon", "department": "Chemistry", "email": "yasmin.dixon1@nhs.net", "image_url": "placeholder.jpg" },
+        { "name": "Matthew Rodgers", "department": "Chemistry", "email": "matthew.rodgers6@nhs.net", "image_url": "placeholder.jpg" }
     ],
-
-    "glossary": {
-        haem: [
-                    // A
-                    { term: 'Acanthocyte (Spur Cell)', definition: 'An erythrocyte (red blood cell) with a few, irregularly spaced spikes of varying length. Associated with severe liver disease.' },
-                    { term: 'Activated Clotting Time (ACT)', definition: 'A point-of-care test used to monitor high-dose heparin therapy, commonly during cardiac surgery.'},
-                    { term: 'Acute Leukaemia', definition: 'A rapidly progressing cancer of the blood-forming tissues, characterized by the proliferation of immature blast cells.'},
-                    { term: 'Agglutination', definition: 'The clumping of red blood cells, usually due to an antigen-antibody reaction. Can interfere with automated cell counts.' },
-                    { term: 'Agranulocytosis', definition: 'A severe and dangerous reduction in the number of granulocytes (a type of white blood cell), leading to a high risk of infection.'},
-                    { term: 'Anaemia', definition: 'A condition where the number of red blood cells or the amount of haemoglobin in the blood is lower than normal, leading to reduced oxygen transport.' },
-                    { term: 'Anaemia of Chronic Disease', definition: 'A type of anaemia that affects people who have conditions associated with chronic inflammation, such as infections, autoimmune diseases, or cancer.'},
-                    { term: 'Anisocytosis', definition: 'Significant variation in the size of erythrocytes. Indicated by a high Red Cell Distribution Width (RDW).' },
-                    { term: 'Anticoagulant', definition: 'A substance that prevents blood from clotting. Examples include EDTA and Citrate, which are used in sample tubes.' },
-                    { term: 'Anti-Factor Xa Assay', definition: 'A laboratory test used to measure the level of certain anticoagulants, such as Low Molecular Weight Heparin (LMWH) and Direct Oral Anticoagulants (DOACs).'},
-                    { term: 'Antithrombin', definition: 'A protein in the blood that inhibits coagulation by inactivating thrombin and other clotting factors. Deficiency increases the risk of thrombosis.'},
-                    { term: 'Aplastic Anaemia', definition: 'A rare and serious condition where the bone marrow fails to produce enough of all three types of blood cells: red cells, white cells, and platelets.'},
-                    { term: 'APTT (Activated Partial Thromboplastin Time)', definition: 'A test that measures the time it takes for a clot to form. It assesses the intrinsic and common pathways of coagulation and is used to monitor heparin therapy.' },
-                    { term: 'Auer Rod', definition: 'An eosinophilic, needle-like inclusion in the cytoplasm of myeloblasts; a definitive sign of acute myeloid leukaemia (AML).' },
-                    { term: 'Atypical Lymphocyte', definition: 'A lymphocyte that is larger than normal, with changes to its nucleus and cytoplasm. Often seen in response to viral infections, especially glandular fever (infectious mononucleosis).' },
-                    // B
-                    { term: 'Band Neutrophil', definition: 'An immature neutrophil with a U-shaped or curved nucleus. An increased number (a "left shift") suggests an active infection.' },
-                    { term: 'Basophil', definition: 'A type of white blood cell (granulocyte) containing large, dark purple granules. Involved in allergic reactions.' },
-                    { term: 'Basophilia', definition: 'An increased number of basophils in the blood. Can be seen in myeloproliferative neoplasms like Chronic Myeloid Leukaemia (CML).'},
-                    { term: 'Basophilic Stippling', definition: 'The presence of small, dark blue-staining dots (precipitated RNA) throughout an erythrocyte. Associated with lead poisoning and certain types of anaemia.' },
-                    { term: 'Blast', definition: 'The earliest and most immature recognisable cell in a blood cell line. Their presence in peripheral blood is abnormal and often indicates leukaemia.' },
-                    { term: 'Bleeding Time', definition: 'An older clinical test that measured the time taken for bleeding to stop after a small, standardized incision. Largely replaced by other platelet function tests.'},
-                    { term: 'Blood Film (or Smear)', definition: 'A drop of blood spread thinly on a glass slide, which is then stained and examined microscopically to assess cell morphology.' },
-                    { term: 'Bone Marrow Aspirate', definition: 'A procedure to remove a small sample of the liquid part of the bone marrow for microscopic examination.'},
-                    { term: 'Bone Marrow Trephine', definition: 'A procedure to remove a small, solid core of bone marrow tissue. It provides information about the structure and cellularity of the marrow.'},
-                    // C
-                    { term: 'Cabot Ring', definition: 'A rare, thin, ring-like or figure-eight shaped inclusion in a red blood cell. Its significance is unclear but can be seen in severe anaemias.'},
-                    { term: 'CD Markers (Cluster of Differentiation)', definition: 'Molecules on the surface of cells that are used to identify and characterize different cell types, particularly white blood cells. Essential for diagnosing leukaemias and lymphomas.'},
-                    { term: 'Chronic Leukaemia', definition: 'A slowly progressing cancer of the blood-forming tissues, characterized by the proliferation of more mature, but still abnormal, blood cells.'},
-                    { term: 'Chronic Myeloid Leukaemia (CML)', definition: 'A type of myeloproliferative neoplasm characterized by the overproduction of granulocytes, often associated with the Philadelphia chromosome.'},
-                    { term: 'Citrate', definition: 'The anticoagulant used in light blue-topped tubes for coagulation testing. It works by binding calcium but in a reversible way.'},
-                    { term: 'Clotting Factors', definition: 'A group of proteins in the blood that work together in a cascade to form a blood clot. Deficiencies lead to bleeding disorders like haemophilia.'},
-                    { term: 'Coagulation', definition: 'The process of blood clotting, involving a complex cascade of protein interactions (clotting factors).' },
-                    { term: 'Coagulation Screen', definition: 'A set of initial tests to investigate a potential bleeding disorder, typically including Prothrombin Time (PT) and Activated Partial Thromboplastin Time (APTT).' },
-                    { term: 'Codocyte (Target Cell)', definition: 'An erythrocyte with a central spot of haemoglobin, resembling a target. Seen in liver disease and haemoglobinopathies like thalassaemia.' },
-                    // D
-                    { term: 'Dacrocyte (Teardrop Cell)', definition: 'An erythrocyte shaped like a teardrop. Associated with myelofibrosis and other conditions where the bone marrow is infiltrated.' },
-                    { term: 'D-Dimer', definition: 'A small protein fragment present in the blood after a blood clot is degraded by fibrinolysis. A key test used to help rule out thrombosis (e.g., DVT or PE).' },
-                    { term: 'DIC (Disseminated Intravascular Coagulation)', definition: 'A serious condition where the blood clotting process is activated throughout the body, leading to widespread clotting and subsequent bleeding.' },
-                    { term: 'Differential Count', definition: 'The percentage and absolute number of each type of white blood cell in a blood sample.'},
-                    { term: 'Döhle Body', definition: 'A pale blue inclusion in the cytoplasm of neutrophils, consisting of remnants of cellular structures. A non-specific sign of infection or inflammation.'},
-                    { term: 'Drepanocyte (Sickle Cell)', definition: 'An elongated, crescent-shaped erythrocyte that forms when Haemoglobin S polymerises under low oxygen conditions. The hallmark of Sickle Cell Anaemia.' },
-                    { term: 'Dyserythropoiesis', definition: 'Abnormal red blood cell development in the bone marrow, a feature of myelodysplastic syndromes.'},
-                    // E
-                    { term: 'Echinocyte (Burr Cell)', definition: 'An erythrocyte with many, short, evenly spaced spikes on its surface. Can be an artefact of storage or associated with kidney failure (uraemia) and liver disease.' },
-                    { term: 'EDTA (Ethylenediaminetetraacetic acid)', definition: 'An anticoagulant used in purple-topped blood tubes. It works by binding calcium, which is essential for clotting. It is the standard sample for a Full Blood Count.' },
-                    { term: 'Elliptocyte (Ovalocyte)', definition: 'An elliptical or oval-shaped erythrocyte. Large numbers are seen in hereditary elliptocytosis.' },
-                    { term: 'Eosinophil', definition: 'A type of white blood cell with a two-lobed nucleus and large, pink-red granules. Associated with allergic reactions and parasitic infections.' },
-                    { term: 'Eosinophilia', definition: 'An increased number of eosinophils in the blood.'},
-                    { term: 'Erythroblast', definition: 'Any of the nucleated cells that are precursors to mature red blood cells (erythrocytes). See also Nucleated Red Blood Cell.'},
-                    { term: 'Erythrocyte', definition: 'A mature red blood cell. A biconcave disc without a nucleus, containing haemoglobin to transport oxygen.'},
-                    { term: 'Erythropoiesis', definition: 'The process of producing red blood cells in the bone marrow.'},
-                    { term: 'Erythropoietin (EPO)', definition: 'A hormone produced by the kidneys that stimulates the bone marrow to produce more red blood cells.'},
-                    { term: 'ESR (Erythrocyte Sedimentation Rate)', definition: 'A non-specific test that measures the rate at which red blood cells settle in a tube of blood. An elevated ESR indicates inflammation.' },
-                    { term: 'Essential Thrombocythaemia (ET)', definition: 'A myeloproliferative neoplasm characterized by a sustained high platelet count.'},
-                    // F
-                    { term: 'Factor V Leiden', definition: 'A specific genetic mutation in clotting factor V, which is the most common inherited cause of thrombophilia.'},
-                    { term: 'Ferritin', definition: 'A protein that stores iron in the body. A low ferritin level is the most sensitive indicator of iron deficiency.'},
-                    { term: 'Fibrin', definition: 'An insoluble protein that forms a mesh-like network to form the basis of a blood clot.'},
-                    { term: 'Fibrinogen', definition: 'A soluble plasma protein (Factor I) that is converted into insoluble fibrin strands during blood clotting, forming the mesh of the clot.' },
-                    { term: 'Fibrinolysis', definition: 'The process of breaking down a blood clot once it is no longer needed.'},
-                    { term: 'Flow Cytometry', definition: 'A laboratory technique that analyzes the physical and chemical characteristics of cells as they pass through a laser beam. Essential for immunophenotyping.'},
-                    { term: 'Folate', definition: 'A B-vitamin necessary for the production of red blood cells. Deficiency causes megaloblastic anaemia.'},
-                    { term: 'Full Blood Count (FBC)', definition: 'A routine blood test that provides information about the different types and numbers of cells in the blood: red cells, white cells, and platelets.' },
-                    // G
-                    { term: 'G6PD (Glucose-6-Phosphate Dehydrogenase)', definition: 'An enzyme that protects red blood cells from damage. Deficiency can lead to haemolytic anaemia when exposed to certain triggers.'},
-                    { term: 'Glandular Fever (Infectious Mononucleosis)', definition: 'An illness caused by the Epstein-Barr virus (EBV), characterized by the presence of atypical lymphocytes in the blood.'},
-                    { term: 'Granulocyte', definition: 'A category of white blood cells that have granules in their cytoplasm, including neutrophils, eosinophils, and basophils.'},
-                    // H
-                    { term: 'Haematocrit (HCT) or Packed Cell Volume (PCV)', definition: 'The proportion of the blood that is made up of red blood cells, expressed as a percentage or a decimal.' },
-                    { term: 'Haematinics', definition: 'Substances required for the production of red blood cells, primarily iron, vitamin B12, and folate.'},
-                    { term: 'Haematopoiesis', definition: 'The formation and development of all types of blood cells from stem cells in the bone marrow.'},
-                    { term: 'Haemoglobin (Hb)', definition: 'The iron-containing protein in red blood cells that transports oxygen from the lungs to the rest of the body.' },
-                    { term: 'Haemoglobin Electrophoresis', definition: 'A laboratory test that separates the different types of haemoglobin in a blood sample, used to diagnose haemoglobinopathies like sickle cell anaemia and thalassaemia.'},
-                    { term: 'Haemoglobinopathy', definition: 'A group of inherited disorders affecting the structure or production of haemoglobin.'},
-                    { term: 'Haemolysis', definition: 'The rupture or destruction of red blood cells, which releases haemoglobin into the plasma. Can occur in the body (in vivo) or during sample collection/handling (in vitro).' },
-                    { term: 'Haemolytic Anaemia', definition: 'A type of anaemia caused by the premature destruction of red blood cells.'},
-                    { term: 'Haemophilia', definition: 'An inherited bleeding disorder where the blood does not clot properly due to a deficiency in a specific clotting factor (Factor VIII for Haemophilia A, Factor IX for Haemophilia B).'},
-                    { term: 'Haemostasis', definition: 'The physiological process that stops bleeding at the site of an injury, while maintaining normal blood flow elsewhere.'},
-                    { term: 'Hairy Cell Leukaemia', definition: 'A rare, slow-growing cancer of the blood in which the bone marrow makes too many B-lymphocytes that appear "hairy" under a microscope.'},
-                    { term: 'Heinz Body', definition: 'An inclusion within a red blood cell composed of denatured haemoglobin. Not visible on a standard blood film, requires a special stain.'},
-                    { term: 'Heparin', definition: 'An anticoagulant drug used to treat and prevent blood clots. Its effect is monitored using the APTT or Anti-Factor Xa assay.'},
-                    { term: 'Hereditary Spherocytosis', definition: 'An inherited condition affecting the red blood cell membrane, causing the cells to be spherical instead of biconcave, leading to their premature destruction in the spleen.'},
-                    { term: 'Howell-Jolly Body', definition: 'A small, round, dark purple remnant of nuclear DNA inside an erythrocyte. Normally removed by the spleen, so their presence suggests the spleen is absent or not working properly.' },
-                    { term: 'Hypercoagulable State', definition: 'Another term for thrombophilia, an increased tendency for blood to clot.'},
-                    { term: 'Hypersegmented Neutrophil', definition: 'A neutrophil with six or more nuclear lobes. A classic feature of megaloblastic anaemia (due to B12 or folate deficiency).' },
-                    { term: 'Hypochromia', definition: 'A decreased concentration of haemoglobin in the red blood cell, resulting in an increased area of central pallor. A feature of iron deficiency anaemia.'},
-                    // I
-                    { term: 'Idiopathic Thrombocytopenic Purpura (ITP)', definition: 'An autoimmune disorder where the immune system destroys the body\'s own platelets, leading to a low platelet count.'},
-                    { term: 'Immunophenotyping', definition: 'A laboratory process that uses antibodies to identify cells based on the types of antigens or markers on their surface. Crucial for classifying leukaemias.'},
-                    { term: 'INR (International Normalised Ratio)', definition: 'A standardised calculation based on the Prothrombin Time (PT) result, used to monitor the effectiveness of warfarin anticoagulant therapy.' },
-                    { term: 'Iron Deficiency Anaemia', definition: 'The most common type of anaemia, caused by a lack of iron, which is necessary to produce haemoglobin.'},
-                    // J
-                    { term: 'JAK2 Mutation', definition: 'A genetic mutation commonly found in patients with myeloproliferative neoplasms, such as polycythaemia vera and essential thrombocythaemia.'},
-                    // K
-                    { term: 'Keratocyte (Helmet Cell)', definition: 'A fragmented red blood cell with two horn-like projections, resulting from mechanical damage.'},
-                    // L
-                    { term: 'Left Shift', definition: 'An increase in the number of immature granulocytes (such as band neutrophils and metamyelocytes) in the peripheral blood, typically indicating a response to infection.'},
-                    { term: 'Leucocyte', definition: 'Another term for a white blood cell (WBC).' },
-                    { term: 'Leucocytosis', definition: 'A higher-than-normal number of white blood cells in the blood.'},
-                    { term: 'Leucopenia', definition: 'A lower-than-normal number of white blood cells in the blood.'},
-                    { term: 'Leukaemia', definition: 'Cancer of the blood-forming tissues, including the bone marrow, resulting in the overproduction of abnormal white blood cells.' },
-                    { term: 'Leukoerythroblastic Picture', definition: 'The presence of immature red cells (NRBCs) and immature white cells (e.g., myelocytes) in the peripheral blood. Suggests significant bone marrow stress or infiltration.'},
-                    { term: 'Lupus Anticoagulant', definition: 'An antibody that interferes with coagulation tests in the laboratory but paradoxically causes an increased risk of thrombosis in the body.'},
-                    { term: 'Lymphocyte', definition: 'A type of white blood cell responsible for the adaptive immune response. Includes T-cells and B-cells.' },
-                    { term: 'Lymphocytosis', definition: 'A higher-than-normal number of lymphocytes in the blood.'},
-                    { term: 'Lymphoma', definition: 'Cancer that begins in the lymphocytes of the immune system.' },
-                    // M
-                    { term: 'Macrocytosis', definition: 'A condition where red blood cells are larger than normal, indicated by a high Mean Cell Volume (MCV).' },
-                    { term: 'Malaria', definition: 'An infectious disease caused by Plasmodium parasites, transmitted by mosquitoes. The parasites infect and destroy red blood cells.'},
-                    { term: 'MCH (Mean Cell Haemoglobin)', definition: 'The average amount (mass) of haemoglobin in a single red blood cell.' },
-                    { term: 'MCHC (Mean Cell Haemoglobin Concentration)', definition: 'The average concentration of haemoglobin inside a single red blood cell.' },
-                    { term: 'MCV (Mean Cell Volume)', definition: 'The average size (volume) of the red blood cells.' },
-                    { term: 'Megakaryocyte', definition: 'A very large cell in the bone marrow that is responsible for producing platelets.'},
-                    { term: 'Megaloblastic Anaemia', definition: 'A type of macrocytic anaemia characterized by large, immature, and dysfunctional red blood cells (megaloblasts) in the bone marrow, typically caused by vitamin B12 or folate deficiency.'},
-                    { term: 'Metamyelocyte', definition: 'An immature granulocyte, the stage of development between a myelocyte and a band neutrophil.'},
-                    { term: 'Microcytosis', definition: 'A condition where red blood cells are smaller than normal, indicated by a low Mean Cell Volume (MCV). Often caused by iron deficiency.' },
-                    { term: 'Monocyte', definition: 'The largest type of white blood cell. They are phagocytes that circulate in the blood before migrating into tissues to become macrophages.' },
-                    { term: 'Monocytosis', definition: 'An increased number of monocytes in the blood.'},
-                    { term: 'Multiple Myeloma', definition: 'A cancer of plasma cells, a type of white blood cell in the bone marrow. It is characterized by the production of a large amount of abnormal antibody (paraprotein).'},
-                    { term: 'Myeloblast', definition: 'The earliest identifiable precursor of the granulocytic series in the bone marrow.'},
-                    { term: 'Myelocyte', definition: 'An immature granulocyte, the stage of development between a promyelocyte and a metamyelocyte.'},
-                    { term: 'Myelodysplastic Syndrome (MDS)', definition: 'A group of disorders caused by poorly formed or dysfunctional blood cells in the bone marrow. Can progress to acute leukaemia.'},
-                    { term: 'Myelofibrosis', definition: 'A serious bone marrow disorder where the marrow is replaced by fibrous scar tissue, leading to severe anaemia and an enlarged spleen.'},
-                    { term: 'Myeloproliferative Neoplasm (MPN)', definition: 'A group of diseases in which the bone marrow produces too many red cells, white cells, or platelets. Includes CML, polycythaemia vera, essential thrombocythaemia, and myelofibrosis.'},
-                    // N
-                    { term: 'Neutropenia', definition: 'A lower-than-normal number of neutrophils in the blood, which increases the risk of infection.' },
-                    { term: 'Neutrophil', definition: 'The most common type of white blood cell. They are a key part of the innate immune system and are the first responders to infection.' },
-                    { term: 'Neutrophilia', definition: 'A higher-than-normal number of neutrophils in the blood, often in response to infection.'},
-                    { term: 'Normoblast', definition: 'Another term for a nucleated red blood cell (erythroblast).'},
-                    { term: 'Nucleated Red Blood Cell (NRBC)', definition: 'An immature red blood cell that still contains a nucleus. Their presence in adult peripheral blood is abnormal.'},
-                    // P
-                    { term: 'Pancytopenia', definition: 'A reduction in the number of all three major blood cell types: red cells, white cells, and platelets.' },
-                    { term: 'Pappenheimer Bodies', definition: 'Small, irregular granules of iron seen inside red blood cells on a standard blood film.'},
-                    { term: 'Pernicious Anaemia', definition: 'A type of megaloblastic anaemia caused by an autoimmune condition that prevents the absorption of vitamin B12.'},
-                    { term: 'Petechiae', definition: 'Pinpoint, round spots that appear on the skin as a result of bleeding. Can be a sign of a low platelet count.'},
-                    { term: 'Philadelphia Chromosome', definition: 'A specific genetic abnormality in chromosome 22, characteristically associated with Chronic Myeloid Leukaemia (CML).'},
-                    { term: 'Plasma', definition: 'The liquid component of blood, in which the blood cells are suspended. It contains proteins, electrolytes, and clotting factors.'},
-                    { term: 'Plasma Cell', definition: 'A fully differentiated B-lymphocyte that produces antibodies. Normally found in the bone marrow, not the peripheral blood.'},
-                    { term: 'Plasmin', definition: 'An enzyme that degrades fibrin clots during fibrinolysis.'},
-                    { term: 'Platelet (Thrombocyte)', definition: 'A small, anucleated cell fragment derived from megakaryocytes, essential for blood clotting.' },
-                    { term: 'Platelet Function Assay (PFA)', definition: 'A laboratory test used to screen for abnormalities in platelet function.'},
-                    { term: 'Poikilocytosis', definition: 'Significant variation in the shape of erythrocytes.' },
-                    { term: 'Polychromasia', definition: 'Erythrocytes that have a blue-grey tinge on a stained blood film, indicating they are young cells (reticulocytes) that have just been released from the bone marrow.' },
-                    { term: 'Polycythaemia Vera (PV)', definition: 'A myeloproliferative neoplasm characterized by the overproduction of red blood cells, leading to thick blood.'},
-                    { term: 'Promyelocyte', definition: 'An immature granulocyte, the stage of development between a myeloblast and a myelocyte.'},
-                    { term: 'Protein C', definition: 'A vitamin K-dependent protein that acts as a natural anticoagulant. Deficiency increases the risk of thrombosis.'},
-                    { term: 'Protein S', definition: 'A vitamin K-dependent protein that acts as a cofactor for Protein C. Deficiency increases the risk of thrombosis.'},
-                    { term: 'Prothrombin Time (PT)', definition: 'A test that measures the time it takes for a clot to form. It assesses the extrinsic and common pathways of coagulation.' },
-                    { term: 'Purpura', definition: 'Purple-coloured spots and patches that occur on the skin, mucous membranes, and lining of organs, caused by bleeding from small blood vessels.'},
-                    // R
-                    { term: 'Red Cell Distribution Width (RDW)', definition: 'A measurement of the variation in the size of red blood cells (anisocytosis).'},
-                    { term: 'Reticulocyte', definition: 'An immature red blood cell. An increased reticulocyte count indicates that the bone marrow is actively producing more red blood cells, often in response to anaemia or bleeding.' },
-                    { term: 'Rouleaux', definition: 'Erythrocytes arranged in stacks like coins, often caused by high concentrations of plasma proteins, such as in multiple myeloma.' },
-                    // S
-                    { term: 'Schistocyte', definition: 'A fragmented erythrocyte, which can indicate mechanical damage within the circulation (microangiopathic haemolytic anaemia).' },
-                    { term: 'Serum', definition: 'The liquid component of blood that remains after the blood has clotted. It is plasma without the clotting factors.'},
-                    { term: 'Sickle Cell Anaemia', definition: 'An inherited haemoglobinopathy where individuals have two copies of the gene for Haemoglobin S, leading to the formation of sickle-shaped red cells.'},
-                    { term: 'Sideroblastic Anaemia', definition: 'A type of anaemia in which the body has enough iron but is unable to incorporate it into haemoglobin, leading to iron accumulating in the mitochondria of red cell precursors (ring sideroblasts).'},
-                    { term: 'Smudge Cell (Smear Cell)', definition: 'The fragile remnant of a lymphocyte that has ruptured during the preparation of a blood film. Commonly seen in Chronic Lymphocytic Leukaemia (CLL).'},
-                    { term: 'Spherocyte', definition: 'A small, spherical, dense erythrocyte that lacks the usual central pale area. Can be caused by hereditary conditions or autoimmune haemolytic anaemia.' },
-                    { term: 'Stomatocyte', definition: 'A red blood cell with a slit-like, mouth-shaped area of central pallor.'},
-                    // T
-                    { term: 'Thalassaemia', definition: 'A group of inherited blood disorders characterised by reduced or absent synthesis of one of the globin chains that make up haemoglobin.' },
-                    { term: 'Thrombin Time (TT)', definition: 'A coagulation test that measures the time it takes for a clot to form in the plasma of a blood sample containing anticoagulant, after an excess of thrombin has been added.'},
-                    { term: 'Thrombocytopenia', definition: 'A lower-than-normal number of platelets in the blood, which can lead to an increased risk of bleeding.' },
-                    { term: 'Thrombocytosis', definition: 'A higher-than-normal number of platelets in the blood, which can lead to an increased risk of clotting.' },
-                    { term: 'Thrombophilia', definition: 'A condition where the blood has an increased tendency to form clots.' },
-                    { term: 'Thrombosis', definition: 'The formation of a blood clot inside a blood vessel, obstructing the flow of blood through the circulatory system.'},
-                    { term: 'Thrombotic Thrombocytopenic Purpura (TTP)', definition: 'A rare blood disorder where blood clots form in small blood vessels throughout the body, leading to a low platelet count and organ damage.'},
-                    { term: 'Toxic Granulation', definition: 'Prominent, dark-staining granules in the cytoplasm of neutrophils, indicating a severe inflammatory response or infection.'},
-                    // V
-                    { term: 'Vitamin B12', definition: 'A vitamin essential for the production of red blood cells and the function of the nervous system. Deficiency causes megaloblastic anaemia and neurological problems.'},
-                    { term: 'Von Willebrand Disease', definition: 'The most common inherited bleeding disorder, caused by a deficiency or defect in von Willebrand factor, a protein that helps platelets stick to blood vessel walls and carries Factor VIII.'},
-                    { term: 'Von Willebrand Factor (vWF)', definition: 'A blood glycoprotein involved in haemostasis. It is deficient or defective in von Willebrand disease.'},
-                    // W
-                    { term: 'Warfarin', definition: 'An oral anticoagulant drug that works by inhibiting vitamin K-dependent clotting factors. Monitored using the INR.'},
-                    { term: 'White Blood Cell (WBC)', definition: 'A cell of the immune system involved in defending the body against infectious disease and foreign invaders. Also known as a leucocyte.'}
-                ],
-                trans: [
-                    // A
-                    { term: 'A, B, O Antigens', definition: 'Carbohydrate structures on the surface of red blood cells that determine the ABO blood group.' },
-                    { term: 'ABO Group', definition: 'The most important blood group system, determining whether a person has A, B, AB, or O type blood based on the antigens present on their red cells.' },
-                    { term: 'Adsorption', definition: 'A laboratory technique to remove specific antibodies from a patient\'s serum by incubating it with red cells that have the corresponding antigen.' },
-                    { term: 'Alloantibody', definition: 'An antibody formed in response to an antigen from a genetically different individual of the same species (e.g., an antibody formed after a blood transfusion or pregnancy).' },
-                    { term: 'Alloimmunisation', definition: 'The process by which an individual produces an immune response (alloantibody) to foreign antigens after exposure through transfusion, transplant, or pregnancy.' },
-                    { term: 'Antibody', definition: 'A protein produced by the immune system that identifies and neutralises foreign objects like bacteria and viruses, or in transfusion, foreign red cell antigens.' },
-                    { term: 'Antibody Identification', definition: 'The laboratory process of determining the specific identity of a red cell antibody detected in a patient\'s plasma.' },
-                    { term: 'Antibody Screen', definition: 'A test performed on a patient\'s plasma to detect the presence of any unexpected, clinically significant red cell alloantibodies.' },
-                    { term: 'Antigen', definition: 'A substance, usually a protein or carbohydrate on the surface of a red blood cell, that can trigger an immune response.' },
-                    { term: 'Antiglobulin Reagent (Coombs\' Reagent)', definition: 'A reagent containing antibodies that bind to human immunoglobulins or complement, used in the DAT and IAT to detect sensitisation of red cells.' },
-                    { term: 'Anti-D Immunoglobulin', definition: 'A solution of antibodies against the RhD antigen, given to RhD-negative mothers to prevent them from becoming sensitised to an RhD-positive baby\'s blood.' },
-                    { term: 'Apheresis', definition: 'A process where a donor\'s blood is passed through a machine that separates out a specific component (like platelets or plasma), with the rest of the blood being returned to the donor.' },
-                    { term: 'Autoantibody', definition: 'An antibody produced by an individual that reacts with their own red cell antigens, which can cause autoimmune haemolytic anaemia.' },
-                    { term: 'Autologous Control', definition: 'A control used in antibody identification where the patient\'s own plasma is tested against their own red cells to check for the presence of an autoantibody.' },
-                    // B
-                    { term: 'Blood Bank', definition: 'The department in a hospital where blood components are stored and where pre-transfusion testing is performed. Also known as the Transfusion Laboratory.' },
-                    { term: 'Blood Component', definition: 'Any therapeutic product derived from a donation of human blood, such as Red Cells, Platelets, Fresh Frozen Plasma (FFP), or Cryoprecipitate.' },
-                    { term: 'Blood Group', definition: 'A classification of blood based on the presence or absence of inherited antigenic substances on the surface of red blood cells. There are over 40 different blood group systems.' },
-                    { term: 'Bombay Phenotype', definition: 'A rare blood type where individuals lack the H antigen, which is the precursor for A and B antigens. They appear as group O but have potent anti-H and can only be transfused with other Bombay blood.' },
-                    // C
-                    { term: 'Clinically Significant Antibody', definition: 'A red cell antibody that is known to cause a transfusion reaction or Haemolytic Disease of the Fetus and Newborn (HDFN).' },
-                    { term: 'CMV (Cytomegalovirus)', definition: 'A common virus that can be transmitted through blood transfusion. CMV-negative blood is given to at-risk patients, such as pregnant women and immunocompromised individuals.' },
-                    { term: 'Cold Agglutinin', definition: 'An antibody, typically of the IgM class, that is most reactive at temperatures below 37°C. Can interfere with testing and, if potent, cause Cold Agglutinin Disease.' },
-                    { term: 'Column Agglutination Technology (CAT)', definition: 'A method for blood grouping and antibody screening that uses microtubes containing a gel matrix to trap agglutinated red cells.' },
-                    { term: 'Compatibility Testing (Crossmatch)', definition: 'The final check before transfusion, where the patient\'s plasma is tested against the donor red cells to ensure they are compatible.' },
-                    { term: 'Cryoprecipitate', definition: 'A blood component prepared from Fresh Frozen Plasma. It is rich in specific clotting factors, particularly Fibrinogen, Factor VIII, and von Willebrand Factor.' },
-                    // D
-                    { term: 'Delayed Haemolytic Transfusion Reaction (DHTR)', definition: 'A transfusion reaction that occurs days or weeks after the transfusion, caused by an anamnestic (memory) immune response to a red cell antigen.' },
-                    { term: 'Direct Antiglobulin Test (DAT)', definition: 'A test used to detect if a patient\'s red blood cells have been coated with antibodies or complement in vivo (inside the body). A positive DAT can indicate autoimmune haemolytic anaemia or a transfusion reaction.' },
-                    { term: 'Donation Number', definition: 'A unique number assigned to each unit of donated blood, essential for traceability from donor to recipient.' },
-                    { term: 'Duffy System', definition: 'A blood group system (antigens Fya and Fyb). Duffy-negative individuals have some resistance to certain types of malaria.' },
-                    // E
-                    { term: 'Electronic Issue (Electronic Crossmatch)', definition: 'A computer-based system that replaces the need for a serological crossmatch for eligible patients, allowing for the safe release of ABO-compatible blood.' },
-                    { term: 'Elution', definition: 'A laboratory technique used to remove antibodies that are attached to red blood cells. The resulting fluid (eluate) can then be tested to identify the antibody.' },
-                    // F
-                    { term: 'Febrile Non-Haemolytic Transfusion Reaction (FNHTR)', definition: 'The most common type of transfusion reaction, characterized by a rise in temperature, usually caused by cytokines released from white blood cells in the stored blood component.' },
-                    { term: 'Fresh Frozen Plasma (FFP)', definition: 'The plasma separated from a unit of whole blood and frozen. It contains all the coagulation factors and is used to treat bleeding in patients with clotting factor deficiencies.' },
-                    // G
-                    { term: 'Genotyping', definition: 'A laboratory method to determine the specific genes an individual has for blood group antigens, particularly useful when serological testing is difficult.' },
-                    { term: 'Group and Screen (G&S)', definition: 'A standard pre-transfusion test request that involves determining the patient\'s ABO and RhD group and screening their plasma for any unexpected antibodies.' },
-                    // H
-                    { term: 'H Antigen', definition: 'The precursor substance on red cells from which A and B antigens are made. Group O individuals have a large amount of H antigen.' },
-                    { term: 'Haemolytic Disease of the Fetus and Newborn (HDFN)', definition: 'A condition where maternal antibodies cross the placenta and destroy the fetus\'s or newborn\'s red blood cells.' },
-                    { term: 'Haemovigilance', definition: 'A set of surveillance procedures covering the whole transfusion chain, from donation to recipient follow-up, to monitor and report adverse events and reactions.' },
-                    // I
-                    { term: 'IgG (Immunoglobulin G)', definition: 'The main class of antibodies involved in secondary immune responses. Most clinically significant red cell alloantibodies are IgG and can cross the placenta.' },
-                    { term: 'IgM (Immunoglobulin M)', definition: 'A large antibody that is produced first in an immune response. "Naturally occurring" anti-A and anti-B are typically IgM and cannot cross the placenta.' },
-                    { term: 'Indirect Antiglobulin Test (IAT)', definition: 'A test used to detect antibodies in a patient\'s plasma (in vitro). It is the basis of the antibody screen and antibody identification.' },
-                    { term: 'Irradiated Blood', definition: 'Blood components that have been exposed to gamma radiation to prevent transfusion-associated graft-versus-host disease (TA-GvHD) in at-risk patients.' },
-                    // K
-                    { term: 'Kell System', definition: 'An important blood group system. The K antigen is highly immunogenic, and anti-K is a common and clinically significant antibody.' },
-                    { term: 'Kidd System', definition: 'A blood group system (antigens Jka and Jkb). Kidd antibodies are notorious for being weak and disappearing from the circulation, making them a common cause of delayed haemolytic transfusion reactions.' },
-                    { term: 'Kleihauer Test', definition: 'A test used to measure the amount of fetal haemoglobin that has passed into the maternal bloodstream, to calculate the required dose of Anti-D immunoglobulin after a potential sensitising event.' },
-                    // L
-                    { term: 'Leucodepletion', definition: 'The process of removing white blood cells from blood components before transfusion to reduce the risk of certain transfusion reactions.' },
-                    { term: 'Lewis System', definition: 'A unique blood group system where the antigens are not an integral part of the red cell membrane but are adsorbed from the plasma.' },
-                    // M
-                    { term: 'Major Haemorrhage Protocol', definition: 'A hospital-wide protocol to ensure the rapid and coordinated delivery of blood components and other support to a patient with life-threatening bleeding.' },
-                    { term: 'Maximum Surgical Blood Ordering Schedule (MSBOS)', definition: 'A schedule that provides guidance on the number of units of blood to typically crossmatch for various surgical procedures, aiming to reduce unnecessary crossmatching.' },
-                    { term: 'MNS System', definition: 'A complex blood group system with M, N, S, and s antigens. Anti-M and anti-N are usually cold-reacting and not clinically significant, while anti-S and anti-s can be.' },
-                    // P
-                    { term: 'Panel', definition: 'A set of 11 to 20 reagent red cells with known antigen profiles, used for antibody identification.' },
-                    { term: 'Phenotype', definition: 'The set of observable characteristics of an individual, such as their expressed blood group antigens (e.g., C, c, E, e, K).' },
-                    { term: 'Plasma', definition: 'The liquid component of blood. See also Fresh Frozen Plasma (FFP).' },
-                    { term: 'Platelets', definition: 'A blood component used to treat or prevent bleeding in patients with a low platelet count or dysfunctional platelets.' },
-                    // R
-                    { term: 'Red Blood Cells (Component)', definition: 'A blood component consisting of concentrated red cells, used to treat anaemia and improve oxygen-carrying capacity.' },
-                    { term: 'Rh System', definition: 'A complex blood group system with many antigens, the most important of which is the D antigen. Individuals are either RhD positive or RhD negative.' },
-                    // S
-                    { term: 'Sensitising Event', definition: 'Any event where an RhD-negative mother may be exposed to RhD-positive fetal red cells, potentially causing her to produce anti-D antibodies.' },
-                    { term: 'Serology', definition: 'The scientific study of serum and other body fluids, particularly with regard to antigen-antibody reactions.' },
-                    { term: 'SHOT (Serious Hazards of Transfusion)', definition: 'The UK\'s independent, professionally-led haemovigilance scheme, which collects and analyses data on adverse events related to blood transfusion.' },
-                    // T
-                    { term: 'TACO (Transfusion-Associated Circulatory Overload)', definition: 'A transfusion reaction caused by transfusing a volume of blood that the recipient\'s circulatory system cannot cope with, leading to heart failure and pulmonary oedema.' },
-                    { term: 'TRALI (Transfusion-Related Acute Lung Injury)', definition: 'A rare but serious transfusion reaction where the patient develops acute lung injury, thought to be caused by antibodies in the donor plasma reacting with the recipient\'s white blood cells.' },
-                    { term: 'Traceability', definition: 'The ability to trace a unit of blood from the donor to its final recipient and vice versa. A legal requirement for all blood components.' },
-                    { term: 'Transfusion Reaction', definition: 'Any adverse event associated with the transfusion of blood or blood components. Can range from mild (e.g., fever) to severe and life-threatening (e.g., acute haemolytic reaction).' },
-                    // U
-                    { term: 'Universal Donor', definition: 'An individual with group O, RhD-negative blood. Their red cells lack A, B, and D antigens, so they can be transfused to patients of most other blood types in an emergency.' },
-                    { term: 'Universal Recipient', definition: 'An individual with group AB, RhD-positive blood. Their plasma lacks anti-A and anti-B, so they can receive red cells from most other blood types.' },
-                    // W
-                    { term: 'Warm Autoimmune Haemolytic Anaemia (WAIHA)', definition: 'An autoimmune condition caused by an IgG autoantibody that reacts optimally at 37°C, leading to the destruction of the patient\'s own red cells.' },
-                    { term: 'Washed Red Cells', definition: 'Red cells that have been washed in saline to remove most of the plasma, used for patients who have had severe allergic reactions to plasma proteins.' },
-                    { term: 'Whole Blood', definition: 'Blood that has been collected from a donor and has not been separated into its different components.' }
-                ],
-                chem: [
-                    // A
-                    { term: 'Acid-Base Balance', definition: 'The mechanism by which the body maintains the pH of its fluids within a narrow, normal range. Primarily involves the lungs and kidneys.' },
-                    { term: 'Acidosis', definition: 'A condition where there is too much acid in the body fluids, resulting in a pH below the normal range.' },
-                    { term: 'ACTH (Adrenocorticotropic Hormone)', definition: 'A hormone produced by the pituitary gland that stimulates the adrenal glands to produce cortisol.' },
-                    { term: 'Alanine Aminotransferase (ALT)', definition: 'An enzyme found mainly in the liver. A high level in the blood is a key marker of liver cell injury.' },
-                    { term: 'Albumin', definition: 'The most common protein in blood plasma. It maintains osmotic pressure and transports various substances. Low levels can indicate liver disease, kidney disease, or malnutrition.' },
-                    { term: 'Alkaline Phosphatase (ALP)', definition: 'An enzyme found in the liver (biliary ducts), bone, and other tissues. High levels can indicate blocked bile ducts, liver disease, or bone disorders.' },
-                    { term: 'Alkalosis', definition: 'A condition where there is too much base (or not enough acid) in the body fluids, resulting in a pH above the normal range.' },
-                    { term: 'Alpha-1 Antitrypsin', definition: 'A protein made by the liver that protects the lungs from damage. Deficiency is a genetic condition that increases the risk of lung and liver disease.' },
-                    { term: 'Amylase', definition: 'An enzyme that helps digest carbohydrates, produced mainly by the pancreas and salivary glands. Very high levels are a sign of acute pancreatitis.' },
-                    { term: 'Anion Gap', definition: 'A calculated value representing the difference between measured cations (positively charged ions) and anions (negatively charged ions) in the blood. It is useful for evaluating metabolic acidosis.' },
-                    { term: 'Aspartate Aminotransferase (AST)', definition: 'An enzyme found in the liver, heart, and other muscles. Along with ALT, it is a marker of liver cell injury.' },
-                    // B
-                    { term: 'Bicarbonate (HCO3-)', definition: 'A key component of the body\'s acid-base buffering system, regulated by the kidneys. It is part of the Urea & Electrolytes (U&E) profile.' },
-                    { term: 'Bilirubin', definition: 'A yellow substance formed from the breakdown of red blood cells. It is processed by the liver. High levels cause jaundice and can indicate liver disease or increased red cell destruction (haemolysis).' },
-                    { term: 'Blood Gas Analysis', definition: 'A test performed on arterial blood to measure the levels of oxygen, carbon dioxide, and the blood\'s pH. It assesses respiratory and metabolic function.' },
-                    { term: 'BNP (B-type Natriuretic Peptide)', definition: 'A hormone released by the heart in response to stretching, such as in heart failure. A high level is a key marker for diagnosing and assessing the severity of heart failure.' },
-                    { term: 'Bone Profile', definition: 'A group of tests to assess bone health, typically including calcium, phosphate, albumin, and alkaline phosphatase (ALP).' },
-                    // C
-                    { term: 'C-Peptide', definition: 'A substance released from the pancreas along with insulin. Measuring C-peptide levels can help determine how much insulin the body is producing.' },
-                    { term: 'C-Reactive Protein (CRP)', definition: 'A protein made by the liver that is released into the bloodstream during inflammation. It is a sensitive but non-specific marker of inflammation and infection.' },
-                    { term: 'Caeruloplasmin', definition: 'The main copper-carrying protein in the blood. Low levels are a feature of Wilson\'s disease, a genetic disorder of copper metabolism.' },
-                    { term: 'Calcitonin', definition: 'A hormone produced by the thyroid gland that is involved in calcium regulation. It is also used as a tumour marker for medullary thyroid cancer.' },
-                    { term: 'Calcium', definition: 'A mineral essential for bone health, muscle function, and nerve signalling. Blood levels are tightly controlled. Results are often "adjusted" for the albumin level.' },
-                    { term: 'Chloride (Cl-)', definition: 'An electrolyte that works with sodium to maintain the body\'s fluid balance.' },
-                    { term: 'Cholesterol', definition: 'A type of fat (lipid) in the blood. High levels of certain types of cholesterol are a risk factor for cardiovascular disease.' },
-                    { term: 'Cortisol', definition: 'A steroid hormone produced by the adrenal glands, often called the "stress hormone". It has many functions, including regulating metabolism and the immune response.' },
-                    { term: 'Creatine Kinase (CK)', definition: 'An enzyme found in muscle tissue, including the heart. High levels indicate muscle damage, such as from injury, strenuous exercise, or a heart attack.' },
-                    { term: 'Creatinine', definition: 'A waste product from muscle activity that is filtered from the blood by the kidneys. Its level is a key indicator of how well the kidneys are working.' },
-                    { term: 'Creatinine Clearance', definition: 'A test that compares the creatinine level in urine with the creatinine level in blood, to estimate the glomerular filtration rate (GFR).' },
-                    // D
-                    { term: 'Diabetes Mellitus', definition: 'A chronic condition characterized by high levels of glucose in the blood, caused by either insufficient insulin production or the body\'s inability to use insulin effectively.' },
-                    { term: 'Digoxin', definition: 'A medication used to treat heart failure and certain irregular heartbeats. Its level in the blood must be monitored to ensure it is within the therapeutic range.' },
-                    // E
-                    { term: 'eGFR (estimated Glomerular Filtration Rate)', definition: 'A calculation based on the blood creatinine level, age, sex, and sometimes ethnicity. It provides an estimate of how much blood the kidneys are filtering per minute and is the main measure of kidney function.' },
-                    { term: 'Electrolytes', definition: 'Minerals in the body that have an electric charge, such as sodium, potassium, and chloride. They are vital for many bodily functions. See U&Es.' },
-                    { term: 'Endocrinology', definition: 'The branch of medicine concerned with the endocrine glands and hormones.' },
-                    // F
-                    { term: 'Ferritin', definition: 'A protein that stores iron within cells. A blood ferritin test is the most accurate way to assess the body\'s total iron stores.' },
-                    { term: 'Folate', definition: 'A B-vitamin essential for cell growth and metabolism. Deficiency can cause megaloblastic anaemia.' },
-                    { term: 'FSH (Follicle-Stimulating Hormone)', definition: 'A hormone produced by the pituitary gland that plays a key role in sexual development and reproduction.' },
-                    // G
-                    { term: 'Gamma-Glutamyl Transferase (GGT)', definition: 'An enzyme found mainly in the liver. High levels are often associated with alcohol consumption or conditions that block the bile ducts.' },
-                    { term: 'Gastrin', definition: 'A hormone that stimulates the stomach to release gastric acid. Very high levels can be a sign of certain tumours (gastrinomas).' },
-                    { term: 'Glucose', definition: 'The main type of sugar in the blood, used by the body for energy. High levels are a sign of diabetes mellitus.' },
-                    { term: 'Growth Hormone (GH)', definition: 'A hormone produced by the pituitary gland that stimulates growth, cell reproduction, and regeneration.' },
-                    // H
-                    { term: 'HbA1c (Glycated Haemoglobin)', definition: 'A test that measures the average blood glucose level over the past 2-3 months by looking at the amount of glucose attached to haemoglobin. Used to diagnose and monitor diabetes.' },
-                    { term: 'HDL (High-Density Lipoprotein)', definition: 'Often called "good" cholesterol, it helps remove excess cholesterol from the body.' },
-                    { term: 'Hormone', definition: 'A chemical messenger produced by an endocrine gland that travels through the bloodstream to target cells or organs.' },
-                    // I
-                    { term: 'Immunoassay', definition: 'A laboratory technique that uses the specificity of an antigen-antibody reaction to measure the concentration of a substance in a sample.' },
-                    { term: 'Insulin', definition: 'A hormone produced by the pancreas that allows the body to use glucose for energy. It is central to the regulation of carbohydrate and fat metabolism.' },
-                    { term: 'Iron', definition: 'A mineral essential for the production of haemoglobin and the transport of oxygen in the blood.' },
-                    // K
-                    { term: 'Ketones', definition: 'Substances produced when the body breaks down fat for energy, which can happen when there is not enough insulin to use glucose. High levels can lead to diabetic ketoacidosis (DKA).' },
-                    // L
-                    { term: 'Lactate', definition: 'A substance produced by the body during anaerobic metabolism (when oxygen levels are low). High levels can indicate severe infection (sepsis), shock, or intense exercise.' },
-                    { term: 'Lactate Dehydrogenase (LDH)', definition: 'An enzyme found in almost all body tissues. High levels are non-specific but can indicate tissue damage somewhere in the body.' },
-                    { term: 'LDL (Low-Density Lipoprotein)', definition: 'Often called "bad" cholesterol, high levels can lead to a build-up of plaque in the arteries.' },
-                    { term: 'LH (Luteinizing Hormone)', definition: 'A hormone produced by the pituitary gland that is crucial for reproduction.' },
-                    { term: 'Lipase', definition: 'An enzyme made by the pancreas to help digest fats. Like amylase, very high levels are a sign of acute pancreatitis.' },
-                    { term: 'Lipid Profile', definition: 'A group of tests to assess cardiovascular risk, typically including total cholesterol, HDL cholesterol, LDL cholesterol, and triglycerides.' },
-                    { term: 'Lithium', definition: 'A medication used to treat bipolar disorder. Its level in the blood must be closely monitored to ensure it is effective but not toxic.' },
-                    { term: 'Liver Function Tests (LFTs)', definition: 'A panel of blood tests to assess liver health, usually including ALT, ALP, GGT, bilirubin, and albumin.' },
-                    // M
-                    { term: 'Magnesium (Mg2+)', definition: 'An electrolyte important for muscle and nerve function, and many enzymatic reactions.' },
-                    // O
-                    { term: 'Osmolality', definition: 'A measure of the concentration of all the chemical particles dissolved in the fluid part of the blood. It is used to evaluate the body\'s water balance.' },
-                    // P
-                    { term: 'Paracetamol', definition: 'A common painkiller that can cause severe liver damage in overdose. Blood levels are measured to guide treatment.' },
-                    { term: 'Parathyroid Hormone (PTH)', definition: 'A hormone produced by the parathyroid glands that regulates calcium and phosphate levels in the blood.' },
-                    { term: 'pH', definition: 'A measure of the acidity or alkalinity of a solution. Blood pH is tightly maintained between 7.35 and 7.45.' },
-                    { term: 'Phosphate', definition: 'A mineral that works with calcium to build strong bones and teeth. Regulated by the kidneys.' },
-                    { term: 'Pituitary Gland', definition: 'A small gland at the base of the brain that produces many important hormones, often called the "master gland".' },
-                    { term: 'Point-of-Care Testing (POCT)', definition: 'Diagnostic testing performed at or near the site of patient care, such as a bedside glucose test.' },
-                    { term: 'Potassium (K+)', definition: 'An electrolyte essential for nerve and muscle function, especially the heart. The kidneys regulate its level, and both high and low levels can be dangerous.' },
-                    { term: 'Prolactin', definition: 'A hormone produced by the pituitary gland, primarily known for its role in enabling milk production.' },
-                    { term: 'Protein Electrophoresis', definition: 'A laboratory test that separates proteins in the blood based on their size and electrical charge. Used to detect abnormal proteins like paraproteins.' },
-                    { term: 'PSA (Prostate-Specific Antigen)', definition: 'A protein produced by the prostate gland. An elevated level may indicate prostate cancer or other prostate conditions.' },
-                    // S
-                    { term: 'Salicylate', definition: 'A substance found in aspirin. Blood levels are measured in cases of suspected overdose.' },
-                    { term: 'Sodium (Na+)', definition: 'An electrolyte that helps maintain the balance of fluids in the body and is crucial for nerve and muscle function.' },
-                    { term: 'Spectrophotometry', definition: 'A common laboratory method for measuring the concentration of a substance by determining how much light it absorbs.' },
-                    { term: 'SST (Serum Separator Tube)', definition: 'A type of blood collection tube (usually with a gold top) containing a gel that separates the serum from the clotted blood cells after centrifugation.' },
-                    // T
-                    { term: 'Testosterone', definition: 'The primary male sex hormone, responsible for the development of male reproductive tissues and secondary sexual characteristics.' },
-                    { term: 'Therapeutic Drug Monitoring (TDM)', definition: 'The measurement of specific drug concentrations in the blood to ensure they are within a range that is both effective and non-toxic.' },
-                    { term: 'Thyroid Gland', definition: 'A gland in the neck that produces hormones (T4 and T3) which regulate the body\'s metabolism.' },
-                    { term: 'Thyroid Function Tests (TFTs)', definition: 'A set of tests to assess thyroid gland function, typically including TSH (Thyroid Stimulating Hormone) and Free T4 (Thyroxine).' },
-                    { term: 'Thyroxine (T4)', definition: 'The main hormone produced by the thyroid gland.' },
-                    { term: 'Transferrin', definition: 'A protein that transports iron in the blood.' },
-                    { term: 'Triglycerides', definition: 'A type of fat (lipid) found in the blood. High levels are a risk factor for cardiovascular disease.' },
-                    { term: 'Triiodothyronine (T3)', definition: 'The more active thyroid hormone, mostly formed from the conversion of T4 in the body\'s tissues.' },
-                    { term: 'Troponin', definition: 'A protein found in heart muscle. When the heart muscle is damaged, troponin is released into the bloodstream. It is a very sensitive and specific marker for a heart attack (myocardial infarction).' },
-                    { term: 'TSH (Thyroid-Stimulating Hormone)', definition: 'A hormone produced by the pituitary gland that tells the thyroid gland to produce more thyroid hormones. It is the primary test for assessing thyroid function.' },
-                    { term: 'Tumour Marker', definition: 'A substance produced by a tumour or by the body in response to a tumour, which can be detected in the blood, urine, or body tissues. Examples include PSA and CA-125.' },
-                    // U
-                    { term: 'Urea', definition: 'A waste product from the breakdown of protein, made in the liver and removed from the blood by the kidneys. Along with creatinine, it is used to assess kidney function.' },
-                    { term: 'Uric Acid (Urate)', definition: 'A waste product from the breakdown of purines (found in many foods and body cells). High levels can cause crystals to form in the joints, leading to gout.' },
-                    { term: 'U&Es (Urea and Electrolytes)', definition: 'A common blood test panel that measures kidney function and electrolyte balance, typically including Urea, Creatinine, Sodium, and Potassium.' },
-                    // V
-                    { term: 'Vitamin D', definition: 'A vitamin essential for absorbing calcium and promoting bone growth. Deficiency is common and can lead to bone problems.' }
-                ],
-                imm: [
-                    // A
-                    { term: 'Adjuvant', definition: 'A substance that enhances the body\'s immune response to an antigen, often included in vaccines.' },
-                    { term: 'Allergen', definition: 'A substance (like pollen, dust mites, or certain foods) that can trigger an allergic reaction in susceptible individuals.' },
-                    { term: 'Allergy', definition: 'An exaggerated immune response to a substance that is normally harmless.' },
-                    { term: 'Anaphylaxis', definition: 'A severe, potentially life-threatening, whole-body allergic reaction.' },
-                    { term: 'ANCA (Anti-Neutrophil Cytoplasmic Antibody)', definition: 'Autoantibodies that target proteins within neutrophils. Associated with types of systemic vasculitis like Granulomatosis with Polyangiitis (GPA) and Microscopic Polyangiitis (MPA).' },
-                    { term: 'Anti-CCP (Anti-Cyclic Citrullinated Peptide)', definition: 'An autoantibody that is highly specific for Rheumatoid Arthritis and can be present early in the disease.' },
-                    { term: 'Anti-dsDNA (Anti-double-stranded DNA)', definition: 'An autoantibody that is very specific for Systemic Lupus Erythematosus (SLE) and is often linked to kidney involvement (lupus nephritis).' },
-                    { term: 'Anti-Nuclear Antibody (ANA)', definition: 'A screening test for autoantibodies that target components of the cell nucleus. A positive result is common in many autoimmune diseases but lacks specificity.' },
-                    { term: 'Antigen-Presenting Cell (APC)', definition: 'A cell (such as a macrophage or dendritic cell) that displays foreign antigens on its surface to activate T-lymphocytes.' },
-                    { term: 'Apoptosis', definition: 'Programmed cell death, a normal process by which the body eliminates unwanted or damaged cells.' },
-                    { term: 'Autoantibody', definition: 'An antibody produced by the immune system that mistakenly targets the individual\'s own cells or tissues.' },
-                    { term: 'Autoimmune Disease', definition: 'A condition in which the body\'s immune system attacks its own healthy tissues.' },
-                    // B
-                    { term: 'B-Lymphocyte (B-Cell)', definition: 'A type of lymphocyte that matures in the bone marrow and is responsible for producing antibodies (humoral immunity).' },
-                    // C
-                    { term: 'C1 Inhibitor', definition: 'A protein that regulates the complement system. Deficiency (either quantitative or functional) causes Hereditary Angioedema (HAE).' },
-                    { term: 'CD4+ T-Cell (Helper T-Cell)', definition: 'A type of T-lymphocyte that helps coordinate the immune response by activating other immune cells. These are the cells targeted by the HIV virus.' },
-                    { term: 'CD8+ T-Cell (Cytotoxic T-Cell)', definition: 'A type of T-lymphocyte that can directly kill infected cells or tumour cells.' },
-                    { term: 'Cell-Mediated Immunity', definition: 'The arm of the immune system that involves the activation of phagocytes, cytotoxic T-cells, and the release of various cytokines, rather than antibodies.' },
-                    { term: 'Chemokine', definition: 'A type of cytokine that directs the migration of white blood cells to sites of infection or inflammation.' },
-                    { term: 'Coeliac Disease', definition: 'An autoimmune disorder where eating gluten causes the immune system to attack the small intestine. Diagnosed with tests for tTG and EMA antibodies.' },
-                    { term: 'Complement System', definition: 'A group of plasma proteins that "complement" the action of antibodies in destroying pathogens. C3 and C4 are the most commonly measured components.' },
-                    { term: 'Connective Tissue Disease', definition: 'A group of autoimmune disorders that affect the tissues providing support and structure to the body, such as SLE, scleroderma, and Sjögren\'s syndrome.' },
-                    { term: 'Cryoglobulin', definition: 'Proteins (usually immunoglobulins) that precipitate or gel at cold temperatures. Associated with various conditions including infections and autoimmune diseases.' },
-                    { term: 'Cytokine', definition: 'A broad category of small proteins that are important in cell signalling, particularly in the immune system. They include interleukins and interferons.' },
-                    // D
-                    { term: 'Dendritic Cell', definition: 'A specialized type of antigen-presenting cell that is a key link between the innate and adaptive immune systems.' },
-                    // E
-                    { term: 'ELISA (Enzyme-Linked Immunosorbent Assay)', definition: 'A common laboratory technique used to detect and quantify substances such as antibodies, antigens, and hormones.' },
-                    { term: 'ENA (Extractable Nuclear Antigens)', definition: 'A panel of tests to identify the specific target of an Anti-Nuclear Antibody (ANA), which helps in diagnosing specific connective tissue diseases (e.g., anti-Ro, anti-La, anti-Sm).' },
-                    { term: 'Endomysial Antibody (EMA)', definition: 'An autoantibody, detected by immunofluorescence, that is highly specific for coeliac disease.' },
-                    // F
-                    { term: 'Flow Cytometry', definition: 'A technique used to analyze the characteristics of cells, such as counting CD4 cells in HIV patients or classifying leukaemias.' },
-                    // H
-                    { term: 'Histamine', definition: 'A chemical released by mast cells and basophils during an allergic reaction, causing symptoms like itching, swelling, and vasodilation.' },
-                    { term: 'HLA (Human Leukocyte Antigen)', definition: 'A group of genes that code for proteins on the surface of cells that are essential for the immune system to recognize foreign invaders. Important in organ transplantation and associated with certain autoimmune diseases.' },
-                    { term: 'Humoral Immunity', definition: 'The arm of the immune system that is mediated by antibodies produced by B-lymphocytes.' },
-                    { term: 'Hypersensitivity', definition: 'An undesirable and exaggerated immune reaction, such as an allergy or autoimmune response.' },
-                    // I
-                    { term: 'IgA (Immunoglobulin A)', definition: 'The main class of antibody found in mucous membranes, saliva, and tears. It provides protection at mucosal surfaces.' },
-                    { term: 'IgE (Immunoglobulin E)', definition: 'The class of antibody associated with allergic reactions. It binds to mast cells and basophils, triggering the release of histamine.' },
-                    { term: 'IgG (Immunoglobulin G)', definition: 'The most abundant class of antibody in the blood. It provides long-term immunity and is the only class that can cross the placenta.' },
-                    { term: 'IgM (Immunoglobulin M)', definition: 'The first class of antibody produced in response to a new infection. It is a large molecule and is very effective at activating the complement system.' },
-                    { term: 'Immune Complex', definition: 'A complex formed by the binding of an antibody to a soluble antigen. Large amounts can deposit in tissues and cause inflammation, such as in lupus nephritis.' },
-                    { term: 'Immunodeficiency', definition: 'A state in which the immune system\'s ability to fight infectious disease and cancer is compromised or entirely absent.' },
-                    { term: 'Immunofixation', definition: 'A technique used to identify the type of immunoglobulin that makes up a paraprotein (e.g., IgG kappa, IgA lambda).' },
-                    { term: 'Immunofluorescence', definition: 'A laboratory technique using fluorescently-labelled antibodies to visualise the presence and pattern of specific antigens or autoantibodies in patient samples.' },
-                    { term: 'Immunoglobulin', definition: 'Another name for an antibody. The main classes are IgG, IgA, IgM, IgD, and IgE.' },
-                    { term: 'Immunosuppression', definition: 'The reduction of the activation or efficacy of the immune system, for example, by drugs given to prevent organ transplant rejection.' },
-                    { term: 'Innate Immunity', definition: 'The non-specific, first line of defence of the immune system, which includes physical barriers, phagocytic cells, and the complement system.' },
-                    { term: 'Interferon', definition: 'A type of cytokine that has antiviral properties and can modulate the immune response.' },
-                    { term: 'Interleukin', definition: 'A group of cytokines that act as chemical signals between white blood cells.' },
-                    // L
-                    { term: 'Lymph Node', definition: 'Small, bean-shaped structures that are part of the lymphatic system and filter harmful substances. They contain immune cells that are ready to respond to infection.' },
-                    // M
-                    { term: 'Macrophage', definition: 'A large phagocytic cell found in tissues, derived from blood monocytes. It engulfs pathogens and cellular debris.' },
-                    { term: 'Mast Cell', definition: 'A cell found in connective tissue that releases histamine and other inflammatory mediators during an allergic reaction.' },
-                    { term: 'Mast Cell Tryptase', definition: 'An enzyme released from mast cells during an allergic reaction. Measuring its level can help confirm if a patient has had an anaphylactic reaction.' },
-                    { term: 'Memory Cell', definition: 'A long-lived lymphocyte (T or B cell) that "remembers" a specific antigen, allowing for a faster and stronger immune response upon re-exposure.' },
-                    { term: 'MHC (Major Histocompatibility Complex)', definition: 'The genetic region that codes for HLA proteins. See HLA.' },
-                    { term: 'Monoclonal Gammopathy of Undetermined Significance (MGUS)', definition: 'A condition where an abnormal paraprotein is present in the blood, but there are no signs of multiple myeloma or other related diseases.' },
-                    { term: 'Multiple Myeloma', definition: 'A cancer of plasma cells in the bone marrow, which produce a large amount of a single, abnormal immunoglobulin (a paraprotein).' },
-                    // N
-                    { term: 'Natural Killer (NK) Cell', definition: 'A type of lymphocyte of the innate immune system that can kill tumour cells and virus-infected cells without prior sensitisation.' },
-                    // O
-                    { term: 'Opsonisation', definition: 'The process by which a pathogen is marked for ingestion and destruction by a phagocyte. Antibodies and complement proteins can act as opsonins.' },
-                    // P
-                    { term: 'Paraprotein (Monoclonal Protein)', definition: 'An abnormal immunoglobulin produced by a single clone of plasma cells. Its presence can indicate conditions like MGUS or multiple myeloma.' },
-                    { term: 'Phagocytosis', definition: 'The process by which a cell, such as a macrophage or neutrophil, engulfs a solid particle to form an internal vesicle known as a phagosome.' },
-                    { term: 'Plasma Cell', definition: 'A fully differentiated B-lymphocyte that is specialized in producing and secreting large quantities of antibodies.' },
-                    { term: 'Primary Immunodeficiency', definition: 'An immunodeficiency that is caused by a genetic defect, present from birth.' },
-                    // R
-                    { term: 'RAST (Radioallergosorbent test)', definition: 'A term often used generically to refer to a blood test for specific IgE, which helps determine if a person is allergic to a particular substance.' },
-                    { term: 'Rheumatoid Arthritis', definition: 'A chronic autoimmune disorder that primarily affects the joints, causing inflammation, pain, and damage. Associated with RF and anti-CCP antibodies.' },
-                    { term: 'Rheumatoid Factor (RF)', definition: 'An autoantibody (usually IgM) that targets the Fc portion of a person\'s own IgG. It is often found in patients with Rheumatoid Arthritis but can be seen in other conditions.' },
-                    // S
-                    { term: 'Secondary Immunodeficiency', definition: 'An immunodeficiency that is acquired as a result of another condition, such as HIV infection, malnutrition, or immunosuppressive drugs.' },
-                    { term: 'Serum Free Light Chains', definition: 'Immunoglobulin light chains (kappa and lambda) that circulate in the blood unbound to heavy chains. The ratio of kappa to lambda is a very sensitive test for plasma cell disorders like multiple myeloma.' },
-                    { term: 'Sjögren\'s Syndrome', definition: 'An autoimmune disease that primarily affects the glands that produce tears and saliva, leading to dry eyes and a dry mouth. Associated with anti-Ro and anti-La antibodies.' },
-                    { term: 'Systemic Lupus Erythematosus (SLE)', definition: 'A chronic autoimmune disease that can affect many parts of the body, including the skin, joints, kidneys, and brain. Characterised by the presence of autoantibodies, especially ANA and anti-dsDNA.' },
-                    { term: 'Systemic Sclerosis (Scleroderma)', definition: 'An autoimmune disease characterized by the hardening and tightening of the skin and connective tissues. Associated with specific autoantibodies like anti-centromere and anti-Scl-70.' },
-                    // T
-                    { term: 'T-Lymphocyte (T-Cell)', definition: 'A type of lymphocyte that matures in the thymus and is central to cell-mediated immunity. Includes helper T-cells and cytotoxic T-cells.' },
-                    { term: 'Tissue Transglutaminase (tTG) Antibody', definition: 'An autoantibody (usually IgA) that is a highly sensitive and specific marker for Coeliac Disease.' },
-                    { term: 'Tolerance', definition: 'The state of unresponsiveness of the immune system to substances or tissues that have the potential to induce an immune response. Central tolerance prevents the immune system from attacking itself.' },
-                    // V
-                    { term: 'Vaccine', definition: 'A biological preparation that provides active acquired immunity to a particular infectious disease.' },
-                    { term: 'Vasculitis', definition: 'Inflammation of the blood vessels. ANCA testing is crucial for diagnosing certain types of small vessel vasculitis.' }
-                ]
-            };
-
-    "learningLinks": {
+    "newsletters": [
+        { "title": "July 2025 Edition", "url": "https://www.canva.com/design/DAGq_W5r-H4/7ZHZKr-ctFrh4vkM6JyN_g/view" },
+        { "title": "June 2025 Edition", "url": "https://www.canva.com/design/DAGnXoAq70Y/0VKC3AAIqPUdaLLZ3cpQUg/view" },
+        { "title": "May 2025 Edition", "url": "https://www.canva.com/design/DAGj3M0ceJ4/nLv3uC_Jojrf20YVExh8Vw/view" },
+        { "title": "April 2025 Edition", "url": "https://www.canva.com/design/DAGhotuowcw/bUjeV9GXeNrwuFZTfrObjA/view" },
+        { "title": "March 2025 Edition", "url": "https://www.canva.com/design/DAGecEbcDF4/bbbGy79e_uK0gRLLYJa4nA/view" },
+        { "title": "January 2025 Edition", "url": "https://www.canva.com/design/DAGSvAh8E6I/b4ZBT3LhYVKWDxoh-OYN5g/view" }
+    ],
+    "learning_links": {
         "general": [
             { "name": "IBMS", "url": "https://www.ibms.org/home/", "description": "The Institute of Biomedical Science - our professional body." },
             { "name": "HCPC", "url": "https://www.hcpc-uk.org/", "description": "The Health and Care Professions Council - our regulator." }
         ],
         "haematology": [
             { "name": "British Society for Haematology", "url": "https://b-s-h.org.uk/", "description": "Guidelines, research and education for haematology." }
+        ],
+        "transfusion": [
+            { "name": "Transfusion Guidelines (JPAC)", "url": "https://www.transfusionguidelines.org/", "description": "The official UK guidelines for blood transfusion services." }
+        ],
+        "chemistry": [
+            { "name": "Association for Laboratory Medicine", "url": "https://labmed.org.uk/", "description": "Formerly the ACB, a key professional body for the field." }
+        ],
+        "immunology": [
+            { "name": "British Society for Immunology", "url": "https://www.immunology.org/", "description": "Representing scientists and clinicians in immunology." }
         ]
     },
-    
-    "newsletters": [
-        { "title": "Summer 2025 Edition", "url": "https://www.canva.com/link-to-newsletter-1", "description": "Our latest edition covering recent events and educational pieces." },
-        { "title": "Spring 2025 Edition", "url": "https://www.canva.com/link-to-newsletter-2", "description": "A look back at the spring term, with case studies and quizzes." }
-    ],
-
-    "socialMedia": [
-        { "title": "A Day in the Life (TikTok)", "url": "https://vm.tiktok.com/some-id", "description": "A great short video showcasing the work of Biomedical Scientists." },
-        { "title": "Q&A with a BMS Apprentice (YouTube)", "url": "https://www.youtube.com/watch?v=some-id", "description": "An insightful Q&A session with an NHS apprentice Biomedical Scientist." }
-    ],
 
     // =================================================================
-    // STATIC PAGE CONTENT (for pages with fixed text sections)
+    // TOOLS & GUIDES
     // =================================================================
-
-    "page_about": {
-        "title": "About The Council",
-        "intro_paragraph": "Welcome to the Student and Graduate Council (SGC). This is the place for all trainee biomedical scientists, healthcare science students, and newly qualified scientists to find resources, support, and a sense of community.\n\nOur council is run by a dedicated team of volunteers from various pathology disciplines who are passionate about education and development.",
-        "mission_title": "Our Mission",
-        "mission_paragraph": "Our primary goal is to bridge the gap between academic study and professional practice. We aim to provide accessible, high-quality educational materials, foster a collaborative environment for learning, and support trainees on their journey to becoming registered and respected scientists in the field."
-    },
-
-    "page_contact": {
-        "title": "Get In Touch",
-        "intro_text": "We'd love to hear from you. Whether you have a question about the council, a suggestion for the website, or want to get involved, please don't hesitate to reach out.",
-        "email_address": "sgc.contact@example-nhs.net",
-        "twitter_handle": "@SGC_Example",
-        "instagram_handle": "@SGC_Example_Insta"
-    },
-
-    "page_garden_project": {
-        "title": "The Garden Project",
-        "intro_paragraph": "The Garden Project is a collaborative initiative to create a virtual 'garden' of interesting and educational pathology cases. Each 'plant' in our garden represents a unique case study, complete with images, history, and discussion points.",
-        "how_it_works_title": "How It Works",
-        "how_it_works_paragraph": "Council members and guest contributors can submit cases. These are then curated and 'planted' in the garden for everyone to learn from. Explore the different sections to see what's growing!",
-        "latest_update_title": "Latest Updates",
-        "latest_update_paragraph": "We've just planted a new 'Rose Bush' of haematology morphology cases and a 'Vegetable Patch' of clinical chemistry conundrums. Go and have a look!"
-    },
-
-    "page_interpretive_guide": {
-        "title": "Interpretive Comments Guide",
-        "intro_paragraph": "This guide provides a collection of template interpretive comments for common scenarios encountered in various laboratory disciplines. These are intended as a learning aid and should always be adapted to the specific patient context and local laboratory guidelines.",
-        "haematology_intro": "Comments related to Full Blood Count (FBC) and coagulation results.",
-        "chemistry_intro": "Comments related to common biochemistry profiles like Urea & Electrolytes (U&Es) and Liver Function Tests (LFTs)."
-    },
-
-    "page_lab_discussions": {
-        "title": "Lab Discussions",
-        "intro_paragraph": "A space for deeper dives into interesting topics, new technologies, and the challenges we face in the lab. These articles are written by council members and are intended to spark curiosity and conversation.",
-        "featured_topic_title": "Featured Topic: The Rise of AI in Morphology",
-        "featured_topic_summary": "This month, we explore the impact of artificial intelligence and digital cell morphology analysers. Are they a helping hand or a threat to traditional skills? Read on for our take."
-    },
-
-    "page_rejection_troubleshooter": {
-        "title": "Sample Rejection Troubleshooter",
-        "intro": "Use this guide to understand common reasons for sample rejection and how to prevent them. Improving pre-analytical quality is a team effort!",
-        "haemolysed_title": "Haemolysed Samples",
-        "haemolysed_causes": "• Difficult venepuncture\n• Using too fine a needle\n• Vigorous shaking of the sample",
-        "haemolysed_prevention": "• Ensure smooth venepuncture\n• Use an appropriate gauge needle (21g is standard)\n• Gently invert tubes; do NOT shake",
-        "clotted_title": "Clotted Samples",
-        "clotted_causes": "• Insufficient or delayed mixing of anticoagulant tubes\n• Slow blood collection",
-        "clotted_prevention": "• Gently invert EDTA/Citrate tubes 8-10 times immediately after collection."
-    },
-
-    // =================================================================
-    // GAME & INTERACTIVE TOOL CONTENT
-    // =================================================================
-
     "tool_add_on_guide": {
-        "title": "Add-On Test Guide",
-        "instructions": "Check the stability for common add-on tests. Select the initial sample tube to see what can be added.",
-        "tests": [
-            { "name": "Add-on CRP from FBC", "tube": "EDTA (Purple)", "stability": "24 hours", "notes": "Only possible if the EDTA sample is centrifuged to get plasma." },
-            { "name": "Add-on LFT from U&E", "tube": "Serum (Brown/Gold)", "stability": "7 days at 4°C", "notes": "Standard procedure, generally no issues." },
-            { "name": "Add-on Coag from FBC", "tube": "EDTA (Purple)", "stability": "Not possible", "notes": "Cannot perform coagulation tests on an EDTA sample. Requires a separate Sodium Citrate (Blue) tube." }
+        "title": "The Power of the Add-On Test",
+        "intro": "A guide to sample stability for add-on requests. Avoiding a re-bleed saves time, resources, and improves the patient experience.",
+        "patient_impact_title": "Better for the Patient",
+        "patient_impact_text": "Every unnecessary venepuncture is an uncomfortable experience for the patient. For those with difficult venous access, children, or needle-phobic individuals, avoiding a redraw significantly improves their quality of care and perception of our service.",
+        "trust_impact_title": "Better for the Trust",
+        "trust_impact_text": "Each blood draw has a cost. While it seems small, the cumulative cost of staff time (phlebotomist, porter, lab staff) and consumables (needle, holder, tubes, bag) is estimated at **£5 - £7 per collection**. Using an existing sample is a direct and simple way to save money.",
+        "biochemistry_data": [
+            { "test": "Amylase", "tube": "Serum (Gold Top)", "stability": "7 days" }
+        ],
+        "haematology_data": [
+            { "test": "APTT (for Heparin monitoring)", "tube": "Citrate (Blue Top)", "stability": "2 hours" }
         ]
     },
-
-    "game_chemistry": {
-        "title": "Chemistry Case Challenge",
-        "instructions": "Analyse the results and answer the question.",
-        "cases": [
-            {
-                "scenario": "A 78-year-old patient presents with confusion. Results: Na+ 120, K+ 4.1, Urea 3.2, Creat 88.",
-                "question": "What is the most significant finding?",
-                "answers": ["Hyponatraemia", "Hyperkalaemia", "Renal Failure"],
-                "correct_answer": "Hyponatraemia"
-            }
+    "tool_cell_counter": {
+        "title": "Manual Differential Counter",
+        "intro": "Use your keyboard number keys to count cells. Enter the patient's total WBC to calculate absolute values.",
+        "cell_groups": {
+            "wbc": { "1": "Neutrophils", "2": "Lymphocytes", "3": "Monocytes", "4": "Eosinophils", "5": "Basophils" },
+            "other": { "6": "Metamyelocytes", "7": "Myelocytes", "8": "Promyelocytes", "9": "Blasts", ".": "Plasma Cells", "0": "NRBCs" }
+        }
+    },
+    "tool_glossary": {
+        "haem": [
+            { "term": "Acanthocyte (Spur Cell)", "definition": "An erythrocyte (red blood cell) with a few, irregularly spaced spikes of varying length. Associated with severe liver disease." }
+        ],
+        "trans": [
+            { "term": "A, B, O Antigens", "definition": "Carbohydrate structures on the surface of red blood cells that determine the ABO blood group." }
+        ],
+        "chem": [
+            { "term": "Acid-Base Balance", "definition": "The mechanism by which the body maintains the pH of its fluids within a narrow, normal range. Primarily involves the lungs and kidneys." }
+        ],
+        "imm": [
+            { "term": "Adjuvant", "definition": "A substance that enhances the body's immune response to an antigen, often included in vaccines." }
         ]
     },
+    "tool_interpretive_guide": {
+        "title": "Interpretive Comment Guide",
+        "intro": "Search for a term to understand its clinical significance and appropriate next steps.",
+        "haem": [
+            { "term": "Leucoerythroblastic Picture", "meaning": "The presence of immature red cells (Nucleated Red Blood Cells) and immature white cells (e.g., myelocytes, metamyelocytes) in the peripheral blood. Teardrop-shaped red cells are often also present.", "causes": "Indicates significant bone marrow disturbance. Common causes include myelofibrosis, metastatic cancer infiltrating the marrow, severe haemolysis, or overwhelming infection (sepsis).", "nextSteps": "This is a significant finding requiring urgent clinical correlation. Review previous haematology results. A bone marrow biopsy is often indicated to determine the underlying cause. Refer to haematology for review." }
+        ],
+        "coag": [
+            { "term": "Prolonged APTT (@PAPT)", "meaning": "The activated partial thromboplastin time, a measure of the intrinsic coagulation pathway, is longer than the reference range.", "causes": "Common causes include heparin therapy, presence of a lupus anticoagulant, clotting factor deficiencies (e.g., Haemophilia A/B), liver disease, or DIC.", "nextSteps": "Suggest repeat in the first instance to rule out pre-analytical error. Correlate with clinical picture (bleeding?) and medication history (heparin?). Further tests (e.g., mixing studies, factor assays) may follow if confirmed." }
+        ],
+        "haemoglobinopathy": [
+            { "term": "No Abnormality Detected (@HNON / @HNOA)", "meaning": "The analysis shows a normal haemoglobin pattern.", "causes": "Normal genetic makeup for haemoglobin.", "nextSteps": "No evidence of sickle haemoglobin or other common haemoglobin variant or of thalassaemia. For antenatal screening, testing of the baby’s biological father is not required based on this result." }
+        ]
+    },
+    "tool_lipaemia_calculator": {
+        "title": "Lipaemia Correction Calculator",
+        "intro": "Calculates a corrected Haemoglobin and red cell indices for a lipaemic FBC sample as per the NUH protocol."
+    },
+    "tool_pre_analytical_query": {
+        "title": "Pre-analytical Query Tool",
+        "intro": "Search for any test in the directory to view its specific sample requirements and turnaround times.",
+        "test_requirements": [
+            { "name": "y-Glutamyl Transferase (GGT)", "lab": "Chemistry", "reqs": ["Sample: 5mL SST/serum", "Turnaround: 60 mins (ED), 180 mins (Inpatient), 24 hours (GP)"] },
+            { "name": "17- OH-progesterone (17-OHP)", "lab": "Other (Referred)", "reqs": ["Sample: Plain serum (red top) ONLY", "Turnaround: 14 days"] }
+        ]
+    },
+    "tool_rejection_troubleshooter": {
+        "title": "Sample Rejection Troubleshooter",
+        "intro": "A practical guide to understanding and preventing common sample collection errors.",
+        "reasons": {
+            "haemolysed": { "title": "Haemolysed Sample", "icon": "droplet", "causes": ["Difficult venepuncture (e.g., probing for a vein, slow draw)."], "prevention": ["Ensure a smooth, clean venepuncture with a good blood flow."], "impact": "Haemolysis releases intracellular components into the plasma/serum..." },
+            "clotted": { "title": "Clotted Sample", "icon": "grid", "causes": ["Insufficient or delayed mixing of anticoagulant tubes (e.g., EDTA, Citrate)."], "prevention": ["Gently invert anticoagulant tubes 8-10 times immediately after collection."], "impact": "Clots consume platelets and clotting factors..." }
+        }
+    },
 
+    // =================================================================
+    // GAMES
+    // =================================================================
+    "game_coagulation": {
+        "title": "Coagulation Cascade Challenge",
+        "intro": "Drag and drop the factors from the bank into their correct positions in the cascade.",
+        "factors": [ { "id": "VIIa", "name": "Factor VIIa" }, { "id": "IXa", "name": "Factor IXa" } ]
+    },
+    "game_compatibility": {
+        "title": "Blood Group BATTLE",
+        "intro": "A patient needs blood. Is the unit compatible? Make the right call!",
+        "blood_groups": ["O-", "O+", "A-", "A+", "B-", "B+", "AB-", "AB+"],
+        "compatibility_matrix": { "O-": ["O-"], "O+": ["O-", "O+"] }
+    },
     "game_disease_association": {
-        "title": "Disease Association Challenge",
-        "instructions": "Match the laboratory finding to the most likely associated disease or condition.",
-        "pairs": [
-            { "finding": "Auer Rods", "disease": "Acute Myeloid Leukaemia (AML)" },
-            { "finding": "Bence Jones Protein", "disease": "Myeloma" },
-            { "finding": "Reed-Sternberg Cells", "disease": "Hodgkin's Lymphoma" }
-        ]
+        "title": "Antibody & Disease Association",
+        "intro": "Test your knowledge of autoimmune serology. Select the correct match for the given item.",
+        "associations": [ { "antibody": "Anti-dsDNA", "disease": "Systemic Lupus Erythematosus" } ]
     },
-
+    "game_chemistry": {
+        "title": "Clinical Chemistry Case Challenge",
+        "intro": "Analyse the patient's case notes and biochemistry results to determine the most likely diagnosis.",
+        "cases": [ { "scenario": "A 68-year-old man presents to A&E...", "answer": "Acute Pancreatitis" } ]
+    },
     "game_fbc_challenge": {
-        "title": "FBC Challenge",
-        "instructions": "Review the FBC results and blood film description, then choose the most likely diagnosis.",
-        "cases": [
-            {
-                "results": "Hb 98, MCV 72, MCH 23, Plt 450, WBC 12.1",
-                "film_description": "Microcytic, hypochromic red cells. Anisopoikilocytosis present. Thrombocytosis noted.",
-                "question": "What is the most likely diagnosis?",
-                "answers": ["Iron Deficiency Anaemia", "B12 Deficiency", "Leukaemia"],
-                "correct_answer": "Iron Deficiency Anaemia"
-            }
-        ]
+        "title": "Name That Condition",
+        "intro": "Analyse the results and clinical note to identify the most likely condition.",
+        "scenarios": [ { "condition": "Iron Deficiency Anaemia", "clinicalNote": "Patient presents with fatigue...", "explanation": "Lack of iron impairs haemoglobin synthesis..." } ]
     },
-
-    "game_haem": {
-        "title": "Haematology Morphology Game",
-        "instructions": "Identify the cell or feature indicated by the arrow.",
-        "images": [
-            { "image_url": "path/to/neutrophil.jpg", "question": "Identify this cell.", "answers": ["Neutrophil", "Lymphocyte", "Monocyte"], "correct_answer": "Neutrophil" },
-            { "image_url": "path/to/sickle_cell.jpg", "question": "Identify this feature.", "answers": ["Sickle Cell", "Target Cell", "Spherocyte"], "correct_answer": "Sickle Cell" }
-        ]
+    "game_haem_morphology": {
+        "title": "Morphology Mastermind",
+        "intro": "Read the description of a haematological feature and select the correct term.",
+        "pairs": [ { "term": "Red Blood Cell", "description": "A non-nucleated, biconcave disc...", "category": "RBC Basic" } ]
     },
-
-    "game_immunology": {
-        "title": "Immunology Game",
-        "instructions": "Answer the following questions about immunology.",
-        "questions": [
-            {
-                "question": "Which antibody isotype is most associated with allergic reactions?",
-                "answers": ["IgE", "IgG", "IgM", "IgA"],
-                "correct_answer": "IgE"
-            }
-        ]
+    "game_immunology_wordsearch": {
+        "title": "Immunology Word Search",
+        "intro": "Find the immunology terms hidden in the grid. Click and drag to select a word.",
+        "word_list": ["ADRENAL", "ALLERGY", "ANCA", "ANTIBODY", "ANTIGEN"]
     },
-
+    "game_lab_discussions": {
+        "title": "Lab Questions",
+        "questions": [ "Is a toastie a sandwich?", "What are your top 5 90s movies?" 
+                "What would be your three dream festival headliners?",
+                "If you had to eat one sandwich for the rest of your life, what would it be?",
+                "Is Die Hard a Christmas film?",
+                "What would you cook on Come Dine With Me?",
+                "If you could ask three questions to see if you'd be friends with someone, what would you ask?",
+                "Do you have any ghost stories?",
+                "What's your most mundane celebrity encounter?",
+                "Would you rather have a middle finger that could travel time, despite being connected to you in the present, or an armpit that can dispense talc?",
+                "If you could be a piece of furniture, what would you be?",
+                "As you lay dying, which celebrity would you want to stroke your hair?",
+                "If you had to replace your hands with two non-hand objects, what would they be?",
+                "Would you rather always have to sing what you say, or always have to dance where you go?",
+                "If you could instantly become fluent in any animal language, which animal's language would you choose?",
+                "What's the most absurd thing you've ever seen someone do in public?",
+                "If you had to wear one hat for the rest of your life, what kind of hat would it be?",
+                "Would you rather fight one horse-sized duck or one hundred duck-sized horses?",
+                "If you could have any object instantly appear whenever you needed it (and disappear when not needed), what would it be?",
+                "If you had to communicate only through interpretive dance for a week, what message would you struggle to convey?",
+                "What's the strangest thing you've ever eaten and surprisingly enjoyed?",
+                "Would you rather have knees that bend both ways or elbows that bend both ways?",
+                "If animals could talk, which species would be the rudest?",
+                "What's a mundane superpower you'd actually find incredibly useful in daily life?",
+                "If you could replace handshakes with any other greeting, what would it be?",
+                "Would you rather have constantly itchy feet or constantly sticky hands?",
+                "If you woke up tomorrow with the ability to talk to inanimate objects, which object would you speak to first?",
+                "What's the most unusual item you have in your fridge right now?",
+                "If you had to wear a ridiculous costume every day for a month, what would it be?",
+                "Would you rather have a perpetually squeaky voice or always smell faintly of onions?",
+                "If you could swap bodies with any fictional creature for a day, which one?",
+                "What's the silliest argument you've ever overheard?",
+                "If you could only eat one colour of food for a year, which colour would you choose?",
+                "Would you rather have a tiny, annoying bell ring every time you yawn, or a small puff of glitter explode every time you sneeze?",
+                "If you could have any animal as your personal assistant, which animal would you choose and why?",
+                "What's the most ridiculous thing you've ever spent money on?",
+                "If your pet could suddenly speak, what's the first thing you think it would say?",
+                "Would you rather be able to fly but only at walking pace, or be invisible but only when no one is looking?",
+                "What's the most bizarre dream you've ever had?",
+                "If you had a personal theme song that played whenever you entered a room, what would it be?",
+                "Would you rather always be slightly too hot or slightly too cold?",
+                "If you could only communicate using emojis, what's the most complex message you'd try to send?",
+                "What's a weird habit you have that you're sure no one else does?",
+                "If you could rename yourself using only two words, what would they be?",
+                "Would you rather have to wear a giant foam finger for the rest of your life or have permanent clown shoes?",
+                "If you could choose any fictional food to be real, what would it be?",
+                "What's the most unusual piece of advice you've ever been given?",
+                "Would you rather be able to understand squirrels or pigeons?",
+                "If you had to trade your sense of taste for an enhanced sense of smell, would you do it?",
+                "What's the strangest thing you've seen someone do while driving?",
+                "If you could only watch one TV show for the rest of your life, what would it be?",
+                "Would you rather be famous for something ridiculous or infamous for something slightly embarrassing?",
+                "If you could only eat condiments for a week, which one would you choose to survive on?",
+                "What's your most irrational fear?",
+                "If you had a warning label, what would it say?",
+                "Would you rather have perpetually cold coffee or perpetually lukewarm tea?",
+                "If you could only speak in movie quotes for a day, which film would you choose to quote from?",
+                "What's the most ridiculous thing you've convinced someone of?",
+                "If you could have an emoji for every single emotion, which new ones would you create?",
+                "Would you rather have a permanent case of the giggles or perpetually have to wink at people?",
+                "What's the most unusual item you carry in your bag/pockets?",
+                "If you could replace your bed with any other object, what would it be?",
+                "Would you rather be followed everywhere by a marching band or have a personal laugh track every time you made a joke?",
+                "What's the most outlandish rumour you've ever heard about yourself?",
+                "If you could only use one kitchen utensil for cooking everything, which one?",
+                "Would you rather have to smell everything intensely or hear everything intensely?",
+                "If you could high-five any historical figure, who would it be?",
+                "What's the silliest thing you've ever done to avoid social interaction?",
+                "Would you rather your only mode of transport be a unicycle or a pogo stick?",
+                "If you could have a conversation with a sentient blob of jelly, what would you talk about?",
+                "What's the most obscure fact you know?",
+                "Would you rather have a perpetually runny nose or constantly watery eyes?",
+                "If you could only wear clothes made of one material, what would it be?",
+                "What's a fictional item you desperately wish was real?",
+                "Would you rather be able to talk to plants or understand insects?",
+                "If you had a personal jingle that played every time you entered a room, what would it be?",
+                "What's the most unexpected item you've found in your own home?",
+                "Would you rather have permanent marker on your face or invisible ink on your clothes that shows up in the rain?",
+                "If you could only communicate through charades, what's the first thing you'd try to explain?",
+                "What's the most ridiculous conspiracy theory you've ever heard?",
+                "Would you rather have to bark like a dog every time you say hello, or meow like a cat every time you say goodbye?",
+                "If you could have a professional wrestler as your personal bodyguard for a day, who would it be?",
+                "What's the most unusual place you've ever fallen asleep?",
+                "Would you rather have unlimited bacon but no games, or unlimited games but no bacon?",
+                "If you could make one small, irritating noise whenever someone spoke, what would it be?",
+                "What's the most bizarre piece of art you've ever seen?",
+                "Would you rather lose the ability to laugh or the ability to cry?",
+                "If you could only eat food shaped like animals, which animal would you eat most often?",
+                "What's the most useless talent you possess?",
+                "Would you rather have perpetually wet socks or perpetually tangled hair?",
+                "If you could swap places with any cartoon character for a day, who would it be?",
+                "What's the silliest thing you've ever done out of boredom?",
+                "Would you rather live in a house made of sweets or a house made of cheese?",
+                "If you could only listen to one song for the rest of your life, what would it be?",
+                "What's the most outrageous lie you've ever told (and gotten away with)?",
+                "Would you rather have hands for feet or feet for hands?",
+                "If you could have a single, non-human companion who could understand all your thoughts, what would it be?",
+                "What's the most unexpected thing you've ever found in a secondhand shop?",
+                "Would you rather have to wear a tinfoil hat everywhere or a tiny propeller beanie?",
+                "If you could replace one body part with a common household item, which one and what item?",
+                "What's the strangest thing you've seen on public transport?",
+                "Would you rather have a permanent unibrow or a permanent handlebar moustache?",
+                "If you could speak to one species of mythical creature, which would it be?",
+                "What's the most bizarre piece of junk mail you've ever received?",
+                "Would you rather have the ability to talk to insects or control traffic lights?",
+                "If you could only eat food that has been prepared by a celebrity chef, who would it be?",
+                "What's the most ridiculous thing you believed as a child?",
+                "Would you rather have a constant low-level static shock or always have chewing gum stuck to your shoe?",
+                "If you could only drink one beverage for the rest of your life (other than water), what would it be?",
+                "What's the most unusual talent you've witnessed?",
+                "Would you rather be followed by a personal spotlight or a constant swarm of harmless butterflies?",
+                "If you could be famous for something ridiculous, what would it be?",
+                "What's the silliest thing you've ever done to make someone laugh?",
+                "Would you rather have your clothes always be one size too big or one size too small?",
+                "If you could only eat crunchy food or only eat soft food for a month, which would you choose?",
+                "What's the most unusual item in your bedside table?",
+                "Would you rather have to wear socks on your hands or gloves on your feet?",
+                "If you could swap houses with any fictional character, who would it be?",
+                "What's the most bizarre historical fact you know?",
+                "Would you rather have a tiny unicorn or a tiny dragon as a pet?",
+                "If you could only communicate using only animal noises, which animal noise would be your primary one?",
+                "What's the most unexpected sound you've ever heard?",
+                "Would you rather have constantly cold hands or constantly cold feet?",
+                "If you could only wear one outfit for a year, what would it be?",
+                "What's a fictional place that sounds utterly miserable to live in?",
+                "Would you rather be able to turn invisible but only when you hold your breath, or be able to teleport but only to places you've been before?",
+                "What's the silliest excuse you've ever used?",
+                "Would you rather your phone only make animal sounds or your car only play children's songs?",
+                "If you could have any fictional vehicle, what would it be?",
+                "What's the most absurd thing you've heard someone complain about?",
+                "Would you rather have perpetually slightly greasy hair or perpetually dry, flaky skin?",
+                "If you could have a conversation with a talking plant, what would you talk about?",
+                "What's the most unusual thing you've seen someone wear?",
+                "Would you rather your tears be glitter or your sweat be syrup?",
+                "If you could add one absurd feature to your home, what would it be?",
+                "What's the most unusual dream job you can think of?",
+                "Would you rather always have to whisper or always have to shout?",
+                "If you could only eat food that begins with the first letter of your name, what would you eat?",
+                "What's the most nonsensical thing someone has ever said to you?",
+                "Would you rather have permanent hiccups or a permanent twitch?",
+                "If you could only use one finger to type for the rest of your life, which finger would you choose?",
+                "What's the most random act of kindness you've ever done?",
+                "Would you rather have your feet grow one size bigger every year or your ears grow one inch longer every year?",
+                "If you could swap brains with any animal for an hour, which one?",
+                "What's the most bizarre thing you've ever cooked?",
+                "Would you rather always be 5 minutes late or always be 20 minutes early?",
+                "If you could only use one form of transport for the rest of your life, what would it be?",
+                "What's the most ridiculous thing you've seen someone get angry about?",
+                "Would you rather have a pet dragon the size of a cat or a pet cat the size of a dragon?",
+                "If you could replace your voice with a famous sound effect, what would it be?",
+                "What's the most outlandish outfit you've ever worn?",
+                "Would you rather be able to talk to ghosts or see into the future (but only the next 5 minutes)?",
+                "If you could only eat breakfast food for every meal, what would you eat?",
+                "What's the silliest nickname you've ever had?",
+                "Would you rather have super speed but only when you're walking backwards, or super strength but only when you're wearing a tutu?",
+                "If you could give one absurd piece of advice to a stranger, what would it be?",
+                "What's the most unexpected talent you've discovered in someone?",
+                "Would you rather sneeze confetti or burp bubbles?",
+                "If you could have a conversation with a fictional villain, who would it be and what would you ask?",
+                "What's the most bizarre thing you've seen a customer do?",
+                "Would you rather always have to wear mismatched socks or mismatched shoes?",
+                "If you could only use one word for every sentence, what would it be?",
+                "What's the most unusual thing you've done to cheer yourself up?",
+                "Would you rather have your nose grow an inch every time you lie, or your ears turn bright green every time you're embarrassed?",
+                "If you could spend a day as any object, what would it be?",
+                "What's the most ridiculous song you know all the lyrics to?",
+                "Would you rather live without internet or without air conditioning (or heating)?",
+                "If you could have a single item from any fictional universe, what would it be?",
+                "What's the most bizarre thing you've found in nature?",
+                "Would you rather have a permanent singing voice, even when talking, or always hear background music wherever you go?",
+                "If you could only eat food that is blue, what would your diet consist of?",
+                "What's the most absurd thing you've ever had to explain?",
+                "Would you rather have a tiny person living in your ear giving you life advice, or a tiny dragon on your shoulder that breathes fire when you're annoyed?",
+                "If you could invent a new animal, what two existing animals would you combine?",
+                "What's the silliest thing you've ever seen a grown-up do?",
+                "Would you rather have every text message you send autocorrect to a random animal noise, or every email you send sign off with 'Sent from my banana'?",
+                "If you could be famous for an extremely niche and bizarre talent, what would it be?",
+                "What's the most random thing you've ever bought on a whim?",
+                "Would you rather have perpetually slightly burnt toast or perpetually slightly soggy cereal?",
+                "If you could swap lives with any cartoon villain for a day, who would it be?",
+                "What's the most illogical thing you do regularly?",
+                "Would you rather have a pet that can talk but always insults you, or a pet that can't talk but always looks sad?",
+                "If you could add one absurd law to your country, what would it be?",
+                "What's the most embarrassing thing you've ever done in front of a stranger?",
+                "Would you rather have to wear a dog cone around your neck for a week or walk everywhere with a squeaky toy in your shoe?",
+                "If you could only answer questions with 'yes' or 'no' for a day, how would you manage?",
+                "What's the most unusual food combination you enjoy?",
+                "Would you rather have extremely long eyelashes that constantly get in your way or constantly shedding hair (like a dog)?",
+                "If you could have a tiny personal rain cloud that followed you everywhere, would you want it?",
+                "What's the strangest piece of art you own?",
+                "Would you rather your laugh sound like a honking goose or a meowing cat?",
+                "If you could be in any video game, which one and what character?",
+                "What's the most peculiar thing you've ever witnessed in nature?",
+                "Would you rather have super sensitive hearing or super sensitive smell?",
+                "If you could only wear clothes with polka dots or stripes for the rest of your life, which would you choose?",
+                "What's a fictional item that would be completely useless in real life?",
+                "Would you rather have perpetually cold feet or perpetually sweaty palms?",
+                "If you could swap places with any inanimate object for an hour, what would it be?",
+                "What's the most absurd thing you've seen on social media?",
+                "Would you rather your phone battery always be at 10% or your internet always be dial-up speed?",
+                "If you could only eat food that is green, what would your diet consist of?",
+                "What's the most ridiculous thing you've ever heard someone try to justify?",
+                "Would you rather have all streetlights turn green when you approach them or always find the exact parking spot you need?",
+                "If you could be a background character in any movie, which movie and what would you be doing?",
+                "What's the most nonsensical conversation you've ever had?",
+                "Would you rather have a permanent glitter allergy or always smell like old cheese?",
+                "If you could only use one utensil for eating for the rest of your life, what would it be?",
+                "What's the most random piece of trivia you know?",
+                "Would you rather have to speak in rhymes all the time or only be able to communicate through interpretive dance?",
+                "If you could have a pet that is half-animal, half-object, what would it be?",
+                "What's the most illogical fear you have?",
+                "Would you rather have constantly tangled earphones or constantly misplaced keys?",
+                "If you could be a flavour of ice cream, what would you be?",
+                "What's the most absurd thing you've ever done to impress someone?",
+                "Would you rather always have crumbs in your bed or always have sand in your shoes?",
+                "If you could only eat food that is spicy, what would your meals look like?",
+                "What's the most ridiculous purchase you've ever made that you don't regret?",
+                "Would you rather have a tiny, invisible personal assistant who occasionally messes things up or a huge, visible personal assistant who is perfectly efficient but constantly judges you?",
+                "If you could invent a new Olympic sport, what would it be?",
+                "What's the most unusual thing you've ever cooked for yourself?",
+                "Would you rather wear a superhero cape every day or a wizard's hat every day?",
+                "If you could have a magic remote control that only affects animals, what's the first thing you'd do with it?",
+                "What's the most bizarre item you've seen in someone else's home?",
+                "Would you rather have your belly button be an outie or your ears be slightly pointed?",
+                "If you could only listen to one album for the rest of your life, which one?",
+                "What's the most ridiculous thing you've done to get out of doing something?",
+                "Would you rather have to wear a bell around your neck or a tiny propeller on your head?",
+                "If you could have one absurd item of clothing that changes colour with your mood, what would it be?",
+                "What's the most unusual dream you've had that felt real?",
+                "Would you rather always have to use a blunt pencil or always have to use a pen that occasionally runs out of ink?",
+                "If you could only eat food that is purple, what would your next meal be?",
+                "What's the most nonsensical job title you can imagine?",
+                "Would you rather have constantly static hair or constantly smelling socks?",
+                "If you could swap places with any fictional sidekick for a day, who would it be?",
+                "What's the most random thing you've ever found in your pocket?",
+                "Would you rather have a small, harmless alien companion who only communicates through interpretive dance or a pet parrot who only repeats your most embarrassing moments?",
+                "If you could add one absurd rule to a common game, what would it be?",
+                "What's the silliest thing you've ever done to impress a crush?",
+                "Would you rather your feet randomly tap dance or your hands spontaneously mime things?",
+                "If you could only listen to elevator music or polka music for the rest of your life, which would you choose?",
+                "What's the most outrageous thing you've ever witnessed at a party?",
+                "Would you rather be able to jump incredibly high but have no control over landing, or be able to run incredibly fast but only on your hands and knees?",
+                "If you could turn any common object into a musical instrument, what would it be and what would it sound like?",
+                "What's the most unusual item you've ever seen a tourist buy?",
+                "Would you rather your sneezes sound like a trumpet or your yawns sound like a foghorn?",
+                "If you could have any fictional animal as your housemate, which one?",
+                "What's the most bizarre thing you've ever seen advertised?",
+                "Would you rather have permanent bed head or permanent hat hair?",
+                "If you could replace your reflection with any fictional character's reflection, who would it be?",
+                "What's the most ridiculous thing you've ever done for a dare?",
+                "Would you rather only be able to speak in riddles or only be able to speak in rhymes?",
+                "If you could add one absurd flavour to every food, what would it be?",
+                "What's the most unconvincing lie you've ever heard?",
+                "Would you rather have super strength but only when naked, or super speed but only when wearing roller skates?",
+                "If you could only eat food that is crunchy, what would your next meal be?",
+                "What's the most nonsensical question you've ever been asked?",
+                "Would you rather have your shadow be a different colour every day or always be trailed by a single, enthusiastic pigeon?",
+                "If you could only wear one type of footwear for the rest of your life, what would it be?",
+                "What's the most random piece of clothing you own?",
+                "Would you rather have to give a dramatic monologue every time you introduced yourself or perform a small magic trick every time you finished a conversation?",
+                "If you could replace your nose with any other object, what would it be?",
+                "What's the most absurd thing you've ever laughed at?",
+                "Would you rather have perpetually slightly greasy hair or perpetually dry, flaky skin?",
+                "If you could have a conversation with a talking piece of toast, what would you ask it?",
+                "What's the most unusual gift you've ever received?",
+                "Would you rather your thoughts were broadcast as a loud whisper or your dreams were acted out by puppets on a small stage near you every night?",
+                "If you could only eat food that is red, what would your diet consist of?",
+                "What's the most illogical fashion trend you've ever seen?",
+                "Would you rather have a permanent tiny cloud raining on your head or always have a gust of wind blowing in your face?",
+                "If you could be a famous meme for a day, which one?",
+                "What's the most bizarre piece of advice you've ever given?",
+                "Would you rather have to wear a bell on your ear or a small propeller on your head?",
+                "If you could only drink beverages that are fizzy, what would you drink?",
+                "What's the most nonsensical product you've ever seen for sale?",
+                "Would you rather have a tiny, annoying personal narrator describe your every move or have a personal soundtrack that changes inappropriately with your mood?",
+                "If you could invent a new holiday, what completely absurd activity would be mandatory?",
+                "What's the silliest thing you've ever seen a pet do?",
+                "Would you rather communicate only through a series of elaborate hand gestures or only through singing opera?",
+                "If you could swap places with any cartoon character, who would it be and what would be the first thing you'd do?",
+                "What's the most unexpected thing you've learned about your family?",
+                "Would you rather have an incredibly loud internal monologue that everyone can hear or never be able to speak above a whisper?",
+                "If you could replace your fingernails with any other common household item, what would they be?",
+                "What's the most absurd thing you've ever seen a grown-up collect?",
+                "Would you rather have a permanent tiny crown stuck to your head or perpetually wear a tiny monocle?",
+                "If you could only eat food that floats, what would your diet consist of?",
+                "What's the most illogical thing you've heard someone say in a serious conversation?",
+                "Would you rather have super strength but only when standing on one leg, or super speed but only when crawling?",
+                "If you could be a flavour of crisps, what would you be?",
+                "What's the most random thing that always makes you laugh?",
+                "Would you rather have perpetually damp hair or perpetually cold feet?",
+                "If you could have any fictional animal as a co-worker, which one?",
+                "What's the silliest mistake you've ever made at work?",
+                "Would you rather have a perpetually broken umbrella or perpetually untied shoelaces?",
+                "If you could only eat food that is smooth, what would your next meal be?",
+                "What's the most ridiculous thing you've ever seen someone do for attention?",
+                "Would you rather have a personal cloud of glitter follow you everywhere or have your clothes occasionally burst into harmless, temporary flames?",
+                "If you could communicate with one type of household appliance, which one?",
+                "What's the most unusual souvenir you own?",
+                "Would you rather your sneezes sound like a foghorn or your burps sound like a cow mooing?",
+                "If you could have any fictional object that's entirely useless, what would it be?",
+                "What's the most bizarre thing you've ever seen happen on a bus?",
+                "Would you rather have permanent stripes or permanent polka dots on your skin?",
+                "If you could replace one of your five senses with an animal's sense, which one and what animal?",
+                "What's the most outlandish theory you secretly believe?",
+                "Would you rather always have to wear a tiny hat or always carry a tiny umbrella?",
+                "If you could only drink one liquid for the rest of your life (other than water), what would it be?",
+                "What's the most nonsensical question you've ever been asked that made you truly ponder?",
+                "Would you rather have a permanent faint rainbow appear over your head or constantly emit the smell of freshly baked bread?",
+                "If you could be a famous fictional character's sidekick, who would you be?",
+                "What's the most random thing you've ever collected?",
+                "Would you rather have perpetually cold coffee or perpetually lukewarm tea?",
+                "If you could only speak in a certain accent for the rest of your life, which one?",
+                "What's the most peculiar dream you've had that you still remember vividly?",
+                "Would you rather have a constantly itchy nose or perpetually chapped lips?",
+                "If you could only wear shoes that are too big or too small, which would you choose?",
+                "What's the most absurd thing you've ever convinced a child is real?",
+                "Would you rather have your phone only play elevator music or your doorbell play a full operatic aria?",
+                "If you could swap bodies with any historical figure for a day, who would it be and what's the first mundane thing you'd do?",
+                "What's the most illogical thing you've ever seen someone passionately argue about?",
+                "Would you rather have a tiny, harmless ghost that follows you everywhere or a friendly, invisible dragon that only you can see?",
+                "If you could add one absurd item to every grocery basket, what would it be?",
+                "What's the silliest thing you've ever worn to a formal event?",
+                "Would you rather always speak in a whisper or always speak in a booming theatrical voice?",
+                "If you could only eat food that is yellow, what would your diet consist of?",
+                "What's the most nonsensical piece of advice you've ever been given?",
+                "Would you rather have permanent glitter in your hair or constantly feel like you're walking on bouncy castles?",
+                "If you could be a sound effect, what would you be?",
+                "What's the most random thing you've ever learned that has no practical use?",
+                "Would you rather have your internal monologue be sung by a choir or performed as a dramatic reading?",
+                "If you could replace one of your limbs with a spring, which one and why?",
+                "What's the most bizarre thing you've ever seen at a wedding?",
+                "Would you rather have to clap your hands three times before speaking or click your heels together before walking?",
+                "If you could be any flavour of chewing gum, what would you be?",
+                "What's the most illogical thing you've ever done to save a small amount of money?",
+                "Would you rather always know exactly what someone is thinking (even if you don't want to know) or always be able to perfectly mimic any sound you hear?",
+                "If you could add one absurd rule to the workplace, what would it be?",
+                "What's the silliest thing you've ever done to cheer up a friend?",
+                "Would you rather have a permanent case of static cling or perpetually have one ear slightly louder than the other?",
+                "If you could only eat food that is crispy, what would your next meal be?",
+                "What's the most absurd reason you've ever been late?",
+                "Would you rather have a tiny, invisible personal fanfare play every time you successfully complete a task, or a tiny, invisible personal clown juggle behind you when you're stressed?",
+                "If you could be a character in any children's book, who would you be?",
+                "What's the most unusual place you've ever napped?",
+                "Would you rather have to sing all your sentences or rhyme all your sentences?",
+                "If you could change one minor physical feature about yourself to something absurd, what would it be?",
+                "What's the most random item you own that you can't explain why you have?",
+                "Would you rather have to wear a ridiculous hat everywhere or always have a clown nose?",
+                "If you could swap houses with any fictional animal, which one?",
+                "What's the most unexpected gift you've ever received?",
+                "Would you rather your sneezes sound like a duck quack or your burps sound like a car horn?",
+                "If you could only eat food that is circular, what would your diet consist of?",
+                "What's the most illogical thing you've ever tried to fix?",
+                "Would you rather have perpetually slightly sticky fingers or perpetually slightly itchy elbows?",
+                "If you could be a type of biscuit, what would you be?",
+                "What's the silliest reason you've ever given for not wanting to do something?",
+                "Would you rather live in a world where everyone always told the truth (no filter) or a world where everyone always spoke in rhymes?",
+                "If you could have any fictional animal as a pet that is perfectly behaved and lives forever, what would it be?",
+                "What's the most unexpected place you've ever heard your favourite song?",
+                "Would you rather have your feet randomly tap dance when you're stressed or have your nose light up when you're excited?",
+                "If you could choose any absurd item to always carry with you, what would it be?",
+                "What's the most bizarre thing you've seen a human try to eat?",
+                "Would you rather have your voice change pitch randomly or always be accompanied by faint accordion music?",
+                "If you could be a flavour of ice cream, what would you be?",
+                "What's the most illogical thing you've ever done out of laziness?",
+                "Would you rather have permanent googly eyes on your eyelids or always have a small, harmless mushroom growing on your head?",
+                "If you could invent a new colour that only you could see, what would it look like?",
+                "What's the most random celebrity encounter you've had that felt like a dream?",
+                "Would you rather always wear clothes that are slightly damp or always wear clothes that are slightly too tight?",
+                "If you could only eat food that is salty, what would your meals look like?",
+                "What's the most nonsensical piece of advice you've ever given?",
+                "Would you rather have super long hair that constantly gets tangled or super short hair that constantly needs trimming?",
+                "If you could be a type of cloud, what would you be?",
+                "What's the most unusual place you've ever found a lost item?",
+                "Would you rather your laugh sound like a honking car horn or a squeaking mouse?",
+                "If you could have any fictional plant that's real, what would it be?",
+                "What's the most bizarre thing you've ever seen happen at a formal event?",
+                "Would you rather have permanent glitter stuck to your face or always smell faintly of cabbage?",
+                "If you could replace your hands with any other objects, what would they be?",
+                "What's the most ridiculous thing you've ever attempted to fix with duct tape?",
+                "Would you rather always have to wear a brightly coloured feather boa or always have to wear oversized novelty glasses?",
+                "If you could only communicate using only animal noises for a month, which animal noise would you choose to express anger?",
+                "What's the most unexpected skill you've learned from a TV show?",
+                "Would you rather your phone only take blurry photos or your computer only run at dial-up speed?",
+                "If you could be a flavour of chocolate, what would you be?",
+                "What's the most nonsensical argument you've ever had?",
+                "Would you rather have a permanent mild itch you can't scratch or always feel like you've just walked through a spiderweb?",
+                "If you could only use one social media platform for the rest of your life, which one?",
+                "What's the most random item you have in your car?",
+                "Would you rather have your shoes constantly untie themselves or your pockets always have holes?",
+                "If you could be a type of crisps, what flavour?",
+                "What's the silliest thing you've ever lost?",
+                "Would you rather live in a house where the doors randomly swap positions or the stairs randomly change height?",
+                "If you could have any mythical creature as your roommate, which one?",
+                "What's the most unexpected thing you've cooked that turned out amazing?",
+                "Would you rather your singing voice be replaced by a kazoo or your speaking voice be autotuned?",
+                "If you could change one minor bodily function to something absurd and harmless, what would it be?",
+                "What's the most random thing you've ever found in your own pockets?",
+                "Would you rather have to wear a ridiculous hat everywhere or always have a tiny, harmless bird nesting in your hair?",
+                "If you could swap houses with any fictional character for a week and do something mundane, who would it be and what would you do?",
+                "What's the most absurd thing you've overheard someone complaining about that was genuinely serious?",
+                "Would you rather your sneezes shoot out small, harmless glitter or your burps emit a tiny, harmless puff of smoke?",
+                "If you could add one absurd item to every single meal you eat, but it's delicious, what would it be?",
+                "What's the most illogical thing you've ever seen someone do when they thought no one was watching, but they were wrong?",
+                "Would you rather have a permanent mild itch on your back that you can't reach or perpetually feel like you have an eyelash in your eye?",
+                "If you could be a type of sweet, what would you be?",
+                "What's the silliest thing you've ever done to avoid a social gathering?",
+                "Would you rather live in a world where everyone communicates only through interpretive dance or a world where everyone always speaks in whispers?",
+                "If you could have any absurd superpower that only works on inanimate objects, what would it be?",
+                "What's the most random item you've seen someone use as a makeshift tool?",
+                "Would you rather have your hands randomly make a 'boing' sound when you move them or your feet make a 'squeak' sound when you walk?",
+                "If you could be a flavour of soup that makes people uncontrollably laugh, what would it be?",
+                "What's the most absurd dream you've had that you genuinely believed was real for a moment after waking?",
+                "Would you rather have a permanent faint smell of old socks or perpetually feel like your hair is slightly damp?",
+                "If you could only wear one type of footwear for the rest of your life, even if it's inappropriate, what would it be?",
+                "What's the most random piece of advice you've ever received that ended up being surprisingly useful?",
+                "Would you rather have your shadow always be a cartoon character or your reflection occasionally wink and give you a thumbs up?",
+                "If you could only drink beverages that are green, what would you drink?",
+                "What's the most peculiar thing you've ever seen someone doing in public at night?",
+                "Would you rather your laugh sound like a honking clown horn or a tiny, persistent whimper?",
+                "If you could have any fictional plant as a pet, but it constantly needs encouraging words, what would it be?",
+                "What's the most bizarre thing you've ever seen at a traffic light?",
+                "Would you rather have permanent glitter eyebrows or always smell faintly of burnt popcorn?",
+                "If you could replace one of your limbs with a common household appliance, which one and what appliance?",
+                "What's the most ridiculous thing you've ever lost and then found in a place that made perfect sense?",
+                "Would you rather always speak in a high-pitched squeak or a low, rumbling growl?",
+                "If you could only eat food that is striped, what would your meals consist of?",
+                "What's the most illogical thing you've ever seen someone genuinely get angry about?",
+                "Would you rather have super strength but only when balancing a spoon on your nose, or super speed but only when wearing roller skates indoors?",
+                "If you could be a flavour of ice cream that can never melt, what absurd flavour would you be?",
+                "What's the silliest reason you've ever given for wanting a new gadget?",
+                "Would you rather live in a world where everyone communicates only through mime or a world where everyone always sings?",
+                "If you could have any absurd superpower that only works on fruit, what would it be?",
+                "What's the most random item you've seen someone use as a weapon (non-harmful)?",
+                "Would you rather have your hands randomly make a 'honk' sound when you move them or your feet make a 'meow' sound when you walk?",
+                "If you could be a type of bread that makes people sing whenever they eat it, what would it be?",
+                "What's the most illogical thing you've ever seen someone try to cook without a recipe?",
+                "Would you rather always know when someone is lying (but they also know you know) or always be able to perfectly mimic any voice you hear?",
+                "If you could add one absurd, non-harmful feature to all public bathrooms, what would it be?",
+                "What's the silliest thing you've ever done to get out of a tedious task?",
+                "Would you rather have a permanent mild itch on your nose that you can't scratch or perpetually feel like you have an invisible feather tickling your ear?",
+                "If you could be a type of crisps that has a surprising and delightful flavour, what would it be?",
+                "What's the most absurd dream you've had that involved a talking animal?",
+                "Would you rather have perpetually slightly undercooked vegetables or perpetually slightly burnt toast?",
+                "If you could only eat food that is yellow, what would your next meal be?",
+                "What's the most nonsensical job you can imagine that pays really well?",
+                "Would you rather have permanent static hair or perpetually feel like you have a piece of fluff stuck to your tongue?",
+                "If you could be a piece of stationery that constantly giggles, what would it be?",
+                "What's the silliest thing you've ever done just to get a reaction?",
+                "Would you rather your laugh sound like a rubber chicken or your burps sound like a dramatic opera crescendo?",
+                "If you could have any fictional object that's entirely useless but very shiny, what would it be?",
+                "What's the most bizarre thing you've ever seen on a billboard?",
+                "Would you rather have permanent slightly wonky eyes or permanent slightly wobbly knees?",
+                "If you could replace one of your five senses with an animal's sense (and it's a completely absurd one), which one and what animal?",
+                "What's the most outlandish conspiracy theory you've ever heard that you secretly find entertaining?",
+                "Would you rather always have to wear a tiny hat that plays jaunty music or always carry a tiny, singing gnome in your pocket?",
+                "If you could only eat food that has stripes, what would your diet consist of?",
+                "What's the most nonsensical thing you've ever said that someone took seriously?",
+                "Would you rather have a permanent faint smell of old socks or perpetually feel like you have an invisible piece of string tickling your nose?",
+                "If you could be a type of weather phenomenon that makes absurd noises, what would it be?",
+                "What's the most random thing you've ever bought from a vending machine?",
+                "Would you rather your sneezes sound like a trumpet or your yawns sound like a foghorn?",
+                "If you could have any fictional plant as a pet, but it constantly needs telling jokes to survive, what would it be?",
+                "What's the most bizarre thing you've ever seen happen at a wedding?",
+                "Would you rather have permanent glitter eyebrows or always smell faintly of cabbage?",
+                "If you could replace your ears with any other common object, what would they be?",
+                "What's the most ridiculous thing you've ever lost and never found, but still occasionally search for?",
+                "Would you rather always have to speak in a high-pitched squeak or a low, rumbling growl?",                ]
+    },
     "game_pre_analytical": {
-        "title": "Pre-Analytical Challenge",
-        "instructions": "You receive a sample in the lab. What is the potential issue?",
-        "scenarios": [
-            {
-                "scenario_description": "A purple top (EDTA) tube for U&Es arrives. The sample is visibly pink.",
-                "question": "What is the primary pre-analytical error?",
-                "answers": ["Wrong tube type", "Haemolysis", "Both A and B"],
-                "correct_answer": "Both A and B"
-            }
-        ]
+        "title": "Pre-analytical Pitfalls",
+        "intro": "Identify common errors in sample collection and handling, and understand their impact on test results.",
+        "questions": [ { "question": "A blood sample for **Potassium** measurement was left at room temperature...", "options": [], "explanation": "Prolonged contact of serum/plasma with red blood cells..." } ]
     },
-
+    "game_transfusion": {
+        "title": "Antibody Identification Challenge",
+        "intro": "An antibody screen was positive. Use all available information to identify the antibody/antibodies present.",
+        "antigens": ["D", "C", "E", "c", "e"],
+        "scenarios": { "easy": [], "medium": [], "hard": [], "auto": [] }
+    },
     "game_tube_sorter": {
-        "title": "Tube Sorter Game",
-        "instructions": "Drag the test request to the correct blood tube.",
-        "tests": [
-            { "test_name": "Full Blood Count", "correct_tube": "EDTA (Purple)" },
-            { "test_name": "Urea & Electrolytes", "correct_tube": "Serum (Brown/Gold)" },
-            { "test_name": "Coagulation Screen", "correct_tube": "Citrate (Blue)" },
-            { "test_name": "Crossmatch", "correct_tube": "EDTA (Pink)" }
-        ]
+        "title": "Specimen Reception: Tube Sorter",
+        "intro": "A test name will appear. Choose the correct department or sample type.",
+        "tests": [ { "name": "17-OH-progesterone", "department": "Clinical Biochemistry", "sampleType": "Plain serum (red top)" } ]
+    },
+    "neqas_case_2406BF1": {
+        "title": "Digital Morphology Case Library",
+        "case_id": "2406BF1",
+        "patient_info": "24-year-old male.",
+        "initial_fbc": { "Hb": "85 g/L", "WBC": "18.1 x10⁹/L", "Platelets": "357 x10⁹/L" },
+        "full_fbc": { "RBC": "2.73 x10¹²/L", "Hct": "0.241 L/L" },
+        "biochemistry": { "Bilirubin": "52 µmol/L", "Adjusted Calcium": "2.34 mmol/L" },
+        "hplc": { "Hb F": "6.5%", "Hb A2": "4.1%", "Hb S": "85.2%" },
+        "expert_commentary": "It was fairly clear from the film that this was some form of sickle cell disease...",
+        "peer_features": [ { "feature": "Eosinophilia", "count": 435 }, { "feature": "Sickle Cells", "count": 428 } ],
+        "morphology_features": { "Red Cell Features": ["Microcytes", "Hypochromic Cells"], "White Cell Features": ["Eosinophilia", "Band Form Neutrophils"], "Platelet Features": ["Thrombocytosis", "Large/Giant Platelets"] }
     }
 };
