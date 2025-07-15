@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEQAS Case 2403BF1 - SGC</title>
+    <title>NEQAS Case 2406BF1 - SGC</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
@@ -21,7 +21,8 @@
         .highlight-correct { background-color: #dcfce7; color: #166534; }
         /* Modal Styles */
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.8); align-items: center; justify-content: center; }
-        .modal-content { margin: auto; display: block; max-width: 80%; max-height: 80%; }
+        .modal-content { margin: auto; display: block; max-width: 90%; max-height: 90%; transition: transform 0.2s ease; cursor: zoom-in; }
+        .modal-content.zoomed { transform: scale(2); cursor: zoom-out; }
         .modal-close { position: absolute; top: 15px; right: 35px; color: #f1f1f1; font-size: 40px; font-weight: bold; transition: 0.3s; cursor: pointer; }
     </style>
 </head>
@@ -58,23 +59,27 @@
         <div class="container mx-auto px-6 max-w-7xl">
             <div class="text-center mb-12">
                 <h2 class="text-4xl font-bold nhs-text-dark-blue">Digital Morphology Case Library</h2>
-                <p class="text-lg text-gray-600">Case Study: 2403BF1</p>
+                <p class="text-lg text-gray-600">Case Study: 2406BF1</p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div class="space-y-6">
                     <div class="bg-white p-6 rounded-lg shadow-md">
                         <h3 class="text-2xl font-semibold nhs-text-dark-blue border-b pb-2 mb-4">Case Information</h3>
-                        <p><strong>Patient:</strong> 37-year-old female.</p>
-                        <details class="mt-4 cursor-pointer">
-                            <summary class="font-semibold text-nhs-blue">View Full Blood Count & Further Results</summary>
-                            <div class="mt-4 space-y-4">
+                        <div id="initial-info">
+                            <p><strong>Patient:</strong> 37-year-old female.</p>
+                            <table class="w-full results-table mt-2">
+                                <tr><td>Hb</td><td class="font-mono text-right">51 g/L</td></tr>
+                                <tr><td>WBC</td><td class="font-mono text-right">41.2 x10⁹/L</td></tr>
+                                <tr><td>Platelets</td><td class="font-mono text-right">91 x10⁹/L</td></tr>
+                            </table>
+                        </div>
+                        <div id="full-case-details" class="hidden mt-4 pt-4 border-t">
+                             <div class="space-y-4">
                                 <h4 class="font-bold">Full Blood Count</h4>
                                 <table class="w-full results-table">
-                                    <tr><td>Hb</td><td class="font-mono text-right">51 g/L</td></tr>
-                                    <tr><td>WBC</td><td class="font-mono text-right">41.2 x10⁹/L</td></tr>
-                                    <tr><td>Platelets</td><td class="font-mono text-right">91 x10⁹/L</td></tr>
                                     <tr><td>MCV</td><td class="font-mono text-right">82.6 fL</td></tr>
+                                    <tr><td>Hct</td><td class="font-mono text-right">0.147 L/L</td></tr>
                                     <tr><td>NRBCs</td><td class="font-mono text-right">0.5 x10⁹/L</td></tr>
                                 </table>
                                 <h4 class="font-bold">Coagulation</h4>
@@ -86,13 +91,15 @@
                                 <h4 class="font-bold">Cytogenetics</h4>
                                 <p>PML::RARA [t(15;17)] fusion POSITIVE.</p>
                             </div>
-                        </details>
+                        </div>
                     </div>
                     <div class="bg-white p-6 rounded-lg shadow-md">
                         <h3 class="text-2xl font-semibold nhs-text-dark-blue border-b pb-2 mb-4">Blood Film Examination</h3>
                         <div class="mb-6">
                             <h4 class="font-semibold text-lg">Red Cell Picture</h4>
-                            <img src="morphology/2403BF1/red cells.JPG" alt="Overall red cell picture for case 2403BF1" class="rounded-md w-full h-auto mt-2 shadow">
+                            <div id="red-cell-container" class="cursor-pointer">
+                                <img id="red-cell-img" src="morphologyimages/2403BF1/red cells.JPG" alt="Overall red cell picture for case" class="rounded-md w-full h-auto mt-2 shadow">
+                            </div>
                         </div>
                         <div>
                              <h4 class="font-semibold text-lg">White Cell Gallery</h4>
@@ -110,7 +117,7 @@
                     <div id="feature-checklist" class="space-y-4 max-h-96 overflow-y-auto pr-2">
                         </div>
 
-                    <button id="reveal-btn" class="w-full mt-6 bg-nhs-blue text-white font-bold py-3 px-4 rounded-lg hover:bg-nhs-dark-blue transition duration-300">Reveal Analysis</button>
+                    <button id="reveal-btn" class="w-full mt-6 bg-black text-white font-bold py-3 px-4 rounded-lg hover:bg-gray-800 transition duration-300">See Results</button>
 
                     <div id="analysis-section" class="hidden mt-6 border-t pt-6">
                         <h3 class="text-2xl font-semibold nhs-text-dark-blue mb-4">Analysis & Peer Consensus</h3>
@@ -167,52 +174,43 @@
             }
             feather.replace();
 
-            // --- Page Data for Case 2403BF1 ---
-            const imageFilenames = [
-                "LY_338592.jpg","LY_338593.jpg","LY_338594.jpg","LY_338595.jpg","LY_338597.jpg","LY_338615.jpg","LY_338622.jpg","LY_338625.jpg","LY_338631.jpg","LY_338647.jpg","LY_338648.jpg","LY_338663.jpg","LY_338670.jpg","LY_338672.jpg","LY_338673.jpg","LY_338686.jpg","LY_338689.jpg","LY_338690.jpg","LY_338701.jpg","LY_338707.jpg","LY_338720.jpg","LY_338728.jpg","LY_338732.jpg","LY_338733.jpg","LY_338741.jpg","LY_338742.jpg","LY_338747.jpg","LY_338748.jpg","LY_338749.jpg","LY_338758.jpg","LY_338770.jpg","LY_338771.jpg","LY_338783.jpg","LY_338785.jpg","LY_338795.jpg","LY_338796.jpg","LY_338799.jpg","LY_338800.jpg","MMY_195925.jpg","MMY_338667.jpg","MO_195758.jpg","MO_195768.jpg","MO_195812.jpg","MO_195895.jpg","MO_195915.jpg","MO_195934.jpg","MO_195945.jpg","MO_195946.jpg","MO_338605.jpg","MO_338611.jpg","MO_338612.jpg","MO_338634.jpg","MO_338646.jpg","MO_338649.jpg","MO_338652.jpg","MO_338679.jpg","MO_338685.jpg","MO_338729.jpg","MO_338777.jpg","MO_338779.jpg","MO_338803.jpg","MY_195769.jpg","red cells.JPG","SNE_195750.jpg","SNE_195751.jpg","SNE_195754.jpg","SNE_195755.jpg","SNE_195756.jpg","SNE_195760.jpg","SNE_195763.jpg","SNE_195764.jpg","SNE_195767.jpg","SNE_195771.jpg","SNE_195774.jpg","SNE_195776.jpg","SNE_195777.jpg","SNE_195778.jpg","SNE_195784.jpg","SNE_195786.jpg","SNE_195791.jpg","SNE_195793.jpg","SNE_195794.jpg","SNE_195795.jpg","SNE_195796.jpg","SNE_195797.jpg","SNE_195800.jpg","SNE_195804.jpg","SNE_195805.jpg","SNE_195806.jpg","SNE_195807.jpg","SNE_195809.jpg","SNE_195816.jpg","SNE_195817.jpg","SNE_195820.jpg","SNE_195822.jpg","SNE_195826.jpg","SNE_195830.jpg","SNE_195834.jpg","SNE_195837.jpg","SNE_195839.jpg","SNE_195842.jpg","SNE_195844.jpg","SNE_195847.jpg","SNE_195852.jpg","SNE_195854.jpg","SNE_195855.jpg","SNE_195857.jpg","SNE_195858.jpg","SNE_195860.jpg","SNE_195862.jpg","SNE_195868.jpg","SNE_195870.jpg","SNE_195871.jpg","SNE_195872.jpg","SNE_195874.jpg","SNE_195875.jpg","SNE_195876.jpg","SNE_195881.jpg","SNE_195882.jpg","SNE_195884.jpg","SNE_195885.jpg","SNE_195887.jpg","SNE_195889.jpg","SNE_195890.jpg","SNE_195892.jpg","SNE_195897.jpg","SNE_195898.jpg","SNE_195900.jpg","SNE_195902.jpg","SNE_195904.jpg","SNE_195907.jpg","SNE_195912.jpg","SNE_195913.jpg","SNE_195916.jpg","SNE_195918.jpg","SNE_195919.jpg","SNE_195930.jpg","SNE_195932.jpg","SNE_195933.jpg","SNE_195936.jpg","SNE_195939.jpg","SNE_195942.jpg","SNE_195943.jpg","SNE_195944.jpg","SNE_195947.jpg","SNE_195951.jpg","SNE_195952.jpg","SNE_195955.jpg","SNE_195959.jpg","SNE_338598.jpg","SNE_338599.jpg","SNE_338601.jpg","SNE_338602.jpg","SNE_338606.jpg","SNE_338607.jpg","SNE_338609.jpg","SNE_338613.jpg","SNE_338614.jpg","SNE_338617.jpg","SNE_338618.jpg","SNE_338619.jpg","SNE_338624.jpg","SNE_338626.jpg","SNE_338627.jpg","SNE_338632.jpg","SNE_338633.jpg","SNE_338636.jpg","SNE_338637.jpg","SNE_338640.jpg","SNE_338644.jpg","SNE_338645.jpg","SNE_338650.jpg","SNE_338651.jpg","SNE_338653.jpg","SNE_338656.jpg","SNE_338657.jpg","SNE_338658.jpg","SNE_338659.jpg","SNE_338660.jpg","SNE_338661.jpg","SNE_338664.jpg","SNE_338666.jpg","SNE_338669.jpg","SNE_338671.jpg","SNE_338676.jpg","SNE_338677.jpg","SNE_338681.jpg","SNE_338683.jpg","SNE_338684.jpg","SNE_338688.jpg","SNE_338693.jpg","SNE_338694.jpg","SNE_338696.jpg","SNE_338698.jpg","SNE_338700.jpg","SNE_338703.jpg","SNE_338705.jpg","SNE_338706.jpg","SNE_338708.jpg","SNE_338709.jpg","SNE_338713.jpg","SNE_338715.jpg","SNE_338716.jpg","SNE_338717.jpg","SNE_338718.jpg","SNE_338721.jpg","SNE_338724.jpg","SNE_338725.jpg","SNE_338730.jpg","SNE_338731.jpg","SNE_338735.jpg","SNE_338739.jpg","SNE_338746.jpg","SNE_338750.jpg","SNE_338751.jpg","SNE_338752.jpg","SNE_338754.jpg","SNE_338757.jpg","SNE_338759.jpg","SNE_338760.jpg","SNE_338761.jpg","SNE_338762.jpg","SNE_338763.jpg","SNE_338765.jpg","SNE_338766.jpg","SNE_338767.jpg","SNE_338768.jpg","SNE_338773.jpg","SNE_338774.jpg","SNE_338778.jpg","SNE_338780.jpg","SNE_338781.jpg","SNE_338784.jpg","SNE_338787.jpg","SNE_338791.jpg","SNE_338793.jpg","SNE_338794.jpg","SNE_338798.jpg","SNE_338801.jpg","UI_338635.jpg","UI_338704.jpg","UI_338711.jpg","UI_338712.jpg","UI_338722.jpg","UI_338734.jpg","UI_338764.jpg","UI_338792.jpg","VLY_195792.jpg","VLY_195843.jpg","VLY_195863.jpg","VLY_195896.jpg","VLY_195906.jpg","VLY_195938.jpg","VLY_195940.jpg"
+            // --- Page Data for Case ---
+            const imageFilenames = ["LY_338592.jpg","LY_338593.jpg","LY_338594.jpg","LY_338595.jpg","LY_338597.jpg","LY_338615.jpg","LY_338622.jpg","LY_338625.jpg","LY_338631.jpg","LY_338647.jpg","LY_338648.jpg","LY_338663.jpg","LY_338670.jpg","LY_338672.jpg","LY_338673.jpg","LY_338686.jpg","LY_338689.jpg","LY_338690.jpg","LY_338701.jpg","LY_338707.jpg","LY_338720.jpg","LY_338728.jpg","LY_338732.jpg","LY_338733.jpg","LY_338741.jpg","LY_338742.jpg","LY_338747.jpg","LY_338748.jpg","LY_338749.jpg","LY_338758.jpg","LY_338770.jpg","LY_338771.jpg","LY_338783.jpg","LY_338785.jpg","LY_338795.jpg","LY_338796.jpg","LY_338799.jpg","LY_338800.jpg","MMY_195925.jpg","MMY_338667.jpg","MO_195758.jpg","MO_195768.jpg","MO_195812.jpg","MO_195895.jpg","MO_195915.jpg","MO_195934.jpg","MO_195945.jpg","MO_195946.jpg","MO_338605.jpg","MO_338611.jpg","MO_338612.jpg","MO_338634.jpg","MO_338646.jpg","MO_338649.jpg","MO_338652.jpg","MO_338679.jpg","MO_338685.jpg","MO_338729.jpg","MO_338777.jpg","MO_338779.jpg","MO_338803.jpg","MY_195769.jpg","SNE_195750.jpg","SNE_195751.jpg","SNE_195754.jpg","SNE_195755.jpg","SNE_195756.jpg","SNE_195760.jpg","SNE_195763.jpg","SNE_195764.jpg","SNE_195767.jpg","SNE_195771.jpg","SNE_195774.jpg","SNE_195776.jpg","SNE_195777.jpg","SNE_195778.jpg","SNE_195784.jpg","SNE_195786.jpg","SNE_195791.jpg","SNE_195793.jpg","SNE_195794.jpg","SNE_195795.jpg","SNE_195796.jpg","SNE_195797.jpg","SNE_195800.jpg","SNE_195804.jpg","SNE_195805.jpg","SNE_195806.jpg","SNE_195807.jpg","SNE_195809.jpg","SNE_195816.jpg","SNE_195817.jpg","SNE_195820.jpg","SNE_195822.jpg","SNE_195826.jpg","SNE_195830.jpg","SNE_195834.jpg","SNE_195837.jpg","SNE_195839.jpg","SNE_195842.jpg","SNE_195844.jpg","SNE_195847.jpg","SNE_195852.jpg","SNE_195854.jpg","SNE_195855.jpg","SNE_195857.jpg","SNE_195858.jpg","SNE_195860.jpg","SNE_195862.jpg","SNE_195868.jpg","SNE_195870.jpg","SNE_195871.jpg","SNE_195872.jpg","SNE_195874.jpg","SNE_195875.jpg","SNE_195876.jpg","SNE_195881.jpg","SNE_195882.jpg","SNE_195884.jpg","SNE_195885.jpg","SNE_195887.jpg","SNE_195889.jpg","SNE_195890.jpg","SNE_195892.jpg","SNE_195897.jpg","SNE_195898.jpg","SNE_195900.jpg","SNE_195902.jpg","SNE_195904.jpg","SNE_195907.jpg","SNE_195912.jpg","SNE_195913.jpg","SNE_195916.jpg","SNE_195918.jpg","SNE_195919.jpg","SNE_195930.jpg","SNE_195932.jpg","SNE_195933.jpg","SNE_195936.jpg","SNE_195939.jpg","SNE_195942.jpg","SNE_195943.jpg","SNE_195944.jpg","SNE_195947.jpg","SNE_195951.jpg","SNE_195952.jpg","SNE_195955.jpg","SNE_195959.jpg","SNE_338598.jpg","SNE_338599.jpg","SNE_338601.jpg","SNE_338602.jpg","SNE_338606.jpg","SNE_338607.jpg","SNE_338609.jpg","SNE_338613.jpg","SNE_338614.jpg","SNE_338617.jpg","SNE_338618.jpg","SNE_338619.jpg","SNE_338624.jpg","SNE_338626.jpg","SNE_338627.jpg","SNE_338632.jpg","SNE_338633.jpg","SNE_338636.jpg","SNE_338637.jpg","SNE_338640.jpg","SNE_338644.jpg","SNE_338645.jpg","SNE_338650.jpg","SNE_338651.jpg","SNE_338653.jpg","SNE_338656.jpg","SNE_338657.jpg","SNE_338658.jpg","SNE_338659.jpg","SNE_338660.jpg","SNE_338661.jpg","SNE_338664.jpg","SNE_338666.jpg","SNE_338669.jpg","SNE_338671.jpg","SNE_338676.jpg","SNE_338677.jpg","SNE_338681.jpg","SNE_338683.jpg","SNE_338684.jpg","SNE_338688.jpg","SNE_338693.jpg","SNE_338694.jpg","SNE_338696.jpg","SNE_338698.jpg","SNE_338700.jpg","SNE_338703.jpg","SNE_338705.jpg","SNE_338706.jpg","SNE_338708.jpg","SNE_338709.jpg","SNE_338713.jpg","SNE_338715.jpg","SNE_338716.jpg","SNE_338717.jpg","SNE_338718.jpg","SNE_338721.jpg","SNE_338724.jpg","SNE_338725.jpg","SNE_338730.jpg","SNE_338731.jpg","SNE_338735.jpg","SNE_338739.jpg","SNE_338746.jpg","SNE_338750.jpg","SNE_338751.jpg","SNE_338752.jpg","SNE_338754.jpg","SNE_338757.jpg","SNE_338759.jpg","SNE_338760.jpg","SNE_338761.jpg","SNE_338762.jpg","SNE_338763.jpg","SNE_338765.jpg","SNE_338766.jpg","SNE_338767.jpg","SNE_338768.jpg","SNE_338773.jpg","SNE_338774.jpg","SNE_338778.jpg","SNE_338780.jpg","SNE_338781.jpg","SNE_338784.jpg","SNE_338787.jpg","SNE_338791.jpg","SNE_338793.jpg","SNE_338794.jpg","SNE_338798.jpg","SNE_338801.jpg","UI_338635.jpg","UI_338704.jpg","UI_338711.jpg","UI_338712.jpg","UI_338722.jpg","UI_338734.jpg","UI_338764.jpg","UI_338792.jpg","VLY_195792.jpg","VLY_195843.jpg","VLY_195863.jpg","VLY_195896.jpg","VLY_195906.jpg","VLY_195938.jpg","VLY_195940.jpg"];
+            
+            const expertComment = "This case indicates how difficult it can be to think of the possibility of the correct diagnosis in the absence of clinical history and ethnic origin. The diagnoses offered by participants were: haemoglobinopathy and/or thalassaemia 228 participants including 62 who specifically mentioned haemoglobin H disease; haemoglobinopathy and/or iron deficiency 92 participants; iron deficiency, possibly complicated by something else 49 participants. If we look at both the Hb we have been given and the blood film, the degree of morphological abnormality is too great for straightforward iron deficiency. This brings us to haemoglobin H disease. My congratulations to the 62 participants who suggested this in their differential diagnosis. The polychromasia is also something expected in haemoglobin H disease, which has a haemolytic element to the pathogenesis of the anaemia.";
+
+            const topPeerFeatures = [
+                { feature: "Eosinophilia", count: 435 },
+                { feature: "Sickle Cells", count: 428 },
+                { feature: "Nucleated RBCs", count: 368 },
+                { feature: "Target Cells", count: 293 },
+                { feature: "Polychromatic Cells", count: 270 },
+                { feature: "Howell-Jolly Bodies", count: 237 },
+                { feature: "Boat-shaped Cells", count: 98 },
+                { feature: "Platelet Clumps", count: 89 },
+                { feature: "Poikilocytes", count: 57 },
+                { feature: "Hypochromic Cells", count: 53 }
             ];
 
             const morphologyFeatures = {
-                "Red Cell Features": ["Microcytes", "Hypochromic Cells", "Polychromatic Cells", "Mixed Cell Population (Dimorphic)", "Poikilocytes", "Target Cells", "Echinocytes/Crenated Cells", "Fragments/Schistocytes", "Sickle Cells", "Spherocytes", "Rouleaux", "Basophilic Stippling", "Nucleated RBCs", "Acanthocytes", "Tear Drop Poikilocytes", "Keratocytes/Bite Cells"],
+                "Red Cell Features": ["Microcytes", "Hypochromic Cells", "Polychromatic Cells", "Mixed Cell Population (Dimorphic)", "Poikilocytes", "Target Cells", "Echinocytes/Crenated Cells", "Fragments/Schistocytes", "Sickle Cells", "Spherocytes", "Rouleaux", "Basophilic Stippling", "Nucleated RBCs", "Acanthocytes", "Tear Drop Poikilocytes", "Keratocytes/Bite Cells", "Boat-shaped Cells", "Howell-Jolly Bodies"],
                 "White Cell Features": ["Eosinophilia", "Band Form Neutrophils", "Toxic Granulation", "Hypogranular/Agranular Cytoplasm (Neutrophils)", "Blast Cells", "Promyelocytes", "Prolymphocytes", "Myelocytes", "Smear/Smudge Cells", "Atypical/Suspect Reactive Lymphocytes", "Reactive/Plasmacytoid Lymphocytes", "Cleft Nuclei", "Plasma Cells", "Auer Rods", "Basophilia", "Neutropenia", "Lymphocytosis", "Lymphopenia", "Abnormal/Suspect Neoplastic Lymphocytes", "Large Granular Lymphocytes", "Left Shift", "Pseudo-Pelger Cells", "Promonocytes"],
-                "Platelet Features": ["Thrombocytosis", "Thrombocytopenia", "Large/Giant Platelets", "Platelet Anisocytosis"]
+                "Platelet Features": ["Thrombocytosis", "Thrombocytopenia", "Large/Giant Platelets", "Platelet Anisocytosis", "Platelet Clumps"]
             };
 
-            const topPeerFeatures = [
-                { feature: 'Thrombocytopenia', count: 458 },
-                { feature: 'Fragments/Schistocytes', count: 445 },
-                { feature: 'Blast Cells', count: 402 },
-                { feature: 'Promyelocytes', count: 377 },
-                { feature: 'Nucleated RBCs', count: 362 },
-                { feature: 'Auer Rods', count: 343 },
-                { feature: 'Neutropenia', count: 74 },
-                { feature: 'Myelocytes', count: 36 },
-                { feature: 'Eosinophilia', count: 33 },
-                { feature: 'Other Leucocyte Comment', count: 19 }
-            ];
-
-            const expertComment = "This film case illustrates the typical morphology of acute promyelocytic leukaemia (APML) with prominent granulated promyelocytes, frequent Auer rods and some cells with multiple rods (faggot cells). There is really no alternative diagnosis. The only unusual feature in this case is the magnitude of the leucocytosis. Another notable feature, not often seen to this extent in APML, is the extensive red cell fragmentation. Disseminated intravascular coagulation (and fibrinolysis) is common in APML and is the likely cause of the fragmentation in this case.";
-
             // --- Populate UI Elements ---
-            
-            // Populate Morphology Checklist
             const checklistContainer = document.getElementById('feature-checklist');
+            const galleryContainer = document.getElementById('wbc-gallery');
+            const imagePath = 'morphologyimages/2403BF1/';
+            
             for (const category in morphologyFeatures) {
                 let categoryHtml = `<h4 class="font-bold mt-4 text-gray-700">${category}</h4>`;
                 morphologyFeatures[category].forEach(feature => {
-                    categoryHtml += `
-                        <label class="feature-label flex items-center space-x-3 cursor-pointer">
-                            <input type="checkbox" class="feature-checkbox h-5 w-5 rounded border-gray-300 text-nhs-blue focus:ring-nhs-blue" data-feature="${feature}">
-                            <span>${feature}</span>
-                        </label>
-                    `;
+                    categoryHtml += `<label class="feature-label flex items-center space-x-3 cursor-pointer"><input type="checkbox" class="feature-checkbox h-5 w-5 rounded border-gray-300 text-nhs-blue focus:ring-nhs-blue" data-feature="${feature}"><span>${feature}</span></label>`;
                 });
                 checklistContainer.innerHTML += categoryHtml;
             }
 
-            // Populate WBC Gallery
-            const galleryContainer = document.getElementById('wbc-gallery');
-            const imagePath = 'morphology/2403BF1/';
             imageFilenames.forEach(filename => {
                 const img = document.createElement('img');
                 img.src = imagePath + filename;
@@ -224,12 +222,13 @@
             // --- Event Listeners & Logic ---
             const revealBtn = document.getElementById('reveal-btn');
             const analysisSection = document.getElementById('analysis-section');
+            const fullDetailsSection = document.getElementById('full-case-details');
             const checkboxes = document.querySelectorAll('.feature-checkbox');
             const modal = document.getElementById('image-modal');
             const modalImg = document.getElementById('modal-img');
             const closeModalBtn = document.getElementById('modal-close-btn');
+            const redCellContainer = document.getElementById('red-cell-container');
 
-            // Reveal Button Logic
             revealBtn.addEventListener('click', () => {
                 const userChoices = Array.from(checkboxes).filter(cb => cb.checked).map(cb => cb.dataset.feature);
                 checkboxes.forEach(cb => cb.disabled = true);
@@ -246,9 +245,9 @@
                 }).join('');
 
                 analysisSection.classList.remove('hidden');
+                fullDetailsSection.classList.remove('hidden');
             });
 
-            // Checkbox Limit Logic
             checklistContainer.addEventListener('change', (e) => {
                 if (e.target.type === 'checkbox') {
                     if (document.querySelectorAll('.feature-checkbox:checked').length > 5) {
@@ -258,19 +257,32 @@
                 }
             });
 
-            // Modal Logic
+            const openModal = (src) => {
+                modal.style.display = "flex";
+                modalImg.src = src;
+                modalImg.classList.remove('zoomed'); // Reset zoom on new image
+            };
+
             galleryContainer.addEventListener('click', (e) => {
-                if (e.target.tagName === 'IMG') {
-                    modal.style.display = "flex";
-                    modalImg.src = e.target.src;
-                }
+                if (e.target.tagName === 'IMG') openModal(e.target.src);
             });
+
+            redCellContainer.addEventListener('click', (e) => {
+                if (e.target.tagName === 'IMG') openModal(e.target.src);
+            });
+
             closeModalBtn.onclick = () => { modal.style.display = "none"; }
-            modal.onclick = (e) => {
+            
+            modal.addEventListener('click', (e) => {
                 if (e.target === modal) {
                     modal.style.display = "none";
                 }
-            }
+            });
+
+            modalImg.addEventListener('click', (e) => {
+                e.stopPropagation(); // Prevent modal from closing when clicking the image
+                e.target.classList.toggle('zoomed');
+            });
         });
     </script>
 
