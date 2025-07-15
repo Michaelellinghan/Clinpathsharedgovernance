@@ -13,7 +13,8 @@
         .sidebar-link.active { background-color: #005EB8; color: white; }
         .sidebar-link.active:hover { background-color: #0052a3; }
         .modal-body { max-height: 70vh; }
-        textarea { min-height: 120px; }
+        textarea { min-height: 120px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+        .raw-json-editor { font-size: 0.8rem; line-height: 1.6; }
     </style>
 </head>
 <body class="bg-gray-100">
@@ -117,12 +118,9 @@
             mainContentTitle.textContent = `Editing: ${sectionName}`;
 
             let editorHtml = '';
-            // If the top-level data is a list (e.g., 'members', 'newsletters')
             if (Array.isArray(sectionData)) {
                 editorHtml = renderListEditor(sectionKey, sectionData);
-            } 
-            // If it's an object (most pages and tools)
-            else if (typeof sectionData === 'object' && sectionData !== null) {
+            } else if (typeof sectionData === 'object' && sectionData !== null) {
                 editorHtml = renderObjectEditor(sectionKey, sectionData);
             }
 
@@ -137,51 +135,68 @@
             const listTitle = categoryKey ? categoryKey.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) : '';
             let html = `<div class="flex justify-between items-center mb-4">
                             <h3 class="text-2xl font-bold text-gray-800">${listTitle}</h3>
-                            <button class="btn-add bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 flex items-center" data-section="${sectionKey}" ${categoryKey ? `data-category="${categoryKey}"` : ''}>
+                            <button type="button" class="btn-add bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 flex items-center" data-section="${sectionKey}" ${categoryKey ? `data-category="${categoryKey}"` : ''}>
                                 <i data-feather="plus" class="w-5 h-5 mr-2"></i>Add New Item
                             </button>
                         </div>`;
             
             if (data.length === 0) {
-                html += `<div class="bg-white p-8 rounded-lg shadow-md text-center text-gray-500">No items yet. Click 'Add New Item' to begin.</div>`;
+                html += `<div class="bg-white p-8 rounded-lg shadow-inner text-center text-gray-500">No items yet. Click 'Add New Item' to begin.</div>`;
                 return html;
             }
 
-            html += `<div class="bg-white rounded-lg shadow-md overflow-x-auto"><table class="w-full text-left"><thead><tr>`;
-            const headers = Object.keys(data[0] || {});
-            headers.forEach(h => html += `<th class="p-3 bg-gray-50 uppercase text-xs font-semibold text-gray-600">${h.replace(/_/g, ' ')}</th>`);
-            html += `<th class="p-3 bg-gray-50 text-right">Actions</th></tr></thead><tbody>`;
-            
-            data.forEach((item, index) => {
-                html += `<tr class="border-t">`;
-                headers.forEach(h => {
-                    const value = typeof item[h] === 'string' ? item[h] : JSON.stringify(item[h]);
-                    html += `<td class="p-3 align-top"><div class="truncate" title="${value}">${value}</div></td>`;
+            // Handle array of simple strings (like Lab Questions)
+            if (typeof data[0] === 'string') {
+                html += `<div class="bg-white p-4 rounded-lg shadow-inner space-y-2">`;
+                data.forEach((item, index) => {
+                    html += `<div class="flex items-center justify-between p-2 border-b last:border-b-0">
+                                <span class="text-gray-700">${item}</span>
+                                <div class="space-x-2 whitespace-nowrap flex-shrink-0 ml-4">
+                                    <button type="button" class="btn-edit text-blue-600 hover:underline" data-section="${sectionKey}" data-index="${index}" ${categoryKey ? `data-category="${categoryKey}"` : ''}>Edit</button>
+                                    <button type="button" class="btn-delete text-red-600 hover:underline" data-section="${sectionKey}" data-index="${index}" ${categoryKey ? `data-category="${categoryKey}"` : ''}>Delete</button>
+                                </div>
+                             </div>`;
                 });
-                html += `<td class="p-3 text-right align-top space-x-2 whitespace-nowrap">
-                            <button class="btn-edit text-blue-600 hover:underline" data-section="${sectionKey}" data-index="${index}" ${categoryKey ? `data-category="${categoryKey}"` : ''}>Edit</button>
-                            <button class="btn-delete text-red-600 hover:underline" data-section="${sectionKey}" data-index="${index}" ${categoryKey ? `data-category="${categoryKey}"` : ''}>Delete</button>
-                         </td></tr>`;
-            });
-            html += `</tbody></table></div>`;
+                html += `</div>`;
+            } 
+            // Handle array of objects
+            else {
+                html += `<div class="bg-white rounded-lg shadow-inner overflow-x-auto"><table class="w-full text-left"><thead><tr>`;
+                const headers = Object.keys(data[0] || {});
+                headers.forEach(h => html += `<th class="p-3 bg-gray-50 uppercase text-xs font-semibold text-gray-600">${h.replace(/_/g, ' ')}</th>`);
+                html += `<th class="p-3 bg-gray-50 text-right">Actions</th></tr></thead><tbody>`;
+                
+                data.forEach((item, index) => {
+                    html += `<tr class="border-t">`;
+                    headers.forEach(h => {
+                        const value = typeof item[h] === 'string' ? item[h] : JSON.stringify(item[h]);
+                        html += `<td class="p-3 align-top text-sm"><div class="truncate" title="${value}">${value}</div></td>`;
+                    });
+                    html += `<td class="p-3 text-right align-top space-x-2 whitespace-nowrap">
+                                <button type="button" class="btn-edit text-blue-600 hover:underline" data-section="${sectionKey}" data-index="${index}" ${categoryKey ? `data-category="${categoryKey}"` : ''}>Edit</button>
+                                <button type="button" class="btn-delete text-red-600 hover:underline" data-section="${sectionKey}" data-index="${index}" ${categoryKey ? `data-category="${categoryKey}"` : ''}>Delete</button>
+                             </td></tr>`;
+                });
+                html += `</tbody></table></div>`;
+            }
             return html;
         };
 
         const renderObjectEditor = (sectionKey, data) => {
-            let html = '<form id="page-form" class="bg-white p-8 rounded-lg shadow-md space-y-8">';
+            let html = '<form id="page-form" class="space-y-8">';
             for (const key in data) {
                 const value = data[key];
                 const label = key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-                html += `<div><label class="block text-lg font-bold text-gray-800 mb-2 border-b pb-1">${label}</label>`;
+                html += `<div class="bg-white p-8 rounded-lg shadow-md">
+                            <label class="block text-xl font-bold text-gray-800 mb-4 border-b pb-2">${label}</label>`;
                 
                 if (typeof value === 'string') {
-                    if (value.length > 100 || value.includes('\n')) {
-                        html += `<textarea data-key="${key}" class="w-full p-2 border rounded-md shadow-sm">${value}</textarea>`;
+                    if (value.length > 150 || value.includes('\n')) {
+                        html += `<textarea data-key="${key}" class="w-full p-2 border rounded-md shadow-sm" rows="6">${value}</textarea>`;
                     } else {
                         html += `<input type="text" data-key="${key}" class="w-full p-2 border rounded-md shadow-sm" value="${value}">`;
                     }
                 } else if (Array.isArray(value)) {
-                    html += `<div class="text-sm text-gray-600 mb-2">This section contains a list of ${value.length} items.</div>`;
                     html += renderListEditor(sectionKey, value, key);
                 } else if (typeof value === 'object' && value !== null) {
                     html += `<div class="text-sm text-gray-600 mb-2">This section contains complex data. Edit the raw JSON below for full control.</div>`;
@@ -201,26 +216,29 @@
             const isNew = index === -1;
             
             let list = categoryKey ? EDITOR_DATA[sectionKey][categoryKey] : EDITOR_DATA[sectionKey];
-            if (!Array.isArray(list)) {
-                console.error("Attempted to open modal for a non-list item:", sectionKey, categoryKey);
-                return;
-            }
+            if (!Array.isArray(list)) { return; }
 
-            let itemData = isNew ? (list[0] ? Object.fromEntries(Object.keys(list[0]).map(k => [k, ''])) : { newItem: "Enter value" }) : list[index];
-            
-            modalTitle.textContent = isNew ? 'Add New Item' : 'Edit Item';
             let formHtml = '';
-            for (const key in itemData) {
-                const label = key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-                const value = itemData[key];
-                formHtml += `<div><label class="block font-semibold text-gray-700 mb-1">${label}</label>`;
-                if (typeof value === 'string' && (value.length > 80 || value.includes('\n'))) {
-                    formHtml += `<textarea id="modal-form-${key}" class="w-full p-2 border rounded-md">${value}</textarea>`;
-                } else {
-                    formHtml += `<input type="text" id="modal-form-${key}" class="w-full p-2 border rounded-md" value="${value}">`;
+            if (isNew && list.length === 0 || typeof list[0] === 'string') {
+                const itemValue = isNew ? '' : list[index];
+                modalTitle.textContent = isNew ? 'Add New Item' : 'Edit Item';
+                formHtml = `<div><label class="block font-semibold text-gray-700 mb-1">Value</label><textarea id="modal-form-value" class="w-full p-2 border rounded-md">${itemValue}</textarea></div>`;
+            } else {
+                let itemData = isNew ? Object.fromEntries(Object.keys(list[0]).map(k => [k, ''])) : list[index];
+                modalTitle.textContent = isNew ? 'Add New Item' : 'Edit Item';
+                for (const key in itemData) {
+                    const label = key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                    const value = itemData[key];
+                    formHtml += `<div><label class="block font-semibold text-gray-700 mb-1">${label}</label>`;
+                    if (typeof value === 'string' && (value.length > 80 || value.includes('\n'))) {
+                        formHtml += `<textarea id="modal-form-${key}" class="w-full p-2 border rounded-md">${value}</textarea>`;
+                    } else {
+                        formHtml += `<input type="text" id="modal-form-${key}" class="w-full p-2 border rounded-md" value="${value}">`;
+                    }
+                    formHtml += `</div>`;
                 }
-                formHtml += `</div>`;
             }
+            
             modalForm.innerHTML = formHtml;
             itemModal.classList.remove('hidden');
         };
@@ -228,15 +246,21 @@
         const closeModal = () => itemModal.classList.add('hidden');
 
         const saveModalForm = () => {
-            const updatedItem = {};
-            modalForm.querySelectorAll('input, textarea').forEach(input => {
-                const key = input.id.replace('modal-form-', '');
-                updatedItem[key] = input.value;
-            });
-
             let targetList = currentCategoryKey ? EDITOR_DATA[currentSectionKey][currentCategoryKey] : EDITOR_DATA[currentSectionKey];
-            if (currentItemIndex === -1) { targetList.push(updatedItem); } 
-            else { targetList[currentItemIndex] = updatedItem; }
+            
+            if (modalForm.querySelector('#modal-form-value')) {
+                const updatedValue = $('#modal-form-value').value;
+                if (currentItemIndex === -1) { targetList.push(updatedValue); } 
+                else { targetList[currentItemIndex] = updatedValue; }
+            } else {
+                const updatedItem = {};
+                modalForm.querySelectorAll('input, textarea').forEach(input => {
+                    const key = input.id.replace('modal-form-', '');
+                    updatedItem[key] = input.value;
+                });
+                if (currentItemIndex === -1) { targetList.push(updatedItem); } 
+                else { targetList[currentItemIndex] = updatedItem; }
+            }
             
             closeModal();
             renderEditor(currentSectionKey);
