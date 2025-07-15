@@ -1,294 +1,343 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SGC Comprehensive Content Editor</title>
+    <title>SGC Master Content Editor</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        .sidebar-link { transition: all 0.2s; }
+        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        .sidebar { scrollbar-width: thin; scrollbar-color: #d1d5db #f9fafb; }
         .sidebar-link.active { background-color: #005EB8; color: white; }
-        .sidebar-link:hover { background-color: #F0F4F5; }
-        .sidebar-link.active:hover { background-color: #005EB8; }
-        .table-action-btn { transition: all 0.2s; }
-        .raw-editor { font-family: 'Courier New', Courier, monospace; font-size: 14px; line-height: 1.6; }
+        .sidebar-link.active:hover { background-color: #0052a3; }
+        .modal-body { max-height: 70vh; }
+        textarea { min-height: 120px; }
     </style>
 </head>
 <body class="bg-gray-100">
 
-    <div class="flex h-screen bg-gray-100">
+    <div class="flex h-screen">
         <!-- Sidebar -->
-        <div class="hidden md:flex flex-col w-72 bg-white border-r">
-            <div class="flex items-center justify-center h-20 border-b">
-                <img src="logo.jpg" alt="SGC Logo" class="h-12">
+        <div class="w-72 bg-white border-r flex flex-col">
+            <div class="flex items-center justify-center h-20 border-b flex-shrink-0">
+                <h1 class="text-xl font-bold text-gray-800">Master Website Editor</h1>
             </div>
-            <div class="flex-grow">
-                <nav id="sidebar-nav" class="flex-grow md:block px-4 pb-4 md:pb-0 md:overflow-y-auto">
-                    <p class="px-4 pt-4 text-xs font-semibold text-gray-500 uppercase">Content Pages</p>
-                    <a class="sidebar-link mt-2 flex items-center px-4 py-2 text-gray-700 rounded-md" href="#" data-section="aboutPage"><i data-feather="info" class="w-5 h-5"></i><span class="mx-4 font-medium">About Page</span></a>
-                    <a class="sidebar-link mt-2 flex items-center px-4 py-2 text-gray-700 rounded-md" href="#" data-section="contactPage"><i data-feather="mail" class="w-5 h-5"></i><span class="mx-4 font-medium">Contact Page</span></a>
-                    <a class="sidebar-link mt-2 flex items-center px-4 py-2 text-gray-700 rounded-md" href="#" data-section="gardenProjectPage"><i data-feather="sun" class="w-5 h-5"></i><span class="mx-4 font-medium">Garden Project</span></a>
-                    <a class="sidebar-link mt-2 flex items-center px-4 py-2 text-gray-700 rounded-md" href="#" data-section="newsletters"><i data-feather="file-text" class="w-5 h-5"></i><span class="mx-4 font-medium">Newsletters</span></a>
-                    <a class="sidebar-link mt-2 flex items-center px-4 py-2 text-gray-700 rounded-md" href="#" data-section="socialMedia"><i data-feather="instagram" class="w-5 h-5"></i><span class="mx-4 font-medium">Social Media</span></a>
-                    
-                    <p class="px-4 pt-4 text-xs font-semibold text-gray-500 uppercase">Tools & Guides</p>
-                    <a class="sidebar-link mt-2 flex items-center px-4 py-2 text-gray-700 rounded-md" href="#" data-section="addOnGuide"><i data-feather="plus-circle" class="w-5 h-5"></i><span class="mx-4 font-medium">Add-On Guide</span></a>
-                    <a class="sidebar-link mt-2 flex items-center px-4 py-2 text-gray-700 rounded-md" href="#" data-section="glossary"><i data-feather="book-open" class="w-5 h-5"></i><span class="mx-4 font-medium">Glossary</span></a>
-                    <a class="sidebar-link mt-2 flex items-center px-4 py-2 text-gray-700 rounded-md" href="#" data-section="interpretiveGuide"><i data-feather="message-square" class="w-5 h-5"></i><span class="mx-4 font-medium">Interpretive Guide</span></a>
-                    <a class="sidebar-link mt-2 flex items-center px-4 py-2 text-gray-700 rounded-md" href="#" data-section="preAnalyticalTool"><i data-feather="search" class="w-5 h-5"></i><span class="mx-4 font-medium">Pre-Analytical Tool</span></a>
-                    <a class="sidebar-link mt-2 flex items-center px-4 py-2 text-gray-700 rounded-md" href="#" data-section="rejectionTroubleshooter"><i data-feather="x-octagon" class="w-5 h-5"></i><span class="mx-4 font-medium">Rejection Troubleshooter</span></a>
-                    <a class="sidebar-link mt-2 flex items-center px-4 py-2 text-gray-700 rounded-md" href="#" data-section="learningLinks"><i data-feather="link" class="w-5 h-5"></i><span class="mx-4 font-medium">Learning Links</span></a>
-
-                    <p class="px-4 pt-4 text-xs font-semibold text-gray-500 uppercase">Games</p>
-                    <a class="sidebar-link mt-2 flex items-center px-4 py-2 text-gray-700 rounded-md" href="#" data-section="labDiscussions"><i data-feather="coffee" class="w-5 h-5"></i><span class="mx-4 font-medium">Lab Discussions</span></a>
-                    <a class="sidebar-link mt-2 flex items-center px-4 py-2 text-gray-700 rounded-md" href="#" data-section="tubeSorterGame"><i data-feather="inbox" class="w-5 h-5"></i><span class="mx-4 font-medium">Tube Sorter Game</span></a>
-                    
-                    <p class="px-4 pt-4 text-xs font-semibold text-gray-500 uppercase">Raw Text Editor</p>
-                     <a class="sidebar-link mt-2 flex items-center px-4 py-2 text-gray-700 rounded-md" href="#" data-section="rawEditor">
-                        <i data-feather="code" class="w-5 h-5"></i><span class="mx-4 font-medium">Edit All Data</span>
-                    </a>
-                </nav>
-            </div>
+            <nav id="sidebar-nav" class="flex-grow p-4 overflow-y-auto sidebar">
+                <!-- Navigation will be dynamically generated here -->
+            </nav>
         </div>
 
-        <!-- Main content -->
-        <div class="flex flex-col flex-1 overflow-y-auto">
-            <div class="flex items-center justify-between h-20 bg-white border-b px-6 sticky top-0 z-10">
-                <h1 id="main-content-title" class="text-2xl font-semibold text-gray-800"></h1>
-                <button id="master-copy-btn" class="bg-green-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-700 transition duration-300 flex items-center">
-                    <i data-feather="copy" class="w-5 h-5 mr-2"></i> Generate & Copy `database.js`
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col">
+            <header class="flex items-center justify-between h-20 bg-white border-b px-6 sticky top-0 z-20 flex-shrink-0">
+                <h2 id="main-content-title" class="text-2xl font-semibold text-gray-800 truncate"></h2>
+                <button id="master-save-btn" class="bg-green-600 text-white font-bold py-2 px-5 rounded-lg hover:bg-green-700 transition-colors flex items-center shadow-sm">
+                    <i data-feather="copy" class="w-5 h-5 mr-2"></i>
+                    Generate New `database.js`
                 </button>
-            </div>
-
-            <main id="main-content" class="p-6 md:p-10">
-                <!-- Content sections will be rendered here by JS -->
+            </header>
+            <main id="main-content" class="flex-1 overflow-y-auto p-6 md:p-10 bg-gray-50">
+                <!-- Editor form will be rendered here -->
             </main>
         </div>
     </div>
 
-    <!-- Modal for Editing/Adding -->
-    <div id="edit-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-        <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-2xl max-h-full overflow-y-auto">
-            <h2 id="modal-title" class="text-2xl font-bold mb-4">Edit Item</h2>
-            <form id="edit-form" class="space-y-4">
-                <!-- Form fields will be generated here by JS -->
-            </form>
-             <div class="flex justify-end space-x-4 mt-6">
+    <!-- Modal for adding/editing list items -->
+    <div id="item-modal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl flex flex-col">
+            <div class="p-5 border-b flex justify-between items-center">
+                 <h3 id="modal-title" class="text-xl font-bold">Edit Item</h3>
+                 <button id="close-modal-btn" class="text-gray-400 hover:text-gray-600"><i data-feather="x" class="w-6 h-6"></i></button>
+            </div>
+            <div class="p-6 modal-body overflow-y-auto">
+                <form id="modal-form" class="space-y-4"></form>
+            </div>
+             <div class="flex justify-end space-x-4 p-4 border-t bg-gray-50">
                 <button type="button" id="cancel-btn" class="bg-gray-200 text-gray-800 font-bold py-2 px-6 rounded-lg hover:bg-gray-300">Cancel</button>
                 <button type="button" id="save-form-btn" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700">Save</button>
             </div>
         </div>
     </div>
 
+    <!-- Load the master database -->
     <script src="database.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            if (typeof SGC_DATA === 'undefined') {
-                document.body.innerHTML = '<div class="p-8 text-center text-red-600"><h1>Error</h1><p>Could not load database.js. Please ensure the file exists and is in the same directory as this editor.</p></div>';
-                return;
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- DATABASE CHECK ---
+        // This is the crucial fix. Check if the database file loaded correctly.
+        if (typeof SGC_DATA === 'undefined') {
+            document.body.innerHTML = `
+                <div class="p-10 text-center bg-red-100 text-red-800">
+                    <h1 class="text-3xl font-bold">Fatal Error: Database Not Found</h1>
+                    <p class="mt-4 text-lg">The editor cannot start because the <strong>database.js</strong> file is missing, corrupted, or failed to load.</p>
+                    <p class="mt-2">Please ensure that a valid <strong>database.js</strong> file exists in the same directory as this HTML file.</p>
+                </div>`;
+            console.error("SGC_DATA is not defined. Make sure database.js is loaded before this script.");
+            return; // Stop execution if the database isn't loaded
+        }
+
+        // --- INITIAL SETUP ---
+        const $ = (selector) => document.querySelector(selector);
+        const $$ = (selector) => document.querySelectorAll(selector);
+        const deepClone = (obj) => JSON.parse(JSON.stringify(obj));
+
+        let EDITOR_DATA = deepClone(SGC_DATA);
+        let currentSectionKey = 'page_about';
+        let currentItemIndex = -1;
+        let currentCategoryKey = '';
+
+        const sidebarNav = $('#sidebar-nav');
+        const mainContent = $('#main-content');
+        const mainContentTitle = $('#main-content-title');
+        const itemModal = $('#item-modal');
+        const modalForm = $('#modal-form');
+        const modalTitle = $('#modal-title');
+
+        // --- DYNAMIC SIDEBAR BUILDER ---
+        const buildSidebar = () => {
+            const sections = {
+                "Static Pages": Object.keys(EDITOR_DATA).filter(k => k.startsWith('page_')),
+                "Games & Tools": Object.keys(EDITOR_DATA).filter(k => k.startsWith('game_') || k.startsWith('tool_')),
+                "Data Lists": Object.keys(EDITOR_DATA).filter(k => !k.startsWith('page_') && !k.startsWith('game_') && !k.startsWith('tool_'))
+            };
+
+            let navHtml = '';
+            for (const title in sections) {
+                navHtml += `<h2 class="mt-4 px-4 text-sm font-semibold text-gray-500 uppercase tracking-wider">${title}</h2>`;
+                sections[title].forEach(key => {
+                    const name = key.replace(/^(page_|game_|tool_)/, '').replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                    navHtml += `<a class="sidebar-link flex items-center mt-2 px-4 py-2 text-gray-700 rounded-md hover:bg-gray-200 transition-colors" href="#" data-section="${key}">${name}</a>`;
+                });
+            }
+            sidebarNav.innerHTML = navHtml;
+        };
+
+        // --- EDITOR RENDERING ENGINE ---
+        const renderEditor = (sectionKey) => {
+            currentSectionKey = sectionKey;
+            const sectionData = EDITOR_DATA[sectionKey];
+            const sectionName = $(`.sidebar-link[data-section="${sectionKey}"]`).textContent;
+            mainContentTitle.textContent = `Editing: ${sectionName}`;
+
+            let editorHtml = '';
+
+            // Renderer for simple objects (static pages)
+            if (typeof sectionData === 'object' && !Array.isArray(sectionData) && !Object.values(sectionData).some(v => typeof v === 'object')) {
+                editorHtml = '<form id="page-form" class="bg-white p-8 rounded-lg shadow-md space-y-6">';
+                for (const key in sectionData) {
+                    const label = key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                    const value = sectionData[key];
+                    editorHtml += `<div><label class="block font-semibold text-gray-700 mb-1">${label}</label>`;
+                    if (String(value).includes('\n')) {
+                        editorHtml += `<textarea data-key="${key}" class="w-full p-2 border rounded-md shadow-sm">${value}</textarea>`;
+                    } else {
+                        editorHtml += `<input type="text" data-key="${key}" class="w-full p-2 border rounded-md shadow-sm" value="${value}">`;
+                    }
+                    editorHtml += `</div>`;
+                }
+                editorHtml += '</form>';
+            }
+            // Renderer for arrays of objects (simple lists)
+            else if (Array.isArray(sectionData)) {
+                editorHtml = renderListEditor(sectionKey, sectionData);
+            }
+            // Renderer for objects containing arrays (categorized lists)
+            else if (typeof sectionData === 'object' && !Array.isArray(sectionData)) {
+                 editorHtml = renderComplexObjectEditor(sectionKey, sectionData);
             }
 
-            const deepClone = (obj) => JSON.parse(JSON.stringify(obj));
-            let appData = deepClone(SGC_DATA);
-
+            mainContent.innerHTML = editorHtml;
             feather.replace();
 
-            const mainContent = document.getElementById('main-content');
-            const mainContentTitle = document.getElementById('main-content-title');
-            const sidebarNav = document.getElementById('sidebar-nav');
-            const modal = document.getElementById('edit-modal');
-            const modalTitle = document.getElementById('modal-title');
-            const editForm = document.getElementById('edit-form');
-            
-            let currentSection = '';
-            let editIndex = -1;
-            let currentCategory = '';
+            // Update sidebar active state
+            $$('.sidebar-link').forEach(l => l.classList.remove('active'));
+            $(`.sidebar-link[data-section="${sectionKey}"]`).classList.add('active');
+        };
+        
+        const renderListEditor = (sectionKey, data) => {
+            let html = `<div class="text-right mb-4"><button class="btn-add bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 flex items-center ml-auto" data-section="${sectionKey}"><i data-feather="plus" class="w-5 h-5 mr-2"></i>Add New Item</button></div>`;
+            if(data.length === 0) {
+                html += `<div class="bg-white p-8 rounded-lg shadow-md text-center text-gray-500">No items yet. Click 'Add New Item' to begin.</div>`;
+                return html;
+            }
+            html += `<div class="bg-white p-6 rounded-lg shadow-md"><table class="w-full text-left"><thead><tr>`;
+            const headers = Object.keys(data[0] || {});
+            headers.forEach(h => html += `<th class="p-3 bg-gray-50">${h.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</th>`);
+            html += `<th class="p-3 bg-gray-50 text-right">Actions</th></tr></thead><tbody>`;
+            data.forEach((item, index) => {
+                html += `<tr class="border-t"><td class="p-3 align-top">${headers.map(h => `<div class="py-1">${item[h]}</div>`).join('')}</td>`;
+                html += `<td class="p-3 text-right align-top space-x-2 whitespace-nowrap">
+                            <button class="btn-edit text-blue-600 hover:underline" data-section="${sectionKey}" data-index="${index}">Edit</button>
+                            <button class="btn-delete text-red-600 hover:underline" data-section="${sectionKey}" data-index="${index}">Delete</button>
+                         </td></tr>`;
+            });
+            html += `</tbody></table></div>`;
+            return html;
+        };
 
-            // --- Generic Render Function for Simple Lists ---
-            const renderSimpleList = (title, dataKey, fields) => {
-                mainContentTitle.textContent = title;
-                let content = `<div class="flex justify-end mb-4"><button onclick="openModal('${dataKey}', -1)" class="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 flex items-center"><i data-feather="plus" class="w-5 h-5 mr-2"></i>Add New</button></div>`;
-                content += `<div class="bg-white p-6 rounded-lg shadow-md"><div class="overflow-x-auto"><table class="w-full text-left"><thead><tr class="bg-gray-50">`;
-                fields.forEach(f => content += `<th class="p-3">${f.label}</th>`);
-                content += `<th class="p-3 text-right">Actions</th></tr></thead><tbody>`;
-                
-                let dataList = appData[dataKey];
-                if(dataList) {
-                    dataList.forEach((item, index) => {
-                        content += `<tr class="border-b">`;
-                        fields.forEach(f => content += `<td class="p-3 font-medium">${item[f.key] || ''}</td>`);
-                        content += `<td class="p-3 text-right"><button class="table-action-btn text-blue-600 hover:underline" onclick="openModal('${dataKey}', ${index})">Edit</button></td></tr>`;
-                    });
+        const renderComplexObjectEditor = (sectionKey, data) => {
+            let html = '<form id="page-form" class="bg-white p-8 rounded-lg shadow-md space-y-8">';
+            for(const key in data){
+                const value = data[key];
+                const label = key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                html += `<div><label class="block text-lg font-bold text-gray-800 mb-2 border-b pb-1">${label}</label>`;
+
+                if(Array.isArray(value)){
+                     html += `<div class="text-sm text-gray-600 mb-2">This is a list of items. Edit the raw JSON below or use the buttons to manage items.</div>`;
+                     html += `<div class="text-right mb-2"><button type="button" class="btn-add bg-blue-600 text-white font-bold py-1 px-3 text-sm rounded-lg hover:bg-blue-700" data-section="${sectionKey}" data-category="${key}">Add Item to ${label}</button></div>`;
+                     html += `<textarea data-key="${key}" class="w-full p-2 border rounded-md shadow-sm font-mono text-sm" rows="10">${JSON.stringify(value, null, 2)}</textarea>`;
+                } else if (typeof value === 'object'){
+                     html += `<div class="text-sm text-gray-600 mb-2">This is a categorized list. Edit the raw JSON below.</div>`;
+                     html += `<textarea data-key="${key}" class="w-full p-2 border rounded-md shadow-sm font-mono text-sm" rows="10">${JSON.stringify(value, null, 2)}</textarea>`;
                 }
-                content += `</tbody></table></div></div>`;
-                mainContent.innerHTML = content;
-                feather.replace();
-            };
-
-            // --- Specific Renderers for Complex UI ---
-            const renderers = {
-                aboutPage: () => {
-                    mainContentTitle.textContent = 'Manage About Page';
-                    const data = appData.aboutPage;
-                    let membersHtml = data.members.map((member, index) => `
-                        <div class="border-b pb-2 flex justify-between items-center">
-                            <div><p class="font-semibold">${member.name}</p><p class="text-sm text-gray-600">${member.department} - ${member.email}</p></div>
-                            <button class="table-action-btn text-blue-600 hover:underline flex-shrink-0 ml-4" onclick="openModal('aboutPage_members', ${index})">Edit</button>
-                        </div>`).join('');
-                    mainContent.innerHTML = `<div class="bg-white p-6 rounded-lg shadow-md space-y-4">
-                        <div><label class="block font-bold">Page Title</label><input type="text" class="w-full p-2 border rounded" value="${data.title}" onchange="updateValue(event, 'aboutPage.title')"></div>
-                        <div><label class="block font-bold">Shared Governance Intro</label><textarea rows="3" class="w-full p-2 border rounded" onchange="updateValue(event, 'aboutPage.sharedGovernanceIntro')">${data.sharedGovernanceIntro}</textarea></div>
-                        <div><label class="block font-bold">Council Mission</label><textarea rows="4" class="w-full p-2 border rounded" onchange="updateValue(event, 'aboutPage.councilMission')">${data.councilMission}</textarea></div>
-                        <h3 class="text-lg font-bold pt-4 border-t">Council Members</h3><div class="space-y-2">${membersHtml}</div>
-                        <div class="flex justify-end mt-2"><button onclick="openModal('aboutPage_members', -1)" class="bg-blue-600 text-white font-bold py-1 px-3 text-sm rounded-lg hover:bg-blue-700 flex items-center"><i data-feather="plus" class="w-4 h-4 mr-1"></i>Add Member</button></div></div>`;
-                    feather.replace();
-                },
-                glossary: () => {
-                    mainContentTitle.textContent = 'Manage Glossary';
-                    let content = '';
-                    for (const category in appData.glossary) {
-                        content += `<div class="mb-8"><h2 class="text-xl font-bold mb-2 flex justify-between items-center">${category.toUpperCase()} Glossary <button onclick="openModal('glossary', -1, '${category}')" class="bg-blue-600 text-white font-bold py-1 px-3 text-sm rounded-lg hover:bg-blue-700 flex items-center"><i data-feather="plus" class="w-4 h-4 mr-1"></i>Add</button></h2><div class="bg-white p-6 rounded-lg shadow-md space-y-2">`;
-                        appData.glossary[category].forEach((item, index) => {
-                            content += `<div class="border-b pb-2 flex justify-between items-start"><div><p class="font-semibold">${item.term}</p><p class="text-sm text-gray-600">${item.definition}</p></div><button class="table-action-btn text-blue-600 hover:underline flex-shrink-0 ml-4" onclick="openModal('glossary', ${index}, '${category}')">Edit</button></div>`;
-                        });
-                        content += `</div></div>`;
+                else {
+                    if (String(value).includes('\n')) {
+                        html += `<textarea data-key="${key}" class="w-full p-2 border rounded-md shadow-sm">${value}</textarea>`;
+                    } else {
+                        html += `<input type="text" data-key="${key}" class="w-full p-2 border rounded-md shadow-sm" value="${value}">`;
                     }
-                    mainContent.innerHTML = content;
-                    feather.replace();
-                },
-                newsletters: () => renderSimpleList('Manage Newsletters', 'newsletters', [{label: 'Title', key: 'title'}, {label: 'URL', key: 'url'}]),
-                socialMedia: () => renderSimpleList('Manage Social Media', 'socialMedia', [{label: 'Title', key: 'title'}, {label: 'URL', key: 'url'}, {label: 'Description', key: 'description'}]),
-                labDiscussions: () => {
-                     mainContentTitle.textContent = 'Manage Lab Discussion Questions';
-                     let content = `<div class="flex justify-end mb-4"><button onclick="openModal('labDiscussions', -1)" class="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 flex items-center"><i data-feather="plus" class="w-5 h-5 mr-2"></i>Add Question</button></div>`;
-                     content += `<div class="bg-white p-6 rounded-lg shadow-md space-y-2">`;
-                     appData.labDiscussions.forEach((item, index) => {
-                         content += `<div class="border-b pb-2 flex justify-between items-center"><span>${item}</span><button class="table-action-btn text-blue-600 hover:underline" onclick="openModal('labDiscussions', ${index})">Edit</button></div>`;
-                     });
-                     content += `</div>`;
-                     mainContent.innerHTML = content;
-                     feather.replace();
-                },
-                rawEditor: () => {
-                    mainContentTitle.textContent = 'Raw Text Editor';
-                    mainContent.innerHTML = `<div class="bg-white p-6 rounded-lg shadow-md"><p class="mb-4 text-sm text-yellow-700 bg-yellow-100 p-3 rounded-md"><b>Warning:</b> Editing this text directly can break the website if the structure is changed incorrectly. Use this for complex data like games, or guides that don't have a dedicated editor yet.</p><textarea id="raw-text-editor" class="w-full h-screen p-4 border rounded raw-editor">${JSON.stringify(appData, null, 2)}</textarea><button id="save-raw-btn" class="mt-4 w-full bg-red-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-red-700">Save Raw Text Changes</button></div>`;
-                    document.getElementById('save-raw-btn').addEventListener('click', () => {
-                        try {
-                            appData = JSON.parse(document.getElementById('raw-text-editor').value);
-                            alert('Raw data updated successfully. Remember to click "Generate & Copy" to save.');
-                        } catch (e) {
-                            alert('Error: The text is not valid JSON. Changes not saved. Please correct the errors.');
-                        }
-                    });
-                },
-                default: (sectionName) => {
-                     mainContentTitle.textContent = 'Manage ' + sectionName.replace(/([A-Z])/g, ' $1').trim();
-                     mainContent.innerHTML = `<div class="text-center p-8 bg-gray-200 rounded-lg"><p>The editor for this section is in development. For now, please use the <b>Raw Text Editor</b> to make changes.</p></div>`;
                 }
-            };
+                html += `</div>`;
+            }
+            html += '</form>';
+            return html;
+        };
 
-            const renderSection = (sectionName) => {
-                currentSection = sectionName;
-                (renderers[sectionName] || renderers.default)(sectionName);
-                document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
-                document.querySelector(`.sidebar-link[data-section="${sectionName}"]`).classList.add('active');
-            };
-
-            window.openModal = (section, index, category = '') => {
-                editIndex = index;
-                currentSection = section;
-                currentCategory = category;
-                editForm.innerHTML = '';
-                
-                let item = {};
-                let title = '';
-
-                if (section === 'aboutPage_members') {
-                    item = (index === -1) ? {} : appData.aboutPage.members[index];
-                    title = (index === -1) ? 'Add Member' : 'Edit Member';
-                    editForm.innerHTML = `<div><label class="block font-semibold">Name</label><input type="text" id="form-name" class="w-full p-2 border rounded" value="${item.name || ''}"></div><div><label class="block font-semibold">Department</label><input type="text" id="form-department" class="w-full p-2 border rounded" value="${item.department || ''}"></div><div><label class="block font-semibold">Email</label><input type="email" id="form-email" class="w-full p-2 border rounded" value="${item.email || ''}"></div>`;
-                } else if (section === 'glossary') {
-                    item = (index === -1) ? {} : appData.glossary[category][index];
-                    title = (index === -1) ? `Add Term to ${category.toUpperCase()}` : 'Edit Term';
-                    editForm.innerHTML = `<div><label class="block font-semibold">Term</label><input type="text" id="form-term" class="w-full p-2 border rounded" value="${item.term || ''}"></div><div><label class="block font-semibold">Definition</label><textarea id="form-definition" rows="4" class="w-full p-2 border rounded">${item.definition || ''}</textarea></div>`;
-                } else if (section === 'newsletters') {
-                    item = (index === -1) ? {} : appData.newsletters[index];
-                    title = (index === -1) ? 'Add Newsletter' : 'Edit Newsletter';
-                    editForm.innerHTML = `<div><label class="block font-semibold">Title</label><input type="text" id="form-title" class="w-full p-2 border rounded" value="${item.title || ''}"></div><div><label class="block font-semibold">URL</label><input type="url" id="form-url" class="w-full p-2 border rounded" value="${item.url || ''}"></div>`;
-                } else if (section === 'socialMedia') {
-                     item = (index === -1) ? {} : appData.socialMedia[index];
-                    title = (index === -1) ? 'Add Social Media Post' : 'Edit Social Media Post';
-                    editForm.innerHTML = `<div><label class="block font-semibold">Title</label><input type="text" id="form-title" class="w-full p-2 border rounded" value="${item.title || ''}"></div><div><label class="block font-semibold">URL</label><input type="url" id="form-url" class="w-full p-2 border rounded" value="${item.url || ''}"></div><div><label class="block font-semibold">Description</label><textarea id="form-description" rows="2" class="w-full p-2 border rounded">${item.description || ''}</textarea></div>`;
-                } else if (section === 'labDiscussions') {
-                    item = (index === -1) ? '' : appData.labDiscussions[index];
-                    title = (index === -1) ? 'Add Question' : 'Edit Question';
-                    editForm.innerHTML = `<div><label class="block font-semibold">Question</label><textarea id="form-question" rows="3" class="w-full p-2 border rounded">${item || ''}</textarea></div>`;
-                }
-                
-                modalTitle.textContent = title;
-                modal.classList.remove('hidden');
-            };
-
-            window.updateValue = (event, path) => {
-                const keys = path.split('.');
-                let current = appData;
-                for(let i = 0; i < keys.length - 1; i++) current = current[keys[i]];
-                current[keys[keys.length - 1]] = event.target.value;
-            };
-
-            const closeModal = () => modal.classList.add('hidden');
+        // --- MODAL & FORM LOGIC ---
+        const openModal = (sectionKey, index, categoryKey = '') => {
+            currentSectionKey = sectionKey;
+            currentItemIndex = index;
+            currentCategoryKey = categoryKey;
+            const isNew = index === -1;
             
-            const saveForm = () => {
-                let updatedItem;
-                if (currentSection === 'aboutPage_members') {
-                    updatedItem = { name: document.getElementById('form-name').value, department: document.getElementById('form-department').value, email: document.getElementById('form-email').value };
-                    if (editIndex === -1) appData.aboutPage.members.push(updatedItem);
-                    else appData.aboutPage.members[editIndex] = updatedItem;
-                } else if (currentSection === 'glossary') {
-                    updatedItem = { term: document.getElementById('form-term').value, definition: document.getElementById('form-definition').value };
-                    if (editIndex === -1) appData.glossary[currentCategory].push(updatedItem);
-                    else appData.glossary[currentCategory][editIndex] = updatedItem;
-                } else if (currentSection === 'newsletters') {
-                    updatedItem = { title: document.getElementById('form-title').value, url: document.getElementById('form-url').value };
-                    if (editIndex === -1) appData.newsletters.push(updatedItem);
-                    else appData.newsletters[editIndex] = updatedItem;
-                } else if (currentSection === 'socialMedia') {
-                    updatedItem = { title: document.getElementById('form-title').value, url: document.getElementById('form-url').value, description: document.getElementById('form-description').value, type: 'youtube' }; // Defaulting type
-                    if (editIndex === -1) appData.socialMedia.push(updatedItem);
-                    else appData.socialMedia[editIndex] = {...appData.socialMedia[editIndex], ...updatedItem};
-                } else if (currentSection === 'labDiscussions') {
-                    updatedItem = document.getElementById('form-question').value;
-                    if (editIndex === -1) appData.labDiscussions.push(updatedItem);
-                    else appData.labDiscussions[editIndex] = updatedItem;
-                }
-                renderSection(currentSection.split('_')[0]);
-                closeModal();
-            };
-
-            document.getElementById('cancel-btn').addEventListener('click', closeModal);
-            document.getElementById('save-form-btn').addEventListener('click', saveForm);
+            let itemData = {};
+            // Determine the object structure for the form
+            if (categoryKey) { // Item within a category (e.g., glossary.haematology)
+                const list = EDITOR_DATA[sectionKey][categoryKey];
+                itemData = isNew ? (list[0] ? Object.fromEntries(Object.keys(list[0]).map(k => [k, ''])) : {note: "Add first item structure"}) : list[index];
+            } else { // Item in a direct list (e.g., members)
+                const list = EDITOR_DATA[sectionKey];
+                itemData = isNew ? (list[0] ? Object.fromEntries(Object.keys(list[0]).map(k => [k, ''])) : {note: "Add first item structure"}) : list[index];
+            }
             
-            document.getElementById('master-copy-btn').addEventListener('click', () => {
-                const fullFileContent = `const SGC_DATA = ${JSON.stringify(appData, null, 2)};`;
-                navigator.clipboard.writeText(fullFileContent).then(() => {
-                    alert('Master content file copied to clipboard!\n\nOpen database.js, delete all old content, and paste.');
-                }).catch(err => alert('Failed to copy.'));
+            modalTitle.textContent = isNew ? 'Add New Item' : 'Edit Item';
+            let formHtml = '';
+            for (const key in itemData) {
+                const label = key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                const value = itemData[key];
+                formHtml += `<div><label class="block font-semibold text-gray-700 mb-1">${label}</label>`;
+                if (String(value).length > 80 || String(value).includes('\n')) {
+                    formHtml += `<textarea id="modal-form-${key}" class="w-full p-2 border rounded-md">${value}</textarea>`;
+                } else {
+                    formHtml += `<input type="text" id="modal-form-${key}" class="w-full p-2 border rounded-md" value="${value}">`;
+                }
+                formHtml += `</div>`;
+            }
+            modalForm.innerHTML = formHtml;
+            itemModal.classList.remove('hidden');
+        };
+
+        const closeModal = () => itemModal.classList.add('hidden');
+
+        const saveModalForm = () => {
+            const updatedItem = {};
+            modalForm.querySelectorAll('input, textarea').forEach(input => {
+                const key = input.id.replace('modal-form-', '');
+                updatedItem[key] = input.value;
             });
 
-            sidebarNav.addEventListener('click', (e) => {
-                const link = e.target.closest('.sidebar-link');
-                if (link) {
-                    e.preventDefault();
-                    renderSection(link.dataset.section);
+            let targetList;
+            if (currentCategoryKey) {
+                targetList = EDITOR_DATA[currentSectionKey][currentCategoryKey];
+            } else {
+                targetList = EDITOR_DATA[currentSectionKey];
+            }
+
+            if (currentItemIndex === -1) { // Add new
+                targetList.push(updatedItem);
+            } else { // Update existing
+                targetList[currentItemIndex] = updatedItem;
+            }
+            
+            closeModal();
+            renderEditor(currentSectionKey);
+        };
+        
+        const deleteListItem = (sectionKey, index, categoryKey = '') => {
+            if(!confirm('Are you sure you want to delete this item? This cannot be undone.')) return;
+            
+            if (categoryKey) {
+                EDITOR_DATA[sectionKey][categoryKey].splice(index, 1);
+            } else {
+                EDITOR_DATA[sectionKey].splice(index, 1);
+            }
+            renderEditor(sectionKey);
+        };
+
+        // --- DATA SAVING ---
+        const saveCurrentForm = () => {
+            const form = $('#page-form');
+            if (!form) return; // Not a page form, nothing to save this way
+
+            form.querySelectorAll('input, textarea').forEach(input => {
+                const key = input.dataset.key;
+                const isJson = input.classList.contains('font-mono');
+                
+                if(isJson){
+                    try {
+                        EDITOR_DATA[currentSectionKey][key] = JSON.parse(input.value);
+                    } catch(e) {
+                        alert(`Error: Invalid JSON in '${key}' field. Changes for this field were not saved. Please correct it and save again.\n\n${e.message}`);
+                    }
+                } else {
+                    EDITOR_DATA[currentSectionKey][key] = input.value;
                 }
             });
+        };
 
-            renderSection('aboutPage');
+        // --- EVENT LISTENERS ---
+        sidebarNav.addEventListener('click', e => {
+            const link = e.target.closest('.sidebar-link');
+            if (link && link.dataset.section !== currentSectionKey) {
+                e.preventDefault();
+                saveCurrentForm();
+                renderEditor(link.dataset.section);
+            }
         });
+
+        mainContent.addEventListener('click', e => {
+            const button = e.target.closest('button');
+            if (!button) return;
+            const { section, index, category } = button.dataset;
+
+            if (button.classList.contains('btn-add')) {
+                openModal(section, -1, category);
+            } else if (button.classList.contains('btn-edit')) {
+                openModal(section, parseInt(index), category);
+            } else if (button.classList.contains('btn-delete')) {
+                deleteListItem(section, parseInt(index), category);
+            }
+        });
+
+        $('#save-form-btn').addEventListener('click', saveModalForm);
+        $('#cancel-btn').addEventListener('click', closeModal);
+        $('#close-modal-btn').addEventListener('click', closeModal);
+
+        $('#master-save-btn').addEventListener('click', () => {
+            saveCurrentForm(); // Save any pending changes on the current page
+            const fullFileContent = `const SGC_DATA = ${JSON.stringify(EDITOR_DATA, null, 4)};`;
+            navigator.clipboard.writeText(fullFileContent).then(() => {
+                alert('Success!\n\nThe new `database.js` content has been copied to your clipboard.\n\nOpen the `database.js` file in your project, delete all its content, and paste.');
+            }).catch(err => alert('Failed to copy content. Your browser might not support this feature or it was blocked.'));
+        });
+
+        // --- INITIAL LOAD ---
+        buildSidebar();
+        renderEditor(currentSectionKey);
+        feather.replace();
+    });
     </script>
 </body>
 </html>
-```
