@@ -1,1 +1,289 @@
-[]
+{
+    // =================================================================
+    // CORE PAGE CONTENT
+    // =================================================================
+    "page_index": {
+        "title": "NUH Clinical Pathology Shared Governance",
+        "intro": "Discover our projects, read our latest news, and find helpful resources from the Nottingham University Hospitals Clinical Pathology team.",
+        "cards": [
+            { "icon": "clipboard", "title": "Our Projects", "description": "See the initiatives we're working on.", "url": "projects.html" },
+            { "icon": "play-circle", "title": "Pathology Games", "description": "Test your knowledge with our fun, interactive games.", "url": "games.html" },
+            { "icon": "tool", "title": "Helpful Tools", "description": "Practical utilities to help with day-to-day tasks.", "url": "helpful_tools.html" },
+            { "icon": "file-text", "title": "Newsletters", "description": "Catch up on the latest news from the council.", "url": "newsletters.html" },
+            { "icon": "users", "title": "About Us", "description": "Learn about our council and what we do.", "url": "about.html" },
+            { "icon": "book-open", "title": "Learning Links", "description": "Useful resources for professional development.", "url": "links.html" },
+            { "icon": "instagram", "title": "Social Media", "description": "Videos promoting our role as Biomedical Scientists.", "url": "social.html" },
+            { "icon": "send", "title": "Suggestions", "description": "Have an idea for a project? Let us know.", "url": "contact.html" }
+        ]
+    },
+    "page_about": {
+        "title": "About Us & The Council",
+        "shared_governance_title": "What is Shared Governance?",
+        "shared_governance_intro": "Shared Governance is a model of empowerment that gives staff a direct voice in the decisions that affect their working lives and the quality of patient care. It moves away from traditional top-down management, creating a partnership between frontline staff and leadership.",
+        "council_mission": "Through councils like ours, team members can take ownership of clinical practice, shape policies, and drive improvements from the ground up. We are proud to be the first non-patient-facing, Pathology-specific Shared Governance Council in the UK, pioneering this approach to enhance our services and empower our dedicated scientific and support staff."
+    },
+    "page_contact": {
+        "title": "Have a Suggestion?",
+        "intro_text": "Your ideas are important to us. If you have a suggestion for a new project or an improvement, we'd love to hear from you. Please get in touch with the council chair.",
+        "chair_name": "Michael Ellingham",
+        "chair_email": "michael.ellingham@nhs.net"
+    },
+    "page_projects_landing": {
+        "title": "Our Projects",
+        "projects": [
+            { "title": "Patient Interviews & Tours", "description": "Learn more about our patient-focused initiatives.", "url": "patient_interviews.html", "image": "interview.jpeg" },
+            { "title": "Laboratory Video Tours", "description": "Discover our video series for wards and GPs.", "url": "video_tours.html", "image": "lab.jpg" },
+            { "title": "Garden Project", "description": "See how we're creating a space for wellbeing.", "url": "garden_project.html", "image": "garden.jpg" }
+        ]
+    },
+    "page_patient_interviews": {
+        "title": "Patient Interviews & Tours",
+        "intro": "This project aims to bridge the gap between the laboratory and the patient experience. By sharing patient stories and providing lab tours, we can better understand the impact of our work and find new ways to improve patient care.",
+        "interview_title": "Patient Interviews",
+        "tours_title": "Harvey's Lab Tours",
+        "tours_intro": "Here are some prior tours provided by the laboratory via Harvey's Gang (now Harvey's Lab Tours).",
+        "harvey_links": [
+            { "title": "Young patient becomes a ‘trainee biomedical scientist’ (Nov 2019)", "description": "Read about seven-year-old Evie's tour of the labs at QMC.", "url": "https://www.nuh.nhs.uk/news/young-patient-becomes-a-trainee-biomedical-scientist-at-queens-medical-centre-3549/" },
+            { "title": "Daughter with rare condition can be 'happy and confident' (Nov 2023)", "description": "A recent tour for a young girl to help her understand her treatment.", "url": "https://www.nottinghampost.com/news/local-news/rare-condition-daughter-can-happy-8946245" },
+            { "title": "Pathologists help 13-year old boy overcome fear of blood tests (May 2018)", "description": "The story of the very first Harvey's Gang tour at NUH.", "url": "https://www.nuh.nhs.uk/news/pathologists-at-nuh-help-13year-old-boy-with-rare-illness-overcome-fear-of-blood-tests-2728/" }
+        ]
+    },
+    "page_nikki_story": {
+        "title": "Nikki Fretwell's Story",
+        "article_title": "Newsletter Article",
+        "content_html": "<p class=\"font-bold text-lg\">Dialysis is something I do. It doesn’t define me.</p><p>Recently, pathology had the privilege of meeting a phenomenal woman. Her name is Nikki Fretwell. She is a mother, a musician, a gym lover and has even presented her own radio show. She spent 22 years in education and now speaks at renal conferences, and supports other people with kidney disease. As a renal patient herself, Nikki was interested to know of potential effects due to delay of sample receipt and processing, for blood samples taken at home. It was especially important to her, to know if the laboratory staff were aware of the importance of her blood results as a renal patient, and that we understood the how the results would affect her, and other renal patients. Especially considering that she dialyses at home, herself. For Nikki, she must tailor her dialysis dependant on the monthly blood test results she receives: Pre and post dialysis bloods reflect how well she dialyses. Everything must be assessed via blood tests as no urine sample is available for analysis. (Some dialysis patients do not produce urine.)</p><img src=\"nikki-fistula.jpg\" onerror=\"this.onerror=null;this.src='https://placehold.co/600x400/e0e0e0/808080?text=Image+Not+Found';\" alt=\"A fistula in Nikki's arm, which she uses for dialysis\" class=\"my-6 rounded-lg shadow-md mx-auto w-full max-w-md\"><p>All blood samples come from a fistula in Nikki’s arm- she takes the blood herself! The fistula is her lifeline. There is no other access to blood, as her veins are brittle and calcified. So, she protects her lifeline and takes her own blood. She told us ‘‘Nobody else is allowed to come near me with a needle’’</p><p>Nikki is one of the longest surviving non-transplanted dialysis patients in the UK, having been on dialysis for 34 years!</p><p>At only 17, she started to experience symptoms which were affecting her quality of life, and was later diagnosed with the autoimmune disease, Focal segmental glomerulosclerosis. FSGS attacks the nephrons in the kidneys. So, at 17, she was put on the transplant list. Three years of pain and difficulty, medications and missing out on teenage life, at the age of 19, she asked, “Will I be better off on dialysis?” and after advocating for herself, things started to improve. She has had to advocate for herself again and again and again. She is the reason she is still so strong all these years later.</p><blockquote>\"You have to know your own condition, and you have to be able to advocate for yourself in a way that other people will listen to. So that is a constant thing, and it's very common in dialysis patients, kidney patients in general, that feel they are unheard a lot of the time.\"</blockquote><p>During her time dialysing at the hospital, She would make the effort to ask the nurses, scientific and medical questions, to better understand her condition and learn as much as she could from them. There wasn’t the access to the internet or google then. And you spend a lot of time with these nurses if you’re having dialysis at the hospital. Hospital dialysis is 3 times a week, every week, forever, or until you get a transplant. There is no time off.</p><blockquote>\"dialysis patients spend a lot of their time waiting. Waiting for hospital appointments, waiting for GP appointments, waiting for transport to and from dialysis, waiting for a machine, waiting for a transplant. We spend a lot of time waiting, and then you sit on the machine for four hours and wait until the four hours is over.\"</blockquote><p>Home dialysis has offered some freedom by getting rid of those strict time restrictions and has allowed Nikki to not only work but do all kinds of hobbies and activities. She has been dialysing overnight at home since 2014, which has given her more independence and control over her life.</p><p>At just 21, she learned to put her own needles in so she could dialyse at home. Not too long after this, she fell pregnant. Nobody in the world, receiving dialysis, had ever had a baby. The very few people who had got pregnant, sadly never had a successful birth. She told us that \"Dialysis patients, generally speaking, don't get pregnant. Very often they have no menstrual cycle, and even if they do, their bodies are just not able to sustain any pregnancy, if they've got creatinine of over 300.\"</p><p>Her son is now in his 30s! Even with the odds stacked against her, she carried her baby until 7 months, and he was born weighing just under two pounds.</p><h3>So… why did Nikki not have a transplant?</h3><p>She did! After almost 20 years of being on the transplant list, waiting for a rare tissue type match, Nikki had a kidney transplant. Unfortunately, however, it is not like it is portrayed on TV, where it’s a complete fix and you just carry on with life with a spring in your step. There are difficulties when things go well and unfortunately things don’t always even go well. Nikki faced complications and after 5 months the kidney was removed. She made the decision not to go back on the transplant list.</p><p>Her take home message is that long term dialysis should be promoted. Everybody seems to think that a transplant is the only next step. She wants people to know not to put their life on pause waiting for a transplant and has proven that you can absolutely live without one.</p><img src=\"nikki-quote.jpg\" onerror=\"this.onerror=null;this.src='https://placehold.co/800x200/e0e0e0/808080?text=Image+Not+Found';\" alt=\"A quote from Nikki's interview about not waiting for a transplant\" class=\"my-6 rounded-lg shadow-md mx-auto w-full\"><p>If you want to know more about this incredible woman, please keep a look out for the interview material available soon: Question and answers will be shared from our interview with Nikki, with an accompanying video.</p>"
+    },
+    "page_video_tours": {
+        "title": "Laboratory Video Tours",
+        "intro": "We're curating a series of videos for each department in Clinical Pathology to teach the wards and GPs what we do and what they can do to help us improve patient care. These short, engaging videos will cover key aspects of the pathology process, from sample collection to result interpretation, providing a valuable educational resource for clinical staff.",
+        "chemistry_video_url": "https://www.canva.com/design/DAGrMNYRfp8/pHyUmUFeWLuQibuvzMzubg/view?embed"
+    },
+    "page_social": {
+        "title": "Social Media Showcase",
+        "intro": "We're looking for staff to help us create a series of videos for all departments, promoting our role and what we do in the lab. Please send us your videos to help kick-start this exciting project!",
+        "submit_email": "mailto:michael.ellingham@nhs.net?subject=SGC%20Video%20Submission",
+        "videos": [
+            { "title": "A Day in the Life (TikTok)", "description": "A great short video showcasing the work of Biomedical Scientists.", "url": "https://vm.tiktok.com/ZNdBGuPcg/", "thumbnail": "tiktok-thumbnail.jpg", "type": "link" },
+            { "title": "\"Biomedical Science is like medicine but easier\"", "description": "A Q&A short addressing this common misconception.", "url": "https://www.youtube.com/embed/4AI7y--kvs0", "type": "embed" },
+            { "title": "All about blood smears (Part 1)", "description": "A quick and informative look at creating blood smears in the lab.", "url": "https://www.youtube.com/embed/vjMLVGA2JuU", "type": "embed" },
+            { "title": "Q&A with a BMS Apprentice", "description": "An insightful Q&A session with an NHS apprentice Biomedical Scientist.", "url": "https://www.youtube.com/embed/Z2yLTLG2xN8", "type": "embed" }
+        ]
+    },
+    "page_sustainability_corner": {
+        "title": "Resource & Sustainability Corner",
+        "intro": "Learn about how we can use our resources more mindfully, reduce waste, and improve efficiency. Small changes can make a big difference.",
+        "links": [
+            { "icon": "truck", "title": "The Journey of a Sample", "description": "An insight into the resources and costs involved in every step of the sample pathway.", "url": "journey_of_a_sample.html" },
+            { "icon": "plus-circle", "title": "The Power of the Add-On Test", "description": "A guide explaining which tests can be added to existing samples, avoiding unnecessary re-bleeds.", "url": "add_on_guide.html" },
+            { "icon": "trash-2", "title": "Waste Management & Costs", "description": "Learn about the correct disposal of laboratory waste and the surprising costs involved.", "url": "waste_management.html" }
+        ]
+    },
+    "page_journey_of_a_sample": {
+        "title": "The Journey of a Sample",
+        "intro": "From the patient's arm to the final report, every sample consumes valuable resources. Understanding this journey helps us appreciate the importance of getting it right first time.",
+        "steps": [
+            { "icon": "user-plus", "title": "Step 1: The Request & Collection", "description": "The process begins with a clinical need. A request is made, and a trained phlebotomist collects the sample from the patient.", "resources": ["Staff Time: Phlebotomist/Nurse time, Clerical time.", "Consumables: Needle, tube holder, vacutainer tube(s), alcohol wipe, gauze, plaster, transport bag."] },
+            { "icon": "truck", "title": "Step 2: Transport to the Lab", "description": "The sample must be transported safely and quickly to the laboratory to ensure its integrity.", "resources": ["Pneumatic Tube System: Significant electrical energy consumption.", "Portering Service: Staff time and wages.", "Van Transport (for GP practices): Fuel, vehicle maintenance, driver's time."] },
+            { "icon": "log-in", "title": "Step 3: Laboratory Reception & Preparation", "description": "The sample arrives, is checked against the request, and booked into the Laboratory Information Management System (LIMS).", "resources": ["Staff Time: MLA/AP time for booking-in and sorting.", "Electricity: Power for centrifuges (for serum/plasma), computers, and barcode scanners.", "Asset Use: High-speed centrifuges are expensive assets that require regular maintenance."] },
+            { "icon": "cpu", "title": "Step 4: Analysis", "description": "The sample is processed on a highly complex, automated analyser.", "resources": ["High-Value Asset: Analysers cost tens to hundreds of thousands of pounds and have expensive service contracts.", "Reagents & Consumables: Every test uses specific, costly reagents, diluents, and cleaning fluids.", "Quality Control: QC material must be run every day to ensure accuracy, consuming further reagents.", "Electricity & Water: Analysers are significant consumers of power and purified water.", "Estimated Cost per FBC/U&E: ~£1.00 - £3.00 in direct analytical costs."] },
+            { "icon": "check-square", "title": "Step 5: Validation & Reporting", "description": "A qualified Biomedical Scientist reviews the result, checks for errors, and validates it. Abnormal results may require further interpretation or referral.", "resources": ["Highly Skilled Staff Time: The expertise of a registered BMS is essential for ensuring the quality and safety of every result.", "IT Infrastructure: Servers and software (LIMS) are needed to manage and store millions of patient results securely."] },
+            { "icon": "archive", "title": "Step 6: Storage & Disposal", "description": "After analysis, samples are stored for a set period in large, refrigerated units before being disposed of as clinical waste.", "resources": ["Cold Storage: Walk-in fridges consume a large amount of electricity 24/7 to keep samples viable for add-on tests.", "Clinical Waste Disposal: Disposing of thousands of samples per day is a major operational cost.", "Cost of Waste: A single bin of clinical waste can cost **over £20** to dispose of correctly."] }
+        ],
+        "summary": "When you combine consumables, staff time, transport, energy, and waste, the true cost of a single \"routine\" blood test is far more than just the reagents. Every rejected sample that requires a redraw multiplies this cost. **Getting it right first time matters.**"
+    },
+    "page_waste_management": {
+        "title": "A Guide to Waste Management",
+        "intro": "Helping Pathology save money and protect the environment.",
+        "chart_title": "The True Cost of Our Bins",
+        "chart_intro": "Using the wrong bin is one of the biggest sources of preventable cost in the Trust. The price to dispose of waste varies dramatically depending on the stream. This chart shows the average cost to dispose of one tonne of waste, based on NUH policy.",
+        "streams": [
+            { "title": "Waste for Incineration", "icon": "alert-octagon", "bag": "Yellow Bag / Yellow-lidded Sharps Bin", "color": "yellow-600", "description": "This stream is for waste that <strong>must be incinerated</strong> due to chemical or medicinal contamination. This is our most expensive waste stream and should be used with care.", "costPerTonne": 600, "costPerBin": "£4 - £6", "examples": ["Waste contaminated with chemicals or medicines (except cytotoxic).", "All sharps (needles, slides, broken glass from lab).", "Known highly infectious laboratory waste.", "Blood gas analyser cartridges."] },
+            { "title": "Infectious Clinical Waste", "icon": "biohazard", "bag": "Orange Bag", "color": "orange-600", "description": "For waste contaminated with blood or other bodily fluids that is known or believed to be infectious. This waste is sent for alternative treatment (e.g., autoclaving) to render it safe before disposal.", "costPerTonne": 420, "costPerBin": "£3 - £4", "examples": ["Used sample tubes (EDTA, Serum, Citrate etc.)", "Contaminated gloves, aprons, and other PPE.", "Blood product packaging.", "Used sample swabs and plastic pasteurs.", "Contaminated bench roll and consumables."] },
+            { "title": "Offensive Waste", "icon": "wind", "bag": "Tiger Stripe Bag (Yellow with Black Stripes)", "color": "yellow-800", "description": "For non-infectious waste that may be unpleasant (e.g., contains body fluids but from a non-infectious source). A much cheaper alternative to orange/yellow streams.", "costPerTonne": 300, "costPerBin": "£2 - £3", "examples": ["Used PPE (gloves, masks) from non-infectious areas.", "Non-infectious incontinence pads.", "Non-infectious wound dressings.", "Empty, non-contaminated urine containers."] },
+            { "title": "General / 'Black Bag' Waste", "icon": "archive", "bag": "Black Bag", "color": "gray-800", "description": "This is for general, non-clinical waste. Using this correctly for non-contaminated items is the most cost-effective and environmentally friendly option.", "costPerTonne": 160, "costPerBin": "Less than £1.50", "examples": ["Paper towels and outer cardboard packaging.", "Non-contaminated stationery.", "Food wrappers and drink cans.", "Uncontaminated plastic packaging."] },
+            { "title": "Recycling & Cardboard", "icon": "recycle", "bag": "Clear Bag / Designated Cardboard Bin", "color": "green-600", "description": "For clean, non-contaminated recyclable materials. Cardboard should be flattened and placed in designated large bins.", "costPerTonne": 40, "costPerBin": "Less than £0.50", "examples": ["Clean plastic bottles and cans.", "Non-confidential paper and office waste.", "Flattened reagent and delivery boxes.", "Newspapers and magazines."] }
+        ],
+        "summary": "Placing a single non-infectious, non-contaminated item in a yellow stream bin means the whole bin must be incinerated at a high cost. Every item placed in the correct bin makes a significant financial and environmental difference. Think before you throw!"
+    },
+
+    // =================================================================
+    // DATA LISTS
+    // =================================================================
+    "members": [
+        { "name": "Michael Ellingham", "department": "Haematology & Blood Transfusion", "email": "Michael.ellingham@nhs.net", "image_url": "placeholder.jpg" },
+        { "name": "Katarzyna Fijalkowska", "department": "Haematology & Blood Transfusion", "email": "katarzyna.fijalkowska@nhs.net", "image_url": "placeholder.jpg" },
+        { "name": "Akwasi Boakye", "department": "Immunology", "email": "akwasi.boakye1@nhs.net", "image_url": "placeholder.jpg" },
+        { "name": "Yasmin Dixon", "department": "Chemistry", "email": "yasmin.dixon1@nhs.net", "image_url": "placeholder.jpg" },
+        { "name": "Matthew Rodgers", "department": "Chemistry", "email": "matthew.rodgers6@nhs.net", "image_url": "placeholder.jpg" }
+    ],
+    "newsletters": [
+        { "title": "July 2025 Edition", "url": "https://www.canva.com/design/DAGq_W5r-H4/7ZHZKr-ctFrh4vkM6JyN_g/view" },
+        { "title": "June 2025 Edition", "url": "https://www.canva.com/design/DAGnXoAq70Y/0VKC3AAIqPUdaLLZ3cpQUg/view" },
+        { "title": "May 2025 Edition", "url": "https://www.canva.com/design/DAGj3M0ceJ4/nLv3uC_Jojrf20YVExh8Vw/view" },
+        { "title": "April 2025 Edition", "url": "https://www.canva.com/design/DAGhotuowcw/bUjeV9GXeNrwuFZTfrObjA/view" },
+        { "title": "March 2025 Edition", "url": "https://www.canva.com/design/DAGecEbcDF4/bbbGy79e_uK0gRLLYJa4nA/view" },
+        { "title": "January 2025 Edition", "url": "https://www.canva.com/design/DAGSvAh8E6I/b4ZBT3LhYVKWDxoh-OYN5g/view" }
+    ],
+    "learning_links": {
+        "general": [
+            { "name": "IBMS", "url": "https://www.ibms.org/home/", "description": "The Institute of Biomedical Science - our professional body." },
+            { "name": "HCPC", "url": "https://www.hcpc-uk.org/", "description": "The Health and Care Professions Council - our regulator." }
+        ],
+        "haematology": [
+            { "name": "British Society for Haematology", "url": "https://b-s-h.org.uk/", "description": "Guidelines, research and education for haematology." }
+        ],
+        "transfusion": [
+            { "name": "Transfusion Guidelines (JPAC)", "url": "https://www.transfusionguidelines.org/", "description": "The official UK guidelines for blood transfusion services." }
+        ],
+        "chemistry": [
+            { "name": "Association for Laboratory Medicine", "url": "https://labmed.org.uk/", "description": "Formerly the ACB, a key professional body for the field." }
+        ],
+        "immunology": [
+            { "name": "British Society for Immunology", "url": "https://www.immunology.org/", "description": "Representing scientists and clinicians in immunology." }
+        ]
+    },
+
+    // =================================================================
+    // TOOLS & GUIDES
+    // =================================================================
+    "tool_add_on_guide": {
+        "title": "The Power of the Add-On Test",
+        "intro": "A guide to sample stability for add-on requests. Avoiding a re-bleed saves time, resources, and improves the patient experience.",
+        "patient_impact_title": "Better for the Patient",
+        "patient_impact_text": "Every unnecessary venepuncture is an uncomfortable experience for the patient. For those with difficult venous access, children, or needle-phobic individuals, avoiding a redraw significantly improves their quality of care and perception of our service.",
+        "trust_impact_title": "Better for the Trust",
+        "trust_impact_text": "Each blood draw has a cost. While it seems small, the cumulative cost of staff time (phlebotomist, porter, lab staff) and consumables (needle, holder, tubes, bag) is estimated at **£5 - £7 per collection**. Using an existing sample is a direct and simple way to save money.",
+        "biochemistry_data": [
+            { "test": "Amylase", "tube": "Serum (Gold Top)", "stability": "7 days" }
+        ],
+        "haematology_data": [
+            { "test": "APTT (for Heparin monitoring)", "tube": "Citrate (Blue Top)", "stability": "2 hours" }
+        ]
+    },
+    "tool_cell_counter": {
+        "title": "Manual Differential Counter",
+        "intro": "Use your keyboard number keys to count cells. Enter the patient's total WBC to calculate absolute values.",
+        "cell_groups": {
+            "wbc": { "1": "Neutrophils", "2": "Lymphocytes", "3": "Monocytes", "4": "Eosinophils", "5": "Basophils" },
+            "other": { "6": "Metamyelocytes", "7": "Myelocytes", "8": "Promyelocytes", "9": "Blasts", ".": "Plasma Cells", "0": "NRBCs" }
+        }
+    },
+    "tool_glossary": {
+        "haem": [
+            { "term": "Acanthocyte (Spur Cell)", "definition": "An erythrocyte (red blood cell) with a few, irregularly spaced spikes of varying length. Associated with severe liver disease." }
+        ],
+        "trans": [
+            { "term": "A, B, O Antigens", "definition": "Carbohydrate structures on the surface of red blood cells that determine the ABO blood group." }
+        ],
+        "chem": [
+            { "term": "Acid-Base Balance", "definition": "The mechanism by which the body maintains the pH of its fluids within a narrow, normal range. Primarily involves the lungs and kidneys." }
+        ],
+        "imm": [
+            { "term": "Adjuvant", "definition": "A substance that enhances the body's immune response to an antigen, often included in vaccines." }
+        ]
+    },
+    "tool_interpretive_guide": {
+        "title": "Interpretive Comment Guide",
+        "intro": "Search for a term to understand its clinical significance and appropriate next steps.",
+        "haem": [
+            { "term": "Leucoerythroblastic Picture", "meaning": "The presence of immature red cells (Nucleated Red Blood Cells) and immature white cells (e.g., myelocytes, metamyelocytes) in the peripheral blood. Teardrop-shaped red cells are often also present.", "causes": "Indicates significant bone marrow disturbance. Common causes include myelofibrosis, metastatic cancer infiltrating the marrow, severe haemolysis, or overwhelming infection (sepsis).", "nextSteps": "This is a significant finding requiring urgent clinical correlation. Review previous haematology results. A bone marrow biopsy is often indicated to determine the underlying cause. Refer to haematology for review." }
+        ],
+        "coag": [
+            { "term": "Prolonged APTT (@PAPT)", "meaning": "The activated partial thromboplastin time, a measure of the intrinsic coagulation pathway, is longer than the reference range.", "causes": "Common causes include heparin therapy, presence of a lupus anticoagulant, clotting factor deficiencies (e.g., Haemophilia A/B), liver disease, or DIC.", "nextSteps": "Suggest repeat in the first instance to rule out pre-analytical error. Correlate with clinical picture (bleeding?) and medication history (heparin?). Further tests (e.g., mixing studies, factor assays) may follow if confirmed." }
+        ],
+        "haemoglobinopathy": [
+            { "term": "No Abnormality Detected (@HNON / @HNOA)", "meaning": "The analysis shows a normal haemoglobin pattern.", "causes": "Normal genetic makeup for haemoglobin.", "nextSteps": "No evidence of sickle haemoglobin or other common haemoglobin variant or of thalassaemia. For antenatal screening, testing of the baby’s biological father is not required based on this result." }
+        ]
+    },
+    "tool_lipaemia_calculator": {
+        "title": "Lipaemia Correction Calculator",
+        "intro": "Calculates a corrected Haemoglobin and red cell indices for a lipaemic FBC sample as per the NUH protocol."
+    },
+    "tool_pre_analytical_query": {
+        "title": "Pre-analytical Query Tool",
+        "intro": "Search for any test in the directory to view its specific sample requirements and turnaround times.",
+        "test_requirements": [
+            { "name": "y-Glutamyl Transferase (GGT)", "lab": "Chemistry", "reqs": ["Sample: 5mL SST/serum", "Turnaround: 60 mins (ED), 180 mins (Inpatient), 24 hours (GP)"] },
+            { "name": "17- OH-progesterone (17-OHP)", "lab": "Other (Referred)", "reqs": ["Sample: Plain serum (red top) ONLY", "Turnaround: 14 days"] }
+        ]
+    },
+    "tool_rejection_troubleshooter": {
+        "title": "Sample Rejection Troubleshooter",
+        "intro": "A practical guide to understanding and preventing common sample collection errors.",
+        "reasons": {
+            "haemolysed": { "title": "Haemolysed Sample", "icon": "droplet", "causes": ["Difficult venepuncture (e.g., probing for a vein, slow draw)."], "prevention": ["Ensure a smooth, clean venepuncture with a good blood flow."], "impact": "Haemolysis releases intracellular components into the plasma/serum..." },
+            "clotted": { "title": "Clotted Sample", "icon": "grid", "causes": ["Insufficient or delayed mixing of anticoagulant tubes (e.g., EDTA, Citrate)."], "prevention": ["Gently invert anticoagulant tubes 8-10 times immediately after collection."], "impact": "Clots consume platelets and clotting factors..." }
+        }
+    },
+
+    // =================================================================
+    // GAMES
+    // =================================================================
+    "game_coagulation": {
+        "title": "Coagulation Cascade Challenge",
+        "intro": "Drag and drop the factors from the bank into their correct positions in the cascade.",
+        "factors": [ { "id": "VIIa", "name": "Factor VIIa" }, { "id": "IXa", "name": "Factor IXa" } ]
+    },
+    "game_compatibility": {
+        "title": "Blood Group BATTLE",
+        "intro": "A patient needs blood. Is the unit compatible? Make the right call!",
+        "blood_groups": ["O-", "O+", "A-", "A+", "B-", "B+", "AB-", "AB+"],
+        "compatibility_matrix": { "O-": ["O-"], "O+": ["O-", "O+"] }
+    },
+    "game_disease_association": {
+        "title": "Antibody & Disease Association",
+        "intro": "Test your knowledge of autoimmune serology. Select the correct match for the given item.",
+        "associations": [ { "antibody": "Anti-dsDNA", "disease": "Systemic Lupus Erythematosus" } ]
+    },
+    "game_chemistry": {
+        "title": "Clinical Chemistry Case Challenge",
+        "intro": "Analyse the patient's case notes and biochemistry results to determine the most likely diagnosis.",
+        "cases": [ { "scenario": "A 68-year-old man presents to A&E...", "answer": "Acute Pancreatitis" } ]
+    },
+    "game_fbc_challenge": {
+        "title": "Name That Condition",
+        "intro": "Analyse the results and clinical note to identify the most likely condition.",
+        "scenarios": [ { "condition": "Iron Deficiency Anaemia", "clinicalNote": "Patient presents with fatigue...", "explanation": "Lack of iron impairs haemoglobin synthesis..." } ]
+    },
+    "game_haem_morphology": {
+        "title": "Morphology Mastermind",
+        "intro": "Read the description of a haematological feature and select the correct term.",
+        "pairs": [ { "term": "Red Blood Cell", "description": "A non-nucleated, biconcave disc...", "category": "RBC Basic" } ]
+    },
+    "game_immunology_wordsearch": {
+        "title": "Immunology Word Search",
+        "intro": "Find the immunology terms hidden in the grid. Click and drag to select a word.",
+        "word_list": ["ADRENAL", "ALLERGY", "ANCA", "ANTIBODY", "ANTIGEN"]
+    },
+    "game_lab_discussions": {
+        "title": "Lab Questions",
+        "questions": [ "Is a toastie a sandwich?", "What are your top 5 90s movies?" ]
+    },
+    "game_pre_analytical": {
+        "title": "Pre-analytical Pitfalls",
+        "intro": "Identify common errors in sample collection and handling, and understand their impact on test results.",
+        "questions": [ { "question": "A blood sample for **Potassium** measurement was left at room temperature...", "options": [], "explanation": "Prolonged contact of serum/plasma with red blood cells..." } ]
+    },
+    "game_transfusion": {
+        "title": "Antibody Identification Challenge",
+        "intro": "An antibody screen was positive. Use all available information to identify the antibody/antibodies present.",
+        "antigens": ["D", "C", "E", "c", "e"],
+        "scenarios": { "easy": [], "medium": [], "hard": [], "auto": [] }
+    },
+    "game_tube_sorter": {
+        "title": "Specimen Reception: Tube Sorter",
+        "intro": "A test name will appear. Choose the correct department or sample type.",
+        "tests": [ { "name": "17-OH-progesterone", "department": "Clinical Biochemistry", "sampleType": "Plain serum (red top)" } ]
+    },
+    "neqas_case_2406BF1": {
+        "title": "Digital Morphology Case Library",
+        "case_id": "2406BF1",
+        "patient_info": "24-year-old male.",
+        "initial_fbc": { "Hb": "85 g/L", "WBC": "18.1 x10⁹/L", "Platelets": "357 x10⁹/L" },
+        "full_fbc": { "RBC": "2.73 x10¹²/L", "Hct": "0.241 L/L" },
+        "biochemistry": { "Bilirubin": "52 µmol/L", "Adjusted Calcium": "2.34 mmol/L" },
+        "hplc": { "Hb F": "6.5%", "Hb A2": "4.1%", "Hb S": "85.2%" },
+        "expert_commentary": "It was fairly clear from the film that this was some form of sickle cell disease...",
+        "peer_features": [ { "feature": "Eosinophilia", "count": 435 }, { "feature": "Sickle Cells", "count": 428 } ],
+        "morphology_features": { "Red Cell Features": ["Microcytes", "Hypochromic Cells"], "White Cell Features": ["Eosinophilia", "Band Form Neutrophils"], "Platelet Features": ["Thrombocytosis", "Large/Giant Platelets"] }
+    }
