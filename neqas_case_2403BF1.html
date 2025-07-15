@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEQAS Case 2403BF1 - SGC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .nhs-blue { background-color: #005EB8; }
+        .nhs-dark-blue { background-color: #003087; }
+        .nhs-text-blue { color: #005EB8; }
+        .nhs-text-dark-blue { color: #003087; }
+        .results-table { font-size: 0.9rem; }
+        .results-table td { padding: 0.25rem 0.5rem; border-bottom: 1px solid #e5e7eb; }
+        .results-table tr:last-child td { border-bottom: none; }
+        .feature-checkbox:disabled { opacity: 0.7; }
+        .feature-label:has(.feature-checkbox:disabled) { cursor: not-allowed; color: #6b7280; }
+        .highlight-correct { background-color: #dcfce7; color: #166534; }
+        /* Modal Styles */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.8); align-items: center; justify-content: center; }
+        .modal-content { margin: auto; display: block; max-width: 80%; max-height: 80%; }
+        .modal-close { position: absolute; top: 15px; right: 35px; color: #f1f1f1; font-size: 40px; font-weight: bold; transition: 0.3s; cursor: pointer; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <a href="index.html" class="cursor-pointer flex items-center space-x-3">
+                <img src="logo.jpg" alt="Clinical Pathology Shared Governance Council Logo" class="h-16 w-auto">
+            </a>
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="index.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Home</a>
+                <a href="projects.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Projects</a>
+                <a href="games.html" class="font-semibold text-nhs-blue transition duration-300">Games</a>
+                <a href="newsletters.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Newsletters</a>
+                <a href="about.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">About Us</a>
+                <a href="links.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Links</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden"><i data-feather="menu"></i></button>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white px-6 pb-4">
+             <a href="index.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Home</a>
+            <a href="projects.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Projects</a>
+            <a href="games.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Games</a>
+            <a href="newsletters.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Newsletters</a>
+            <a href="about.html" class="block py-2 text-gray-600 hover:nhs-text-blue">About Us</a>
+            <a href="social.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Social Media</a>
+            <a href="links.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Learning Links</a>
+            <a href="contact.html" class="block py-2 text-gray-600 hover:nhs-text-blue">Suggestions</a>
+        </div>
+    </header>
+
+    <main class="py-16">
+        <div class="container mx-auto px-6 max-w-7xl">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold nhs-text-dark-blue">Digital Morphology Case Library</h2>
+                <p class="text-lg text-gray-600">Case Study: 2403BF1</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="space-y-6">
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-2xl font-semibold nhs-text-dark-blue border-b pb-2 mb-4">Case Information</h3>
+                        [cite_start]<p><strong>Patient:</strong> 37-year-old female. [cite: 2088, 2091]</p>
+                        <details class="mt-4 cursor-pointer">
+                            <summary class="font-semibold text-nhs-blue">View Full Blood Count & Further Results</summary>
+                            <div class="mt-4 space-y-4">
+                                [cite_start]<h4 class="font-bold">Full Blood Count [cite: 2273]</h4>
+                                <table class="w-full results-table">
+                                    <tr><td>Hb</td><td class="font-mono text-right">51 g/L</td></tr>
+                                    <tr><td>WBC</td><td class="font-mono text-right">41.2 x10⁹/L</td></tr>
+                                    <tr><td>Platelets</td><td class="font-mono text-right">91 x10⁹/L</td></tr>
+                                    <tr><td>MCV</td><td class="font-mono text-right">82.6 fL</td></tr>
+                                    <tr><td>NRBCs</td><td class="font-mono text-right">0.5 x10⁹/L</td></tr>
+                                </table>
+                                [cite_start]<h4 class="font-bold">Coagulation [cite: 2279, 2280]</h4>
+                                <table class="w-full results-table">
+                                    <tr><td>PT</td><td class="font-mono text-right">38.5 secs</td></tr>
+                                    <tr><td>APTT</td><td class="font-mono text-right">37.7 secs</td></tr>
+                                    <tr><td>Fibrinogen</td><td class="font-mono text-right">0.41 g/L</td></tr>
+                                </table>
+                                [cite_start]<h4 class="font-bold">Cytogenetics [cite: 2282]</h4>
+                                [cite_start]<p>PML::RARA [t(15;17)] fusion POSITIVE. [cite: 2282]</p>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-2xl font-semibold nhs-text-dark-blue border-b pb-2 mb-4">Blood Film Examination</h3>
+                        <div class="mb-6">
+                            <h4 class="font-semibold text-lg">Red Cell Picture</h4>
+                            <img src="red cells.JPG" alt="Overall red cell picture for case 2403BF1" class="rounded-md w-full h-auto mt-2 shadow">
+                        </div>
+                        <div>
+                             <h4 class="font-semibold text-lg">White Cell Gallery</h4>
+                             <p class="text-sm text-gray-600 mb-2">Click a thumbnail to view the full-size image.</p>
+                             <div id="wbc-gallery" class="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2 max-h-96 overflow-y-auto pr-2">
+                                 </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-2xl font-semibold nhs-text-dark-blue border-b pb-2 mb-4">Morphology Checklist</h3>
+                    <p class="text-gray-600 mb-4">Select up to five key morphological features you have identified.</p>
+                    
+                    <div id="feature-checklist" class="space-y-4 max-h-96 overflow-y-auto pr-2">
+                        </div>
+
+                    <button id="reveal-btn" class="w-full mt-6 bg-nhs-blue text-white font-bold py-3 px-4 rounded-lg hover:bg-nhs-dark-blue transition duration-300">Reveal Analysis</button>
+
+                    <div id="analysis-section" class="hidden mt-6 border-t pt-6">
+                        <h3 class="text-2xl font-semibold nhs-text-dark-blue mb-4">Analysis & Peer Consensus</h3>
+                        
+                        <div class="mb-6">
+                            <h4 class="text-lg font-bold">Your Selected Features:</h4>
+                            <ul id="user-choices" class="list-disc list-inside mt-2"></ul>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <h4 class="text-lg font-bold">Expert Commentary</h4>
+                            <div class="mt-2 p-4 bg-gray-100 rounded-md text-gray-700">
+                                <p id="expert-comment-text"></p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h4 class="text-lg font-bold">Top 10 Peer-Reported Features</h4>
+                            <table class="w-full text-left mt-2 text-sm">
+                                <thead>
+                                    <tr class="bg-gray-50"><th class="p-2">Feature</th><th class="p-2 text-right">No. of Labs</th></tr>
+                                </thead>
+                                <tbody id="top-features-table"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="image-modal" class="modal">
+        <span class="modal-close" id="modal-close-btn">&times;</span>
+        <img class="modal-content" id="modal-img">
+    </div>
+
+    <footer class="nhs-dark-blue text-white py-8 mt-16">
+        <div class="container mx-auto px-6 text-center">
+            <div class="flex justify-center items-center space-x-8 my-4">
+                <img src="nhs-logo-880x4951.jpeg" alt="NHS Logo" class="h-10">
+                <img src="images.png" alt="Nottingham University Hospitals NHS Trust Logo" class="h-12">
+            </div>
+            <p>&copy; 2024 Clinical Pathology Shared Governance Council. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Mobile menu toggle ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if(mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+            }
+            feather.replace();
+
+            // --- Page Data for Case 2403BF1 ---
+            
+            // IMPORTANT: Add all your image filenames to this list.
+            // The path "morphologyimages/2403BF1/" will be added automatically.
+            const imageFilenames = [
+                "MMY_338667.jpg",
+                "VLY_195940.jpg",
+                "SNE_338791.jpg",
+                "MO_195895.jpg",
+                "SNE_338793.jpg",
+                "LY_338593.jpg"
+                // Add the rest of your ~200 image filenames here
+            ];
+
+            const morphologyFeatures = {
+                "Red Cell Features": ["Microcytes", "Hypochromic Cells", "Polychromatic Cells", "Mixed Cell Population (Dimorphic)", "Poikilocytes", "Target Cells", "Echinocytes/Crenated Cells", "Fragments/Schistocytes", "Sickle Cells", "Spherocytes", "Rouleaux", "Basophilic Stippling", "Nucleated RBCs", "Acanthocytes", "Tear Drop Poikilocytes", "Keratocytes/Bite Cells"],
+                "White Cell Features": ["Eosinophilia", "Band Form Neutrophils", "Toxic Granulation", "Hypogranular/Agranular Cytoplasm (Neutrophils)", "Blast Cells", "Promyelocytes", "Prolymphocytes", "Myelocytes", "Smear/Smudge Cells", "Atypical/Suspect Reactive Lymphocytes", "Reactive/Plasmacytoid Lymphocytes", "Cleft Nuclei", "Plasma Cells", "Auer Rods", "Basophilia", "Neutropenia", "Lymphocytosis", "Lymphopenia", "Abnormal/Suspect Neoplastic Lymphocytes", "Large Granular Lymphocytes", "Left Shift", "Pseudo-Pelger Cells", "Promonocytes"],
+                "Platelet Features": ["Thrombocytosis", "Thrombocytopenia", "Large/Giant Platelets", "Platelet Anisocytosis"]
+            };
+
+            const topPeerFeatures = [
+                { feature: 'Thrombocytopenia', count: 458 },
+                { feature: 'Fragments/Schistocytes', count: 445 },
+                { feature: 'Blast Cells', count: 402 },
+                { feature: 'Promyelocytes', count: 377 },
+                { feature: 'Nucleated RBCs', count: 362 },
+                { feature: 'Auer Rods', count: 343 },
+                { feature: 'Neutropenia', count: 74 },
+                { feature: 'Myelocytes', count: 36 },
+                { feature: 'Eosinophilia', count: 33 },
+                { feature: 'Other Leucocyte Comment', count: 19 }
+            ];
+
+            const expertComment = "This film case illustrates the typical morphology of acute promyelocytic leukaemia (APML) with prominent granulated promyelocytes, frequent Auer rods and some cells with multiple rods (faggot cells). There is really no alternative diagnosis. The only unusual feature in this case is the magnitude of the leucocytosis. Another notable feature, not often seen to this extent in APML, is the extensive red cell fragmentation. Disseminated intravascular coagulation (and fibrinolysis) is common in APML and is the likely cause of the fragmentation in this case.";
+
+            // --- Populate UI Elements ---
+            
+            // Populate Morphology Checklist
+            const checklistContainer = document.getElementById('feature-checklist');
+            for (const category in morphologyFeatures) {
+                let categoryHtml = `<h4 class="font-bold mt-4 text-gray-700">${category}</h4>`;
+                morphologyFeatures[category].forEach(feature => {
+                    categoryHtml += `
+                        <label class="feature-label flex items-center space-x-3 cursor-pointer">
+                            <input type="checkbox" class="feature-checkbox h-5 w-5 rounded border-gray-300 text-nhs-blue focus:ring-nhs-blue" data-feature="${feature}">
+                            <span>${feature}</span>
+                        </label>
+                    `;
+                });
+                checklistContainer.innerHTML += categoryHtml;
+            }
+
+            // Populate WBC Gallery
+            const galleryContainer = document.getElementById('wbc-gallery');
+            const imagePath = 'morphologyimages/2403BF1/';
+            imageFilenames.forEach(filename => {
+                const img = document.createElement('img');
+                img.src = imagePath + filename;
+                img.alt = `Morphology image: ${filename}`;
+                img.className = 'w-full h-auto rounded cursor-pointer hover:opacity-75 transition-opacity';
+                galleryContainer.appendChild(img);
+            });
+            
+            // --- Event Listeners & Logic ---
+            const revealBtn = document.getElementById('reveal-btn');
+            const analysisSection = document.getElementById('analysis-section');
+            const checkboxes = document.querySelectorAll('.feature-checkbox');
+            const modal = document.getElementById('image-modal');
+            const modalImg = document.getElementById('modal-img');
+            const closeModalBtn = document.getElementById('modal-close-btn');
+
+            // Reveal Button Logic
+            revealBtn.addEventListener('click', () => {
+                const userChoices = Array.from(checkboxes).filter(cb => cb.checked).map(cb => cb.dataset.feature);
+                checkboxes.forEach(cb => cb.disabled = true);
+                revealBtn.disabled = true;
+                revealBtn.classList.add('opacity-50', 'cursor-not-allowed');
+
+                document.getElementById('user-choices').innerHTML = userChoices.length > 0 ? userChoices.map(choice => `<li>${choice}</li>`).join('') : '<li>No features selected.</li>';
+                document.getElementById('expert-comment-text').textContent = expertComment;
+                
+                const topFeaturesTable = document.getElementById('top-features-table');
+                topFeaturesTable.innerHTML = topPeerFeatures.map(f => {
+                    const isUserChoice = userChoices.includes(f.feature);
+                    return `<tr class="${isUserChoice ? 'highlight-correct font-bold' : ''}"><td class="p-2">${f.feature}</td><td class="p-2 text-right">${f.count}</td></tr>`;
+                }).join('');
+
+                analysisSection.classList.remove('hidden');
+            });
+
+            // Checkbox Limit Logic
+            checklistContainer.addEventListener('change', (e) => {
+                if (e.target.type === 'checkbox') {
+                    if (document.querySelectorAll('.feature-checkbox:checked').length > 5) {
+                        e.target.checked = false;
+                        alert('You can select a maximum of five features.');
+                    }
+                }
+            });
+
+            // Modal Logic
+            galleryContainer.addEventListener('click', (e) => {
+                if (e.target.tagName === 'IMG') {
+                    modal.style.display = "flex";
+                    modalImg.src = e.target.src;
+                }
+            });
+            closeModalBtn.onclick = () => { modal.style.display = "none"; }
+            modal.onclick = (e) => {
+                if (e.target === modal) {
+                    modal.style.display = "none";
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
