@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SGC Master Content Editor</title>
-    <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
-    <link href="[https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap](https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap)" rel="stylesheet">
-    <script src="[https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js](https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js)"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <style>
         body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
         .sidebar { scrollbar-width: thin; scrollbar-color: #d1d5db #f9fafb; }
@@ -142,7 +142,10 @@
             headers.forEach(h => html += `<th class="p-3 bg-gray-50">${h.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</th>`);
             html += `<th class="p-3 bg-gray-50 text-right">Actions</th></tr></thead><tbody>`;
             data.forEach((item, index) => {
-                html += `<tr class="border-t"><td class="p-3 align-top">${headers.map(h => `<div class="py-1 truncate" title="${item[h]}">${item[h]}</div>`).join('')}</td>`;
+                html += `<tr class="border-t">`;
+                headers.forEach(h => {
+                    html += `<td class="p-3 align-top"><div class="truncate" title="${item[h]}">${item[h]}</div></td>`;
+                });
                 html += `<td class="p-3 text-right align-top space-x-2 whitespace-nowrap">
                             <button class="btn-edit text-blue-600 hover:underline" data-section="${sectionKey}" data-index="${index}">Edit</button>
                             <button class="btn-delete text-red-600 hover:underline" data-section="${sectionKey}" data-index="${index}">Delete</button>
@@ -166,8 +169,9 @@
                         html += `<input type="text" data-key="${key}" class="w-full p-2 border rounded-md shadow-sm" value="${value}">`;
                     }
                 } else if (typeof value === 'object') {
-                    html += `<div class="text-sm text-gray-600 mb-2">This section contains complex data (a list or nested object). Edit the raw JSON below for full control.</div>`;
-                    html += `<textarea data-key="${key}" class="w-full p-2 border rounded-md shadow-sm raw-json-editor" rows="12">${JSON.stringify(value, null, 2)}</textarea>`;
+                     // This is the key change to handle nested objects/arrays better
+                    html += `<div class="text-sm text-gray-600 mb-2">This section contains a list of items. Click the button to manage them.</div>`;
+                    html += `<button type="button" class="btn-manage-list bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded shadow-sm" data-section="${sectionKey}" data-category="${key}">Manage ${label}</button>`;
                 }
                 html += `</div>`;
             }
@@ -184,6 +188,12 @@
             
             let itemData = {};
             let list = categoryKey ? EDITOR_DATA[sectionKey][categoryKey] : EDITOR_DATA[sectionKey];
+            
+            if (!list) {
+                console.error(`Data list not found for section: ${sectionKey}, category: ${categoryKey}`);
+                return;
+            }
+
             itemData = isNew ? (list[0] ? Object.fromEntries(Object.keys(list[0]).map(k => [k, ''])) : { note: "Add first item structure" }) : list[index];
             
             modalTitle.textContent = isNew ? 'Add New Item' : 'Edit Item';
@@ -234,6 +244,8 @@
 
             form.querySelectorAll('input, textarea').forEach(input => {
                 const key = input.dataset.key;
+                if (!key) return; // Skip elements without a data-key
+                
                 const isJson = input.classList.contains('raw-json-editor');
                 
                 try {
@@ -259,9 +271,15 @@
             const button = e.target.closest('button');
             if (!button) return;
             const { section, index, category } = button.dataset;
-            if (button.classList.contains('btn-add')) openModal(section, -1, category);
-            if (button.classList.contains('btn-edit')) openModal(section, parseInt(index), category);
-            if (button.classList.contains('btn-delete')) deleteListItem(section, parseInt(index), category);
+            if (button.classList.contains('btn-add')) {
+                openModal(section, -1, category);
+            } else if (button.classList.contains('btn-edit')) {
+                openModal(section, parseInt(index), category);
+            } else if (button.classList.contains('btn-delete')) {
+                deleteListItem(section, parseInt(index), category);
+            } else if (button.classList.contains('btn-manage-list')) {
+                renderEditor(category); // Switch view to the nested list
+            }
         });
 
         $('#save-form-btn').addEventListener('click', saveModalForm);
