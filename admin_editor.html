@@ -3,78 +3,183 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SGC Content Editor</title>
+    <title>SGC User-Friendly Content Editor</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <style>
         body { font-family: 'Inter', sans-serif; }
+        .sidebar-link { transition: all 0.2s; }
+        .sidebar-link.active { background-color: #005EB8; color: white; }
+        .sidebar-link:hover { background-color: #F0F4F5; }
+        .sidebar-link.active:hover { background-color: #005EB8; }
+        .table-action-btn { transition: all 0.2s; }
     </style>
 </head>
 <body class="bg-gray-100">
 
-    <header class="bg-gray-800 text-white shadow-md">
-        <div class="container mx-auto px-6 py-4">
-            <h1 class="text-xl font-bold">SGC Content Editor</h1>
-        </div>
-    </header>
-
-    <main class="py-10">
-        <div class="container mx-auto px-6">
-            <div class="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-6" role="alert">
-                <p class="font-bold">How to Use This Page</p>
-                <ol class="list-decimal list-inside mt-2">
-                    <li>Make any changes you need to the text in the box below.</li>
-                    <li>When you're finished, click the "Prepare & Copy Content" button.</li>
-                    <li>Open the `database.js` file in your code editor or on GitHub.</li>
-                    <li>Delete all the old text in `database.js` and paste the new content from your clipboard.</li>
-                    <li>Save the `database.js` file. Your website will now be updated.</li>
-                </ol>
+    <div class="flex h-screen bg-gray-100">
+        <div class="hidden md:flex flex-col w-64 bg-white border-r">
+            <div class="flex items-center justify-center h-20 border-b">
+                <img src="logo.jpg" alt="SGC Logo" class="h-12">
             </div>
-
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <label for="content-editor" class="block text-lg font-semibold text-gray-700 mb-2">Master Content File Editor</label>
-                <textarea id="content-editor" class="w-full h-screen p-4 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none font-mono text-sm"></textarea>
-                <button id="copy-btn" class="mt-4 w-full bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition duration-300">Prepare & Copy Content</button>
+            <div class="flex-grow">
+                <nav id="sidebar-nav" class="flex-grow md:block px-4 pb-4 md:pb-0 md:overflow-y-auto">
+                    <a class="sidebar-link mt-4 flex items-center px-4 py-2 text-gray-700 rounded-md active" href="#" data-section="members">
+                        <i data-feather="users" class="w-5 h-5"></i><span class="mx-4 font-medium">Council Members</span>
+                    </a>
+                    <a class="sidebar-link mt-4 flex items-center px-4 py-2 text-gray-700 rounded-md" href="#" data-section="links">
+                        <i data-feather="link" class="w-5 h-5"></i><span class="mx-4 font-medium">Learning Links</span>
+                    </a>
+                    <a class="sidebar-link mt-4 flex items-center px-4 py-2 text-gray-700 rounded-md" href="#" data-section="reasons">
+                        <i data-feather="x-octagon" class="w-5 h-5"></i><span class="mx-4 font-medium">Rejection Reasons</span>
+                    </a>
+                </nav>
             </div>
         </div>
-    </main>
+
+        <div class="flex flex-col flex-1 overflow-y-auto">
+            <div class="flex items-center justify-between h-20 bg-white border-b px-6">
+                <h1 id="main-content-title" class="text-2xl font-semibold text-gray-800">Manage Council Members</h1>
+                <button id="master-copy-btn" class="bg-green-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-700 transition duration-300 flex items-center">
+                    <i data-feather="copy" class="w-5 h-5 mr-2"></i> Generate & Copy Master File
+                </button>
+            </div>
+
+            <main id="main-content" class="p-6 md:p-10">
+                </main>
+        </div>
+    </div>
+
+    <div id="edit-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-2xl">
+            <h2 id="modal-title" class="text-2xl font-bold mb-4">Edit Item</h2>
+            <form id="edit-form" class="space-y-4">
+                </form>
+             <div class="flex justify-end space-x-4 mt-6">
+                <button type="button" id="cancel-btn" class="bg-gray-200 text-gray-800 font-bold py-2 px-6 rounded-lg hover:bg-gray-300">Cancel</button>
+                <button type="button" id="save-form-btn" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700">Save</button>
+            </div>
+        </div>
+    </div>
 
     <script src="database.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const editor = document.getElementById('content-editor');
-            const copyBtn = document.getElementById('copy-btn');
+            feather.replace();
 
-            // Check if SGC_DATA exists from the loaded script
-            if (typeof SGC_DATA !== 'undefined') {
-                // Convert the object to a nicely formatted string and display it in the textarea
-                const formattedString = JSON.stringify(SGC_DATA, null, 2);
-                editor.value = formattedString;
-            } else {
-                editor.value = "Error: Could not load database.js. Please ensure the file exists and is in the same directory.";
-            }
+            // --- UI References ---
+            const mainContent = document.getElementById('main-content');
+            const mainContentTitle = document.getElementById('main-content-title');
+            const sidebarNav = document.getElementById('sidebar-nav');
+            const modal = document.getElementById('edit-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const editForm = document.getElementById('edit-form');
+            
+            // --- State ---
+            let currentSection = 'members';
+            let editIndex = -1;
 
-            copyBtn.addEventListener('click', () => {
-                try {
-                    // Get the text from the editor
-                    const editorText = editor.value;
-                    // Re-wrap it as a JavaScript variable assignment
-                    const fullFileContent = `const SGC_DATA = ${editorText};`;
-
-                    // Copy to clipboard
-                    navigator.clipboard.writeText(fullFileContent).then(() => {
-                        alert('Content copied to clipboard!\n\nNow open your `database.js` file and replace its contents with what you just copied.');
-                    }).catch(err => {
-                        console.error('Could not copy text: ', err);
-                        alert('Failed to copy content. Please copy it manually from the text box.');
+            // --- Templates for Rendering ---
+            const renderMembers = () => {
+                mainContentTitle.textContent = 'Manage Council Members';
+                let content = `<div class="flex justify-end mb-4"><button onclick="openModal('members', -1)" class="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 flex items-center"><i data-feather="plus" class="w-5 h-5 mr-2"></i>Add Member</button></div>`;
+                content += `<div class="bg-white p-6 rounded-lg shadow-md"><div class="overflow-x-auto"><table class="w-full text-left"><thead><tr class="bg-gray-50"><th class="p-3">Name</th><th class="p-3">Department</th><th class="p-3">Email</th><th class="p-3 text-right">Actions</th></tr></thead><tbody>`;
+                SGC_DATA.members.forEach((item, index) => {
+                    content += `<tr class="border-b"><td class="p-3 font-medium">${item.name}</td><td class="p-3">${item.department}</td><td class="p-3">${item.email}</td><td class="p-3 text-right"><button class="table-action-btn text-blue-600 hover:underline" onclick="openModal('members', ${index})">Edit</button></td></tr>`;
+                });
+                content += `</tbody></table></div></div>`;
+                mainContent.innerHTML = content;
+                feather.replace();
+            };
+            
+            // Add similar render functions for links, reasons etc. here
+            const renderLinks = () => {
+                mainContentTitle.textContent = 'Manage Learning Links';
+                let content = '';
+                for(const category in SGC_DATA.learningLinks){
+                    content += `<div class="mb-8"><h2 class="text-xl font-bold mb-2">${category.charAt(0).toUpperCase() + category.slice(1)} Links</h2><div class="bg-white p-6 rounded-lg shadow-md space-y-2">`;
+                    SGC_DATA.learningLinks[category].forEach((item, index) => {
+                       content += `<div class="border-b pb-2"><p class="font-semibold">${item.name}</p><p class="text-sm text-gray-600">${item.url}</p><p class="text-sm">${item.description}</p></div>`;
                     });
+                     content += `</div></div>`;
+                }
+                 mainContent.innerHTML = content;
+            };
 
-                } catch (e) {
-                    alert('The text in the editor is not valid. Please check for errors.');
-                    console.error('Error parsing content:', e);
+            const renderReasons = () => {
+                 mainContentTitle.textContent = 'Manage Rejection Reasons';
+                 let content = '<p class="text-gray-600">Editing this section requires care due to its complex structure. Recommended to use the simple text editor for this part.</p>';
+                 mainContent.innerHTML = content;
+            };
+
+            const renderSection = (sectionName) => {
+                currentSection = sectionName;
+                if (sectionName === 'members') renderMembers();
+                else if (sectionName === 'links') renderLinks();
+                else if (sectionName === 'reasons') renderReasons();
+                
+                document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+                document.querySelector(`.sidebar-link[data-section="${sectionName}"]`).classList.add('active');
+            };
+
+            // --- Modal & Form Logic ---
+            window.openModal = (section, index) => {
+                editIndex = index;
+                currentSection = section;
+                editForm.innerHTML = '';
+                
+                if(section === 'members'){
+                    const item = (index === -1) ? { name: '', department: '', email: '' } : SGC_DATA.members[index];
+                    modalTitle.textContent = (index === -1) ? 'Add New Member' : 'Edit Member';
+                    editForm.innerHTML = `
+                        <div><label class="block font-semibold">Name</label><input type="text" id="edit-name" class="w-full p-2 border rounded" value="${item.name}"></div>
+                        <div><label class="block font-semibold">Department</label><input type="text" id="edit-department" class="w-full p-2 border rounded" value="${item.department}"></div>
+                        <div><label class="block font-semibold">Email</label><input type="email" id="edit-email" class="w-full p-2 border rounded" value="${item.email}"></div>
+                    `;
+                }
+                // Add other form builders here
+                modal.classList.remove('hidden');
+            };
+
+            const closeModal = () => modal.classList.add('hidden');
+            
+            document.getElementById('cancel-btn').addEventListener('click', closeModal);
+
+            document.getElementById('save-form-btn').addEventListener('click', () => {
+                if(currentSection === 'members'){
+                    const updatedItem = {
+                        name: document.getElementById('edit-name').value,
+                        department: document.getElementById('edit-department').value,
+                        email: document.getElementById('edit-email').value
+                    };
+                    if(editIndex === -1) SGC_DATA.members.push(updatedItem);
+                    else SGC_DATA.members[editIndex] = updatedItem;
+                }
+                // Add other save logic here
+                renderSection(currentSection);
+                closeModal();
+            });
+            
+            // --- Master Copy Button ---
+            document.getElementById('master-copy-btn').addEventListener('click', () => {
+                const fullFileContent = `const SGC_DATA = ${JSON.stringify(SGC_DATA, null, 2)};`;
+                navigator.clipboard.writeText(fullFileContent).then(() => {
+                    alert('Master content file copied to clipboard!\n\nOpen database.js, delete all old content, and paste.');
+                }).catch(err => alert('Failed to copy.'));
+            });
+
+            // --- Initial Load ---
+            sidebarNav.addEventListener('click', (e) => {
+                const link = e.target.closest('.sidebar-link');
+                if(link) {
+                    e.preventDefault();
+                    renderSection(link.dataset.section);
                 }
             });
+
+            renderSection('members'); // Load the first section
         });
     </script>
 </body>
