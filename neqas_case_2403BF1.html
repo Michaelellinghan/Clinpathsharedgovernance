@@ -92,7 +92,7 @@
                         <h3 class="text-2xl font-semibold nhs-text-dark-blue border-b pb-2 mb-4">Blood Film Examination</h3>
                         <div class="mb-6">
                             <h4 class="font-semibold text-lg">Red Cell Picture</h4>
-                            <img src="morphologyimages/2403BF1/red cells.JPG" alt="Overall red cell picture for case 2403BF1" class="rounded-md w-full h-auto mt-2 shadow">
+                            <img src="morphology/2403BF1/red cells.JPG" alt="Overall red cell picture for case 2403BF1" class="rounded-md w-full h-auto mt-2 shadow">
                         </div>
                         <div>
                              <h4 class="font-semibold text-lg">White Cell Gallery</h4>
@@ -212,7 +212,7 @@
 
             // Populate WBC Gallery
             const galleryContainer = document.getElementById('wbc-gallery');
-            const imagePath = 'morphologyimages/2403BF1/';
+            const imagePath = 'morphology/2403BF1/';
             imageFilenames.forEach(filename => {
                 const img = document.createElement('img');
                 img.src = imagePath + filename;
