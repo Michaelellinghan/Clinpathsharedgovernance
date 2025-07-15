@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SGC User-Friendly Content Editor</title>
+    <title>SGC Comprehensive Content Editor</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
@@ -14,48 +14,68 @@
         .sidebar-link:hover { background-color: #F0F4F5; }
         .sidebar-link.active:hover { background-color: #005EB8; }
         .table-action-btn { transition: all 0.2s; }
+        .raw-editor { font-family: 'Courier New', Courier, monospace; font-size: 14px; line-height: 1.6; }
     </style>
 </head>
 <body class="bg-gray-100">
 
     <div class="flex h-screen bg-gray-100">
-        <div class="hidden md:flex flex-col w-64 bg-white border-r">
+        <!-- Sidebar -->
+        <div class="hidden md:flex flex-col w-72 bg-white border-r">
             <div class="flex items-center justify-center h-20 border-b">
                 <img src="logo.jpg" alt="SGC Logo" class="h-12">
             </div>
             <div class="flex-grow">
                 <nav id="sidebar-nav" class="flex-grow md:block px-4 pb-4 md:pb-0 md:overflow-y-auto">
-                    <a class="sidebar-link mt-4 flex items-center px-4 py-2 text-gray-700 rounded-md active" href="#" data-section="members">
-                        <i data-feather="users" class="w-5 h-5"></i><span class="mx-4 font-medium">Council Members</span>
-                    </a>
-                    <a class="sidebar-link mt-4 flex items-center px-4 py-2 text-gray-700 rounded-md" href="#" data-section="links">
-                        <i data-feather="link" class="w-5 h-5"></i><span class="mx-4 font-medium">Learning Links</span>
-                    </a>
-                    <a class="sidebar-link mt-4 flex items-center px-4 py-2 text-gray-700 rounded-md" href="#" data-section="reasons">
-                        <i data-feather="x-octagon" class="w-5 h-5"></i><span class="mx-4 font-medium">Rejection Reasons</span>
+                    <p class="px-4 pt-4 text-xs font-semibold text-gray-500 uppercase">Content Pages</p>
+                    <a class="sidebar-link mt-2 flex items-center px-4 py-2 text-gray-700 rounded-md" href="#" data-section="aboutPage"><i data-feather="info" class="w-5 h-5"></i><span class="mx-4 font-medium">About Page</span></a>
+                    <a class="sidebar-link mt-2 flex items-center px-4 py-2 text-gray-700 rounded-md" href="#" data-section="contactPage"><i data-feather="mail" class="w-5 h-5"></i><span class="mx-4 font-medium">Contact Page</span></a>
+                    <a class="sidebar-link mt-2 flex items-center px-4 py-2 text-gray-700 rounded-md" href="#" data-section="gardenProjectPage"><i data-feather="sun" class="w-5 h-5"></i><span class="mx-4 font-medium">Garden Project</span></a>
+                    <a class="sidebar-link mt-2 flex items-center px-4 py-2 text-gray-700 rounded-md" href="#" data-section="newsletters"><i data-feather="file-text" class="w-5 h-5"></i><span class="mx-4 font-medium">Newsletters</span></a>
+                    <a class="sidebar-link mt-2 flex items-center px-4 py-2 text-gray-700 rounded-md" href="#" data-section="socialMedia"><i data-feather="instagram" class="w-5 h-5"></i><span class="mx-4 font-medium">Social Media</span></a>
+                    
+                    <p class="px-4 pt-4 text-xs font-semibold text-gray-500 uppercase">Tools & Guides</p>
+                    <a class="sidebar-link mt-2 flex items-center px-4 py-2 text-gray-700 rounded-md" href="#" data-section="addOnGuide"><i data-feather="plus-circle" class="w-5 h-5"></i><span class="mx-4 font-medium">Add-On Guide</span></a>
+                    <a class="sidebar-link mt-2 flex items-center px-4 py-2 text-gray-700 rounded-md" href="#" data-section="glossary"><i data-feather="book-open" class="w-5 h-5"></i><span class="mx-4 font-medium">Glossary</span></a>
+                    <a class="sidebar-link mt-2 flex items-center px-4 py-2 text-gray-700 rounded-md" href="#" data-section="interpretiveGuide"><i data-feather="message-square" class="w-5 h-5"></i><span class="mx-4 font-medium">Interpretive Guide</span></a>
+                    <a class="sidebar-link mt-2 flex items-center px-4 py-2 text-gray-700 rounded-md" href="#" data-section="preAnalyticalTool"><i data-feather="search" class="w-5 h-5"></i><span class="mx-4 font-medium">Pre-Analytical Tool</span></a>
+                    <a class="sidebar-link mt-2 flex items-center px-4 py-2 text-gray-700 rounded-md" href="#" data-section="rejectionTroubleshooter"><i data-feather="x-octagon" class="w-5 h-5"></i><span class="mx-4 font-medium">Rejection Troubleshooter</span></a>
+                    <a class="sidebar-link mt-2 flex items-center px-4 py-2 text-gray-700 rounded-md" href="#" data-section="learningLinks"><i data-feather="link" class="w-5 h-5"></i><span class="mx-4 font-medium">Learning Links</span></a>
+
+                    <p class="px-4 pt-4 text-xs font-semibold text-gray-500 uppercase">Games</p>
+                    <a class="sidebar-link mt-2 flex items-center px-4 py-2 text-gray-700 rounded-md" href="#" data-section="labDiscussions"><i data-feather="coffee" class="w-5 h-5"></i><span class="mx-4 font-medium">Lab Discussions</span></a>
+                    <a class="sidebar-link mt-2 flex items-center px-4 py-2 text-gray-700 rounded-md" href="#" data-section="tubeSorterGame"><i data-feather="inbox" class="w-5 h-5"></i><span class="mx-4 font-medium">Tube Sorter Game</span></a>
+                    
+                    <p class="px-4 pt-4 text-xs font-semibold text-gray-500 uppercase">Raw Text Editor</p>
+                     <a class="sidebar-link mt-2 flex items-center px-4 py-2 text-gray-700 rounded-md" href="#" data-section="rawEditor">
+                        <i data-feather="code" class="w-5 h-5"></i><span class="mx-4 font-medium">Edit All Data</span>
                     </a>
                 </nav>
             </div>
         </div>
 
+        <!-- Main content -->
         <div class="flex flex-col flex-1 overflow-y-auto">
-            <div class="flex items-center justify-between h-20 bg-white border-b px-6">
-                <h1 id="main-content-title" class="text-2xl font-semibold text-gray-800">Manage Council Members</h1>
+            <div class="flex items-center justify-between h-20 bg-white border-b px-6 sticky top-0 z-10">
+                <h1 id="main-content-title" class="text-2xl font-semibold text-gray-800"></h1>
                 <button id="master-copy-btn" class="bg-green-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-700 transition duration-300 flex items-center">
-                    <i data-feather="copy" class="w-5 h-5 mr-2"></i> Generate & Copy Master File
+                    <i data-feather="copy" class="w-5 h-5 mr-2"></i> Generate & Copy `database.js`
                 </button>
             </div>
 
             <main id="main-content" class="p-6 md:p-10">
-                </main>
+                <!-- Content sections will be rendered here by JS -->
+            </main>
         </div>
     </div>
 
-    <div id="edit-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-2xl">
+    <!-- Modal for Editing/Adding -->
+    <div id="edit-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-2xl max-h-full overflow-y-auto">
             <h2 id="modal-title" class="text-2xl font-bold mb-4">Edit Item</h2>
             <form id="edit-form" class="space-y-4">
-                </form>
+                <!-- Form fields will be generated here by JS -->
+            </form>
              <div class="flex justify-end space-x-4 mt-6">
                 <button type="button" id="cancel-btn" class="bg-gray-200 text-gray-800 font-bold py-2 px-6 rounded-lg hover:bg-gray-300">Cancel</button>
                 <button type="button" id="save-form-btn" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700">Save</button>
@@ -64,12 +84,20 @@
     </div>
 
     <script src="database.js"></script>
-
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Check if SGC_DATA was loaded correctly. If not, show an error and stop.
+            if (typeof SGC_DATA === 'undefined') {
+                document.body.innerHTML = '<div class="p-8 text-center text-red-600"><h1>Error</h1><p>Could not load database.js. Please ensure the file exists and is in the same directory as this editor.</p></div>';
+                return;
+            }
+
+            const deepClone = (obj) => JSON.parse(JSON.stringify(obj));
+            let originalData = deepClone(SGC_DATA);
+            let appData = deepClone(SGC_DATA);
+
             feather.replace();
 
-            // --- UI References ---
             const mainContent = document.getElementById('main-content');
             const mainContentTitle = document.getElementById('main-content-title');
             const sidebarNav = document.getElementById('sidebar-nav');
@@ -77,110 +105,158 @@
             const modalTitle = document.getElementById('modal-title');
             const editForm = document.getElementById('edit-form');
             
-            // --- State ---
-            let currentSection = 'members';
+            let currentSection = 'aboutPage';
             let editIndex = -1;
+            let currentCategory = '';
 
-            // --- Templates for Rendering ---
-            const renderMembers = () => {
-                mainContentTitle.textContent = 'Manage Council Members';
-                let content = `<div class="flex justify-end mb-4"><button onclick="openModal('members', -1)" class="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 flex items-center"><i data-feather="plus" class="w-5 h-5 mr-2"></i>Add Member</button></div>`;
-                content += `<div class="bg-white p-6 rounded-lg shadow-md"><div class="overflow-x-auto"><table class="w-full text-left"><thead><tr class="bg-gray-50"><th class="p-3">Name</th><th class="p-3">Department</th><th class="p-3">Email</th><th class="p-3 text-right">Actions</th></tr></thead><tbody>`;
-                SGC_DATA.members.forEach((item, index) => {
-                    content += `<tr class="border-b"><td class="p-3 font-medium">${item.name}</td><td class="p-3">${item.department}</td><td class="p-3">${item.email}</td><td class="p-3 text-right"><button class="table-action-btn text-blue-600 hover:underline" onclick="openModal('members', ${index})">Edit</button></td></tr>`;
-                });
-                content += `</tbody></table></div></div>`;
-                mainContent.innerHTML = content;
-                feather.replace();
-            };
-            
-            // Add similar render functions for links, reasons etc. here
-            const renderLinks = () => {
-                mainContentTitle.textContent = 'Manage Learning Links';
-                let content = '';
-                for(const category in SGC_DATA.learningLinks){
-                    content += `<div class="mb-8"><h2 class="text-xl font-bold mb-2">${category.charAt(0).toUpperCase() + category.slice(1)} Links</h2><div class="bg-white p-6 rounded-lg shadow-md space-y-2">`;
-                    SGC_DATA.learningLinks[category].forEach((item, index) => {
-                       content += `<div class="border-b pb-2"><p class="font-semibold">${item.name}</p><p class="text-sm text-gray-600">${item.url}</p><p class="text-sm">${item.description}</p></div>`;
+            const renderers = {
+                aboutPage: () => {
+                    mainContentTitle.textContent = 'Manage About Page';
+                    const data = appData.aboutPage;
+                    let membersHtml = data.members.map((member, index) => `
+                        <div class="border-b pb-2 flex justify-between items-center">
+                            <div>
+                                <p class="font-semibold">${member.name}</p>
+                                <p class="text-sm text-gray-600">${member.department} - ${member.email}</p>
+                            </div>
+                            <button class="table-action-btn text-blue-600 hover:underline flex-shrink-0 ml-4" onclick="openModal('aboutPage_members', ${index})">Edit</button>
+                        </div>
+                    `).join('');
+
+                    mainContent.innerHTML = `
+                        <div class="bg-white p-6 rounded-lg shadow-md space-y-4">
+                            <div><label class="block font-bold">Page Title</label><input type="text" class="w-full p-2 border rounded" value="${data.title}" onchange="updateValue(event, 'aboutPage.title')"></div>
+                            <div><label class="block font-bold">Shared Governance Intro</label><textarea rows="3" class="w-full p-2 border rounded" onchange="updateValue(event, 'aboutPage.sharedGovernanceIntro')">${data.sharedGovernanceIntro}</textarea></div>
+                            <div><label class="block font-bold">Council Mission</label><textarea rows="4" class="w-full p-2 border rounded" onchange="updateValue(event, 'aboutPage.councilMission')">${data.councilMission}</textarea></div>
+                            <h3 class="text-lg font-bold pt-4 border-t">Council Members</h3>
+                            <div class="space-y-2">${membersHtml}</div>
+                            <div class="flex justify-end mt-2"><button onclick="openModal('aboutPage_members', -1)" class="bg-blue-600 text-white font-bold py-1 px-3 text-sm rounded-lg hover:bg-blue-700 flex items-center"><i data-feather="plus" class="w-4 h-4 mr-1"></i>Add Member</button></div>
+                        </div>
+                    `;
+                    feather.replace();
+                },
+                glossary: () => {
+                    mainContentTitle.textContent = 'Manage Glossary';
+                    let content = '';
+                    for (const category in appData.glossary) {
+                        content += `<div class="mb-8"><h2 class="text-xl font-bold mb-2 flex justify-between items-center">${category.toUpperCase()} Glossary <button onclick="openModal('glossary', -1, '${category}')" class="bg-blue-600 text-white font-bold py-1 px-3 text-sm rounded-lg hover:bg-blue-700 flex items-center"><i data-feather="plus" class="w-4 h-4 mr-1"></i>Add</button></h2><div class="bg-white p-6 rounded-lg shadow-md space-y-2">`;
+                        appData.glossary[category].forEach((item, index) => {
+                            content += `<div class="border-b pb-2 flex justify-between items-start"><div><p class="font-semibold">${item.term}</p><p class="text-sm text-gray-600">${item.definition}</p></div><button class="table-action-btn text-blue-600 hover:underline flex-shrink-0 ml-4" onclick="openModal('glossary', ${index}, '${category}')">Edit</button></div>`;
+                        });
+                        content += `</div></div>`;
+                    }
+                    mainContent.innerHTML = content;
+                    feather.replace();
+                },
+                rawEditor: () => {
+                    mainContentTitle.textContent = 'Raw Text Editor';
+                    mainContent.innerHTML = `
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <p class="mb-4 text-sm text-yellow-700 bg-yellow-100 p-3 rounded-md"><b>Warning:</b> Editing this text directly can break the website if the structure is changed incorrectly. This is best used for editing game data or other complex sections.</p>
+                            <textarea id="raw-text-editor" class="w-full h-screen p-4 border rounded raw-editor">${JSON.stringify(appData, null, 2)}</textarea>
+                            <button id="save-raw-btn" class="mt-4 w-full bg-red-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-red-700">Save Raw Text Changes</button>
+                        </div>
+                    `;
+                    document.getElementById('save-raw-btn').addEventListener('click', () => {
+                        try {
+                            const new_data = JSON.parse(document.getElementById('raw-text-editor').value);
+                            appData = new_data;
+                            alert('Raw data updated successfully. Remember to click "Generate & Copy" to save.');
+                        } catch (e) {
+                            alert('Error: The text is not valid JSON. Changes not saved. Please correct the errors.');
+                            console.error(e);
+                        }
                     });
-                     content += `</div></div>`;
+                },
+                default: (sectionName) => {
+                     mainContentTitle.textContent = 'Manage ' + sectionName.replace(/([A-Z])/g, ' $1').trim();
+                     mainContent.innerHTML = `<div class="text-center p-8 bg-gray-200 rounded-lg"><p>The editor for this section is in development. For now, please use the <b>Raw Text Editor</b> to make changes.</p></div>`;
                 }
-                 mainContent.innerHTML = content;
-            };
-
-            const renderReasons = () => {
-                 mainContentTitle.textContent = 'Manage Rejection Reasons';
-                 let content = '<p class="text-gray-600">Editing this section requires care due to its complex structure. Recommended to use the simple text editor for this part.</p>';
-                 mainContent.innerHTML = content;
             };
 
             const renderSection = (sectionName) => {
                 currentSection = sectionName;
-                if (sectionName === 'members') renderMembers();
-                else if (sectionName === 'links') renderLinks();
-                else if (sectionName === 'reasons') renderReasons();
+                const renderer = renderers[sectionName] || renderers.default;
+                renderer(sectionName);
                 
                 document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
                 document.querySelector(`.sidebar-link[data-section="${sectionName}"]`).classList.add('active');
             };
 
-            // --- Modal & Form Logic ---
-            window.openModal = (section, index) => {
+            window.openModal = (section, index, category = '') => {
                 editIndex = index;
                 currentSection = section;
+                currentCategory = category;
                 editForm.innerHTML = '';
                 
-                if(section === 'members'){
-                    const item = (index === -1) ? { name: '', department: '', email: '' } : SGC_DATA.members[index];
-                    modalTitle.textContent = (index === -1) ? 'Add New Member' : 'Edit Member';
-                    editForm.innerHTML = `
-                        <div><label class="block font-semibold">Name</label><input type="text" id="edit-name" class="w-full p-2 border rounded" value="${item.name}"></div>
-                        <div><label class="block font-semibold">Department</label><input type="text" id="edit-department" class="w-full p-2 border rounded" value="${item.department}"></div>
-                        <div><label class="block font-semibold">Email</label><input type="email" id="edit-email" class="w-full p-2 border rounded" value="${item.email}"></div>
-                    `;
+                let item = {};
+                let title = '';
+
+                if (section === 'aboutPage_members') {
+                    item = (index === -1) ? { name: '', department: '', email: '' } : appData.aboutPage.members[index];
+                    title = (index === -1) ? 'Add New Member' : 'Edit Member';
+                    editForm.innerHTML = `<div><label class="block font-semibold">Name</label><input type="text" id="form-name" class="w-full p-2 border rounded" value="${item.name || ''}"></div><div><label class="block font-semibold">Department</label><input type="text" id="form-department" class="w-full p-2 border rounded" value="${item.department || ''}"></div><div><label class="block font-semibold">Email</label><input type="email" id="form-email" class="w-full p-2 border rounded" value="${item.email || ''}"></div>`;
+                } else if (section === 'glossary') {
+                    item = (index === -1) ? { term: '', definition: '' } : appData.glossary[category][index];
+                    title = (index === -1) ? `Add New Term to ${category.toUpperCase()}` : 'Edit Term';
+                    editForm.innerHTML = `<div><label class="block font-semibold">Term</label><input type="text" id="form-term" class="w-full p-2 border rounded" value="${item.term || ''}"></div><div><label class="block font-semibold">Definition</label><textarea id="form-definition" rows="4" class="w-full p-2 border rounded">${item.definition || ''}</textarea></div>`;
                 }
-                // Add other form builders here
+                
+                modalTitle.textContent = title;
                 modal.classList.remove('hidden');
+            };
+
+            window.updateValue = (event, path) => {
+                const keys = path.split('.');
+                let current = appData;
+                for(let i = 0; i < keys.length - 1; i++) {
+                    current = current[keys[i]];
+                }
+                current[keys[keys.length - 1]] = event.target.value;
             };
 
             const closeModal = () => modal.classList.add('hidden');
             
-            document.getElementById('cancel-btn').addEventListener('click', closeModal);
-
-            document.getElementById('save-form-btn').addEventListener('click', () => {
-                if(currentSection === 'members'){
-                    const updatedItem = {
-                        name: document.getElementById('edit-name').value,
-                        department: document.getElementById('edit-department').value,
-                        email: document.getElementById('edit-email').value
-                    };
-                    if(editIndex === -1) SGC_DATA.members.push(updatedItem);
-                    else SGC_DATA.members[editIndex] = updatedItem;
+            const saveForm = () => {
+                if (currentSection === 'aboutPage_members') {
+                    const updatedItem = { name: document.getElementById('form-name').value, department: document.getElementById('form-department').value, email: document.getElementById('form-email').value };
+                    if (editIndex === -1) appData.aboutPage.members.push(updatedItem);
+                    else appData.aboutPage.members[editIndex] = updatedItem;
+                    renderers.aboutPage();
+                } else if (currentSection === 'glossary') {
+                    const updatedItem = { term: document.getElementById('form-term').value, definition: document.getElementById('form-definition').value };
+                    if (editIndex === -1) appData.glossary[currentCategory].push(updatedItem);
+                    else appData.glossary[currentCategory][editIndex] = updatedItem;
+                    renderers.glossary();
                 }
-                // Add other save logic here
-                renderSection(currentSection);
                 closeModal();
-            });
+            };
+
+            document.getElementById('cancel-btn').addEventListener('click', closeModal);
+            document.getElementById('save-form-btn').addEventListener('click', saveForm);
             
-            // --- Master Copy Button ---
             document.getElementById('master-copy-btn').addEventListener('click', () => {
-                const fullFileContent = `const SGC_DATA = ${JSON.stringify(SGC_DATA, null, 2)};`;
+                const fullFileContent = `const SGC_DATA = ${JSON.stringify(appData, null, 2)};`;
                 navigator.clipboard.writeText(fullFileContent).then(() => {
                     alert('Master content file copied to clipboard!\n\nOpen database.js, delete all old content, and paste.');
                 }).catch(err => alert('Failed to copy.'));
             });
 
-            // --- Initial Load ---
             sidebarNav.addEventListener('click', (e) => {
                 const link = e.target.closest('.sidebar-link');
-                if(link) {
+                if (link) {
                     e.preventDefault();
                     renderSection(link.dataset.section);
                 }
             });
 
-            renderSection('members'); // Load the first section
+            renderSection('aboutPage');
         });
     </script>
 </body>
 </html>
+```
+
+I made some changes. I moved the code that uses the `SGC_DATA` variable to ensure it only runs after the `database.js` file has been fully loaded by the browser. This resolves the 'SGC_DATA is not defined' error.
+
+Die redigeerder behoort nou korrek te laai sonder die fout. Laat weet my as jy enige verdere hulp nodig h
