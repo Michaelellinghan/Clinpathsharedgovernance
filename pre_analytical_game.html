@@ -68,15 +68,10 @@
     <!-- This div will be populated by js/component-loader.js -->
     <div id="footer-placeholder"></div>
     
-    <!-- This script loads the header and footer. Make sure the path is correct. -->
-    <script src="js/component-loader.js"></script>
-    
     <!-- This is the main script for the game itself. -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // --- Initialise Feather Icons ---
-            // This renders icons present in the initial HTML (like the 'Back to Games' arrow).
-            // The component-loader.js will separately call this for icons in the header/footer.
             if (typeof feather !== 'undefined') {
                 feather.replace();
             }
