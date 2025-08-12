@@ -31,6 +31,7 @@
 </head>
 <body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
 
+    <!-- This div will be populated by js/component-loader.js -->
     <div id="header-placeholder"></div>
 
     <main class="py-12 md:py-16 bg-nhs-light-grey flex-grow">
@@ -41,6 +42,7 @@
             <h2 class="text-3xl md:text-4xl font-bold nhs-text-dark-blue mb-4">Pre-analytical Pitfalls</h2>
             <p class="text-gray-600 mb-8 max-w-2xl mx-auto">Identify common errors in sample collection and handling, and understand their impact on test results.</p>
 
+            <!-- The main quiz container. It starts hidden and is shown by the script. -->
             <div id="quiz-container" class="bg-white p-6 md:p-8 rounded-lg shadow-lg text-left hidden">
                 <p id="question-text" class="text-xl font-medium mb-6"></p>
                 <div id="options-container" class="space-y-4">
@@ -54,6 +56,7 @@
                 </div>
             </div>
 
+            <!-- The game over screen. Also starts hidden. -->
             <div id="game-over-screen" class="hidden bg-white p-8 rounded-lg shadow-lg mt-8 fade-in">
                 <h3 class="text-2xl font-bold nhs-text-dark-blue mb-4">Quiz Complete!</h3>
                 <p id="final-score" class="text-xl text-gray-700 mb-6"></p>
@@ -62,12 +65,22 @@
         </div>
     </main>
 
+    <!-- This div will be populated by js/component-loader.js -->
     <div id="footer-placeholder"></div>
     
+    <!-- This script loads the header and footer. Make sure the path is correct. -->
     <script src="js/component-loader.js"></script>
     
+    <!-- This is the main script for the game itself. -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // --- Initialise Feather Icons ---
+            // This renders icons present in the initial HTML (like the 'Back to Games' arrow).
+            // The component-loader.js will separately call this for icons in the header/footer.
+            if (typeof feather !== 'undefined') {
+                feather.replace();
+            }
+
             // --- DOM Element References ---
             const questionTextEl = document.getElementById('question-text');
             const optionsContainerEl = document.getElementById('options-container');
@@ -228,13 +241,11 @@
 
                 if (isCorrect) {
                     score++;
-                    // CORRECTED: Use dark text on light backgrounds for readability
                     feedbackContainerEl.className = 'mt-6 p-4 rounded-lg bg-green-100 text-green-800 fade-in';
-                    feedbackTextEl.textContent = `Correct! ${explanation}`;
+                    feedbackTextEl.innerHTML = `<strong>Correct!</strong> ${explanation}`;
                 } else {
-                    // CORRECTED: Use dark text on light backgrounds for readability
                     feedbackContainerEl.className = 'mt-6 p-4 rounded-lg bg-red-100 text-red-800 fade-in';
-                    feedbackTextEl.textContent = `Incorrect. ${explanation}`;
+                    feedbackTextEl.innerHTML = `<strong>Incorrect.</strong> ${explanation}`;
                 }
                 nextQuestionBtn.classList.remove('hidden');
             }
@@ -265,8 +276,6 @@
 
             // --- Initialisation ---
             startGame();
-            
-            // Feather icons will be handled by the component-loader.js after it loads the header/footer
         });
     </script>
 </body>
