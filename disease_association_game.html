@@ -33,8 +33,7 @@
 </head>
 <body class="bg-gray-50 text-gray-800">
 
-    <header class="bg-white shadow-md sticky top-0 z-50">
-        </header>
+    <div id="header-placeholder"></div>
 
     <main class="py-16">
         <div class="container mx-auto px-6 max-w-2xl text-center">
@@ -62,7 +61,15 @@
         </div>
     </main>
     
-    <footer class="nhs-dark-blue text-white py-8 mt-16"></footer>
+    <div id="footer-placeholder"></div>
+
+      <script src="js/component-loader.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            feather.replace();
+        });
+   </script>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
