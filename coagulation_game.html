@@ -76,6 +76,8 @@
             75% { transform: translateX(5px); }
         }
     </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
     
     <div id="header-placeholder"></div>
     
@@ -93,7 +95,7 @@
             <div class="my-8">
                 <h3 class="text-xl font-semibold text-center mb-2">Factor Bank</h3>
                 <div id="factor-bank" class="factor-bank justify-center">
-                    </div>
+                </div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
@@ -132,16 +134,17 @@
     
     <div id="footer-placeholder"></div>
 
-      <script src="js/component-loader.js"></script>
+    <script src="js/component-loader.js"></script>
     
+    <!-- FIX: Combined all JavaScript into a single, robust script block -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            feather.replace();
-        });
- 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            feather.replace();
+            // This is called by component-loader.js, but we call it here too to be safe.
+            if (typeof feather !== 'undefined') {
+                feather.replace();
+            }
+
+            // --- Coagulation Game Logic ---
             const factors = [
                 { id: 'VIIa', name: 'Factor VIIa' },
                 { id: 'IXa', name: 'Factor IXa' },
@@ -159,6 +162,16 @@
             const winMessage = document.getElementById('win-message');
             const resetBtn = document.getElementById('reset-btn');
             
+            // Safety check to ensure all HTML elements are present before running the game
+            if (!scoreEl || !totalFactorsEl || !factorBank || !slots.length || !winMessage || !resetBtn) {
+                console.error("Coagulation game error: One or more required HTML elements are missing.");
+                const mainContent = document.querySelector('main');
+                if(mainContent) {
+                    mainContent.innerHTML = '<p class="text-center text-red-500 font-bold">Error: Game could not be loaded. Please check the console for details.</p>';
+                }
+                return;
+            }
+
             let score = 0;
             const totalFactors = factors.length;
 
