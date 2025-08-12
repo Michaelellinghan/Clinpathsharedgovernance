@@ -9,8 +9,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#005EB8">
     <style>
         body { font-family: 'Inter', sans-serif; }
         .nhs-blue { background-color: #005EB8; }
@@ -25,74 +23,68 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        /* Style for the option buttons */
+        .option-btn {
+            transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+        }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
 
     <div id="header-placeholder"></div>
 
-    <main class="py-16 bg-nhs-light-grey">
-        <div class="container mx-auto px-6 max-w-3xl text-center">
-            <a href="games.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8">
+    <main class="py-12 md:py-16 bg-nhs-light-grey flex-grow">
+        <div class="container mx-auto px-4 sm:px-6 max-w-3xl text-center">
+            <a href="games.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8 hover:underline">
                 <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Games
             </a>
-            <h2 class="text-3xl font-bold nhs-text-dark-blue mb-4">Pre-analytical Pitfalls</h2>
+            <h2 class="text-3xl md:text-4xl font-bold nhs-text-dark-blue mb-4">Pre-analytical Pitfalls</h2>
             <p class="text-gray-600 mb-8 max-w-2xl mx-auto">Identify common errors in sample collection and handling, and understand their impact on test results.</p>
 
-            <div id="quiz-container" class="bg-white p-8 rounded-lg shadow-md text-left fade-in">
+            <div id="quiz-container" class="bg-white p-6 md:p-8 rounded-lg shadow-lg text-left hidden">
                 <p id="question-text" class="text-xl font-medium mb-6"></p>
                 <div id="options-container" class="space-y-4">
-                    </div>
-                <div id="feedback-container" class="mt-6 p-4 rounded-lg text-white hidden">
+                    <!-- Options will be populated by JS -->
+                </div>
+                <div id="feedback-container" class="mt-6 p-4 rounded-lg hidden">
                     <p id="feedback-text" class="font-semibold"></p>
                 </div>
-                <button id="next-question-btn" class="mt-4 bg-gray-800 text-white font-bold py-3 px-8 rounded-lg hover:bg-black transition duration-300 hidden">Next Question</button>
-                <button id="restart-game-btn" class="mt-4 bg-gray-800 text-white font-bold py-3 px-8 rounded-lg hover:bg-black transition duration-300 hidden">Restart Game</button>
+                <div class="text-right">
+                    <button id="next-question-btn" class="mt-6 bg-gray-800 text-white font-bold py-3 px-8 rounded-lg hover:bg-black transition duration-300 hidden">Next Question</button>
+                </div>
             </div>
 
-            <div id="game-over-screen" class="hidden bg-white p-8 rounded-lg shadow-md mt-8 fade-in">
+            <div id="game-over-screen" class="hidden bg-white p-8 rounded-lg shadow-lg mt-8 fade-in">
                 <h3 class="text-2xl font-bold nhs-text-dark-blue mb-4">Quiz Complete!</h3>
                 <p id="final-score" class="text-xl text-gray-700 mb-6"></p>
-                <button id="play-again-btn-end" class="bg-nhs-blue text-white font-bold py-3 px-8 rounded-lg hover:bg-nhs-dark-blue transition duration-300">Play Again</button>
+                <button id="play-again-btn" class="bg-nhs-blue text-white font-bold py-3 px-8 rounded-lg hover:bg-nhs-dark-blue transition duration-300">Play Again</button>
             </div>
         </div>
     </main>
 
     <div id="footer-placeholder"></div>
-
-      <script src="js/component-loader.js"></script>
+    
+    <script src="js/component-loader.js"></script>
     
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            feather.replace();
-        });
-   </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            feather.replace(); // For Feather icons
-
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            if(mobileMenuButton) {
-                mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
-            }
-
+            // --- DOM Element References ---
             const questionTextEl = document.getElementById('question-text');
             const optionsContainerEl = document.getElementById('options-container');
             const feedbackContainerEl = document.getElementById('feedback-container');
             const feedbackTextEl = document.getElementById('feedback-text');
             const nextQuestionBtn = document.getElementById('next-question-btn');
-            const restartGameBtn = document.getElementById('restart-game-btn');
             const quizContainerEl = document.getElementById('quiz-container');
             const gameOverScreenEl = document.getElementById('game-over-screen');
             const finalScoreEl = document.getElementById('final-score');
-            const playAgainBtnEnd = document.getElementById('play-again-btn-end');
+            const playAgainBtn = document.getElementById('play-again-btn');
 
+            // --- Game State ---
             let currentQuestionIndex = 0;
             let score = 0;
             let questions = [];
 
+            // --- Game Data ---
             const allQuestions = [
                 {
                     question: "A blood sample for **Potassium** measurement was left at room temperature for 8 hours before being centrifuged. The result is likely to be...",
@@ -102,17 +94,17 @@
                         { text: "Unaffected, as potassium is stable.", isCorrect: false },
                         { text: "Inconclusive due to clot formation.", isCorrect: false }
                     ],
-                    explanation: "Prolonged contact of serum/plasma with red blood cells at room temperature allows potassium to leak out of the cells, causing a falsely elevated result. This is a common pre-analytical error affecting chemistry results."
+                    explanation: "Prolonged contact of serum/plasma with red blood cells allows potassium to leak out, causing a falsely elevated result. This is a common pre-analytical error."
                 },
                 {
-                    question: "A **coagulation** sample (e.g., for PT/APTT) is collected into a tube that is underfilled, meaning there is too much anticoagulant for the blood volume. What is the likely impact on results?",
+                    question: "A **coagulation** sample (e.g., for PT/APTT) is collected into a tube that is underfilled. What is the likely impact on results?",
                     options: [
                         { text: "Clotting times will be falsely shortened.", isCorrect: false },
                         { text: "Clotting times will be falsely prolonged.", isCorrect: true },
                         { text: "The sample will haemolyse.", isCorrect: false },
                         { text: "There will be no significant impact.", isCorrect: false }
                     ],
-                    explanation: "Too much anticoagulant (citrate) in relation to blood volume will bind more calcium, falsely prolonging clotting times. This is a critical error in coagulation testing."
+                    explanation: "The fixed amount of citrate anticoagulant is too high for the blood volume, leading to excess binding of calcium and falsely prolonged clotting times."
                 },
                 {
                     question: "A **bilirubin** sample is exposed to direct sunlight for an extended period. What effect is this likely to have on the result?",
@@ -122,75 +114,71 @@
                         { text: "No significant effect, bilirubin is stable.", isCorrect: false },
                         { text: "It will cause the sample to clot.", isCorrect: false }
                     ],
-                    explanation: "Bilirubin is light-sensitive and degrades upon exposure to light, leading to a falsely decreased result in chemistry. Samples for bilirubin should be protected from light."
+                    explanation: "Bilirubin is light-sensitive and breaks down upon exposure to UV light, leading to a falsely decreased result. Samples should be protected from light."
                 },
                 {
-                    question: "A blood sample for **Sodium** measurement is found to be lipemic (cloudy due to high fats). Using an indirect ion-selective electrode (ISE) method, what is the likely impact?",
+                    question: "A blood sample for **Sodium** is found to be lipemic (high fats). Using an indirect ISE method, what is the likely impact?",
                     options: [
                         { text: "Falsely high sodium due to interference.", isCorrect: false },
                         { text: "Falsely low sodium (pseudohyponatremia).", isCorrect: true },
-                        { text: "No effect on sodium, but other analytes affected.", isCorrect: false },
+                        { text: "No effect on sodium.", isCorrect: false },
                         { text: "The sample will clot prematurely.", isCorrect: false }
                     ],
-                    explanation: "Lipemia increases the solid phase relative to the water phase in plasma, leading to pseudo hyponatremia, especially in indirect ISE methods for chemistry."
+                    explanation: "High lipid content displaces the aqueous portion of the sample. Since sodium is in the aqueous phase, its measured concentration appears lower than it actually is."
                 },
                 {
-                    question: "A patient's blood sample is collected with a **prolonged tourniquet application** (over 3 minutes). Which chemistry analytes are most likely to show a falsely elevated result?",
+                    question: "A patient's blood sample is collected with **prolonged tourniquet application** (over 3 minutes). Which analytes are most likely to be falsely elevated?",
                     options: [
                         { text: "Glucose and Urea.", isCorrect: false },
-                        { text: "Total Protein and Albumin.", isCorrect: true },
+                        { text: "Total Protein, Albumin, and Calcium.", isCorrect: true },
                         { text: "Sodium and Chloride.", isCorrect: false },
                         { text: "Creatinine and Phosphate.", isCorrect: false }
                     ],
-                    explanation: "Prolonged tourniquet use (venous stasis) can cause fluid to shift out of the vessel, concentrating larger molecules like total protein and albumin, leading to falsely elevated results in chemistry."
+                    explanation: "Prolonged venous stasis causes water and small molecules to leak from the vessel, concentrating larger molecules like proteins and protein-bound analytes like calcium."
                 },
                 {
-                    question: "An EDTA (lavender top) tube is collected **before** a serum (red top) tube for chemistry tests. What is a significant risk for the chemistry results?",
+                    question: "An EDTA (lavender top) tube is collected **before** a serum (red top) tube. What is a significant risk for the chemistry results?",
                     options: [
                         { text: "Falsely low potassium and high calcium.", isCorrect: false },
                         { text: "Falsely high potassium and falsely low calcium.", isCorrect: true },
                         { text: "Contamination with gel separator.", isCorrect: false },
                         { text: "Delayed clotting of the serum tube.", isCorrect: false }
                     ],
-                    explanation: "EDTA contamination from an incorrect order of draw can chelate calcium (falsely low calcium) and release potassium from cells (falsely high potassium), significantly impacting chemistry results."
+                    explanation: "Carryover of potassium-EDTA from the lavender tube contaminates the serum tube. EDTA binds calcium (falsely low) and the sample is contaminated with potassium (falsely high)."
                 },
                 {
-                    question: "A patient did not fast as required before a **lipid profile** (cholesterol, triglycerides) and had a heavy, fatty meal. What is the expected impact on the results?",
+                    question: "A patient did not fast as required before a **lipid profile** and had a fatty meal. What is the expected impact?",
                     options: [
                         { text: "Falsely low cholesterol and triglycerides.", isCorrect: false },
-                        { text: "Falsely high cholesterol and triglycerides (lipemia).", isCorrect: true },
-                        { text: "No significant effect, as fasting is not critical for lipids.", isCorrect: false },
+                        { text: "Falsely high triglycerides.", isCorrect: true },
+                        { text: "No significant effect.", isCorrect: false },
                         { text: "Increased HDL cholesterol only.", isCorrect: false }
                     ],
-                    explanation: "Failure to fast adequately before a lipid profile, especially after a heavy meal, can lead to a lipemic sample and falsely elevated triglyceride and cholesterol levels in chemistry."
+                    explanation: "A non-fasting state, especially after a fatty meal, leads to a temporary but significant increase in circulating triglycerides, making the sample lipemic."
                 },
-                 {
-                    question: "A **blood transfusion** sample for grouping and crossmatching is mislabelled with the wrong patient's details. What is the most severe potential outcome?",
+                {
+                    question: "A **blood transfusion** sample is mislabelled with another patient's details. What is the most severe potential outcome?",
                     options: [
                         { text: "Delayed test results.", isCorrect: false },
                         { text: "Minor allergic reaction.", isCorrect: false },
-                        { text: "Acute haemolytic transfusion reaction leading to severe patient harm or death.", isCorrect: true },
+                        { text: "Acute haemolytic transfusion reaction.", isCorrect: true },
                         { text: "Need for a repeat venepuncture.", isCorrect: false }
                     ],
-                    explanation: "Patient misidentification or mislabelling of blood samples for transfusion is one of the most critical pre-analytical errors, potentially leading to a fatal acute haemolytic transfusion reaction if incompatible blood is given."
+                    explanation: "This is a critical error. Transfusing incompatible blood can cause a catastrophic immune reaction, leading to massive red cell destruction, organ failure, and potentially death."
                 },
                 {
-                    question: "A **coagulation** sample arrives at the laboratory clotted. Which of the following is the most likely reason for this pre-analytical error?",
+                    question: "A **coagulation** sample arrives at the laboratory clotted. What is the most likely reason?",
                     options: [
                         { text: "Overfilling the tube.", isCorrect: false },
                         { text: "Underfilling the tube.", isCorrect: false },
                         { text: "Insufficient or delayed mixing with anticoagulant.", isCorrect: true },
                         { text: "Exposure to cold temperature.", isCorrect: false }
                     ],
-                    explanation: "Inadequate or delayed mixing of the blood with the anticoagulant in a coagulation tube allows the blood to clot, rendering the sample unsuitable for accurate testing."
+                    explanation: "The blood must be mixed gently but thoroughly with the citrate anticoagulant immediately after collection to prevent the clotting cascade from activating."
                 }
             ];
 
-
-            function loadQuestions() {
-                // Shuffle all questions and pick a subset, or use all for a longer game
-                questions = shuffleArray([...allQuestions]); // Using all for now
-            }
+            // --- Game Logic Functions ---
 
             function shuffleArray(array) {
                 for (let i = array.length - 1; i > 0; i--) {
@@ -206,7 +194,7 @@
                     return;
                 }
 
-                quizContainerEl.classList.remove('fade-in'); // Reset animation
+                quizContainerEl.classList.remove('fade-in');
                 void quizContainerEl.offsetWidth; // Trigger reflow
                 quizContainerEl.classList.add('fade-in');
 
@@ -214,28 +202,23 @@
                 questionTextEl.innerHTML = questionData.question;
                 optionsContainerEl.innerHTML = '';
                 feedbackContainerEl.classList.add('hidden');
-                nextQuestionBtn.classList.add('hidden'); // Hide the button until an answer is selected
-                restartGameBtn.classList.add('hidden'); // Ensure restart button is hidden during game
+                nextQuestionBtn.classList.add('hidden');
 
-                // Shuffle options for each question
                 const shuffledOptions = shuffleArray([...questionData.options]);
-
                 shuffledOptions.forEach(option => {
                     const button = document.createElement('button');
-                    button.textContent = option.text;
-                    button.classList.add('w-full', 'p-3', 'border', 'border-gray-300', 'rounded-lg', 'text-left', 'hover:bg-gray-100', 'focus:outline-none', 'focus:ring-2', 'focus:ring-nhs-blue', 'transition', 'duration-200');
+                    button.innerHTML = option.text; // Use innerHTML to render bold tags
+                    button.classList.add('option-btn', 'w-full', 'p-3', 'border', 'border-gray-300', 'rounded-lg', 'text-left', 'hover:bg-gray-100', 'focus:outline-none', 'focus:ring-2', 'focus:ring-nhs-blue', 'transition', 'duration-200');
                     button.dataset.isCorrect = option.isCorrect;
-                    button.addEventListener('click', () => selectOption(button, option.explanation));
+                    button.addEventListener('click', () => selectOption(button, questionData.explanation));
                     optionsContainerEl.appendChild(button);
                 });
             }
 
             function selectOption(selectedButton, explanation) {
                 const isCorrect = selectedButton.dataset.isCorrect === 'true';
-                const allOptionButtons = optionsContainerEl.querySelectorAll('button');
-
-                allOptionButtons.forEach(button => {
-                    button.disabled = true; // Disable all buttons after selection
+                optionsContainerEl.querySelectorAll('button').forEach(button => {
+                    button.disabled = true;
                     if (button.dataset.isCorrect === 'true') {
                         button.classList.add('bg-green-200', 'border-green-400');
                     } else if (button === selectedButton) {
@@ -245,16 +228,15 @@
 
                 if (isCorrect) {
                     score++;
-                    feedbackContainerEl.classList.remove('hidden', 'bg-red-100');
-                    feedbackContainerEl.classList.add('bg-green-100');
+                    // CORRECTED: Use dark text on light backgrounds for readability
+                    feedbackContainerEl.className = 'mt-6 p-4 rounded-lg bg-green-100 text-green-800 fade-in';
                     feedbackTextEl.textContent = `Correct! ${explanation}`;
                 } else {
-                    feedbackContainerEl.classList.remove('hidden', 'bg-green-100');
-                    feedbackContainerEl.classList.add('bg-red-100');
+                    // CORRECTED: Use dark text on light backgrounds for readability
+                    feedbackContainerEl.className = 'mt-6 p-4 rounded-lg bg-red-100 text-red-800 fade-in';
                     feedbackTextEl.textContent = `Incorrect. ${explanation}`;
                 }
-                feedbackContainerEl.classList.add('fade-in');
-                nextQuestionBtn.classList.remove('hidden'); // Show the Next Question button
+                nextQuestionBtn.classList.remove('hidden');
             }
 
             function nextQuestion() {
@@ -265,24 +247,26 @@
             function endGame() {
                 quizContainerEl.classList.add('hidden');
                 gameOverScreenEl.classList.remove('hidden');
-                finalScoreEl.textContent = `You scored ${score} out of ${questions.length} correct answers.`;
+                finalScoreEl.textContent = `You scored ${score} out of ${questions.length}.`;
             }
 
             function startGame() {
                 currentQuestionIndex = 0;
                 score = 0;
-                loadQuestions(); // Load and shuffle questions for a new game
-                quizContainerEl.classList.remove('hidden');
+                questions = shuffleArray([...allQuestions]);
                 gameOverScreenEl.classList.add('hidden');
+                quizContainerEl.classList.remove('hidden');
                 displayQuestion();
             }
 
+            // --- Event Listeners ---
             nextQuestionBtn.addEventListener('click', nextQuestion);
-            playAgainBtnEnd.addEventListener('click', startGame);
-            restartGameBtn.addEventListener('click', startGame); // If you want a restart button mid-game
+            playAgainBtn.addEventListener('click', startGame);
 
-            // Initial game start
+            // --- Initialisation ---
             startGame();
+            
+            // Feather icons will be handled by the component-loader.js after it loads the header/footer
         });
     </script>
 </body>
