@@ -88,13 +88,7 @@
     
     <div id="footer-placeholder"></div>
 
-      <script src="js/component-loader.js"></script>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            feather.replace();
-        });
-   </script>
+    <script src="js/component-loader.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -145,7 +139,6 @@
                 scenarios.medium = [];
                 for (let i = 0; i < allAntibodies.length; i++) { for (let j = i + 1; j < allAntibodies.length; j++) { const scenario = [allAntibodies[i], allAntibodies[j]]; if (isScenarioSolvable(scenario, mainPanelCells)) scenarios.medium.push(scenario); } }
                 
-                // NEW: More robust 'hard' scenario generation
                 scenarios.hard = [];
                 const keyAntibodies = allAntibodies.filter(ab => ['D', 'C', 'c', 'E', 'e', 'K', 'k', 'Fyᵃ', 'Jkᵃ', 'S', 's'].includes(ab.antigen));
                 if (keyAntibodies.length >= 3) {
@@ -168,7 +161,7 @@
             
             function renderTable(tableId, panelData, antibodies) { const tableEl = document.getElementById(tableId); if (!tableEl) return; tableEl.innerHTML = ''; const isScreeningPanel = (tableId === 'screen-table'); const thead = document.createElement('thead'); const headerRow = thead.insertRow(); let headerHTML = `<th class="w-12">${isScreeningPanel ? 'Screen' : 'Cell'}</th>`; headerHTML += antigens.map(ag => `<th class="antigen-header" data-antigen="${ag}">${ag}</th>`).join(''); headerHTML += `<th>IAT</th>`; if (!isScreeningPanel) { headerHTML += `<th class="enz-col hidden-col">ENZ</th>`; } headerRow.innerHTML = headerHTML; thead.appendChild(headerRow); const tbody = document.createElement('tbody'); panelData.forEach((cellData, index) => { const reaction = calculateReaction(cellData, antibodies); const row = tbody.insertRow(); let rowHTML = `<td class="font-bold">${isScreeningPanel ? ['I', 'II', 'III'][index] : index + 1}</td>`; rowHTML += antigens.map(ag => `<td data-antigen="${ag}">${cellData.antigens[ag] || '0'}</td>`).join(''); rowHTML += `<td class="${reaction.iat !== '0' ? 'reaction-pos' : ''}">${reaction.iat}</td>`; if (!isScreeningPanel) { rowHTML += `<td class="enz-col hidden-col ${reaction.enz !== '0' ? 'reaction-pos' : ''}">${reaction.enz}</td>`; } row.innerHTML = rowHTML; }); tableEl.appendChild(thead); tableEl.appendChild(tbody); }
             
-            function setupAnswerOptions() { let correctAnswers = currentScenario.antibodies.map(ab=>ab.name); let displayOptions; if(currentScenario.type === 'auto') { displayOptions = ["Pan-reactive Warm Autoantibody", "Refer to NBS", "Anti-e", "Anti-K"]; } else { let wrongOptions = allAntibodies.filter(ab => !correctAnswers.includes(ab.name)).sort(() => 0.5-Math.random()).slice(0, 5-correctAnswers.length).map(ab=>ab.name); displayOptions = [...correctAnswers, ...wrongOptions]; } ui.antibodyOptionsContainer.innerHTML = ''; [...new Set(displayOptions)].sort(() => 0.5 - Math.random()).forEach(abName => { ui.antibodyOptionsContainer.innerHTML += `<button class="antibody-choice-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">${abName}</button>`; }); }
+            function setupAnswerOptions() { let correctAnswers = currentScenario.antibodies.map(ab=>ab.name); let displayOptions; if(currentScenario.type === 'auto') { displayOptions = ["Pan-reactive Warm Autoantibody", "Refer to NBS", "Anti-e", "Anti-K"]; } else { let wrongOptions = allAntibodies.filter(ab => !correctAnswers.includes(ab.name)).sort(() => 0.5-Math.random()).slice(0, 8-correctAnswers.length).map(ab=>ab.name); displayOptions = [...correctAnswers, ...wrongOptions]; } ui.antibodyOptionsContainer.innerHTML = ''; [...new Set(displayOptions)].sort(() => 0.5 - Math.random()).forEach(abName => { ui.antibodyOptionsContainer.innerHTML += `<button class="antibody-choice-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">${abName}</button>`; }); }
 
             function checkFinalAnswer() { ui.checkAnswerBtn.disabled = true; document.querySelectorAll('.action-btn, .antibody-choice-btn').forEach(btn => btn.disabled = true); const correctAnswers = currentScenario.antibodies.map(ab => ab.name).sort(); const selectedAnswers = selectedAntibodies.sort(); const isCorrect = JSON.stringify(correctAnswers) === JSON.stringify(selectedAnswers); ui.antigramFeedback.classList.remove('hidden'); if (isCorrect) { ui.antigramFeedback.textContent = `Correct! The answer is: ${correctAnswers.join(', ')}.`; ui.antigramFeedback.className = 'mt-6 p-4 rounded-lg text-lg font-semibold bg-green-100 text-green-800'; } else { ui.antigramFeedback.textContent = `Incorrect. The correct answer was: ${correctAnswers.join(', ')}.`; ui.antigramFeedback.className = 'mt-6 p-4 rounded-lg text-lg font-semibold bg-red-100 text-red-800'; } }
             
@@ -206,11 +199,22 @@
                 renderTable('additional-panel-table', additionalPanelCells, currentScenario.antibodies);
                 
                 setupAnswerOptions();
-                
-                ui.antibodyOptionsContainer.addEventListener('click', e => { if (e.target.classList.contains('antibody-choice-btn')) { e.target.classList.toggle('selected'); const abName = e.target.textContent; if (selectedAntibodies.includes(abName)) { selectedAntibodies = selectedAntibodies.filter(ab => ab !== abName); } else { selectedAntibodies.push(abName); } } });
-                document.querySelectorAll('.antigen-header').forEach(header => { header.addEventListener('click', () => { const antigenToExclude = header.dataset.antigen; document.querySelectorAll(`[data-antigen="${antigenToExclude}"]`).forEach(cell => cell.classList.toggle('excluded')); }); });
             }
+            
+            // FIX: Moved this event listener outside of initGame() so it's only attached once.
+            ui.antibodyOptionsContainer.addEventListener('click', e => { 
+                if (e.target.classList.contains('antibody-choice-btn')) { 
+                    e.target.classList.toggle('selected'); 
+                    const abName = e.target.textContent; 
+                    if (selectedAntibodies.includes(abName)) { 
+                        selectedAntibodies = selectedAntibodies.filter(ab => ab !== abName); 
+                    } else { 
+                        selectedAntibodies.push(abName); 
+                    } 
+                } 
+            });
 
+            document.querySelectorAll('.antigen-header').forEach(header => { header.addEventListener('click', () => { const antigenToExclude = header.dataset.antigen; document.querySelectorAll(`[data-antigen="${antigenToExclude}"]`).forEach(cell => cell.classList.toggle('excluded')); }); });
             ui.difficultyButtons.forEach(btn => btn.addEventListener('click', () => { ui.difficultyButtons.forEach(b => b.classList.remove('active')); btn.classList.add('active'); currentDifficulty = btn.dataset.difficulty; initGame(); }));
             ui.screenBtn.addEventListener('click', () => ui.screenContainer.classList.toggle('hidden'));
             ui.additionalPanelBtn.addEventListener('click', () => ui.additionalPanelContainer.classList.toggle('hidden'));
@@ -223,6 +227,5 @@
             initGame();
         });
     </script>
-    <script src="js/component-loader.js"></script>
 </body>
 </html>
