@@ -69,9 +69,13 @@
     </main>
 
     <div id="footer-placeholder"></div>
-    <script src="js/component-loader.js"></script>
+
+      <script src="js/component-loader.js"></script>
+    
     <script>
-        feather.replace();
-    </script>
+        document.addEventListener('DOMContentLoaded', () => {
+            feather.replace();
+        });
+   </script>
 </body>
 </html>
