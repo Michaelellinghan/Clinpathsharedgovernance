@@ -71,6 +71,16 @@
                         <p class="text-gray-600">Understand why samples are rejected and learn how to prevent common collection errors.</p>
                     </div>
                 </a>
+
+                                <a href="cell_counter.html" class="tool-card block bg-white rounded-lg shadow-lg overflow-hidden">
+                     <div class="p-6">
+                        <div class="flex items-center text-nhs-blue mb-3">
+                            <i data-feather="book-open" class="w-8 h-8"></i>
+                            <h3 class="text-xl font-semibold ml-3">Blood Cell Counter</h3>
+                        </div>
+                        <p class="text-gray-600">A cell counter to aid in morphology.</p>
+                    </div>
+                </a>
                 
                 <a href="sustainability_corner.html" class="tool-card block bg-white rounded-lg shadow-lg overflow-hidden">
                      <div class="p-6">
@@ -87,9 +97,13 @@
     </main>
 
     <div id="footer-placeholder"></div>
-    <script src="js/component-loader.js"></script>
+
+      <script src="js/component-loader.js"></script>
+    
     <script>
-        feather.replace();
-    </script>
+        document.addEventListener('DOMContentLoaded', () => {
+            feather.replace();
+        });
+   </script>
 </body>
 </html>
