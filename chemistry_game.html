@@ -23,31 +23,21 @@
              transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
         }
         .diagnosis-option-btn:hover:not(:disabled) {
-            background-color: #e5e7eb; /* A slightly darker grey on hover */
+            background-color: #e5e7eb;
         }
          .diagnosis-option-btn:active:not(:disabled) {
             transform: scale(0.98);
         }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
 
-    <!-- This is a placeholder for a dynamic header. You can replace it with your actual header content. -->
-    <header class="bg-white shadow-md">
-        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="text-2xl font-bold nhs-text-dark-blue">Pathology Games</div>
-            <div>
-                <a href="#" class="text-gray-600 hover:nhs-text-blue px-3">Home</a>
-                <a href="#" class="text-gray-600 hover:nhs-text-blue px-3">Games</a>
-                <a href="#" class="text-gray-600 hover:nhs-text-blue px-3">About</a>
-            </div>
-        </nav>
-    </header>
+    <div id="header-placeholder"></div>
 
-    <main class="py-12 md:py-16 bg-nhs-light-grey">
+    <main class="py-12 md:py-16 bg-nhs-light-grey flex-grow">
         <div class="container mx-auto px-4 sm:px-6 max-w-4xl">
             <div class="text-center">
-                <a href="#" class="inline-flex items-center nhs-text-blue font-semibold mb-8 hover:underline">
+                <a href="games.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8 hover:underline">
                     <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Games
                 </a>
                 <h2 class="text-3xl md:text-4xl font-bold nhs-text-dark-blue mb-4">Clinical Chemistry Case Challenge</h2>
@@ -61,15 +51,13 @@
                 <h3 class="text-xl font-bold nhs-text-dark-blue mb-4 border-b-2 border-gray-200 pb-2">Results</h3>
                 <div class="overflow-x-auto">
                     <table id="results-table" class="w-full result-table mb-4">
-                        <!-- Results will be populated by JS -->
-                    </table>
+                        </table>
                 </div>
 
                 <div class="mt-8">
                     <h3 class="text-xl font-bold nhs-text-dark-blue mb-4">What is the most likely diagnosis?</h3>
                     <div id="diagnosis-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <!-- Options will be populated by JS -->
-                    </div>
+                        </div>
                 </div>
             </div>
             
@@ -80,13 +68,10 @@
         </div>
     </main>
 
-    <!-- This is a placeholder for a dynamic footer. You can replace it with your actual footer content. -->
-    <footer class="nhs-dark-blue text-white py-8 mt-auto">
-        <div class="container mx-auto px-6 text-center">
-            <p>&copy; 2024 Clinical Pathology Fun. All Rights Reserved.</p>
-        </div>
-    </footer>
+    <div id="footer-placeholder"></div>
 
+    <script src="js/component-loader.js"></script>
+    
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // --- DOM Element References ---
@@ -94,11 +79,9 @@
             const resultsTableEl = document.getElementById('results-table');
             const diagnosisOptionsEl = document.getElementById('diagnosis-options');
             const caseFeedbackEl = document.getElementById('case-feedback');
-            // CORRECTED: The ID of the button is 'next-question-btn', not 'next-case-btn'
             const nextCaseBtn = document.getElementById('next-question-btn');
 
             // --- Game Data ---
-            // All game data is stored here, inside the HTML file for simplicity.
             const cases = [
                 {
                     scenario: "A 68-year-old man presents to A&E with severe abdominal pain radiating to his back. He admits to heavy alcohol consumption.",
@@ -248,35 +231,20 @@
             let usedCaseIndices = [];
 
             // --- Game Logic Functions ---
-
-            /**
-             * Loads a new, unused case into the UI.
-             */
             function loadNewCase() {
-                // If all cases have been used, reset the list of used cases.
                 if (usedCaseIndices.length === cases.length) {
                     usedCaseIndices = []; 
                 }
-
-                // Find cases that haven't been used yet.
                 let availableCases = cases.filter((c, index) => !usedCaseIndices.includes(index));
-                
-                // Select a random case from the available ones.
                 const caseIndexInAvailable = Math.floor(Math.random() * availableCases.length);
                 currentCase = availableCases[caseIndexInAvailable];
-                
-                // Get the original index of the selected case to mark it as used.
                 const actualIndex = cases.indexOf(currentCase);
                 usedCaseIndices.push(actualIndex);
                 
-                // --- Update UI ---
                 caseScenarioEl.textContent = currentCase.scenario;
-                
-                // Hide feedback and the 'Next Case' button.
                 caseFeedbackEl.classList.add('hidden');
                 nextCaseBtn.classList.add('hidden');
 
-                // Build and display the results table.
                 let resultsHTML = '<thead><tr class="text-left"><th class="font-semibold pb-2">Test</th><th class="font-semibold pb-2 text-right">Result</th><th class="font-semibold pb-2 text-right">Reference Range</th></tr></thead><tbody>';
                 currentCase.results.forEach(res => {
                     resultsHTML += `<tr><td class="font-semibold py-1">${res.test}</td><td class="text-right py-1 ${res.abnormal ? 'result-abnormal' : ''}">${res.value}</td><td class="text-xs text-gray-500 text-right py-1">${res.ref}</td></tr>`;
@@ -284,7 +252,6 @@
                 resultsHTML += '</tbody>';
                 resultsTableEl.innerHTML = resultsHTML;
 
-                // Clear old options and display new, shuffled options.
                 diagnosisOptionsEl.innerHTML = '';
                 const shuffledOptions = [...currentCase.options].sort(() => Math.random() - 0.5);
                 shuffledOptions.forEach(opt => {
@@ -296,17 +263,11 @@
                 });
             }
 
-            /**
-             * Checks the selected answer, provides feedback, and reveals the 'Next Case' button.
-             * @param {Event} event The click event from the option button.
-             */
             function checkCaseAnswer(event) {
                 const selectedAnswer = event.target.textContent;
-                
                 caseFeedbackEl.classList.remove('hidden');
                 nextCaseBtn.classList.remove('hidden');
                 
-                // Provide feedback based on the answer.
                 if (selectedAnswer === currentCase.answer) {
                     caseFeedbackEl.textContent = 'Correct! Well done.';
                     caseFeedbackEl.className = 'mt-6 p-4 rounded-lg text-lg font-semibold bg-green-100 text-green-800 text-center';
@@ -315,10 +276,8 @@
                     caseFeedbackEl.className = 'mt-6 p-4 rounded-lg text-lg font-semibold bg-red-100 text-red-800 text-center';
                 }
 
-                // Disable all option buttons after an answer is selected.
                 document.querySelectorAll('.diagnosis-option-btn').forEach(btn => {
                     btn.disabled = true;
-                    // Visually mark the correct and incorrect answers
                     if (btn.textContent === currentCase.answer) {
                         btn.classList.add('bg-green-200');
                     } else if (btn.textContent === selectedAnswer) {
@@ -328,15 +287,13 @@
             }
 
             // --- Initialisation ---
-            // Set up the event listener for the 'Next Case' button.
             if (nextCaseBtn) {
                 nextCaseBtn.addEventListener('click', loadNewCase);
             }
-
-            // Load the first case when the page loads.
             loadNewCase();
             
-            // Initialise Feather Icons.
+            // Re-render any Feather icons in the main body content.
+            // Your component-loader will handle icons in the header/footer.
             if (typeof feather !== 'undefined') {
                 feather.replace();
             }
