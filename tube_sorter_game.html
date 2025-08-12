@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Specimen Reception: Tube Sorter - SGC</title>
+    <title>Chemistry Case Challenge - SGC</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,278 +18,270 @@
         .nhs-light-grey { background-color: #F0F4F5; }
         .nhs-text-blue { color: #005EB8; }
         .nhs-text-dark-blue { color: #003087; }
-        .answer-button {
-            transition: all 0.2s ease-in-out;
-        }
-        .answer-button:hover {
-            transform: translateY(-2px);
-        }
-        .answer-button:disabled {
-            cursor: not-allowed;
-            opacity: 0.7;
-        }
+        .result-table th, .result-table td { padding: 0.5rem 1rem; border-bottom: 1px solid #e5e7eb; }
+        .result-abnormal { color: #dc2626; font-weight: bold; }
+        .diagnosis-option-btn:disabled { background-color: #d1d5db; cursor: not-allowed; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
 
     <div id="header-placeholder"></div>
 
-
     <main class="py-16 bg-nhs-light-grey">
-        <div class="container mx-auto px-6 max-w-2xl text-center">
+        <div class="container mx-auto px-6 max-w-4xl text-center">
             <a href="games.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8">
                 <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Games
             </a>
-            <h2 class="text-3xl font-bold nhs-text-dark-blue mb-4">Specimen Reception: Tube Sorter</h2>
-            
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <p id="test-name" class="text-3xl md:text-4xl font-extrabold nhs-text-dark-blue mb-4 h-20 flex items-center justify-center"></p>
-                <h3 id="question-prompt" class="text-lg font-semibold text-gray-600 mb-6"></h3>
-                
-                <div id="game-feedback" class="mb-6 h-10 text-2xl font-bold"></div>
+            <h2 class="text-3xl font-bold nhs-text-dark-blue mb-4">Clinical Chemistry Case Challenge</h2>
+            <p class="text-gray-600 mb-8 max-w-2xl mx-auto">Analyse the patient's case notes and biochemistry results to determine the most likely diagnosis.</p>
 
-                <div id="answer-buttons" class="grid grid-cols-2 gap-4">
+            <div class="bg-white p-6 rounded-lg shadow-md text-left">
+                <h3 class="text-xl font-bold nhs-text-dark-blue mb-4 border-b pb-2">Case Study</h3>
+                <p id="case-scenario" class="text-gray-700 mb-6"></p>
+
+                <h3 class="text-xl font-bold nhs-text-dark-blue mb-4 border-b pb-2">Results</h3>
+                <table id="results-table" class="w-full result-table">
+                </table>
+
+                <div class="mt-8">
+                    <h3 class="text-xl font-bold nhs-text-dark-blue mb-4">What is the most likely diagnosis?</h3>
+                    <div id="diagnosis-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     </div>
+                </div>
             </div>
             
-            <div class="mt-8 bg-white p-4 rounded-lg shadow-md">
-                <p class="text-lg">Score: <span id="game-score" class="font-bold">0</span></p>
-                <button id="new-game-btn" class="mt-4 bg-nhs-blue text-white font-bold py-2 px-6 rounded-lg hover:bg-nhs-dark-blue transition duration-300">Start New Game</button>
-            </div>
+            <div id="case-feedback" class="mt-6 p-4 rounded-lg text-lg font-semibold hidden"></div>
+                <button id="next-question-btn" class="mt-4 bg-gray-800 text-white font-bold py-3 px-8 rounded-lg hover:bg-black transition duration-300 hidden">Next Question</button>
         </div>
     </main>
 
     <div id="footer-placeholder"></div>
 
-      <script src="js/component-loader.js"></script>
+    <script src="js/component-loader.js"></script>
     
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            feather.replace();
-        });
-   </script>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
-            feather.replace();
+            // This script block contains all the data and logic needed for the game to run.
 
-            const testNameEl = document.getElementById('test-name');
-            const questionPromptEl = document.getElementById('question-prompt');
-            const answerButtonsEl = document.getElementById('answer-buttons');
-            const feedbackEl = document.getElementById('game-feedback');
-            const scoreEl = document.getElementById('game-score');
-            const newGameBtn = document.getElementById('new-game-btn');
+            const caseScenarioEl = document.getElementById('case-scenario');
+            const resultsTableEl = document.getElementById('results-table');
+            const diagnosisOptionsEl = document.getElementById('diagnosis-options');
+            const caseFeedbackEl = document.getElementById('case-feedback');
+            const nextCaseBtn = document.getElementById('next-case-btn');
 
-            const tests = [
-                { name: '17-OH-progesterone', department: 'Clinical Biochemistry', sampleType: 'Plain serum (red top)' },
-                { name: 'ACTH', department: 'Clinical Biochemistry', sampleType: 'Separated & frozen EDTA' },
-                { name: 'ALT', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Albumin', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Aldosterone & Renin', department: 'Clinical Biochemistry', sampleType: '4mL EDTA' },
-                { name: 'Alkaline Phosphatase (ALP)', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Ammonia', department: 'Clinical Biochemistry', sampleType: '5mL Li-Hep (<30min)' },
-                { name: 'Amylase', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Androstenedione', department: 'Clinical Biochemistry', sampleType: '5mL Clotted' },
-                { name: 'Anti-Factor Xa', department: 'Haematology', sampleType: '2.7mL Citrate' },
-                { name: 'Anti-Mitochondrial Ab', department: 'Immunology', sampleType: '5mL SST/serum' },
-                { name: 'Anti-Smooth Muscle Ab', department: 'Immunology', sampleType: '5mL SST/serum' },
-                { name: 'Antibody Screen', department: 'Blood Transfusion', sampleType: '6mL EDTA' },
-                { name: 'Antithrombin', department: 'Haematology', sampleType: '2.7mL Citrate' },
-                { name: 'B12/Folate', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Bicarbonate', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Bilirubin', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Blood Film Exam', department: 'Haematology', sampleType: '4mL EDTA' },
-                { name: 'Bone Profile', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'C-Peptide', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'C-Reactive Protein (CRP)', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'C1 inhibitor', department: 'Immunology', sampleType: '10mL Clotted' },
-                { name: 'C3/C4 Complement', department: 'Immunology', sampleType: '5mL SST/serum' },
-                { name: 'CA125', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Caeruloplasmin', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Calcitonin', department: 'Clinical Biochemistry', sampleType: '5mL Li-Hep/Serum SST' },
-                { name: 'Calcium', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Carbamazepine', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Chloride', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Cholesterol', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Clotting Screen', department: 'Haematology', sampleType: '2.7mL Citrate' },
-                { name: 'Coeliac screen (Anti-TTG)', department: 'Immunology', sampleType: '5mL SST/serum' },
-                { name: 'Copper', department: 'Clinical Biochemistry', sampleType: '5mL Clotted' },
-                { name: 'Cortisol', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Creatine Kinase (CK)', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Creatinine', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Crossmatch', department: 'Blood Transfusion', sampleType: '6mL EDTA' },
-                { name: 'Cryoglobulins', department: 'Immunology', sampleType: '20mL Clotted (Warm)' },
-                { name: 'D-Dimer', department: 'Haematology', sampleType: '2.7mL Citrate' },
-                { name: 'DHEAS', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Digoxin', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Direct Antiglobulin Test (DAT)', department: 'Blood Transfusion', sampleType: '6mL EDTA' },
-                { name: 'Erythrocyte Sedimentation Rate (ESR)', department: 'Haematology', sampleType: '4mL EDTA' },
-                { name: 'Factor V Leiden', department: 'Haematology', sampleType: '4mL EDTA' },
-                { name: 'Ferritin', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Fibrinogen', department: 'Haematology', sampleType: '2.7mL Citrate' },
-                { name: 'Follicle Stimulating Hormone (FSH)', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Free T3', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Free T4', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Full Blood Count (FBC)', department: 'Haematology', sampleType: '4mL EDTA' },
-                { name: 'G6PD Screen', department: 'Haematology', sampleType: '4mL EDTA' },
-                { name: 'Gamma GT', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Glandular Fever Screen', department: 'Haematology', sampleType: '4mL EDTA' },
-                { name: 'Glucose', department: 'Clinical Biochemistry', sampleType: '2mL Fluoride/oxalate' },
-                { name: 'Group & Save', department: 'Blood Transfusion', sampleType: '6mL EDTA' },
-                { name: 'Growth Hormone', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Haptoglobin', department: 'Haematology', sampleType: '5mL SST/serum' },
-                { name: 'HbA1c', department: 'Clinical Biochemistry', sampleType: '4mL EDTA' },
-                { name: 'Homocysteine', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum (<30min)' },
-                { name: 'IGF-1', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'INR', department: 'Haematology', sampleType: '2.7mL Citrate' },
-                { name: 'Immunoglobulins (IgG, IgA, IgM)', department: 'Immunology', sampleType: '5mL SST/serum' },
-                { name: 'Insulin', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Iron', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Kleihauer', department: 'Blood Transfusion', sampleType: '6mL EDTA' },
-                { name: 'Lactate', department: 'Clinical Biochemistry', sampleType: '2mL Fluoride/oxalate' },
-                { name: 'Lactate Dehydrogenase (LDH)', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Luteinising Hormone (LH)', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Lipase', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Lithium', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Liver Function Tests (LFTs)', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Lupus Anticoagulant', department: 'Haematology', sampleType: '2 x 2.7mL Citrate' },
-                { name: 'Magnesium', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Malarial Parasites', department: 'Haematology', sampleType: '4mL EDTA' },
-                { name: 'Myeloma Screen', department: 'Clinical Biochemistry', sampleType: '5mL Clotted' },
-                { name: 'NTproBNP', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Oestradiol (E2)', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Osmolality', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Paracetamol', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Parathyroid Hormone (PTH)', department: 'Clinical Biochemistry', sampleType: '4mL EDTA' },
-                { name: 'Phenytoin', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Phosphate', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Plasma Viscosity', department: 'Haematology', sampleType: '4mL EDTA' },
-                { name: 'Potassium', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Progesterone', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Prolactin', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Prostate Specific Antigen (PSA)', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Protein C Level', department: 'Haematology', sampleType: '2.7mL Citrate' },
-                { name: 'Protein S Level', department: 'Haematology', sampleType: '2.7mL Citrate' },
-                { name: 'Reticulocyte Count', department: 'Haematology', sampleType: '4mL EDTA' },
-                { name: 'Rheumatoid Factor (RF)', department: 'Immunology', sampleType: '5mL SST/serum' },
-                { name: 'Salicylate', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Serum Free Light Chains', department: 'Immunology', sampleType: '5mL SST/serum' },
-                { name: 'Sex Hormone Binding Globulin (SHBG)', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Sickle Screen', department: 'Haematology', sampleType: '4mL EDTA' },
-                { name: 'Sodium', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Tacrolimus (FK506)', department: 'Clinical Biochemistry', sampleType: '4mL EDTA' },
-                { name: 'Testosterone', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Theophylline', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Thrombophilia Screen', department: 'Haematology', sampleType: '3 x 2.7mL Citrate' },
-                { name: 'Thyroid Antibodies', department: 'Immunology', sampleType: '5mL SST/serum' },
-                { name: 'Thyroid Stimulating Hormone (TSH)', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Total Protein', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Transferrin', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Triglycerides', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Trisomy Screening', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Troponin I', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Urea & Electrolytes', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Uric Acid (Urate)', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Valproate', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Vancomycin', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Vitamin D', department: 'Clinical Biochemistry', sampleType: '5mL SST/serum' },
-                { name: 'Zinc', department: 'Clinical Biochemistry', sampleType: '5mL Clotted' },
-                { name: 'Anti-dsDNA antibodies', department: 'Immunology', sampleType: '5mL SST/serum' },
-                { name: 'ANCA (MPO/PR3)', department: 'Immunology', sampleType: '5mL SST/serum' },
-                { name: 'Haemoglobinopathy Screen', department: 'Haematology', sampleType: '4mL EDTA' },
-                { name: 'Mast cell tryptase', department: 'Immunology', sampleType: '10mL Clotted' },
-                { name: 'Lymphocyte subsets', department: 'Immunology', sampleType: '4mL EDTA' },
-                { name: 'Connective tissue disease screen', department: 'Immunology', sampleType: '5mL SST/serum' },
-                { name: 'Cyclosporin', department: 'Clinical Biochemistry', sampleType: '4mL EDTA' },
-                { name: 'Sirolimus', department: 'Clinical Biochemistry', sampleType: '4mL EDTA' },
-                { name: 'Porphyrins (Blood)', department: 'Clinical Biochemistry', sampleType: '4mL EDTA' }
-            ];
-
-
-            const allDepartments = ['Haematology', 'Clinical Biochemistry', 'Blood Transfusion', 'Immunology'];
-            const allSampleTypes = [
-                '5mL SST/serum', '4mL EDTA', '6mL EDTA', '2.7mL Citrate', 
-                '2mL Fluoride/oxalate', '10mL Clotted', 'Separated & frozen EDTA', 
-                'Plain serum (red top)', '5mL Clotted', '5mL Li-Hep (<30min)', '3 x 2.7mL Citrate',
-                '2 x 2.7mL Citrate', '20mL Clotted (Warm)', '5mL SST/serum (<30min)',
-                '5mL Li-Hep/Serum SST'
-            ];
-
-            let currentTest = {};
-            let currentQuestionType = '';
-            let score = 0;
-            let buttonsLocked = false;
-
-            function shuffle(array) {
-                for (let i = array.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [array[i], array[j]] = [array[j], array[i]];
+            // All game data is now stored here, inside the HTML file.
+            const cases = [
+                {
+                    scenario: "A 68-year-old man presents to A&E with severe abdominal pain radiating to his back. He admits to heavy alcohol consumption.",
+                    results: [
+                        { test: 'Amylase', value: '1250 U/L', ref: '25-125', abnormal: true },
+                        { test: 'Sodium', value: '138 mmol/L', ref: '135-145', abnormal: false },
+                        { test: 'Urea', value: '6.5 mmol/L', ref: '2.5-7.8', abnormal: false },
+                        { test: 'ALT', value: '45 U/L', ref: '<50', abnormal: false },
+                    ],
+                    options: ['Myocardial Infarction', 'Acute Pancreatitis', 'Diabetic Ketoacidosis', 'Appendicitis'],
+                    answer: 'Acute Pancreatitis'
+                },
+                {
+                    scenario: "A 45-year-old woman presents with fatigue, weight gain, and feeling cold. Her GP suspects a thyroid issue.",
+                    results: [
+                        { test: 'TSH', value: '12.5 mU/L', ref: '0.4-4.0', abnormal: true },
+                        { test: 'Free T4', value: '8.0 pmol/L', ref: '10-22', abnormal: true },
+                        { test: 'Sodium', value: '140 mmol/L', ref: '135-145', abnormal: false },
+                    ],
+                    options: ['Hyperthyroidism', 'Hypothyroidism', 'Cushing\'s Syndrome', 'Normal Thyroid Function'],
+                    answer: 'Hypothyroidism'
+                },
+                {
+                    scenario: "A 55-year-old man with known type 2 diabetes presents with confusion. He has been unwell with a chest infection for 3 days.",
+                    results: [
+                        { test: 'Glucose', value: '35.2 mmol/L', ref: '4.0-7.0', abnormal: true },
+                        { test: 'Ketones', value: 'Negative', ref: 'Negative', abnormal: false },
+                        { test: 'Sodium', value: '155 mmol/L', ref: '135-145', abnormal: true },
+                        { test: 'Osmolality (calc)', value: '350 mOsmol/kg', ref: '275-295', abnormal: true },
+                    ],
+                    options: ['Diabetic Ketoacidosis (DKA)', 'Hypoglycaemia', 'Hyperosmolar Hyperglycaemic State (HHS)', 'Sepsis'],
+                    answer: 'Hyperosmolar Hyperglycaemic State (HHS)'
+                },
+                {
+                    scenario: "A 24-year-old female presents with central chest pain. An ECG is performed.",
+                    results: [
+                        { test: 'Troponin I', value: '1500 ng/L', ref: '<15', abnormal: true },
+                        { test: 'CK', value: '350 U/L', ref: '<145', abnormal: true },
+                        { test: 'Potassium', value: '4.1 mmol/L', ref: '3.5-5.3', abnormal: false },
+                    ],
+                    options: ['Acute Pancreatitis', 'Pulmonary Embolism', 'Myocardial Infarction', 'Stable Angina'],
+                    answer: 'Myocardial Infarction'
+                },
+                {
+                    scenario: "A 72-year-old male with a history of bone pain and frequent infections presents with fatigue.",
+                    results: [
+                        { test: 'Total Protein', value: '105 g/L', ref: '60-80', abnormal: true },
+                        { test: 'Albumin', value: '30 g/L', ref: '35-50', abnormal: true },
+                        { test: 'Adjusted Calcium', value: '2.95 mmol/L', ref: '2.2-2.6', abnormal: true },
+                        { test: 'Creatinine', value: '180 umol/L', ref: '64-104', abnormal: true },
+                        { test: 'Serum Free Light Chains', value: 'Kappa:Lambda ratio 5.60', ref: '0.26-1.65', abnormal: true },
+                    ],
+                    options: ['Liver Disease', 'Dehydration', 'Multiple Myeloma', 'Hyperparathyroidism'],
+                    answer: 'Multiple Myeloma'
+                },
+                {
+                    scenario: "A 35-year-old female presents with jaundice, dark urine, and right upper quadrant pain. She denies alcohol use.",
+                    results: [
+                        { test: 'Bilirubin', value: '85 umol/L', ref: '<21', abnormal: true },
+                        { test: 'ALT', value: '450 U/L', ref: '<40', abnormal: true },
+                        { test: 'AST', value: '380 U/L', ref: '<30', abnormal: true },
+                        { test: 'Alkaline Phosphatase', value: '150 U/L', ref: '30-130', abnormal: true },
+                    ],
+                    options: ['Acute Pancreatitis', 'Acute Hepatitis', 'Gilbert\'s Syndrome', 'Gallstones'],
+                    answer: 'Acute Hepatitis'
+                },
+                {
+                    scenario: "A 60-year-old male is reviewed in the renal clinic. He has a long history of hypertension and type 2 diabetes.",
+                    results: [
+                        { test: 'Creatinine', value: '250 umol/L', ref: '64-104', abnormal: true },
+                        { test: 'eGFR', value: '25 mL/min/1.73m²', ref: '>60', abnormal: true },
+                        { test: 'Urea', value: '15.2 mmol/L', ref: '2.5-7.8', abnormal: true },
+                        { test: 'Potassium', value: '5.6 mmol/L', ref: '3.5-5.3', abnormal: true },
+                    ],
+                    options: ['Acute Kidney Injury', 'Chronic Kidney Disease', 'Nephrotic Syndrome', 'Urinary Tract Infection'],
+                    answer: 'Chronic Kidney Disease'
+                },
+                {
+                    scenario: "A 30-year-old female presents with muscle weakness, hypertension, and weight gain, particularly around her abdomen.",
+                    results: [
+                        { test: 'Cortisol (9am)', value: '750 nmol/L', ref: '102-535', abnormal: true },
+                        { test: 'Overnight Dexamethasone Suppression', value: 'Cortisol 600 nmol/L', ref: '<50', abnormal: true },
+                        { test: 'Potassium', value: '3.1 mmol/L', ref: '3.5-5.3', abnormal: true },
+                    ],
+                    options: ['Addison\'s Disease', 'Hypothyroidism', 'Cushing\'s Syndrome', 'Conn\'s Syndrome'],
+                    answer: 'Cushing\'s Syndrome'
+                },
+                {
+                    scenario: "A patient presents with severe dehydration, hypotension, and confusion following a bout of vomiting and diarrhoea.",
+                    results: [
+                        { test: 'Sodium', value: '122 mmol/L', ref: '133-146', abnormal: true },
+                        { test: 'Potassium', value: '2.8 mmol/L', ref: '3.5-5.3', abnormal: true },
+                        { test: 'Urea', value: '18.1 mmol/L', ref: '2.5-7.8', abnormal: true },
+                        { test: 'Creatinine', value: '160 umol/L', ref: '64-104', abnormal: true },
+                    ],
+                    options: ['Diabetes Insipidus', 'Acute Kidney Injury (Pre-renal)', 'SIADH', 'Primary Polydipsia'],
+                    answer: 'Acute Kidney Injury (Pre-renal)'
+                },
+                {
+                    scenario: "An 18-year-old presents to A&E with confusion, vomiting and a Kussmaul breathing pattern. A fingerprick glucose is very high.",
+                    results: [
+                        { test: 'Glucose', value: '25.6 mmol/L', ref: '4.0-7.0', abnormal: true },
+                        { test: 'Ketones (Blood)', value: '4.1 mmol/L', ref: '<0.6', abnormal: true },
+                        { test: 'Bicarbonate', value: '12 mmol/L', ref: '22-29', abnormal: true },
+                        { test: 'pH (venous)', value: '7.15', ref: '7.32-7.42', abnormal: true },
+                    ],
+                    options: ['Hyperosmolar Hyperglycaemic State (HHS)', 'Alcoholic Ketoacidosis', 'Diabetic Ketoacidosis (DKA)', 'Lactic Acidosis'],
+                    answer: 'Diabetic Ketoacidosis (DKA)'
+                },
+                {
+                    scenario: "A 40-year-old man presents with extreme fatigue, skin hyperpigmentation, and postural hypotension.",
+                    results: [
+                        { test: 'Sodium', value: '128 mmol/L', ref: '133-146', abnormal: true },
+                        { test: 'Potassium', value: '5.9 mmol/L', ref: '3.5-5.3', abnormal: true },
+                        { test: 'Cortisol (9am)', value: '45 nmol/L', ref: '102-535', abnormal: true },
+                        { test: 'ACTH', value: '850 ng/L', ref: '7.2-63.3', abnormal: true },
+                    ],
+                    options: ['Cushing\'s Syndrome', 'Addison\'s Disease', 'Hypopituitarism', 'Conn\'s Syndrome'],
+                    answer: 'Addison\'s Disease'
+                },
+                 {
+                    scenario: "A 58-year-old woman is investigated for persistent bone pain. Her GP notes a raised alkaline phosphatase.",
+                    results: [
+                        { test: 'Alkaline Phosphatase', value: '550 U/L', ref: '30-130', abnormal: true },
+                        { test: 'Adjusted Calcium', value: '2.4 mmol/L', ref: '2.2-2.6', abnormal: false },
+                        { test: 'Phosphate', value: '1.1 mmol/L', ref: '0.8-1.5', abnormal: false },
+                        { test: 'Gamma GT', value: '40 U/L', ref: '<40', abnormal: false },
+                    ],
+                    options: ['Primary Hyperparathyroidism', 'Liver disease', 'Vitamin D Deficiency', 'Paget\'s Disease of Bone'],
+                    answer: 'Paget\'s Disease of Bone'
+                },
+                {
+                    scenario: "A 65-year-old male presents with jaundice and pruritus (itching). He notes his stools have become pale.",
+                    results: [
+                        { test: 'Bilirubin', value: '120 umol/L', ref: '<21', abnormal: true },
+                        { test: 'Alkaline Phosphatase', value: '800 U/L', ref: '30-130', abnormal: true },
+                        { test: 'Gamma GT', value: '950 U/L', ref: '<55', abnormal: true },
+                        { test: 'ALT', value: '95 U/L', ref: '<50', abnormal: true },
+                    ],
+                    options: ['Acute Hepatitis', 'Haemolytic Anaemia', 'Obstructive Jaundice', 'Gilbert\'s Syndrome'],
+                    answer: 'Obstructive Jaundice'
                 }
-                return array;
-            }
+            ];
 
-            function startNewGame() {
-                score = 0;
-                scoreEl.textContent = score;
-                nextRound();
-            }
+            let currentCase = {};
+            let usedCases = [];
 
-            function nextRound() {
-                buttonsLocked = false;
-                feedbackEl.textContent = '';
-                feedbackEl.className = 'mb-6 h-10 text-2xl font-bold';
+            function loadNewCase() {
+                if (usedCases.length === cases.length) {
+                    usedCases = []; // Reset if all cases have been shown
+                }
+
+                let availableCases = cases.filter((c, index) => !usedCases.includes(index));
+                if (availableCases.length === 0) {
+                     usedCases = [];
+                     availableCases = cases;
+                }
                 
-                currentTest = tests[Math.floor(Math.random() * tests.length)];
-                testNameEl.textContent = currentTest.name;
+                let caseIndex = Math.floor(Math.random() * availableCases.length);
+                let actualIndex = cases.indexOf(availableCases[caseIndex]);
+                usedCases.push(actualIndex);
+                
+                currentCase = cases[actualIndex];
+                
+                caseScenarioEl.textContent = currentCase.scenario;
+                caseFeedbackEl.classList.add('hidden');
+                nextCaseBtn.classList.add('hidden');
 
-                currentQuestionType = Math.random() < 0.5 ? 'department' : 'sampleType';
+                let resultsHTML = '<tbody>';
+                currentCase.results.forEach(res => {
+                    resultsHTML += `<tr><td class="font-semibold text-left">${res.test}</td><td class="text-right ${res.abnormal ? 'result-abnormal' : ''}">${res.value}</td><td class="text-xs text-gray-500 text-right">${res.ref}</td></tr>`;
+                });
+                resultsHTML += '</tbody>';
+                resultsTableEl.innerHTML = resultsHTML;
 
-                if (currentQuestionType === 'department') {
-                    questionPromptEl.textContent = 'To which department should the sample be sent?';
-                    createButtons(allDepartments, currentTest.department);
-                } else {
-                    questionPromptEl.textContent = 'What is the correct sample tube for this test?';
-                    let options = shuffle([...allSampleTypes]).filter(type => type !== currentTest.sampleType).slice(0, 3);
-                    options.push(currentTest.sampleType);
-                    createButtons(shuffle(options), currentTest.sampleType);
-                }
-            }
-            
-            function createButtons(options, correctAnswer) {
-                answerButtonsEl.innerHTML = '';
-                options.forEach(opt => {
+                diagnosisOptionsEl.innerHTML = '';
+                // Shuffle options before displaying them
+                const shuffledOptions = [...currentCase.options].sort(() => Math.random() - 0.5);
+                shuffledOptions.forEach(opt => {
                     const button = document.createElement('button');
-                    button.className = 'answer-button bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-3 sm:py-4 px-2 text-sm sm:text-base md:text-lg border border-gray-400 rounded shadow';
+                    button.className = 'diagnosis-option-btn w-full text-left p-4 bg-gray-100 rounded-lg hover:bg-gray-200 transition';
                     button.textContent = opt;
-                    button.dataset.answer = opt;
-                    button.addEventListener('click', () => checkAnswer(opt, correctAnswer));
-                    answerButtonsEl.appendChild(button);
+                    button.addEventListener('click', checkCaseAnswer);
+                    diagnosisOptionsEl.appendChild(button);
                 });
             }
 
-            function checkAnswer(selectedAnswer, correctAnswer) {
-                if (buttonsLocked) return;
-                buttonsLocked = true;
-                document.querySelectorAll('.answer-button').forEach(btn => btn.disabled = true);
-
-                if (selectedAnswer === correctAnswer) {
-                    feedbackEl.textContent = 'Correct!';
-                    feedbackEl.className = 'mb-6 h-10 text-2xl font-bold text-green-600';
-                    score++;
+            function checkCaseAnswer(event) {
+                const selectedAnswer = event.target.textContent;
+                
+                caseFeedbackEl.classList.remove('hidden');
+                nextCaseBtn.classList.remove('hidden');
+                
+                if(selectedAnswer === currentCase.answer) {
+                    caseFeedbackEl.textContent = 'Correct! Well done.';
+                    caseFeedbackEl.className = 'mt-6 p-4 rounded-lg text-lg font-semibold bg-green-100 text-green-800';
                 } else {
-                    feedbackEl.textContent = `Incorrect! It's ${correctAnswer}.`;
-                    feedbackEl.className = 'mb-6 h-10 text-2xl font-bold text-red-600';
+                    caseFeedbackEl.textContent = `Incorrect. The correct diagnosis is ${currentCase.answer}.`;
+                    caseFeedbackEl.className = 'mt-6 p-4 rounded-lg text-lg font-semibold bg-red-100 text-red-800';
                 }
-                scoreEl.textContent = score;
-                setTimeout(nextRound, 2500);
+
+                document.querySelectorAll('.diagnosis-option-btn').forEach(btn => btn.disabled = true);
             }
 
-            newGameBtn.addEventListener('click', startNewGame);
+            // --- Initial Load ---
+            nextCaseBtn.addEventListener('click', loadNewCase);
+            loadNewCase();
             
-            startNewGame();
+            // This needs to be called after the main content is loaded
+            if (typeof feather !== 'undefined') {
+                feather.replace();
+            }
         });
    </script>
 </body>
