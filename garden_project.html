@@ -68,43 +68,12 @@
 
     <div id="footer-placeholder"></div>
 
+      <script src="js/component-loader.js"></script>
+    
     <script>
-        // This function loads components like the header and footer
-        function loadComponent(url, placeholderId, callback) {
-            fetch(url)
-                .then(response => {
-                    if (!response.ok) throw new Error('Network response was not ok ' + response.statusText);
-                    return response.text();
-                })
-                .then(data => {
-                    const placeholder = document.getElementById(placeholderId);
-                    if (placeholder) {
-                        const tempDiv = document.createElement('div');
-                        tempDiv.innerHTML = data;
-                        placeholder.replaceWith(...tempDiv.childNodes);
-                        if (callback) callback();
-                    }
-                })
-                .catch(error => console.error(`Error loading component from ${url}:`, error));
-        }
-
-        // Load Header and then run its scripts
-        loadComponent('header.html', 'header-placeholder', () => {
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            if (mobileMenuButton && mobileMenu) {
-                 mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
-            }
+        document.addEventListener('DOMContentLoaded', () => {
             feather.replace();
         });
-
-        // Load Footer
-        loadComponent('footer.html', 'footer-placeholder');
-
-        // Initialise Feather Icons for this page's content
-        document.addEventListener('DOMContentLoaded', () => {
-             feather.replace();
-        });
-    </script>
+   </script>
 </body>
 </html>
