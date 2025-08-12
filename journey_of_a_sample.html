@@ -184,13 +184,12 @@
 
     <div id="footer-placeholder"></div>
 
+      <script src="js/component-loader.js"></script>
+    
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', () => {
             feather.replace();
-            const script = document.createElement('script');
-            script.src = 'js/component-loader.js';
-            document.body.appendChild(script);
         });
-    </script>
+   </script>
 </body>
 </html>
