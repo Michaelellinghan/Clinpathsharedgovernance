@@ -25,25 +25,7 @@
 </head>
 <body class="bg-white text-gray-800">
 
-    <header class="bg-white shadow-md sticky top-0 z-50 py-4">
-        <div class="container mx-auto px-6 flex flex-col items-center">
-            <a href="index.html" class="cursor-pointer mb-4"> <img src="logo.jpg" alt="Clinical Pathology Shared Governance Council Logo" class="h-40 w-auto"> </a>
-            <nav id="desktop-nav" class="flex flex-wrap justify-center items-center gap-x-6 gap-y-2">
-                <a href="index.html" class="font-semibold text-nhs-blue transition duration-300">Home</a>
-                <a href="projects.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Projects</a>
-                <a href="helpful_tools.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Helpful Tools</a>
-                <a href="games.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Games</a>
-                <a href="newsletters.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Newsletters</a>
-                <a href="social.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Social Media</a>
-                <a href="about.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">About Us</a>
-                <a href="links.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Links</a>
-                <a href="contact.html" class="font-semibold text-gray-600 hover:nhs-text-blue transition duration-300">Suggestions</a>
-            </nav>
-            <button id="mobile-menu-button" class="lg:hidden absolute top-6 right-6"><i data-feather="menu"></i></button>
-        </div>
-        <div id="mobile-menu" class="hidden lg:hidden bg-white px-6 pb-4 mt-2">
-             </div>
-    </header>
+   <div id="header-placeholder"></div>
 
     <main>
         <section class="bg-nhs-light-grey">
@@ -69,9 +51,15 @@
         </section>
     </main>
 
-    <footer class="nhs-dark-blue text-white py-8">
-       </footer>
+<div id="footer-placeholder"></div>
 
     <script src="js/component-loader.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            feather.replace();
+        });
+   </script>
 </body>
 </html>
+
