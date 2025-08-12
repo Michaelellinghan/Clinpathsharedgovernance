@@ -41,12 +41,12 @@
 
                 <h3 class="text-xl font-bold nhs-text-dark-blue mb-4 border-b pb-2">Results</h3>
                 <table id="results-table" class="w-full result-table">
-                    </table>
+                </table>
 
                 <div class="mt-8">
                     <h3 class="text-xl font-bold nhs-text-dark-blue mb-4">What is the most likely diagnosis?</h3>
                     <div id="diagnosis-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        </div>
+                    </div>
                 </div>
             </div>
             
@@ -57,19 +57,11 @@
 
     <div id="footer-placeholder"></div>
 
-      <script src="js/component-loader.js"></script>
+    <script src="js/component-loader.js"></script>
     
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            feather.replace();
-        });
-   </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
-            feather.replace();
+            // This script block contains all the data and logic needed for the game to run.
 
             const caseScenarioEl = document.getElementById('case-scenario');
             const resultsTableEl = document.getElementById('results-table');
@@ -77,6 +69,7 @@
             const caseFeedbackEl = document.getElementById('case-feedback');
             const nextCaseBtn = document.getElementById('next-case-btn');
 
+            // All game data is now stored here, inside the HTML file.
             const cases = [
                 {
                     scenario: "A 68-year-old man presents to A&E with severe abdominal pain radiating to his back. He admits to heavy alcohol consumption.",
@@ -230,7 +223,7 @@
                 }
 
                 let availableCases = cases.filter((c, index) => !usedCases.includes(index));
-                if (availableCases.length === 0) { // Double check in case all cases were just used
+                if (availableCases.length === 0) {
                      usedCases = [];
                      availableCases = cases;
                 }
@@ -253,7 +246,9 @@
                 resultsTableEl.innerHTML = resultsHTML;
 
                 diagnosisOptionsEl.innerHTML = '';
-                currentCase.options.forEach(opt => {
+                // Shuffle options before displaying them
+                const shuffledOptions = [...currentCase.options].sort(() => Math.random() - 0.5);
+                shuffledOptions.forEach(opt => {
                     const button = document.createElement('button');
                     button.className = 'diagnosis-option-btn w-full text-left p-4 bg-gray-100 rounded-lg hover:bg-gray-200 transition';
                     button.textContent = opt;
@@ -279,10 +274,14 @@
                 document.querySelectorAll('.diagnosis-option-btn').forEach(btn => btn.disabled = true);
             }
 
+            // --- Initial Load ---
             nextCaseBtn.addEventListener('click', loadNewCase);
-            
-            // Initial Load
             loadNewCase();
+            
+            // This needs to be called after the main content is loaded
+            if (typeof feather !== 'undefined') {
+                feather.replace();
+            }
         });
    </script>
 </body>
