@@ -29,13 +29,25 @@
             <a href="projects.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8">
                 <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Projects
             </a>
-            <h2 class="text-3xl font-bold nhs-text-dark-blue mb-4">Laboratory Video Tours</h2>
-            <p class="text-gray-700 mb-6">We're curating a series of videos for each department in Clinical Pathology to teach the wards and GPs what we do and what they can do to help us improve patient care. These short, engaging videos will cover key aspects of the pathology process, from sample collection to result interpretation, providing a valuable educational resource for clinical staff.</p>
+            <h2 class="text-3xl font-bold nhs-text-dark-blue mb-4">Laboratory Video Tours & Guides</h2>
+            <p class="text-gray-700 mb-6">We're curating a series of videos and guides for each department in Clinical Pathology to teach the wards and GPs what we do and what they can do to help us improve patient care. These short, engaging resources will cover key aspects of the pathology process, from sample collection to result interpretation, providing a valuable educational resource for clinical staff.</p>
             
-           
-            <div class="mt-12 text-center bg-gray-100 p-8 rounded-lg">
-                <i data-feather="video" class="h-12 w-12 mx-auto mb-4 text-nhs-blue"></i>
-                <h3 class="text-xl font-semibold text-gray-700">Department Tours Coming Soon!</h3>
+            <!-- ADDED: Link to the new Clinical Chemistry page -->
+            <div class="mt-12 space-y-8">
+                <a href="what_chemistry_does.html" class="block bg-white p-8 rounded-lg shadow-lg transform hover:-translate-y-1 transition duration-300">
+                    <div class="flex items-center">
+                        <i data-feather="flask-conical" class="h-12 w-12 text-nhs-blue"></i>
+                        <div class="ml-6 text-left">
+                            <h3 class="text-xl font-semibold text-gray-800">What Does Clinical Chemistry Do?</h3>
+                            <p class="text-gray-600 mt-1">A visual guide to the journey of a sample through the chemistry lab, from receipt to result.</p>
+                        </div>
+                    </div>
+                </a>
+
+                <div class="text-center bg-gray-100 p-8 rounded-lg">
+                    <i data-feather="video" class="h-12 w-12 mx-auto mb-4 text-nhs-blue"></i>
+                    <h3 class="text-xl font-semibold text-gray-700">More Department Tours Coming Soon!</h3>
+                </div>
             </div>
         </div>
     </main>
@@ -48,15 +60,6 @@
         document.addEventListener('DOMContentLoaded', () => {
             feather.replace();
         });
-   </script>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
-            feather.replace();
-        });
-   </script>
+    </script>
 </body>
 </html>
