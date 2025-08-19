@@ -28,6 +28,10 @@
         .text-shadow-pink { text-shadow: 2px 2px 4px rgba(236, 72, 153, 0.5); }
         .text-shadow-blue { text-shadow: 2px 2px 4px rgba(59, 130, 246, 0.5); }
         .text-shadow-yellow { text-shadow: 2px 2px 4px rgba(245, 158, 11, 0.5); }
+        .text-shadow-purple { text-shadow: 2px 2px 4px rgba(168, 85, 247, 0.5); }
+        .text-shadow-orange { text-shadow: 2px 2px 4px rgba(249, 115, 22, 0.5); }
+        /* ADDED: New text shadow for the changed text color */
+        .text-shadow-indigo { text-shadow: 2px 2px 4px rgba(99, 102, 241, 0.5); }
     </style>
 </head>
 <body class="bg-white text-gray-800 flex flex-col min-h-screen">
@@ -65,12 +69,13 @@
                     </div>
                 </div>
                 <div class="text-center">
-                    <h3 class="text-5xl md:text-7xl font-bangers text-cyan-400 text-shadow-blue tracking-wider">and watch things change</h3>
+                    <!-- CHANGED: Text color from cyan to indigo for variation -->
+                    <h3 class="text-5xl md:text-7xl font-bangers text-indigo-500 text-shadow-indigo tracking-wider">and watch things change</h3>
                 </div>
 
                 <!-- Section: How That Works For You -->
                 <div class="text-center pt-8">
-                    <h2 class="text-6xl md:text-8xl font-bangers text-green-500 tracking-wider">How that works for you</h2>
+                    <h2 class="text-6xl md:text-8xl font-bangers text-purple-500 text-shadow-purple tracking-wider">How that works for you</h2>
                     <p class="mt-4 text-3xl font-lilita text-gray-700">Team work makes the dream work</p>
                 </div>
                 <div class="grid md:grid-cols-2 gap-8 items-center bg-nhs-light-grey p-8 rounded-lg shadow-inner">
@@ -92,14 +97,14 @@
 
                 <!-- Section: Laboratory Automation -->
                 <div class="text-center pt-8">
-                    <h2 class="text-6xl md:text-8xl font-bangers text-yellow-400 text-shadow-yellow tracking-wider">Laboratory Automation</h2>
+                    <h2 class="text-6xl md:text-8xl font-bangers text-red-500 tracking-wider">Laboratory Automation</h2>
                     <p class="mt-4 text-lg text-gray-600">A tiny little mouse car Takes the sample where it needs to go</p>
                 </div>
                 <div class="grid md:grid-cols-2 gap-8 items-center bg-nhs-dark-blue text-white p-8 rounded-lg shadow-xl">
                     <img src="A yellow lidded blood collection tube strapped to the top of a car with a mouse driving .jpg" alt="A yellow lidded blood collection tube strapped to the top of a car with a mouse driving .jpg" class="rounded-lg shadow-2xl w-full h-auto object-cover">
                     <div class="text-center md:text-left">
-                        <p class="text-black-100">Single Sample: 5-15 minutes (varies greatly depending on requested tests and current samples on track)</p>
-                        <p class="mt-2 text-black-100">Batch of 30 Samples: 30-90 minutes (automated analyzers can process multiple samples, but total time increases with batch size)</p>
+                        <p class="text-gray-200">Single Sample: 5-15 minutes (varies greatly depending on requested tests and current samples on track)</p>
+                        <p class="mt-2 text-gray-200">Batch of 30 Samples: 30-90 minutes (automated analyzers can process multiple samples, but total time increases with batch size)</p>
                     </div>
                 </div>
                 <div class="text-center bg-red-100 p-6 rounded-lg">
@@ -108,7 +113,7 @@
 
                 <!-- Section: Golden Hour -->
                 <div class="text-center pt-8">
-                    <h2 class="text-6xl md:text-8xl font-bangers text-yellow-400 text-shadow-yellow tracking-wider">GOLDEN HOUR</h2>
+                    <h2 class="text-6xl md:text-8xl font-bangers text-orange-500 text-shadow-orange tracking-wider">GOLDEN HOUR</h2>
                     <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">While we do aim to process all urgent samples within the hour, it is not always possible. The Volume of samples is the main problem.</p>
                 </div>
 
