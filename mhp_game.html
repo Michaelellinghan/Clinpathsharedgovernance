@@ -9,8 +9,9 @@
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <style>
         body { font-family: 'Inter', sans-serif; }
-        .component-btn { transition: background-color 0.2s; }
-        .component-btn.selected { background-color: #22c55e; /* green-500 */ border-color: #16a34a; }
+        .component-btn { transition: all 0.2s; }
+        .component-btn.selected { transform: scale(1.05); background-color: #22c55e; border-color: #16a34a; color: white; }
+        .disabled-choice { opacity: 0.5; cursor: not-allowed; }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
@@ -27,30 +28,27 @@
             
             <div id="start-screen" class="text-center">
                 <h2 class="text-2xl font-bold mb-4">Massive Haemorrhage Protocol Simulation</h2>
-                <p class="mb-6">You are the Biomedical Scientist in the transfusion lab. An MHP bleep is about to go off. Your job is to select the correct blood components for each pack as quickly as possible. Are you ready?</p>
+                <p class="mb-6">You are the Biomedical Scientist. An MHP is about to be activated. Your job is to follow the procedure correctly and dispatch the right components. Are you ready?</p>
                 <button id="start-button" class="bg-blue-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-600">Start Simulation</button>
             </div>
 
             <div id="game-screen" class="hidden">
                 <div class="flex justify-between items-center border-b pb-4 mb-4">
                     <div>
-                        <h2 class="text-2xl font-bold" id="scenario-title"></h2>
+                        <h2 class="text-xl font-bold" id="scenario-title"></h2>
                         <p class="text-gray-600" id="scenario-description"></p>
                     </div>
                     <div class="text-right">
-                        <div class="text-xl font-bold">Time: <span id="timer">30</span>s</div>
+                        <div id="timer-container" class="text-xl font-bold text-red-600">Time: <span id="timer">30</span>s</div>
                         <div class="text-lg">Score: <span id="score">0</span></div>
                     </div>
                 </div>
-
-                <div id="task-description" class="my-4 p-4 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700"></div>
-
-                <div id="component-choices" class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                    </div>
                 
-                <div id="feedback" class="mt-4 h-12 text-lg font-semibold"></div>
-
-                <button id="submit-pack-button" class="w-full mt-4 bg-red-600 text-white font-bold py-3 rounded-lg hover:bg-red-700">Dispatch Pack</button>
+                <div id="task-container">
+                    <div id="task-description" class="my-4 p-4 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 font-semibold"></div>
+                    <div id="choices-container"></div>
+                </div>
+                <div id="feedback" class="mt-4 h-12 text-lg font-semibold text-center"></div>
             </div>
             
             <div id="end-screen" class="hidden text-center">
@@ -64,152 +62,6 @@
 
     <div id="footer-placeholder"></div>
     <script src="js/component-loader.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // --- Elements ---
-            const startScreen = document.getElementById('start-screen');
-            const gameScreen = document.getElementById('game-screen');
-            const endScreen = document.getElementById('end-screen');
-            const startButton = document.getElementById('start-button');
-            const restartButton = document.getElementById('restart-button');
-            const scenarioTitleEl = document.getElementById('scenario-title');
-            const scenarioDescEl = document.getElementById('scenario-description');
-            const timerEl = document.getElementById('timer');
-            const scoreEl = document.getElementById('score');
-            const taskEl = document.getElementById('task-description');
-            const choicesEl = document.getElementById('component-choices');
-            const feedbackEl = document.getElementById('feedback');
-            const submitButton = document.getElementById('submit-pack-button');
-            const finalScoreEl = document.getElementById('final-score');
-
-            // --- Game Data & State ---
-            const allComponents = [
-                { id: 'o_neg_rbc', name: 'O Neg RBC' },
-                { id: 'o_pos_rbc', name: 'O Pos RBC' },
-                { id: 'group_rbc', name: 'Group Specific RBC' },
-                { id: 'ffp', name: 'FFP' },
-                { id: 'platelets', name: 'Platelets' },
-                { id: 'cryo', name: 'Cryoprecipitate' }
-            ];
-
-            const scenarios = [
-                {
-                    title: 'Trauma Case 1',
-                    description: '25 year old Female, Major Trauma from Road Traffic Accident.',
-                    stages: [
-                        { task: 'Select components for TRAUMA PACK 1.', solution: ['o_neg_rbc', 'ffp'], requiredCounts: { o_neg_rbc: 4, ffp: 4 } },
-                        { task: 'Sample arrived: Patient is A Positive. Select components for TRAUMA PACK 2.', solution: ['group_rbc', 'ffp', 'platelets'], requiredCounts: { group_rbc: 6, ffp: 4, platelets: 1 } }
-                    ]
-                },
-                {
-                    title: 'Trauma Case 2',
-                    description: '68 year old Male, Major Trauma from fall.',
-                    stages: [
-                        { task: 'Select components for TRAUMA PACK 1.', solution: ['o_pos_rbc', 'ffp'], requiredCounts: { o_pos_rbc: 4, ffp: 4 } },
-                        { task: 'Sample arrived: Patient is O Negative. Select components for TRAUMA PACK 2.', solution: ['group_rbc', 'ffp', 'platelets'], requiredCounts: { group_rbc: 6, ffp: 4, platelets: 1 } }
-                    ]
-                }
-            ];
-
-            let score, timer, timerInterval, currentScenario, currentStage;
-
-            // --- Functions ---
-            function startGame() {
-                score = 0;
-                currentScenario = scenarios[Math.floor(Math.random() * scenarios.length)];
-                currentStage = 0;
-                scoreEl.textContent = score;
-                
-                startScreen.classList.add('hidden');
-                endScreen.classList.add('hidden');
-                gameScreen.classList.remove('hidden');
-
-                loadStage();
-            }
-
-            function loadStage() {
-                const stageData = currentScenario.stages[currentStage];
-                scenarioTitleEl.textContent = currentScenario.title;
-                scenarioDescEl.textContent = currentScenario.description;
-                taskEl.textContent = stageData.task;
-                feedbackEl.textContent = '';
-                submitButton.disabled = false;
-
-                // Create choice buttons
-                choicesEl.innerHTML = '';
-                allComponents.forEach(comp => {
-                    const button = document.createElement('button');
-                    const requiredCount = stageData.requiredCounts[comp.id];
-                    button.id = comp.id;
-                    button.textContent = `${comp.name}${requiredCount ? ` (x${requiredCount})` : ''}`;
-                    button.dataset.component = comp.id;
-                    button.className = 'component-btn p-4 border-2 rounded-lg font-semibold';
-                    button.addEventListener('click', () => button.classList.toggle('selected'));
-                    choicesEl.appendChild(button);
-                });
-                
-                startTimer();
-            }
-
-            function startTimer() {
-                let timeLeft = 30;
-                timerEl.textContent = timeLeft;
-                timerInterval = setInterval(() => {
-                    timeLeft--;
-                    timerEl.textContent = timeLeft;
-                    if (timeLeft <= 0) {
-                        clearInterval(timerInterval);
-                        feedbackEl.textContent = "Time's up!";
-                        feedbackEl.className = 'mt-4 h-12 text-lg font-semibold text-red-600';
-                        submitButton.disabled = true;
-                        setTimeout(nextStage, 2000);
-                    }
-                }, 1000);
-            }
-
-            function handleSubmit() {
-                clearInterval(timerInterval);
-                const stageData = currentScenario.stages[currentStage];
-                const selected = Array.from(choicesEl.querySelectorAll('.selected')).map(btn => btn.dataset.component);
-
-                // Check if the set of selected components is correct
-                const isCorrect = selected.length === stageData.solution.length && selected.every(val => stageData.solution.includes(val));
-
-                if (isCorrect) {
-                    const points = parseInt(timerEl.textContent);
-                    score += points;
-                    scoreEl.textContent = score;
-                    feedbackEl.textContent = `Correct! +${points} points.`;
-                    feedbackEl.className = 'mt-4 h-12 text-lg font-semibold text-green-600';
-                } else {
-                    feedbackEl.textContent = 'Incorrect pack composition!';
-                    feedbackEl.className = 'mt-4 h-12 text-lg font-semibold text-red-600';
-                }
-
-                submitButton.disabled = true;
-                setTimeout(nextStage, 2000);
-            }
-
-            function nextStage() {
-                currentStage++;
-                if (currentStage >= currentScenario.stages.length) {
-                    endGame();
-                } else {
-                    loadStage();
-                }
-            }
-
-            function endGame() {
-                gameScreen.classList.add('hidden');
-                endScreen.classList.remove('hidden');
-                finalScoreEl.textContent = score;
-            }
-
-            // --- Event Listeners ---
-            startButton.addEventListener('click', startGame);
-            restartButton.addEventListener('click', startGame);
-            submitButton.addEventListener('click', handleSubmit);
-        });
-    </script>
+    <script src="mhp_game_logic.js"></script>
 </body>
 </html>
