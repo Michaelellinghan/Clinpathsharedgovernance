@@ -9,7 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <style>
         body { font-family: 'Inter', sans-serif; }
-        .hero-bg { background-image: url('https://images.unsplash.com/photo-1628334882270-038a3ba3be5b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; background-position: center; }
+        .hero-bg { background-image: url('https://images.unsplash.com/photo-1628334882270-038a3ba3be5b?q=80&w=2070&auto=format&fit=crop&ixlib-rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; background-position: center; }
         .text-shadow-lg { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
         .card-hover-effect { transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; }
         .card-hover-effect:hover { transform: translateY(-10px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
@@ -30,7 +30,7 @@
 
         <section class="bg-white p-8 rounded-lg shadow-md mb-8">
             <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Routine Haematology</h2>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
                 <a href="fbc_page.html" class="block bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300">
                     <div class="flex items-center">
                         <div class="text-4xl text-red-500 mr-4"><i class="fas fa-file-medical-alt"></i></div>
@@ -49,6 +49,15 @@
                         </div>
                     </div>
                 </a>
+                <a href="coagulation_page.html" class="block bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300">
+                    <div class="flex items-center">
+                        <div class="text-4xl text-teal-500 mr-4"><i class="fas fa-hourglass-half"></i></div>
+                        <div>
+                            <h3 class="text-2xl font-semibold mb-2">Routine Coagulation</h3>
+                            <p>Learn how we perform routine tests on your blood's ability to clot, such as the INR and APTT.</p>
+                        </div>
+                    </div>
+                </a>
                 <a href="further_haematology_tests_page.html" class="block bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300">
                     <div class="flex items-center">
                          <div class="text-4xl text-indigo-500 mr-4"><i class="fas fa-vial"></i></div>
@@ -64,15 +73,6 @@
         <section class="bg-white p-8 rounded-lg shadow-md mb-8">
             <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Specialist Haematology Areas</h2>
             <div class="grid md:grid-cols-2 gap-8">
-                <a href="coagulation_page.html" class="block bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300">
-                    <div class="flex items-center">
-                        <div class="text-4xl text-teal-500 mr-4"><i class="fas fa-hourglass-half"></i></div>
-                        <div>
-                            <h3 class="text-2xl font-semibold mb-2">Coagulation</h3>
-                            <p>Learn how we test your blood's ability to clot, including the specialist area of Haemostasis & Thrombophilia.</p>
-                        </div>
-                    </div>
-                </a>
                 <a href="red_cell_investigations_page.html" class="block bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300">
                      <div class="flex items-center">
                         <div class="text-4xl text-red-500 mr-4"><i class="fas fa-dna"></i></div>
@@ -82,6 +82,15 @@
                         </div>
                     </div>
                 </a>
+                <a href="haemostasis_thrombophilia_page.html" class="block bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300">
+                    <div class="flex items-center">
+                       <div class="text-4xl text-purple-500 mr-4"><i class="fas fa-search-plus"></i></div>
+                       <div>
+                           <h3 class="text-2xl font-semibold mb-2">Haemostasis & Thrombophilia</h3>
+                           <p>Dive deeper into our specialised tests for diagnosing inherited bleeding and clotting disorders.</p>
+                       </div>
+                   </div>
+               </a>
             </div>
         </section>
 
