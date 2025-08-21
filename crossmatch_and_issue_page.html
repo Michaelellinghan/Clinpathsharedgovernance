@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crossmatch & Electronic Issue - Clinical Pathology</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .hero-bg-xm {
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1620955219569-3221035515a7?q=80&w=1932&auto=format&fit=crop&ixlib-rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="header-placeholder"></div>
+
+    <main class="container mx-auto px-4 py-8">
+        
+        <section class="hero-bg-xm text-white rounded-lg p-16 mb-8 text-center shadow-lg">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4">Crossmatch & Issue</h1>
+            <p class="text-lg md:text-2xl max-w-3xl mx-auto">The final, critical safety check before transfusion.</p>
+        </section>
+
+        <section class="bg-white p-8 rounded-lg shadow-md mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">The Last Step: Ensuring Compatibility</h2>
+            <p class="text-lg">Once a patient's group and screen is complete, and blood has been requested, the final step is to issue compatible units. This process can be done in two ways: a traditional serological crossmatch or a modern electronic issue. The method we use depends on the patient's transfusion history and antibody status.</p>
+        </section>
+        
+        <section class="bg-white p-8 rounded-lg shadow-md mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Methods of Issue</h2>
+            <div class="flex flex-col md:flex-row gap-8">
+                <div class="md:w-1/2 bg-gray-50 p-6 rounded-lg">
+                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-flask text-green-500 mr-2"></i>Full Serological Crossmatch</h3>
+                    <p class="mb-4">This is the traditional "wet" crossmatch. We physically mix the patient's plasma with red cells from the actual donor unit that we intend to issue. We incubate this mixture at 37°C and then check for agglutination (clumping).</p>
+                    <p class="mb-4"><strong>If there is no agglutination, the blood is compatible and safe to issue.</strong></p>
+                    <p>We must perform a full serological crossmatch if:</p>
+                    <ul class="list-disc list-inside space-y-2">
+                        <li>The patient has a currently positive antibody screen.</li>
+                        <li>The patient has a history of clinically significant antibodies.</li>
+                        <li>There are any discrepancies or uncertainties in the patient's record.</li>
+                    </ul>
+                </div>
+                <div class="md:w-1/2 bg-gray-50 p-6 rounded-lg">
+                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-desktop text-blue-500 mr-2"></i>Electronic Issue (EI)</h3>
+                    <p class="mb-4">Electronic issue is a "virtual" crossmatch performed by our laboratory information system (LIMS). Instead of physically mixing samples, the computer checks a series of rules to ensure safety.</p>
+                     <p class="mb-4">To be eligible for electronic issue, a patient must:</p>
+                    <ul class="list-disc list-inside space-y-2">
+                        <li>Have a current negative antibody screen.</li>
+                        <li>Have no history of clinically significant antibodies.</li>
+                        <li>Have a validated blood group on record (usually from two separate samples).</li>
+                    </ul>
+                    <p class="mt-4">If all the rules are met, the computer allows us to select compatible units from our stock and issue them without a wet crossmatch. Electronic issue is safe, fast, and efficient, allowing us to get blood to patients quickly.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="text-center mt-12">
+            <a href="what_transfusion_does.html" class="bg-gray-800 text-white font-bold py-3 px-8 rounded-full hover:bg-gray-700 transition duration-300">
+                <i class="fas fa-arrow-left mr-2"></i>Back to Transfusion Overview
+            </a>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+      <script src="js/component-loader.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            feather.replace();
+        });
+   </script>
+</body>
+</html>
