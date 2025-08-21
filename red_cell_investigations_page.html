@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Red Cell Investigations - Clinical Pathology</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .hero-bg-redcell { background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1558502951-01723a1376a2?q=80&w=1955&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; background-position: center; }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
+
+    <div id="header-placeholder"></div>
+
+    <main class="container mx-auto px-4 py-8 flex-grow">
+
+        <section class="hero-bg-redcell text-white rounded-lg p-16 mb-8 text-center shadow-lg">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4">Red Cell Investigations</h1>
+            <p class="text-lg md:text-2xl max-w-3xl mx-auto">Screening for inherited red cell disorders.</p>
+        </section>
+
+        <section class="bg-white p-8 rounded-lg shadow-md mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">Haemoglobinopathy Screening</h2>
+            <div class="flex flex-col md:flex-row gap-8 items-center">
+                <div class="md:w-2/3">
+                    <p class="mb-4 text-lg">A haemoglobinopathy is a genetic disorder caused by an abnormal structure of one of the globin chains of the haemoglobin molecule. The two most common and important examples are <strong>Sickle Cell Disease</strong> and <strong>Thalassaemia</strong>.</p>
+                    <p class="mb-4 text-lg">We screen for these conditions using a technique called High-Performance Liquid Chromatography (HPLC). This method separates out the different types of haemoglobin in a patient's blood, allowing us to detect abnormal variants (like Haemoglobin S in sickle cell) or identify patterns that suggest thalassaemia.</p>
+                    <p class="text-lg">This screening is a vital part of the national antenatal screening programme and is also essential for patients before they receive an anaesthetic for surgery.</p>
+                </div>
+                <div class="md:w-1/3">
+                    <img src="morphology/2403BF1/HPLC.JPG" alt="HPLC Chromatogram" class="rounded-lg shadow-lg">
+                </div>
+            </div>
+        </section>
+        
+        <section class="text-center mt-12">
+            <a href="further_investigations_hub.html" class="bg-gray-800 text-white font-bold py-3 px-8 rounded-full hover:bg-gray-700 transition duration-300">
+                <i class="fas fa-arrow-left mr-2"></i>Back to Further Investigations
+            </a>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="js/component-loader.js"></script>
+
+</body>
+</html>
