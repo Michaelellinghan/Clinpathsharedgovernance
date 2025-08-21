@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Routine Coagulation Tests - Clinical Pathology</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .hero-bg-routine-coag { background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1618939303117-b236f38d391a?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; background-position: center; }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
+
+    <div id="header-placeholder"></div>
+
+    <main class="container mx-auto px-4 py-8 flex-grow">
+
+        <section class="hero-bg-routine-coag text-white rounded-lg p-16 mb-8 text-center shadow-lg">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4">Routine Coagulation Tests</h1>
+            <p class="text-lg md:text-2xl max-w-3xl mx-auto">The first step in assessing bleeding and clotting.</p>
+        </section>
+
+        <section class="bg-white p-8 rounded-lg shadow-md mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Our Core Clotting Tests</h2>
+            <p class="text-lg max-w-3xl mx-auto text-center mb-8">These tests are our first-line investigations into the clotting system. They provide a quick and effective overview, helping doctors to monitor medication, prepare patients for surgery, and decide if more specialist testing is needed.</p>
+
+            <div class="space-y-8">
+                <div class="p-6 bg-gray-50 rounded-lg">
+                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-chart-line text-green-600 mr-2"></i>Prothrombin Time (PT) and INR</h3>
+                    <p>The PT measures how long it takes for a clot to form in a blood sample. It specifically assesses the 'extrinsic' and common pathways of the clotting cascade. Its most frequent use is to calculate the <strong>International Normalised Ratio (INR)</strong>, which is essential for monitoring patients on Warfarin therapy to ensure their blood is appropriately thinned.</p>
+                </div>
+                <div class="p-6 bg-gray-50 rounded-lg">
+                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-project-diagram text-blue-600 mr-2"></i>Activated Partial Thromboplastin Time (APTT)</h3>
+                    <p>The APTT measures the 'intrinsic' and common pathways of the cascade. It is commonly used as a pre-operative screen to check for underlying bleeding tendencies and for monitoring patients on Heparin therapy. An unexpectedly prolonged APTT would trigger further investigation into specific clotting factor deficiencies, like Haemophilia.</p>
+                </div>
+                <div class="p-6 bg-gray-50 rounded-lg">
+                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-cubes text-purple-600 mr-2"></i>Fibrinogen</h3>
+                    <p>Fibrinogen is a key protein (Factor I) that is converted into fibrin threads to form the structure of a blood clot. We measure the level of fibrinogen in the blood, which is particularly important in cases of major bleeding or a condition called Disseminated Intravascular Coagulation (DIC), where the clotting system becomes overactive and uses up all the fibrinogen.</p>
+                </div>
+                <div class="p-6 bg-gray-50 rounded-lg">
+                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-search-plus text-red-600 mr-2"></i>D-Dimer</h3>
+                    <p>When a blood clot is broken down by the body, tiny protein fragments called D-Dimers are released. A normal D-Dimer level is very useful for helping to <strong>rule out</strong> the presence of a dangerous clot, such as a Deep Vein Thrombosis (DVT) in the leg or a Pulmonary Embolus (PE) in the lungs. However, a high level can be caused by many other conditions, so it is less useful for confirming a clot.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="text-center mt-12">
+            <a href="coagulation_page.html" class="bg-gray-800 text-white font-bold py-3 px-8 rounded-full hover:bg-gray-700 transition duration-300">
+                <i class="fas fa-arrow-left mr-2"></i>Back to Coagulation Overview
+            </a>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="js/component-loader.js"></script>
+
+</body>
+</html>
