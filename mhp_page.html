@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Massive Haemorrhage Protocol - Clinical Pathology</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .hero-bg-mhp {
+            background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1559742810-1d2b59a2664b?q=80&w=2070&auto=format&fit=crop&ixlib-rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="header-placeholder"></div>
+
+    <main class="container mx-auto px-4 py-8">
+        
+        <section class="hero-bg-mhp text-white rounded-lg p-16 mb-8 text-center shadow-lg">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4">Massive Haemorrhage Protocol (MHP)</h1>
+            <p class="text-lg md:text-2xl max-w-3xl mx-auto">Our emergency response for critical bleeding.</p>
+        </section>
+
+        <section class="bg-white p-8 rounded-lg shadow-md mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">What is a Massive Haemorrhage?</h2>
+            <p class="text-lg">A massive haemorrhage is defined as the loss of 50% of a patient's blood volume within 3 hours, or a bleeding rate of 150 ml per minute. It is a life-threatening medical emergency that requires an immediate and coordinated response. The Transfusion laboratory plays a critical role in providing blood components rapidly to sustain life.</p>
+        </section>
+        
+        <section class="bg-white p-8 rounded-lg shadow-md mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">The Laboratory Response</h2>
+            <div class="space-y-6">
+                <div>
+                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-bell text-red-500 mr-2"></i>Activation</h3>
+                    <p>The MHP is activated by the senior clinician in charge of the patient by calling the switchboard. A dedicated bleep is set off in the transfusion lab, which takes absolute priority over all other work. We immediately begin preparing emergency blood components.</p>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-box-open text-blue-500 mr-2"></i>Pack 1: The Initial Response</h3>
+                    <p>There is no time to perform a group and screen. We immediately issue a pre-prepared pack containing:</p>
+                    <ul class="list-disc list-inside space-y-2 mt-2">
+                        <li><strong>4 units of Red Blood Cells:</strong> These are group O. For females under 50, we issue O Negative blood. For males and females over 50, we issue O Positive blood to conserve stocks of O Negative.</li>
+                        <li><strong>4 units of Fresh Frozen Plasma (FFP):</strong> The plasma is pre-thawed and ready for immediate use to help with clotting.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-sync-alt text-green-500 mr-2"></i>Pack 2 and Beyond: Targeted Support</h3>
+                    <p>While Pack 1 is being transfused, we urgently process the patient's blood sample. Once we know their blood group, we switch to providing group-specific blood. Subsequent packs are guided by laboratory results and clinical need, and may contain:</p>
+                     <ul class="list-disc list-inside space-y-2 mt-2">
+                        <li>More Red Blood Cells</li>
+                        <li>More FFP</li>
+                        <li>Platelets</li>
+                        <li>Cryoprecipitate (a concentrated source of clotting factors)</li>
+                    </ul>
+                    <p class="mt-4">The haematology registrar is informed and provides expert guidance throughout the event, liaising between the clinical team and the laboratory to ensure the right components are given at the right time.</p>
+                </div>
+                 <div>
+                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-hand-paper text-gray-500 mr-2"></i>Stand Down</h3>
+                    <p>The clinical team will "stand down" the MHP when the bleeding is under control. We then account for all issued units, manage any remaining stock, and ensure all documentation is complete for traceability.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="text-center mt-12">
+            <a href="what_transfusion_does.html" class="bg-gray-800 text-white font-bold py-3 px-8 rounded-full hover:bg-gray-700 transition duration-300">
+                <i class="fas fa-arrow-left mr-2"></i>Back to Transfusion Overview
+            </a>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+      <script src="js/component-loader.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            feather.replace();
+        });
+   </script>
+</body>
+</html>
