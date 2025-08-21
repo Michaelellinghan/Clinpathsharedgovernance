@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Grouping Game - Clinical Pathology</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .reaction-well {
+            width: 100px;
+            height: 100px;
+            border: 2px solid #cbd5e1; /* slate-300 */
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        .positive {
+            background-color: #ef4444; /* red-500 */
+            background-image: radial-gradient(#dc2626 20%, transparent 20%), radial-gradient(#dc2626 20%, transparent 20%);
+            background-size: 15px 15px;
+            background-position: 0 0, 7.5px 7.5px;
+        }
+        .negative {
+            background-color: #f87171; /* red-400 */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
+
+    <div id="header-placeholder"></div>
+
+    <main class="container mx-auto px-4 py-8 flex-grow">
+
+        <section class="text-center mb-8">
+            <h1 class="text-4xl md:text-5xl font-bold mb-2">The Blood Grouping Challenge</h1>
+            <p class="text-lg text-gray-600">Interpret the reactions and determine the patient's blood group!</p>
+        </section>
+
+        <div class="bg-white p-6 rounded-lg shadow-md max-w-4xl mx-auto">
+            <div class="flex justify-between items-start mb-6">
+                <div>
+                    <h2 class="text-2xl font-bold">Patient Sample</h2>
+                    <p id="feedback" class="mt-1 h-6 text-lg font-semibold text-gray-500">What is the blood group?</p>
+                </div>
+                <div class="text-xl font-bold text-right">Score: <span id="score">0</span></div>
+            </div>
+
+            <div class="flex justify-around items-center bg-gray-100 p-6 rounded-lg">
+                <div class="text-center">
+                    <div id="reaction-a" class="reaction-well mx-auto"></div>
+                    <p class="mt-2 font-bold text-lg">Anti-A</p>
+                </div>
+                <div class="text-center">
+                    <div id="reaction-b" class="reaction-well mx-auto"></div>
+                    <p class="mt-2 font-bold text-lg">Anti-B</p>
+                </div>
+                <div class="text-center">
+                    <div id="reaction-d" class="reaction-well mx-auto"></div>
+                    <p class="mt-2 font-bold text-lg">Anti-D (Rh)</p>
+                </div>
+            </div>
+
+            <div id="answer-buttons" class="grid grid-cols-4 md:grid-cols-4 gap-4 mt-6">
+                </div>
+        </div>
+
+        <section class="mt-8 bg-white p-6 rounded-lg shadow-md max-w-4xl mx-auto">
+            <h2 class="text-2xl font-bold mb-4 text-center">How to Interpret Forward Group Reactions</h2>
+            <div class="text-left">
+                <p><span class="font-bold">Positive (+) Reaction (Agglutination):</span> Means the antigen is PRESENT on the red cells.</p>
+                <p><span class="font-bold">Negative (-) Reaction (No Agglutination):</span> Means the antigen is ABSENT from the red cells.</p>
+                <ul class="list-disc list-inside mt-4 space-y-1">
+                    <li>If Anti-A is positive, the patient has the <strong>A antigen</strong>.</li>
+                    <li>If Anti-B is positive, the patient has the <strong>B antigen</strong>.</li>
+                    <li>If both are positive, they have <strong>A and B antigens</strong> (Group AB).</li>
+                    <li>If both are negative, they have <strong>neither antigen</strong> (Group O).</li>
+                    <li>If Anti-D is positive, the patient is <strong>Rh Positive (+)</strong>.</li>
+                    <li>If Anti-D is negative, the patient is <strong>Rh Negative (-)</strong>.</li>
+                </ul>
+            </div>
+        </section>
+        
+        <section class="text-center mt-12">
+            <a href="games.html" class="bg-gray-800 text-white font-bold py-3 px-8 rounded-full hover:bg-gray-700 transition duration-300">
+                <i class="fas fa-arrow-left mr-2"></i>Back to Games
+            </a>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+    <script src="js/component-loader.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const problems = [
+                { reactions: ['-', '-', '-'], group: 'O-' },
+                { reactions: ['-', '-', '+'], group: 'O+' },
+                { reactions: ['+', '-', '-'], group: 'A-' },
+                { reactions: ['+', '-', '+'], group: 'A+' },
+                { reactions: ['-', '+', '-'], group: 'B-' },
+                { reactions: ['-', '+', '+'], group: 'B+' },
+                { reactions: ['+', '+', '-'], group: 'AB-' },
+                { reactions: ['+', '+', '+'], group: 'AB+' }
+            ];
+
+            const bloodGroups = ['O-', 'O+', 'A-', 'A+', 'B-', 'B+', 'AB-', 'AB+'];
+
+            const reactionA = document.getElementById('reaction-a');
+            const reactionB = document.getElementById('reaction-b');
+            const reactionD = document.getElementById('reaction-d');
+            const answerButtonsContainer = document.getElementById('answer-buttons');
+            const feedbackEl = document.getElementById('feedback');
+            const scoreEl = document.getElementById('score');
+
+            let currentProblem = {};
+            let currentScore = 0;
+
+            function generateNewProblem() {
+                feedbackEl.textContent = 'What is the blood group?';
+                feedbackEl.className = 'mt-1 h-6 text-lg font-semibold text-gray-500';
+
+                // Get a random problem
+                currentProblem = problems[Math.floor(Math.random() * problems.length)];
+
+                // Update reaction wells visually
+                const [a, b, d] = currentProblem.reactions;
+                
+                reactionA.className = 'reaction-well mx-auto ' + (a === '+' ? 'positive' : 'negative');
+                reactionB.className = 'reaction-well mx-auto ' + (b === '+' ? 'positive' : 'negative');
+                reactionD.className = 'reaction-well mx-auto ' + (d === '+' ? 'positive' : 'negative');
+
+                // Enable buttons
+                answerButtonsContainer.querySelectorAll('button').forEach(btn => btn.disabled = false);
+            }
+
+            function checkAnswer(selectedGroup) {
+                 // Disable all buttons to prevent multiple clicks
+                answerButtonsContainer.querySelectorAll('button').forEach(btn => btn.disabled = true);
+
+                if (selectedGroup === currentProblem.group) {
+                    feedbackEl.textContent = 'Correct!';
+                    feedbackEl.className = 'mt-1 h-6 text-lg font-semibold text-green-600';
+                    currentScore++;
+                    scoreEl.textContent = currentScore;
+                    setTimeout(generateNewProblem, 1500); // Next question after 1.5s
+                } else {
+                    feedbackEl.textContent = `Incorrect. The group is ${currentProblem.group}.`;
+                    feedbackEl.className = 'mt-1 h-6 text-lg font-semibold text-red-600';
+                    setTimeout(generateNewProblem, 2000); // Next question after 2s
+                }
+            }
+
+            // Create answer buttons
+            bloodGroups.forEach(group => {
+                const button = document.createElement('button');
+                button.textContent = group;
+                button.className = 'w-full p-4 bg-blue-500 text-white font-bold rounded-lg hover:bg-blue-600 transition-colors duration-300 disabled:bg-gray-400';
+                button.addEventListener('click', () => checkAnswer(group));
+                answerButtonsContainer.appendChild(button);
+            });
+            
+            // Initialise Game
+            generateNewProblem();
+        });
+    </script>
+</body>
+</html>
