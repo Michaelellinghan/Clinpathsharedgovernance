@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group & Screen - Clinical Pathology</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .hero-bg-gs {
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1579154286823-0c4e12354a63?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="header-placeholder"></div>
+
+    <main class="container mx-auto px-4 py-8">
+        
+        <section class="hero-bg-gs text-white rounded-lg p-16 mb-8 text-center shadow-lg">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4">The Group & Screen</h1>
+            <p class="text-lg md:text-2xl max-w-3xl mx-auto">The cornerstone of safe transfusion practice.</p>
+        </section>
+
+        <section class="bg-white p-8 rounded-lg shadow-md mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">What is a Group and Screen?</h2>
+            <p class="text-lg">The "Group and Screen" (G&S) is one of the most common tests we perform. It's the first and most critical step in pre-transfusion testing. The test has two essential parts: determining the patient's blood group and screening their plasma for any unexpected red cell antibodies.</p>
+        </section>
+
+        <section class="bg-white p-8 rounded-lg shadow-md mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">The Two Parts of the Test</h2>
+            <div class="flex flex-col md:flex-row gap-8">
+                <div class="md:w-1/2 bg-gray-50 p-6 rounded-lg">
+                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-dna text-red-500 mr-2"></i>1. The 'Group' (ABO and D Typing)</h3>
+                    <p class="mb-4">This part of the test determines the patient's blood group. We perform two checks:</p>
+                    <ul class="list-disc list-inside space-y-2">
+                        <li><strong>Forward Group:</strong> We test the patient's red blood cells to see which antigens (A, B, and D) are present on their surface.</li>
+                        <li><strong>Reverse Group:</strong> We test the patient's plasma to see which antibodies (Anti-A and Anti-B) they have.</li>
+                    </ul>
+                    <p class="mt-4">According to Landsteiner's Law, the forward and reverse group results must be a mirror image of each other for the group to be valid. For example, a group A patient will have A antigens on their cells and Anti-B antibodies in their plasma.</p>
+                </div>
+                <div class="md:w-1/2 bg-gray-50 p-6 rounded-lg">
+                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-search-plus text-blue-500 mr-2"></i>2. The 'Screen' (Antibody Screen)</h3>
+                    <p class="mb-4">This test looks for "atypical" or "unexpected" antibodies in the patient's plasma. These are antibodies against other red cell antigens outside of the ABO system.</p>
+                     <p class="mb-4">Patients can develop these antibodies after being exposed to red cells that are different from their own, which can happen during:</p>
+                    <ul class="list-disc list-inside space-y-2">
+                        <li>A previous blood transfusion</li>
+                        <li>Pregnancy</li>
+                    </ul>
+                     <p class="mt-4">If the screen is positive, we must perform further tests to identify the specific antibody. This is crucial because if a patient receives blood with the corresponding antigen, it can cause a serious transfusion reaction. Finding and identifying antibodies before a transfusion is a key part of our job.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="text-center mt-12">
+            <a href="what_transfusion_does.html" class="bg-gray-800 text-white font-bold py-3 px-8 rounded-full hover:bg-gray-700 transition duration-300">
+                <i class="fas fa-arrow-left mr-2"></i>Back to Transfusion Overview
+            </a>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+      <script src="js/component-loader.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            feather.replace();
+        });
+   </script>
+</body>
+</html>
