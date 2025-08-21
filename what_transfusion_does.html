@@ -11,7 +11,7 @@
             font-family: 'Inter', sans-serif;
         }
         .hero-bg-transfusion {
-            background-image: url('https://images.unsplash.com/photo-1581091224254-7a7b82c16a3c?q=80&w=2070&auto=format&fit=crop&ixlib-rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-image: url('https://images.unsplash.com/photo-1581091224254-7a7b82c16a3c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
             background-size: cover;
             background-position: center;
         }
@@ -27,11 +27,11 @@
         }
     </style>
 </head>
-<body class="bg-gray-100 text-gray-800">
+<body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
 
     <div id="header-placeholder"></div>
 
-    <main class="container mx-auto px-4 py-8">
+    <main class="container mx-auto px-4 py-8 flex-grow">
         
         <section class="hero-bg-transfusion text-white rounded-lg p-8 md:p-16 mb-8 flex items-center justify-center text-center shadow-lg">
             <div>
@@ -47,8 +47,8 @@
                     <p class="mb-4 text-lg">The Blood Transfusion department is the vital link between a blood donation and a patient receiving a life-saving transfusion. Our primary role is to ensure that every bag of blood or blood component is safe and, most importantly, compatible with the patient who needs it.</p>
                     <p class="text-lg">We perform a series of critical tests to match donated blood with a patient's own blood type. We're on call 24/7, ready to respond to routine requests for surgery and to life-or-death emergencies where every second counts. Explore our detailed pages to learn more about our key processes.</p>
                 </div>
-                <div class="md:w-1/3 flex items-center justify-center">
-                    <img src="lab.jpg" alt="Blood bank refrigerator" class="rounded-lg shadow-lg">
+                <div class="md:w-1/3 h-64 flex items-center justify-center">
+                    <img src="lab.jpg" alt="Blood bank refrigerator" class="rounded-lg shadow-lg w-full h-full object-cover">
                 </div>
             </div>
         </section>
@@ -111,11 +111,21 @@
 
     <div id="footer-placeholder"></div>
 
-      <script src="js/component-loader.js"></script>
-    
     <script>
+        // Function to load components
+        const loadComponent = (url, placeholderId) => {
+            fetch(url)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById(placeholderId).innerHTML = data;
+                })
+                .catch(error => console.error('Error loading component:', error));
+        };
+
+        // Load header and footer on page load
         document.addEventListener('DOMContentLoaded', () => {
-            feather.replace();
+            loadComponent('header.html', 'header-placeholder');
+            loadComponent('footer.html', 'footer-placeholder');
         });
    </script>
 </body>
