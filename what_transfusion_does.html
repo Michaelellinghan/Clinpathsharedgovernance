@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>What Transfusion Does - Clinical Pathology</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <link href="https://unpkg.com/tailwindcss@^3/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
@@ -15,7 +14,6 @@
             background-image: url('https://images.unsplash.com/photo-1581091224254-7a7b82c16a3c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
             background-size: cover;
             background-position: center;
-            background-attachment: fixed;
         }
         .text-shadow-lg {
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
@@ -27,179 +25,80 @@
             transform: translateY(-5px);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
-        .high-contrast-text {
-            color: #1a202c;
-        }
-        .accordion-button {
-            cursor: pointer;
-        }
-        .accordion-content {
-            display: none;
-        }
-        .accordion-content.active {
-            display: block;
-        }
     </style>
 </head>
-<body class="bg-gray-100 text-gray-800 antialiased">
+<body class="bg-gray-100 text-gray-800">
 
     <div id="header-placeholder"></div>
 
     <main class="container mx-auto px-4 py-8">
         
-        <section aria-labelledby="hero-title" class="hero-bg-transfusion text-white rounded-lg p-8 md:p-16 mb-8 flex items-center justify-center text-center shadow-lg">
-            <div class="max-w-4xl mx-auto">
-                <h1 id="hero-title" class="text-4xl md:text-6xl font-bold mb-4 text-shadow-lg">Blood Transfusion: The Gift of Life</h1>
-                <p class="text-lg md:text-2xl max-w-3xl mx-auto text-shadow-lg">Ensuring the right blood gets to the right patient at the right time – safely and quickly.</p>
+        <section class="hero-bg-transfusion text-white rounded-lg p-8 md:p-16 mb-8 flex items-center justify-center text-center shadow-lg">
+            <div>
+                <h1 class="text-4xl md:text-6xl font-bold mb-4 text-shadow-lg">Blood Transfusion: The Gift of Life</h1>
+                <p class="text-lg md:text-2xl max-w-3xl mx-auto text-shadow-lg">Ensuring the right blood gets to the right patient at the right time.</p>
             </div>
-        </section> <section aria-labelledby="lab-intro" class="bg-white p-8 rounded-lg shadow-md mb-8">
-            <h2 id="lab-intro" class="text-3xl font-bold text-gray-900 mb-4 high-contrast-text">What is the Blood Transfusion Lab?</h2>
+        </section>
+
+        <section class="bg-white p-8 rounded-lg shadow-md mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">What is the Blood Transfusion Lab?</h2>
             <div class="flex flex-col md:flex-row gap-8 items-center">
                 <div class="md:w-2/3">
-                    <p class="mb-4 text-lg leading-relaxed">Imagine being the vital bridge between a generous blood donor and a patient in desperate need. That's us – the Blood Transfusion team. We're like matchmakers for blood, ensuring every donation is perfectly compatible with the person who receives it. This prevents dangerous reactions and saves lives every day.</p>
-                    <p class="text-lg leading-relaxed mb-4">We handle everything from routine pre-surgery checks to emergency responses where seconds count. Our lab runs 24/7, testing blood samples, selecting the right blood products, and making sure they're ready when needed. We deal with red cells for oxygen transport, platelets to stop bleeding, plasma for clotting, and more specialised products.</p>
-                    <p class="text-lg leading-relaxed">Safety is our top priority. We follow strict rules to trace every unit from donor to patient, and we're always prepared for recalls or emergencies. Whether it's a planned operation or a sudden trauma, we're the team making sure the blood is there – and it's safe.</p>
+                    <p class="mb-4 text-lg">The Blood Transfusion department is the vital link between a blood donation and a patient receiving a life-saving transfusion. Our primary role is to ensure that every bag of blood or blood component is safe and, most importantly, compatible with the patient who needs it.</p>
+                    <p class="text-lg">We perform a series of critical tests to match donated blood with a patient's own blood type. This process, called <strong>crossmatching</strong>, prevents dangerous transfusion reactions. We're on call 24/7, ready to respond to routine requests for surgery and to life-or-death emergencies where every second counts.</p>
                 </div>
                 <div class="md:w-1/3 flex items-center justify-center">
-                    <img src="https://images.unsplash.com/photo-1604881991720-f91add269612?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Blood bags ready for transfusion in a clinical setting" class="rounded-lg shadow-lg object-cover">
+                    <img src="https://images.unsplash.com/photo-1604881991720-f91add269612?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Blood bags" class="rounded-lg shadow-lg">
                 </div>
             </div>
         </section>
 
-        <section aria-labelledby="group-screen" class="bg-white p-8 rounded-lg shadow-md mb-8">
-            <h2 id="group-screen" class="text-3xl font-bold text-gray-900 mb-4 high-contrast-text">The Group & Screen: The Foundation of Safe Transfusion</h2>
-            <p class="text-lg mb-6 max-w-4xl mx-auto leading-relaxed">Think of this as the essential first check before any blood transfusion. It's like verifying someone's ID before letting them into a secure area – but for blood. We need to know your blood type and check for any hidden 'troublemakers' that could cause problems.</p>
-            <div class="grid md:grid-cols-2 gap-6 mb-6">
-                <div class="bg-gray-50 p-6 rounded-lg card-hover-effect">
-                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-vials text-blue-600 mr-2"></i>The 'Group': Finding Your Blood Type</h3>
-                    <p class="leading-relaxed mb-2">We test your blood to determine your ABO group (A, B, AB, or O) and whether you're RhD positive or negative. This is done in two ways:</p>
-                    <ul class="list-disc pl-5 mb-2">
-                        <li><strong>Forward Typing:</strong> We mix your red blood cells with special antibodies to see which ones they react with.</li>
-                        <li><strong>Reverse Typing:</strong> We check your plasma for natural antibodies against A or B blood types.</li>
-                    </ul>
-                    <p class="leading-relaxed">Both tests must match perfectly – that's called Landsteiner's Law. If there's any mismatch or a weak reaction (like a 'weak D'), we investigate further with manual tests to get it right.</p>
+        <section class="bg-white p-8 rounded-lg shadow-md mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">The Group & Screen: Our Core Safety Test</h2>
+            <p class="text-lg mb-6 max-w-4xl mx-auto">Before any transfusion, we must be absolutely certain the donor's blood won't be rejected by the patient's body. The 'Group and Screen' is the first step.</p>
+            <div class="flex flex-col md:flex-row gap-8 items-center">
+                <div class="md:w-1/2">
+                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-vials text-blue-500 mr-2"></i>1. The 'Group'</h3>
+                    <p>We determine the patient's ABO and RhD blood group. We test the patient's red cells to see what antigens are on their surface, and we test their plasma to see which ABO antibodies they have. The two tests must match for the group to be valid - this is called Landsteiner's Law.</p>
                 </div>
-                <div class="bg-gray-50 p-6 rounded-lg card-hover-effect">
-                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-search text-green-600 mr-2"></i>The 'Screen': Hunting for Antibodies</h3>
-                    <p class="leading-relaxed mb-2">Your body might have developed antibodies from previous transfusions, pregnancies, or even naturally. These could attack donor blood. We mix your plasma with a panel of test red cells that have known surface markers (antigens).</p>
-                    <p class="leading-relaxed mb-2">If there's no reaction, it's negative – good news! If positive, we move to detailed identification. This screen is crucial because undetected antibodies can cause severe reactions during transfusion.</p>
-                    <p class="leading-relaxed">Samples are valid for a certain time (usually 72 hours if you've been transfused recently), so we might need fresh ones for ongoing care.</p>
-                </div>
-            </div>
-            <p class="text-lg text-center italic">Fun fact: There are over 300 known blood group antigens, but ABO and Rh are the most important for everyday transfusions!</p>
-        </section>
-
-        <section aria-labelledby="antibody-testing" class="bg-gray-50 p-8 rounded-lg shadow-inner mb-8">
-            <h2 id="antibody-testing" class="text-3xl font-bold text-gray-900 mb-4 high-contrast-text">Antibody Testing: When the Screen Flags a Problem</h2>
-            <p class="text-lg mb-6 leading-relaxed">If the antibody screen shows something unusual, we don't panic – we investigate! This is like solving a puzzle to identify exactly what's causing the reaction, so we can find safe blood for you.</p>
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="bg-white p-6 rounded-lg shadow-md card-hover-effect">
-                    <h3 class="text-xl font-semibold mb-2 text-center">Identification Panels</h3>
-                    <p class="text-sm leading-relaxed">We use larger sets of test cells (like 11-cell panels) with known antigen patterns. By seeing which cells react, we can pinpoint the antibody – maybe anti-Kell, anti-Duffy, or others. Sometimes we use enzymes to enhance reactions or special techniques for tricky cases.</p>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-md card-hover-effect">
-                    <h3 class="text-xl font-semibold mb-2 text-center">Titration: Measuring Strength</h3>
-                    <p class="text-sm leading-relaxed">We dilute the plasma step by step and test each dilution. The highest dilution that still reacts gives the 'titre'. This is important for pregnant women (to assess risk to the baby) or when monitoring antibody levels over time.</p>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-md card-hover-effect">
-                    <h3 class="text-xl font-semibold mb-2 text-center">Special Cases</h3>
-                    <p class="text-sm leading-relaxed">For autoimmune issues (where antibodies attack your own cells), we do tests like the Direct Antiglobulin Test (DAT). In complex cases, we might send samples to reference labs for expert help.</p>
+                <div class="md:w-1/2">
+                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-search text-green-500 mr-2"></i>2. The 'Screen'</h3>
+                    <p>We screen the patient's plasma for any pre-existing antibodies against other, less common, blood group antigens. These antibodies could have been developed from previous transfusions or pregnancies. If this screen is positive, we must perform detailed investigations to identify the antibody before we can find compatible blood.</p>
                 </div>
             </div>
         </section>
 
-        <section aria-labelledby="crossmatch" class="bg-white p-8 rounded-lg shadow-md mb-8">
-            <h2 id="crossmatch" class="text-3xl font-bold text-gray-900 mb-4 high-contrast-text">Full Crossmatch vs Electronic Issue: Selecting the Perfect Match</h2>
-            <p class="text-lg mb-6 leading-relaxed">Once we know your group and any antibodies, it's time to pick donor blood. We have two ways to do this – one hands-on, one high-tech – both ensuring safety.</p>
-            <div class="grid md:grid-cols-2 gap-6">
-                <div class="bg-gray-50 p-6 rounded-lg card-hover-effect">
-                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-microscope text-purple-600 mr-2"></i>Full Serological Crossmatch</h3>
-                    <p class="leading-relaxed mb-2">The traditional method: We physically mix your plasma with a sample from the donor unit and check for reactions using gel cards or tubes. If it clumps, it's incompatible. This is used when you have antibodies or no valid historical records.</p>
-                    <p class="leading-relaxed">It takes longer (about 45 minutes) but is thorough. We might need to test multiple units to find the right ones.</p>
-                </div>
-                <div class="bg-gray-50 p-6 rounded-lg card-hover-effect">
-                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-laptop-medical text-indigo-600 mr-2"></i>Electronic Issue (EI)</h3>
-                    <p class="leading-relaxed mb-2">The faster way: If your screen is negative and we have two matching historical groups, our computer system selects compatible units automatically. No physical mixing needed!</p>
-                    <p class="leading-relaxed">This can be done in minutes, perfect for routine cases. But strict rules apply – no antibodies, valid sample, and electronic tracking for safety.</p>
-                </div>
-            </div>
-        </section>
-
-        <section aria-labelledby="mhp" class="bg-red-700 text-white p-8 rounded-lg shadow-md mb-8">
-            <h2 id="mhp" class="text-3xl font-bold mb-4 text-center">Massive Haemorrhage Protocol: Emergency Lifesavers</h2>
-            <p class="text-lg mb-6 max-w-3xl mx-auto leading-relaxed text-center">In major bleeding emergencies – like accidents or childbirth complications – there's no time for full testing. We activate the Massive Haemorrhage Protocol (MHP) with a special alert system.</p>
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="bg-red-800 p-6 rounded-lg">
-                    <h3 class="text-xl font-semibold mb-2 text-center">Immediate Response</h3>
-                    <p class="text-sm leading-relaxed text-center">We rush out 'universal donor' O negative red cells from emergency fridges, plus platelets and fresh frozen plasma (FFP) in pre-made packs to replace lost blood volume and clotting factors.</p>
-                </div>
-                <div class="bg-red-800 p-6 rounded-lg">
-                    <h3 class="text-xl font-semibold mb-2 text-center">Ongoing Support</h3>
-                    <p class="text-sm leading-relaxed text-center">As we get samples, we switch to your specific blood type. We might include cryoprecipitate for extra clotting power. The goal: Stabilise the patient fast while minimising waste.</p>
-                </div>
-                <div class="bg-red-800 p-6 rounded-lg">
-                    <h3 class="text-xl font-semibold mb-2 text-center">Stand-Down and Review</h3>
-                    <p class="text-sm leading-relaxed text-center">When bleeding is under control, we stop the protocol, return unused products, and review what happened to improve next time.</p>
-                </div>
-            </div>
-        </section>
-
-        <section aria-labelledby="further-testing" class="bg-white p-8 rounded-lg shadow-md mb-8">
-            <h2 id="further-testing" class="text-3xl font-bold text-gray-900 mb-4 high-contrast-text">Further Testing: Digging Deeper for Special Needs</h2>
-            <p class="text-lg mb-6 leading-relaxed">Sometimes standard tests aren't enough. We have advanced tools for unique situations, always keeping things simple and safe.</p>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="bg-gray-50 p-6 rounded-lg card-hover-effect">
-                    <h3 class="text-xl font-semibold mb-2">Red Cell Phenotyping</h3>
-                    <p class="text-sm leading-relaxed">We test for extra antigens like Kell, Duffy, or Kidd. This helps find super-compatible blood for patients with multiple antibodies or those needing long-term transfusions.</p>
-                </div>
-                <div class="bg-gray-50 p-6 rounded-lg card-hover-effect">
-                    <h3 class="text-xl font-semibold mb-2">Autoimmune Investigations</h3>
-                    <p class="text-sm leading-relaxed">If your body attacks its own red cells (autoimmune haemolytic anaemia), we use tests like DAT to detect antibodies on cell surfaces. This guides treatment and blood selection.</p>
-                </div>
-                <div class="bg-gray-50 p-6 rounded-lg card-hover-effect">
-                    <h3 class="text-xl font-semibold mb-2">Weak D and Variants</h3>
-                    <p class="text-sm leading-relaxed">Some people have a 'weak' RhD that doesn't show clearly. We investigate with special tests to decide if you're treated as positive or negative – crucial for pregnancy and transfusions.</p>
-                </div>
-                <div class="bg-gray-50 p-6 rounded-lg card-hover-effect">
-                    <h3 class="text-xl font-semibold mb-2">Haemolytic Disease of the Fetus and Newborn (HDFN)</h3>
-                    <p class="text-sm leading-relaxed">For RhD negative mums, we prevent issues with anti-D injections. We test fetal RhD from mum's blood and use Kleihauer tests to check for any blood mixing. <a href="antenatal_screening_page.html" class="text-blue-600 hover:underline">Learn more on our Antenatal Screening page</a>.</p>
-                </div>
-                <div class="bg-gray-50 p-6 rounded-lg card-hover-effect">
-                    <h3 class="text-xl font-semibold mb-2">Bone Marrow Transplant Patients</h3>
-                    <p class="text-sm leading-relaxed">After a transplant, your blood type might change! We test donors and recipients carefully, managing any group changes post-transplant with special selection rules.</p>
-                </div>
-                <div class="bg-gray-50 p-6 rounded-lg card-hover-effect">
-                    <h3 class="text-xl font-semibold mb-2">Neonatal Transfusions</h3>
-                    <p class="text-sm leading-relaxed">Babies need extra care. We select blood that's CMV negative, irradiated if needed, and often from dedicated paediatric packs. If mum has antibodies, we choose units safe for the baby.</p>
-                </div>
-            </div>
-        </section>
-
-        <section aria-labelledby="blood-components" class="bg-gray-50 p-8 rounded-lg shadow-inner mb-8">
-            <h2 id="blood-components" class="text-3xl font-bold text-gray-900 mb-6 text-center high-contrast-text">Blood Components: Not Just Whole Blood</h2>
-            <p class="text-lg text-center max-w-3xl mx-auto mb-8 leading-relaxed">One donation can help multiple patients! We separate blood into components so each patient gets exactly what they need.</p>
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <section class="bg-gray-50 p-8 rounded-lg shadow-inner mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">More Than Just Red Cells</h2>
+            <p class="text-lg text-center max-w-3xl mx-auto mb-8">A single blood donation can be separated into several different parts, or components. This allows us to give patients only the specific part of the blood they need.</p>
+            <div class="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
                 <div class="bg-white p-6 rounded-lg shadow-md text-center card-hover-effect">
-                    <div class="text-5xl text-red-600 mb-4"><i class="fas fa-tint"></i></div>
+                    <div class="text-5xl text-red-500 mb-4"><i class="fas fa-burn"></i></div>
                     <h3 class="text-xl font-semibold mb-2">Red Blood Cells</h3>
-                    <p class="text-sm leading-relaxed">The oxygen carriers. Used for anaemia, surgery, or blood loss. Stored cold for up to 35 days.</p>
+                    <p>Used to treat anaemia or to replace blood lost during surgery or trauma. They carry oxygen around the body.</p>
                 </div>
                 <div class="bg-white p-6 rounded-lg shadow-md text-center card-hover-effect">
-                    <div class="text-5xl text-yellow-600 mb-4"><i class="fas fa-band-aid"></i></div>
+                    <div class="text-5xl text-yellow-500 mb-4"><i class="fas fa-band-aid"></i></div>
                     <h3 class="text-xl font-semibold mb-2">Platelets</h3>
-                    <p class="text-sm leading-relaxed">Stop bleeding by forming plugs. For cancer patients or those with low counts. Kept at room temperature, last 7 days.</p>
+                    <p>Given to patients with low platelet counts to prevent or treat bleeding. Essential for blood clotting.</p>
                 </div>
                 <div class="bg-white p-6 rounded-lg shadow-md text-center card-hover-effect">
-                    <div class="text-5xl text-blue-600 mb-4"><i class="fas fa-vial"></i></div>
+                    <div class="text-5xl text-blue-500 mb-4"><i class="fas fa-vial"></i></div>
                     <h3 class="text-xl font-semibold mb-2">Fresh Frozen Plasma (FFP)</h3>
-                    <p class="text-sm leading-relaxed">Liquid with clotting factors. For major bleeds or liver issues. Frozen, thaws in special machines.</p>
+                    <p>The liquid part of the blood, rich in clotting factors. Used for patients with complex clotting problems or after massive blood loss.</p>
                 </div>
                 <div class="bg-white p-6 rounded-lg shadow-md text-center card-hover-effect">
-                    <div class="text-5xl text-green-600 mb-4"><i class="fas fa-cubes"></i></div>
+                    <div class="text-5xl text-green-500 mb-4"><i class="fas fa-cubes"></i></div>
                     <h3 class="text-xl font-semibold mb-2">Cryoprecipitate</h3>
-                    <p class="text-sm leading-relaxed">Concentrated clotting factors like fibrinogen. For specific bleeding disorders or emergencies.</p>
+                    <p>A concentrated source of certain clotting factors, especially Fibrinogen. Used to treat specific bleeding disorders or in major haemorrhage.</p>
                 </div>
             </div>
+        </section>
+
+        <section class="bg-red-700 text-white p-8 rounded-lg shadow-md text-center">
+            <h2 class="text-3xl font-bold mb-4">In an Emergency: The Massive Haemorrhage Protocol</h2>
+            <p class="text-lg mb-6 max-w-3xl mx-auto">When a patient is bleeding heavily, there's no time for full crossmatching. The "Massive Haemorrhage" bleep activates an immediate response from our team. We provide O RhD Negative red cells, the universal donor group, straight from a special fridge, along with other components like FFP in pre-prepared packs. This allows life-saving treatment to begin while we work on providing group-specific blood as soon as we can.</p>
+            <a href="coagulation_page.html" class="bg-white text-red-700 font-bold py-3 px-8 rounded-full hover:bg-gray-200 transition duration-300">Learn about Coagulation</a>
         </section>
 
         <section class="text-center mt-12">
@@ -213,16 +112,5 @@
     <div id="footer-placeholder"></div>
 
     <script src="js/component-loader.js"></script>
-    <script>
-        // Add smooth scrolling for internal links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-    </script>
 </body>
 </html>
