@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antibody Investigation - Clinical Pathology</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .hero-bg-antibody {
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1576091160550-2173dba999ab?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="header-placeholder"></div>
+
+    <main class="container mx-auto px-4 py-8">
+        
+        <section class="hero-bg-antibody text-white rounded-lg p-16 mb-8 text-center shadow-lg">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4">Antibody Investigation</h1>
+            <p class="text-lg md:text-2xl max-w-3xl mx-auto">The detective work of transfusion science.</p>
+        </section>
+
+        <section class="bg-white p-8 rounded-lg shadow-md mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">What happens when the antibody screen is positive?</h2>
+            <p class="text-lg">When a patient's antibody screen is positive, it means we've detected an unexpected antibody. Our next job is to identify exactly what it is. This is like a form of detective work. We test the patient's plasma against a panel of reagent red cells. Each vial of cells in the panel is like a 'suspect' with a known set of antigens (identifying features). By seeing which cells the antibody reacts with, we can deduce its identity.</p>
+        </section>
+
+        <section class="bg-white p-8 rounded-lg shadow-md mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">The Investigation Process</h2>
+            <div class="space-y-6">
+                <div>
+                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-list-ol text-indigo-500 mr-2"></i>1. Running the Panel</h3>
+                    <p>We test the patient's plasma against a panel of 10-16 different group O reagent red cells. Each of these panel cells has a known phenotype, meaning we know which antigens (like C, c, E, e, K, k, Fy<sup>a</sup>, Fy<sup>b</sup>, Jk<sup>a</sup>, Jk<sup>b</sup>, etc.) are on its surface. We incubate the patient plasma with each of these cells and look for a reaction (agglutination).</p>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-lightbulb text-yellow-500 mr-2"></i>2. Pattern Recognition</h3>
+                    <p>We record the pattern of positive and negative reactions. We then look at the antigen sheet that comes with the panel and try to find an antibody specificity that matches the reaction pattern. For example, if the plasma reacts with every cell that is K positive and none of the cells that are K negative, we can be confident the patient has Anti-K.</p>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-tasks text-teal-500 mr-2"></i>3. Confirmation and Exclusion</h3>
+                    <p>To confirm the antibody's identity, we must show that the patient's own red cells lack the corresponding antigen (you can't make an antibody to an antigen you have). We perform a phenotype on the patient's cells. We also have to exclude the presence of other, underlying antibodies that might be masked by the first one.</p>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-shield-alt text-green-500 mr-2"></i>4. Ensuring Safety</h3>
+                    <p>Once an antibody is identified, we update the patient's record with a special requirement. For the rest of their life, they must receive blood that is negative for that specific antigen. This prevents a transfusion reaction and ensures their safety.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="text-center mt-12">
+            <a href="what_transfusion_does.html" class="bg-gray-800 text-white font-bold py-3 px-8 rounded-full hover:bg-gray-700 transition duration-300">
+                <i class="fas fa-arrow-left mr-2"></i>Back to Transfusion Overview
+            </a>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+      <script src="js/component-loader.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            feather.replace();
+        });
+   </script>
+</body>
+</html>
