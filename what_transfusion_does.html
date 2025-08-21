@@ -6,12 +6,13 @@
     <title>What Transfusion Does - Clinical Pathology</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
         }
         .hero-bg-transfusion {
-            background-image: url('https://images.unsplash.com/photo-1581091224254-7a7b82c16a3c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-image: url('https://images.unsplash.com/photo-1581091224254-7a7b82c16a3c?q=80&w=2070&auto=format&fit=crop&ixlib-rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
             background-size: cover;
             background-position: center;
         }
@@ -106,26 +107,17 @@
                 <i class="fas fa-arrow-left mr-2"></i>Back to Laboratory Tours
             </a>
         </section>
-
     </main>
 
     <div id="footer-placeholder"></div>
 
+    <script src="js/component-loader.js"></script>
+    
     <script>
-        // Function to load components
-        const loadComponent = (url, placeholderId) => {
-            fetch(url)
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById(placeholderId).innerHTML = data;
-                })
-                .catch(error => console.error('Error loading component:', error));
-        };
-
-        // Load header and footer on page load
+        // This script is now only for initializing icons on the main page.
+        // The component-loader will handle icons inside the header/footer.
         document.addEventListener('DOMContentLoaded', () => {
-            loadComponent('header.html', 'header-placeholder');
-            loadComponent('footer.html', 'footer-placeholder');
+            feather.replace();
         });
    </script>
 </body>
