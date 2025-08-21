@@ -6,53 +6,82 @@
     <title>Antibody Investigation - Clinical Pathology</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        .hero-bg-antibody {
-            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1576091160550-2173dba999ab?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
-            background-size: cover;
-            background-position: center;
-        }
+        body { font-family: 'Inter', sans-serif; }
+        .hero-bg-antibody { background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1576091160550-2173dba999ab?q=80&w=2070&auto=format&fit=crop&ixlib-rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; background-position: center; }
+        .text-shadow-lg { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
     </style>
 </head>
-<body class="bg-gray-100 text-gray-800">
+<body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
 
     <div id="header-placeholder"></div>
 
-    <main class="container mx-auto px-4 py-8">
+    <main class="container mx-auto px-4 py-8 flex-grow">
         
         <section class="hero-bg-antibody text-white rounded-lg p-16 mb-8 text-center shadow-lg">
-            <h1 class="text-4xl md:text-6xl font-bold mb-4">Antibody Investigation</h1>
-            <p class="text-lg md:text-2xl max-w-3xl mx-auto">The detective work of transfusion science.</p>
+            <h1 class="text-4xl md:text-6xl font-bold mb-4 text-shadow-lg">Antibody Investigation</h1>
+            <p class="text-lg md:text-2xl max-w-3xl mx-auto text-shadow-lg">The detective work of transfusion science.</p>
         </section>
 
         <section class="bg-white p-8 rounded-lg shadow-md mb-8">
-            <h2 class="text-3xl font-bold text-gray-900 mb-4">What happens when the antibody screen is positive?</h2>
-            <p class="text-lg">When a patient's antibody screen is positive, it means we've detected an unexpected antibody. Our next job is to identify exactly what it is. This is like a form of detective work. We test the patient's plasma against a panel of reagent red cells. Each vial of cells in the panel is like a 'suspect' with a known set of antigens (identifying features). By seeing which cells the antibody reacts with, we can deduce its identity.</p>
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">When the Screen is Positive</h2>
+            <p class="text-lg">When a patient's antibody screen is positive, our investigation begins. The goal is to identify the exact specificity of the antibody to ensure we can provide antigen-negative blood, preventing a potentially harmful transfusion reaction. This process requires a combination of specialist reagents, precise techniques, and expert interpretation.</p>
         </section>
 
         <section class="bg-white p-8 rounded-lg shadow-md mb-8">
-            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">The Investigation Process</h2>
-            <div class="space-y-6">
-                <div>
-                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-list-ol text-indigo-500 mr-2"></i>1. Running the Panel</h3>
-                    <p>We test the patient's plasma against a panel of 10-16 different group O reagent red cells. Each of these panel cells has a known phenotype, meaning we know which antigens (like C, c, E, e, K, k, Fy<sup>a</sup>, Fy<sup>b</sup>, Jk<sup>a</sup>, Jk<sup>b</sup>, etc.) are on its surface. We incubate the patient plasma with each of these cells and look for a reaction (agglutination).</p>
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">The Investigation Toolkit</h2>
+            <p class="text-lg max-w-3xl mx-auto text-center mb-8">We use several techniques to build a complete picture of the antibody's behaviour. Full antibody investigations involve testing the patient's plasma against a panel of at least 8 different group O cells.</p>
+            <div class="grid md:grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-2">Indirect Antiglobulin Technique (IAT)</h3>
+                    <p>This is our primary method. It detects clinically significant IgG antibodies that react at body temperature (37°C). The test involves incubating patient plasma with panel cells in a specialized gel card incubator before centrifugation.</p>
                 </div>
-                <div>
-                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-lightbulb text-yellow-500 mr-2"></i>2. Pattern Recognition</h3>
-                    <p>We record the pattern of positive and negative reactions. We then look at the antigen sheet that comes with the panel and try to find an antibody specificity that matches the reaction pattern. For example, if the plasma reacts with every cell that is K positive and none of the cells that are K negative, we can be confident the patient has Anti-K.</p>
-                </div>
-                <div>
-                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-tasks text-teal-500 mr-2"></i>3. Confirmation and Exclusion</h3>
-                    <p>To confirm the antibody's identity, we must show that the patient's own red cells lack the corresponding antigen (you can't make an antibody to an antigen you have). We perform a phenotype on the patient's cells. We also have to exclude the presence of other, underlying antibodies that might be masked by the first one.</p>
-                </div>
-                <div>
-                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-shield-alt text-green-500 mr-2"></i>4. Ensuring Safety</h3>
-                    <p>Once an antibody is identified, we update the patient's record with a special requirement. For the rest of their life, they must receive blood that is negative for that specific antigen. This prevents a transfusion reaction and ensures their safety.</p>
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-2">Enzyme Technique</h3>
+                    <p>Treating the panel cells with an enzyme (like papain) can enhance the reactions of some antibodies (especially those in the Rh system) while destroying the antigens for others (like Duffy and MNS systems). This helps us differentiate between multiple antibodies or confirm a suspected specificity.</p>
                 </div>
             </div>
+        </section>
+
+        <section class="bg-white p-8 rounded-lg shadow-md mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Step-by-Step Detective Work</h2>
+            <ol class="relative border-l border-gray-200 dark:border-gray-700 ml-4">                  
+                <li class="mb-10 ml-6">            
+                    <span class="absolute flex items-center justify-center w-8 h-8 bg-blue-100 rounded-full -left-4 ring-8 ring-white">
+                        <i class="fas fa-vials text-blue-600"></i>
+                    </span>
+                    <h3 class="flex items-center mb-1 text-xl font-semibold text-gray-900">1. Run the Panels & Auto-Control</h3>
+                    <p class="mb-4 text-base font-normal text-gray-600">We test the patient's plasma against our panel cells using both IAT and enzyme techniques. We also perform an "auto-control" by testing the patient's plasma against their own cells. A positive auto-control may indicate an auto-antibody is present.</p>
+                </li>
+                <li class="mb-10 ml-6">
+                    <span class="absolute flex items-center justify-center w-8 h-8 bg-blue-100 rounded-full -left-4 ring-8 ring-white">
+                        <i class="fas fa-lightbulb text-blue-600"></i>
+                    </span>
+                    <h3 class="mb-1 text-xl font-semibold text-gray-900">2. Interpret the Pattern</h3>
+                    <p class="text-base font-normal text-gray-600">We carefully record the pattern of positive and negative reactions. By cross-referencing this pattern with the known antigen profiles of the panel cells, we can begin to identify the antibody. For example, if the plasma reacts with all three Fy(a+) cells on the panel but none of the Fy(a-) cells, we suspect the presence of Anti-Fy<sup>a</sup>.</p>
+                </li>
+                <li class="mb-10 ml-6">
+                    <span class="absolute flex items-center justify-center w-8 h-8 bg-blue-100 rounded-full -left-4 ring-8 ring-white">
+                        <i class="fas fa-tasks text-blue-600"></i>
+                    </span>
+                    <h3 class="mb-1 text-xl font-semibold text-gray-900">3. Confirm Specificity</h3>
+                    <p class="text-base font-normal text-gray-600">To be certain of an antibody's identity, strict criteria must be met. Specificity can only be assigned when the antibody reacts with at least two panel cells that have the target antigen, and does not react with at least two panel cells that lack the antigen. We must also exclude the presence of any other clinically significant antibodies that could be masked by the initial reaction pattern.</p>
+                </li>
+                 <li class="ml-6">
+                    <span class="absolute flex items-center justify-center w-8 h-8 bg-blue-100 rounded-full -left-4 ring-8 ring-white">
+                        <i class="fas fa-user-check text-blue-600"></i>
+                    </span>
+                    <h3 class="mb-1 text-xl font-semibold text-gray-900">4. Patient Phenotyping</h3>
+                    <p class="text-base font-normal text-gray-600">The final confirmation step is to test the patient's own red blood cells. A patient cannot make an allo-antibody to an antigen they possess. Therefore, we must prove their cells are negative for the corresponding antigen to confirm the antibody's identity.</p>
+                </li>
+            </ol>
+        </section>
+
+        <section class="bg-teal-600 text-white p-8 rounded-lg shadow-md text-center">
+            <h2 class="text-3xl font-bold mb-4">Can You Solve the Case?</h2>
+            <p class="text-lg mb-6 max-w-3xl mx-auto">Antibody identification is like solving a puzzle. Try our compatibility game to see if you can match the right blood to the right patient based on their antibodies!</p>
+            <a href="compatibility_game.html" class="inline-block bg-white text-teal-700 font-bold py-3 px-8 rounded-full hover:bg-gray-200 transition duration-300">Play the Compatibility Challenge</a>
         </section>
 
         <section class="text-center mt-12">
@@ -63,13 +92,6 @@
     </main>
 
     <div id="footer-placeholder"></div>
-
-      <script src="js/component-loader.js"></script>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            feather.replace();
-        });
-   </script>
+    <script src="js/component-loader.js"></script>
 </body>
 </html>
