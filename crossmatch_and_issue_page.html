@@ -6,59 +6,71 @@
     <title>Crossmatch & Electronic Issue - Clinical Pathology</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        .hero-bg-xm {
-            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1620955219569-3221035515a7?q=80&w=1932&auto=format&fit=crop&ixlib-rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
-            background-size: cover;
-            background-position: center;
-        }
+        body { font-family: 'Inter', sans-serif; }
+        .hero-bg-xm { background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1620955219569-3221035515a7?q=80&w=1932&auto=format&fit=crop&ixlib-rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; background-position: center; }
+        .text-shadow-lg { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
     </style>
 </head>
-<body class="bg-gray-100 text-gray-800">
+<body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
 
     <div id="header-placeholder"></div>
 
-    <main class="container mx-auto px-4 py-8">
+    <main class="container mx-auto px-4 py-8 flex-grow">
         
         <section class="hero-bg-xm text-white rounded-lg p-16 mb-8 text-center shadow-lg">
-            <h1 class="text-4xl md:text-6xl font-bold mb-4">Crossmatch & Issue</h1>
-            <p class="text-lg md:text-2xl max-w-3xl mx-auto">The final, critical safety check before transfusion.</p>
+            <h1 class="text-4xl md:text-6xl font-bold mb-4 text-shadow-lg">Crossmatch & Issue</h1>
+            <p class="text-lg md:text-2xl max-w-3xl mx-auto text-shadow-lg">The final, critical safety checks before transfusion.</p>
         </section>
 
         <section class="bg-white p-8 rounded-lg shadow-md mb-8">
-            <h2 class="text-3xl font-bold text-gray-900 mb-4">The Last Step: Ensuring Compatibility</h2>
-            <p class="text-lg">Once a patient's group and screen is complete, and blood has been requested, the final step is to issue compatible units. This process can be done in two ways: a traditional serological crossmatch or a modern electronic issue. The method we use depends on the patient's transfusion history and antibody status.</p>
-        </section>
-        
-        <section class="bg-white p-8 rounded-lg shadow-md mb-8">
-            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Methods of Issue</h2>
-            <div class="flex flex-col md:flex-row gap-8">
-                <div class="md:w-1/2 bg-gray-50 p-6 rounded-lg">
-                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-flask text-green-500 mr-2"></i>Full Serological Crossmatch</h3>
-                    <p class="mb-4">This is the traditional "wet" crossmatch. We physically mix the patient's plasma with red cells from the actual donor unit that we intend to issue. We incubate this mixture at 37°C and then check for agglutination (clumping).</p>
-                    <p class="mb-4"><strong>If there is no agglutination, the blood is compatible and safe to issue.</strong></p>
-                    <p>We must perform a full serological crossmatch if:</p>
-                    <ul class="list-disc list-inside space-y-2">
-                        <li>The patient has a currently positive antibody screen.</li>
-                        <li>The patient has a history of clinically significant antibodies.</li>
-                        <li>There are any discrepancies or uncertainties in the patient's record.</li>
-                    </ul>
-                </div>
-                <div class="md:w-1/2 bg-gray-50 p-6 rounded-lg">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">The Two Paths to a Safe Transfusion</h2>
+            <p class="text-lg max-w-3xl mx-auto text-center mb-8">Once a patient's blood group is known and their antibody screen is complete, we perform a final compatibility test between the patient and the donor blood unit. This can be done in two ways: a modern, computer-based "Electronic Issue" or a traditional, hands-on "Serological Crossmatch". The path we take is strictly determined by the patient's history and test results to ensure maximum safety.</p>
+
+            <div class="grid md:grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-gray-50 p-6 rounded-lg">
                     <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-desktop text-blue-500 mr-2"></i>Electronic Issue (EI)</h3>
-                    <p class="mb-4">Electronic issue is a "virtual" crossmatch performed by our laboratory information system (LIMS). Instead of physically mixing samples, the computer checks a series of rules to ensure safety.</p>
-                     <p class="mb-4">To be eligible for electronic issue, a patient must:</p>
+                    <p class="mb-4">Electronic Issue is a "virtual" crossmatch performed by our laboratory computer system. It is a safe and efficient method that allows us to get blood to patients quickly. However, a patient must meet strict criteria to be eligible.</p>
+                    <h4 class="font-bold mb-2">Eligibility Criteria:</h4>
                     <ul class="list-disc list-inside space-y-2">
-                        <li>Have a current negative antibody screen.</li>
-                        <li>Have no history of clinically significant antibodies.</li>
-                        <li>Have a validated blood group on record (usually from two separate samples).</li>
+                        <li>The patient must have a current negative antibody screen.</li>
+                        <li>The patient must have no history of clinically significant antibodies.</li>
+                        <li>The patient's blood group must be fully validated on our system, often from two separate samples taken at different times.</li>
                     </ul>
-                    <p class="mt-4">If all the rules are met, the computer allows us to select compatible units from our stock and issue them without a wet crossmatch. Electronic issue is safe, fast, and efficient, allowing us to get blood to patients quickly.</p>
+                    <p class="mt-4">If all rules are met, the computer allows us to select compatible units and release them.</p>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-flask text-green-500 mr-2"></i>Full Serological Crossmatch</h3>
+                    <p class="mb-4">If a patient is not eligible for EI, we must perform a traditional "wet" crossmatch. This is a physical test to prove compatibility.</p>
+                     <h4 class="font-bold mb-2">The Process:</h4>
+                    <ol class="list-decimal list-inside space-y-2">
+                        <li>We mix a sample of the patient's plasma with red cells taken directly from the donor blood bag.</li>
+                        <li>The mixture is incubated at 37°C in a special gel card.</li>
+                        <li>After incubation, the card is centrifuged and examined for agglutination (clumping).</li>
+                        <li><strong>No agglutination</strong> means the unit is compatible and safe to issue.</li>
+                        <li><strong>Any agglutination</strong> indicates an incompatibility. The unit must not be issued, and further investigation is required.</li>
+                    </ol>
                 </div>
             </div>
+        </section>
+
+        <section class="bg-white p-8 rounded-lg shadow-md mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">The Final Release: Last Checks for Safety</h2>
+            <p class="text-lg mb-4">Regardless of the crossmatch method used, a series of critical final checks must be completed before any blood component leaves the laboratory. This is the last chance to catch any potential errors.</p>
+            <ul class="list-disc list-inside space-y-2 text-lg">
+                <li>We check that the patient's details and blood group on the request form, our computer system, and the compatibility label are a perfect match.</li>
+                <li>We confirm that all special requirements, such as irradiated or CMV negative blood, have been met.</li>
+                <li>We visually inspect the blood bag for any leaks, clots, or unusual colour that could indicate bacterial contamination.</li>
+                <li>Once all checks are complete, the unit is placed in a dedicated, temperature-controlled issue fridge, ready for collection.</li>
+                <li>Staff collecting the blood must use the <strong>Blood360 electronic tracking system</strong>, often with a biometric fingerprint scan, to ensure only trained personnel can access the fridge and that the correct unit is matched to the correct patient at the point of collection.</li>
+            </ul>
+        </section>
+
+        <section class="bg-teal-600 text-white p-8 rounded-lg shadow-md text-center">
+            <h2 class="text-3xl font-bold mb-4">Ready for the Challenge?</h2>
+            <p class="text-lg mb-6 max-w-3xl mx-auto">Now that you know how we ensure blood is compatible, try it for yourself! Play our game to see if you can make the right decision for your patient.</p>
+            <a href="compatibility_game.html" class="inline-block bg-white text-teal-700 font-bold py-3 px-8 rounded-full hover:bg-gray-200 transition duration-300">Play the Compatibility Game</a>
         </section>
 
         <section class="text-center mt-12">
@@ -69,13 +81,7 @@
     </main>
 
     <div id="footer-placeholder"></div>
+    <script src="js/component-loader.js"></script>
 
-      <script src="js/component-loader.js"></script>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            feather.replace();
-        });
-   </script>
 </body>
 </html>
