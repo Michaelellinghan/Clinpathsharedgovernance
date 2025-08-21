@@ -10,7 +10,9 @@
     <style>
         body { font-family: 'Inter', sans-serif; }
         .choice-btn { transition: all 0.2s; }
-        .choice-btn.selected { transform: scale(1.05); background-color: #fbbf24; /* amber-400 */ border-color: #f59e0b; /* amber-500 */ }
+        .choice-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+        .choice-btn.correct { background-color: #22c55e; color: white; }
+        .choice-btn.incorrect { background-color: #ef4444; color: white; }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
@@ -27,7 +29,7 @@
             
             <div id="start-screen" class="text-center">
                 <h2 class="text-2xl font-bold mb-4">MHP Simulation Training</h2>
-                <p class="mb-6">An MHP has been activated. Your job is to follow the procedure correctly. You will be scored on speed and accuracy. Are you ready?</p>
+                <p class="mb-6">You are the Biomedical Scientist. An MHP is about to be activated. You will be presented with a series of scenarios and must choose the correct action. You will be scored on speed and accuracy. Are you ready?</p>
                 <button id="start-button" class="bg-blue-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-600">Start Simulation</button>
             </div>
 
@@ -44,7 +46,7 @@
                 </div>
                 
                 <div id="task-container">
-                    <div id="task-description" class="my-4 p-4 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 font-semibold"></div>
+                    <div id="task-description" class="my-4 p-4 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-800 font-semibold text-lg"></div>
                     <div id="choices-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
                 </div>
                 <div id="feedback" class="mt-4 h-12 text-lg font-semibold text-center"></div>
@@ -82,31 +84,26 @@
             };
 
             const scenarios = [
-                {
-                    title: 'Trauma MHP',
-                    description: '28 year old female, unknown identity, major trauma.',
-                    stages: [
-                        { task: 'MHP Activated! What is your FIRST action?', timer: 15, choices: [{ text: 'Start thawing FFP', correct: false }, { text: 'Call the activating area', correct: true }, { text: 'Grab emergency blood', correct: false }], feedback: "Correct! Communication is the first critical step." },
-                        { task: 'What blood do you prepare for PACK 1?', timer: 20, choices: [{ text: '4x O Pos RBC, 4x FFP', correct: false }, { text: '4x O Neg RBC, 4x FFP', correct: true }, { text: '6x Group Specific RBC', correct: false }, { text: '4x O Neg RBC only', correct: false }], feedback: "Correct! Females of child-bearing age receive O Negative blood." },
-                        { task: 'The patient is Group B Positive. A porter arrives for Pack 2. What do you give them?', timer: 25, choices: [{ text: '6x O Neg RBC, 4x FFP, 1x Plt', correct: false }, { text: '6x B Pos RBC only', correct: false }, { text: '6x B Pos RBC, 4x FFP, 1x Plt', correct: true }, { text: '6x O Pos RBC, 4x FFP, 1x Plt', correct: false }], feedback: "Correct! Switch to group-specific blood as soon as possible." }
-                    ]
-                },
-                {
-                    title: 'Obstetric MHP',
-                    description: '35 year old female, Post-Partum Haemorrhage. She is group A Positive.',
-                    stages: [
-                        { task: 'MHP Activated! The midwife requests blood. What is your priority?', timer: 15, choices: [{ text: 'Issue 4 units A Pos RBC', correct: true }, { text: 'Issue Pack 1 (4 RBC, 4 FFP)', correct: false }, { text: 'Wait for coagulation results', correct: false }], feedback: "Correct! For non-trauma, red cells are the immediate priority." },
-                        { task: 'The Fibrinogen result is 0.8 g/L (critically low). What component is now most urgently needed?', timer: 20, choices: [{ text: 'More Red Cells', correct: false }, { text: 'Platelets', correct: false }, { text: 'Cryoprecipitate', correct: true }, { text: 'Fresh Frozen Plasma (FFP)', correct: false }], feedback: "Correct! Cryoprecipitate is rich in fibrinogen and vital in obstetric bleeds." },
-                        { task: 'The Haematology registrar has been informed. The bleed is ongoing. What is your next action?', timer: 20, choices: [{ text: 'Continue issuing components as requested', correct: true }, { text: 'Activate the Major Incident Plan', correct: false }, { text: 'Stand down the MHP', correct: false }], feedback: "Correct! Follow the guidance of the clinical and haematology teams." }
-                    ]
-                }
+                { title: 'Trauma MHP', description: '28 year old female, unknown identity, major trauma.', stages: [
+                    { task: 'MHP Activated! What is your FIRST action?', timer: 15, choices: [{ text: 'Start thawing FFP', correct: false }, { text: 'Call the activating area', correct: true }, { text: 'Grab emergency blood', correct: false }, { text: 'Order more blood from NHSBT', correct: false }], feedback: "Correct! Communication is the first critical step." },
+                    { task: 'What blood do you prepare for TRAUMA PACK 1?', timer: 20, choices: [{ text: '4x O Pos RBC, 4x FFP', correct: false }, { text: '4x O Neg RBC, 4x FFP', correct: true }, { text: '6x Group Specific RBC', correct: false }, { text: '4x O Neg RBC only', correct: false }], feedback: "Correct! Females of child-bearing age receive O Negative blood." },
+                    { task: 'The patient is Group B Positive. A porter arrives for Pack 2. What do you give them?', timer: 25, choices: [{ text: '6x O Neg RBC, 4x FFP, 1x Plt', correct: false }, { text: '6x B Pos RBC only', correct: false }, { text: '6x B Pos RBC, 4x FFP, 1x Plt', correct: true }, { text: '6x O Pos RBC, 4x FFP, 1x Plt', correct: false }], feedback: "Correct! Switch to group-specific blood as soon as possible." }
+                ]},
+                { title: 'Obstetric MHP', description: '35 year old female, Post-Partum Haemorrhage. She is group A Positive.', stages: [
+                    { task: 'MHP Activated! The midwife requests blood. What is your priority?', timer: 15, choices: [{ text: 'Issue 4 units A Pos RBC', correct: true }, { text: 'Issue Pack 1 (4 RBC, 4 FFP)', correct: false }, { text: 'Wait for coagulation results', correct: false }, { text: 'Thaw 2 units of Cryo', correct: false }], feedback: "Correct! For non-trauma, red cells are the immediate priority." },
+                    { task: 'The Fibrinogen result is 0.8 g/L (critically low). What component is now most urgently needed?', timer: 20, choices: [{ text: 'More Red Cells', correct: false }, { text: 'Platelets', correct: false }, { text: 'Cryoprecipitate', correct: true }, { text: 'Fresh Frozen Plasma (FFP)', correct: false }], feedback: "Correct! Cryoprecipitate is rich in fibrinogen and vital in obstetric bleeds." },
+                    { task: 'The bleed is ongoing. The team has given 6 units of red cells. What should you proactively prepare next?', timer: 20, choices: [{ text: 'More Cryoprecipitate', correct: false }, { text: 'A dose of NovoSeven', correct: false }, { text: '4 units of FFP', correct: true }, { text: 'Another unit of Platelets', correct: false }], feedback: "Correct! A 1:1 ratio of FFP to Red Cells is often targeted." }
+                ]},
+                 { title: 'Surgical MHP', description: '65 year old male, post-op bleed in theatres. Patient is O Positive with known Anti-K.', stages: [
+                    { task: 'Theatres activate the MHP. You have a valid sample. What red cells do you select?', timer: 20, choices: [{ text: '6 units of O Positive', correct: false }, { text: '4 units of O Negative', correct: false }, { text: '6 units of K-Negative O Positive', correct: true }, { text: '6 units of K-Negative O Negative', correct: false }], feedback: "Correct! Antigen-negative blood must be selected for patients with known antibodies." },
+                    { task: 'The anaesthetist calls: "The patient is still oozing. Coags are pending. What should we have?" What is your best response?', timer: 20, choices: [{ text: 'Issue 4 FFP and 1 Platelets now', correct: false }, { text: 'Wait for the lab results', correct: false }, { text: 'Liaise with the Haematology Registrar for advice', correct: true }, { text: 'Send 2 units of Cryoprecipitate', correct: false }], feedback: "Correct! The BMS role is to facilitate, not to give clinical advice. Involving the Haematology SpR is key." },
+                    { task: 'Lab results: Platelets 45, PT and APTT very prolonged. What components do you anticipate being requested?', timer: 20, choices: [{ text: 'Red Cells and Cryo', correct: false }, { text: 'FFP and Platelets', correct: true }, { text: 'Platelets only', correct: false }, { text: 'FFP only', correct: false }], feedback: "Correct! Low platelets and prolonged clotting times indicate a need for FFP and Platelets." }
+                ]}
             ];
 
             let state;
 
-            const resetState = () => {
-                state = { score: 0, timer: 0, timerInterval: null, currentScenario: null, currentStage: 0 };
-            };
+            const resetState = () => { state = { score: 0, timer: 0, timerInterval: null, currentScenario: null, currentStage: 0 }; };
 
             const startGame = () => {
                 resetState();
@@ -130,8 +127,8 @@
                 stage.choices.forEach(choice => {
                     const button = document.createElement('button');
                     button.textContent = choice.text;
-                    button.className = 'choice-btn w-full p-4 bg-gray-200 rounded-lg hover:bg-gray-300 font-semibold';
-                    button.onclick = () => checkAnswer(choice.correct, stage.feedback);
+                    button.className = 'choice-btn w-full p-4 bg-gray-200 rounded-lg hover:bg-gray-300 font-semibold text-left';
+                    button.onclick = () => handleChoice(choice, button, stage.feedback);
                     elements.choicesContainer.appendChild(button);
                 });
                 
@@ -152,11 +149,18 @@
                 }, 1000);
             };
 
-            const checkAnswer = (isCorrect, feedbackText) => {
+            const handleChoice = (choice, button, feedbackText) => {
                 clearInterval(state.timerInterval);
-                const points = isCorrect ? state.timer : 0;
-                const text = isCorrect ? feedbackText : 'Incorrect. That was not the priority action.';
-                handleResult(isCorrect, points, text);
+                const points = choice.correct ? state.timer : 0;
+                const text = choice.correct ? feedbackText : 'Incorrect. That was not the priority action.';
+                
+                elements.choicesContainer.querySelectorAll('button').forEach(btn => {
+                    btn.disabled = true;
+                });
+                
+                button.classList.add(choice.correct ? 'correct' : 'incorrect');
+
+                handleResult(choice.correct, points, text);
             };
 
             const handleResult = (correct, points, text) => {
@@ -168,10 +172,6 @@
                     elements.feedback.className = 'mt-4 h-12 text-lg font-semibold text-center text-red-600';
                 }
                 elements.feedback.textContent = text;
-                elements.choicesContainer.querySelectorAll('button').forEach(btn => {
-                    btn.disabled = true;
-                    btn.classList.add('opacity-50', 'cursor-not-allowed');
-                });
                 elements.nextStageButton.classList.remove('hidden');
             };
 
