@@ -6,63 +6,67 @@
     <title>Antenatal Screening - Clinical Pathology</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        .hero-bg-antenatal {
-            background-image: url('https://images.unsplash.com/photo-1580130281329-1971d63847a7?q=80&w=1932&auto=format&fit=crop&ixlib-rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
-            background-size: cover;
-            background-position: center;
-        }
-         .text-shadow-lg {
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
+        body { font-family: 'Inter', sans-serif; }
+        .hero-bg-antenatal { background-image: url('https://images.unsplash.com/photo-1580130281329-1971d63847a7?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; background-position: center; }
+        .text-shadow-lg { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
     </style>
 </head>
-<body class="bg-gray-100 text-gray-800">
+<body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
 
     <div id="header-placeholder"></div>
 
-    <main class="container mx-auto px-4 py-8">
+    <main class="container mx-auto px-4 py-8 flex-grow">
         
-        <section class="hero-bg-antenatal text-white rounded-lg p-8 md:p-16 mb-8 flex items-center justify-center text-center shadow-lg">
+        <section class="hero-bg-antenatal text-white rounded-lg p-16 mb-8 text-center shadow-lg">
             <div>
                 <h1 class="text-4xl md:text-6xl font-bold mb-4 text-shadow-lg">Antenatal Screening</h1>
-                <p class="text-lg md:text-2xl max-w-3xl mx-auto text-shadow-lg">Protecting the health of mother and baby through early testing.</p>
+                <p class="text-lg md:text-2xl max-w-3xl mx-auto text-shadow-lg">Protecting the health of mother and baby through specialised blood testing.</p>
             </div>
         </section>
 
         <section class="bg-white p-8 rounded-lg shadow-md mb-8">
-            <h2 class="text-3xl font-bold text-gray-900 mb-4">Why do we screen in pregnancy?</h2>
-            <p class="text-lg">Antenatal screening is a series of tests offered during pregnancy to identify any potential health problems that could affect you or your baby. By identifying these risks early, we can offer information, support, and treatment to give your baby the best possible start in life. All screening is optional, and your midwife will discuss all the tests with you.</p>
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">The Screening Pathway</h2>
+            <p class="text-lg mb-4">The aim of the routine antenatal blood screening service is to identify pregnancies that may be at risk of Haemolytic Disease of the Fetus & Newborn (HDFN). This is a condition where antibodies from the mother cross the placenta and attack the baby's red blood cells, potentially causing severe anaemia. The screening pathway involves tests at two key stages:</p>
+            <div class="flex flex-col md:flex-row gap-8 mt-6">
+                <div class="md:w-1/2 bg-gray-50 p-6 rounded-lg">
+                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-calendar-alt text-blue-500 mr-2"></i>Booking Appointment (8-12 Weeks)</h3>
+                    <p>At the first booking appointment, a sample is taken for a full blood group and antibody screen. This initial test establishes the mother's ABO and RhD group and checks for any pre-existing clinically significant antibodies.</p>
+                </div>
+                <div class="md:w-1/2 bg-gray-50 p-6 rounded-lg">
+                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-calendar-day text-blue-500 mr-2"></i>28 Weeks Gestation</h3>
+                    <p>The blood group and antibody screen is repeated for all pregnant women. This is to check if any new antibodies have developed during the pregnancy. For D-negative women, this sample is taken before they receive their routine dose of Anti-D prophylaxis.</p>
+                </div>
+            </div>
         </section>
 
         <section class="bg-white p-8 rounded-lg shadow-md mb-8">
-            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Key Screening Tests</h2>
-            <div class="space-y-8">
-                <div class="flex flex-col md:flex-row gap-6 items-center">
-                    <div class="text-5xl text-red-600 md:w-1/6 text-center"><i class="fas fa-tint"></i></div>
-                    <div class="md:w-5/6">
-                        <h3 class="text-2xl font-semibold mb-2">Blood Group & Antibody Screen</h3>
-                        <p>At your booking appointment, and again at 28 weeks, we test your blood to find out your ABO and RhD blood group. This is vital in case you need a blood transfusion. We also check for any unusual blood group antibodies that could potentially cross the placenta and affect the baby's red blood cells, a condition called Haemolytic Disease of the Fetus and Newborn (HDFN).</p>
-                    </div>
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Key Tests and Interventions Explained</h2>
+            <div class="space-y-6">
+                <div>
+                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-dna text-purple-600 mr-2"></i>Fetal RHD Screening (FDS)</h3>
+                    <p>For D-negative mothers, we can now perform a test on their blood to predict the baby's D type. This highly specialised test analyses fragments of fetal DNA present in the maternal circulation from around 11 weeks gestation. If the fetus is predicted to be D-negative, the mother does not require Anti-D injections, avoiding unnecessary treatment.</p>
                 </div>
-                <div class="flex flex-col md:flex-row gap-6 items-center">
-                    <div class="text-5xl text-blue-600 md:w-1/6 text-center"><i class="fas fa-syringe"></i></div>
-                    <div class="md:w-5/6">
-                        <h3 class="text-2xl font-semibold mb-2">For RhD Negative Mums: Anti-D</h3>
-                        <p>If you are RhD negative, you'll be offered injections of a substance called Anti-D immunoglobulin during pregnancy and after birth if your baby is RhD positive. This prevents your immune system from producing antibodies that could be harmful in future pregnancies. We can also now offer a test to predict your baby's D type from your own blood sample.</p>
-                    </div>
+                <div>
+                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-syringe text-red-600 mr-2"></i>Anti-D Prophylaxis</h3>
+                    <p>Anti-D immunoglobulin is a sterile solution of human antibodies that prevents a D-negative mother from forming her own powerful Anti-D antibodies if she is exposed to D-positive fetal cells. It is given in two situations:</p>
+                     <ul class="list-disc list-inside space-y-2 mt-2 pl-4">
+                        <li><strong>RAADP (Routine Antenatal Anti-D Prophylaxis):</strong> A dose is given to eligible D-negative women at 28 weeks gestation.</li>
+                        <li><strong>PSE (Potential Sensitising Events):</strong> A dose is also required after any event during pregnancy that could cause fetal blood to enter the maternal circulation, such as a trauma or significant bleed.</li>
+                    </ul>
                 </div>
-                <div class="flex flex-col md:flex-row gap-6 items-center">
-                    <div class="text-5xl text-purple-600 md:w-1/6 text-center"><i class="fas fa-microscope"></i></div>
-                    <div class="md:w-5/6">
-                        <h3 class="text-2xl font-semibold mb-2">The Kleihauer Test (FMH Screen)</h3>
-                        <p>Following a potential sensitising event (such as a trauma or a bleed during pregnancy or delivery), there's a risk that some of the baby's blood cells can enter the mother's circulation. This is called a feto-maternal haemorrhage (FMH). The Kleihauer test is a special staining technique performed on a maternal blood film. Fetal red cells are resistant to acid elution and stain pink, whereas adult red cells become pale "ghost" cells. By counting the number of fetal cells seen, we can estimate the size of the FMH. This allows us to calculate the correct dose of Anti-D to give to neutralize the fetal cells and prevent the mother from becoming sensitized.</p>
-                    </div>
+                 <div>
+                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-microscope text-teal-600 mr-2"></i>Fetomaternal Haemorrhage (FMH) Test</h3>
+                    <p>After a potential sensitising event from 20 weeks gestation, a maternal blood sample is tested to estimate the volume of fetal blood that may have entered her circulation. This is most commonly done using the <strong>Kleihauer test</strong>, a specialised staining technique that makes fetal cells visible under a microscope. The size of the bleed is calculated so that the correct dose of Anti-D can be administered to ensure full protection.</p>
                 </div>
             </div>
+        </section>
+        
+        <section class="bg-teal-600 text-white p-8 rounded-lg shadow-md text-center">
+            <h2 class="text-3xl font-bold mb-4">Practice Your Skills</h2>
+            <p class="text-lg mb-6 max-w-3xl mx-auto">A key part of antenatal screening is identifying unexpected antibodies. Test your skills on our Antibody Identification Challenge and see if you can solve the case!</p>
+            <a href="transfusion_game.html" class="inline-block bg-white text-teal-700 font-bold py-3 px-8 rounded-full hover:bg-gray-200 transition duration-300">Play the Antibody Identification Challenge</a>
         </section>
 
         <section class="text-center mt-12">
@@ -70,17 +74,10 @@
                 <i class="fas fa-arrow-left mr-2"></i>Back to Transfusion Overview
             </a>
         </section>
-
     </main>
 
     <div id="footer-placeholder"></div>
+    <script src="js/component-loader.js"></script>
 
-      <script src="js/component-loader.js"></script>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            feather.replace();
-        });
-   </script>
 </body>
 </html>
