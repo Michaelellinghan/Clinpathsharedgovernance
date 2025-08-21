@@ -1,248 +1,230 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Antibody Identification Challenge - Clinical Pathology</title>
+    <title>Antibody ID Challenge - SGC</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <style>
         body { font-family: 'Inter', sans-serif; }
-        .panel-table { border-collapse: collapse; }
-        .panel-table th, .panel-table td { border: 1px solid #d1d5db; padding: 0.5rem; text-align: center; }
-        .panel-table th { background-color: #f3f4f6; }
-        .antigen-header { cursor: pointer; user-select: none; position: relative; }
-        .antigen-header .line-through {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            width: 2px;
-            height: 100%;
-            background-color: rgba(239, 68, 68, 0.7);
-            transform: translateX(-50%);
-            display: none;
-        }
-        .antigen-header.excluded .line-through { display: block; }
-        .reaction-cell { font-weight: bold; }
-        .modal { display: none; }
-        .modal.active { display: flex; }
+        .nhs-blue { background-color: #005EB8; }
+        .nhs-dark-blue { background-color: #003087; }
+        .nhs-light-grey { background-color: #F0F4F5; }
+        .nhs-text-blue { color: #005EB8; }
+        .antigram-table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 0.7rem; margin-top: 1rem; }
+        .antigram-table th, .antigram-table td { border: 1px solid #d1d5db; padding: 0.4rem 0.2rem; text-align: center; position: relative; }
+        .antigram-table th { background-color: #e5e7eb; font-weight: bold; }
+        .antigen-header { writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg); white-space: nowrap; cursor: pointer; }
+        .reaction-pos { color: #dc2626; font-weight: bold; }
+        .difficulty-btn.active { background-color: #003087; color: white; }
+        .antibody-choice-btn.selected { background-color: #fde047; }
+        .antibody-choice-btn:disabled, .action-btn:disabled { background-color: #e5e7eb; cursor: not-allowed; color: #9ca3af; }
+        .excluded::after { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background-color: rgba(239, 68, 68, 0.7); transform: translateX(-50%); }
+        .hidden, .hidden-col { display: none; }
     </style>
 </head>
-<body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
+<body class="bg-gray-50 text-gray-800">
 
     <div id="header-placeholder"></div>
 
-    <main class="container mx-auto px-4 py-8 flex-grow">
-
-        <section class="text-center mb-8">
-            <h1 class="text-4xl md:text-5xl font-bold mb-2">Antibody Identification Challenge</h1>
-            <p class="text-lg text-gray-600">Analyse the panel results to identify the patient's antibody.</p>
-        </section>
-
-        <div class="bg-white p-6 rounded-lg shadow-md max-w-7xl mx-auto">
-            <div class="flex justify-between items-start mb-4">
-                <div>
-                    <h2 class="text-2xl font-bold">Patient Panel</h2>
-                    <p id="feedback" class="mt-1 h-6 text-lg font-semibold text-gray-500">Select an antibody and click "Submit".</p>
-                </div>
-                <div class="flex items-center gap-4">
-                    <button id="tutorial-button" class="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors"><i class="fas fa-question-circle mr-2"></i>How to Play</button>
-                    <div class="text-xl font-bold text-right">Score: <span id="score">0</span></div>
-                </div>
+    <main class="py-16 bg-nhs-light-grey">
+        <div class="container mx-auto px-2 md:px-6 max-w-7xl text-center">
+            <a href="games.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8"><i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Games</a>
+            <h2 class="text-3xl font-bold nhs-text-dark-blue mb-4">Antibody Identification Challenge</h2>
+            <p class="text-gray-600 mb-6 max-w-3xl mx-auto">An antibody screen was positive. Use all available information to identify the antibody/antibodies present.</p>
+            
+            <div class="flex justify-center items-center space-x-2 mb-6 bg-gray-200 p-2 rounded-lg max-w-md mx-auto">
+                <button class="difficulty-btn flex-1 py-2 px-4 rounded-md text-sm font-semibold" data-difficulty="easy">Easy</button>
+                <button class="difficulty-btn flex-1 py-2 px-4 rounded-md text-sm font-semibold" data-difficulty="medium">Medium</button>
+                <button class="difficulty-btn flex-1 py-2 px-4 rounded-md text-sm font-semibold" data-difficulty="hard">Hard</button>
             </div>
 
-            <div class="overflow-x-auto">
-                <table id="panel-table" class="panel-table w-full text-sm">
-                    </table>
+            <div class="bg-white p-4 rounded-lg shadow-md mb-4">
+                 <h3 class="text-xl font-bold nhs-text-dark-blue">Patient & Sample Information</h3>
+                 <div class="text-left mt-2 grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div><strong>Blood Group:</strong> <span id="patient-blood-group"></span></div>
+                    <div><strong>Clinical Details:</strong> <span id="patient-details"></span></div>
+                    <div><strong>Autocontrol (IAT):</strong> <span id="autocontrol-result" class="font-bold"></span></div>
+                 </div>
+            </div>
+            
+            <div class="flex flex-wrap justify-center items-center gap-4 mt-4 mb-4">
+                <button id="screen-btn" class="action-btn bg-gray-200 font-bold py-2 px-4 rounded-lg hover:bg-gray-300 transition duration-300">View Screening Cells</button>
+                <button id="enzyme-panel-btn" class="action-btn bg-gray-200 font-bold py-2 px-4 rounded-lg hover:bg-gray-300 transition duration-300">View Enzyme Panel</button>
+                <button id="additional-panel-btn" class="action-btn bg-gray-200 font-bold py-2 px-4 rounded-lg hover:bg-gray-300 transition duration-300">Do Additional Panel</button>
             </div>
 
-            <div class="mt-6 flex flex-col md:flex-row items-center justify-center gap-4">
-                <label for="answer-select" class="font-bold text-lg">I think the antibody is:</label>
-                <select id="answer-select" class="p-2 border border-gray-300 rounded-lg">
-                    </select>
-                <button id="submit-answer" class="bg-green-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-green-600 transition-colors">Submit</button>
-                 <button id="next-case" class="bg-gray-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-gray-600 transition-colors hidden">Next Case</button>
+            <div id="screen-container" class="bg-white p-4 rounded-lg shadow-md mb-4 hidden">
+                 <h3 class="text-xl font-bold nhs-text-dark-blue">Screening Cells (IAT only)</h3>
+                <div class="overflow-x-auto"><table id="screen-table" class="antigram-table"></table></div>
+            </div>
+            
+            <div id="additional-panel-container" class="bg-white p-4 rounded-lg shadow-md mb-4 hidden">
+                <h3 class="text-xl font-bold nhs-text-dark-blue">Additional Panel</h3>
+                <div class="overflow-x-auto"><table id="additional-panel-table" class="antigram-table"></table></div>
+            </div>
+
+            <div class="bg-white p-4 rounded-lg shadow-md">
+                <h3 class="text-xl font-bold nhs-text-dark-blue">Main Identification Panel</h3>
+                <div class="overflow-x-auto"><table id="main-panel-table" class="antigram-table"></table></div>
+            </div>
+            
+            <div class="mt-8">
+                <h3 class="text-xl font-semibold mb-3">What is the antibody specificity?</h3>
+                <div id="antibody-options" class="flex flex-wrap justify-center gap-2"></div>
+            </div>
+
+            <div id="antigram-feedback" class="mt-6 p-4 rounded-lg text-lg font-semibold hidden"></div>
+            <div class="flex justify-center items-center gap-4 mt-4">
+                <button id="check-answer-btn" class="bg-green-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-green-700 transition duration-300">Check Answer</button>
+                <button id="new-panel-btn" class="bg-gray-800 text-white font-bold py-3 px-8 rounded-lg hover:bg-black transition duration-300">New Panel</button>
             </div>
         </div>
-        
-        <section class="text-center mt-12">
-            <a href="games.html" class="bg-gray-800 text-white font-bold py-3 px-8 rounded-full hover:bg-gray-700 transition duration-300">
-                <i class="fas fa-arrow-left mr-2"></i>Back to Games
-            </a>
-        </section>
     </main>
     
-    <div id="tutorial-modal" class="modal fixed inset-0 bg-black bg-opacity-50 items-center justify-center p-4">
-        <div class="bg-white rounded-lg shadow-xl p-8 max-w-2xl w-full">
-            <h2 class="text-2xl font-bold mb-4">How to Identify an Antibody</h2>
-            <div class="text-left space-y-3">
-                <p><strong>The Goal:</strong> To find an antibody specificity that matches the pattern of the patient's positive reactions.</p>
-                <ol class="list-decimal list-inside space-y-2">
-                    <li><strong>Rule Out (Exclusion):</strong> Look at the patient's <span class="font-bold text-red-600">negative</span> reactions. If a panel cell is <span class="font-bold">homozygous</span> for an antigen (e.g., Jk(a+b-)) and the patient's plasma does not react with it, you can confidently rule out that antibody (in this case, Anti-Jk<sup>a</sup>). You can click the antigen header on the panel to draw a line through it.</li>
-                    <li><strong>Rule In (Pattern Matching):</strong> Look at the patient's <span class="font-bold text-green-600">positive</span> reactions. The pattern of reactivity should match the antigen profile of a single antibody.</li>
-                    <li><strong>Check the Auto-Control:</strong> The 'Auto' column shows the patient's plasma tested against their own cells. If this is positive, an auto-antibody may be present.</li>
-                    <li><strong>Consider Dosage:</strong> Some antibodies react more weakly with heterozygous cells (e.g., K+k+) than homozygous cells (e.g., K+k-). This is called 'dosage'.</li>
-                </ol>
-                <p class="mt-4">When you have identified the most likely antibody (or antibodies), select it from the dropdown and submit your answer!</p>
-            </div>
-            <button id="close-tutorial" class="mt-6 bg-red-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-600 transition-colors float-right">Close</button>
-        </div>
-    </div>
-
-
     <div id="footer-placeholder"></div>
+
     <script src="js/component-loader.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            const antigens = ['D', 'C', 'E', 'c', 'e', 'Cʷ', 'K', 'k', 'Fyᵃ', 'Fyᵇ', 'Jkᵃ', 'Jkᵇ', 'Leᵃ', 'Leᵇ', 'P₁', 'M', 'N', 'S', 's', 'Luᵃ', 'Luᵇ'];
+            const mainPanelCells = [ {antigens: {'D':'+','C':'+','E':'0','c':'0','e':'+','Cʷ':'+','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'0','Leᵇ':'+','P₁':'+','M':'+','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}}, {antigens: {'D':'+','C':'+','E':'0','c':'0','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'0','P₁':'+','M':'+','N':'0','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}}, {antigens: {'D':'+','C':'0','E':'+','c':'+','e':'0','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'+','P₁':'+','M':'0','N':'+','S':'+','s':'+','Luᵃ':'0','Luᵇ':'+'}}, {antigens: {'D':'0','C':'+','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'+','Jkᵇ':'0','Leᵃ':'0','Leᵇ':'+','P₁':'+','M':'+','N':'0','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}}, {antigens: {'D':'0','C':'0','E':'+','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'+','P₁':'0','M':'+','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}}, {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'+','P₁':'+','M':'+','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}}, {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'0','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'+','P₁':'+','M':'+','N':'+','S':'+','s':'+','Luᵃ':'0','Luᵇ':'+'}}, {antigens: {'D':'+','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'0','Leᵇ':'+','P₁':'+','M':'+','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}}, {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'0','Jkᵇ':'+','Leᵃ':'0','Leᵇ':'+','P₁':'0','M':'0','N':'+','S':'+','s':'+','Luᵃ':'0','Luᵇ':'+'}}, {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'+','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'0','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'+','P₁':'+','M':'+','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}}, {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'+','k':'+','Fyᵃ':'+','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'0','P₁':'+','M':'+','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}} ];
+            const screeningCells = mainPanelCells.slice(0, 3);
+            const additionalPanelCells = [ {antigens: {'D':'+','C':'+','E':'0','c':'0','e':'+','Cʷ':'+','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'0','Jkᵇ':'+','Leᵃ':'0','Leᵇ':'+','P₁':'+','M':'+','N':'0','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}}, {antigens: {'D':'+','C':'+','E':'0','c':'0','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'0','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'0','P₁':'+','M':'0','N':'+','S':'+','s':'0','Luᵃ':'0','Luᵇ':'+'}}, {antigens: {'D':'+','C':'0','E':'+','c':'+','e':'0','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'0','Leᵃ':'0','Leᵇ':'+','P₁':'+','M':'+','N':'0','S':'+','s':'0','Luᵃ':'0','Luᵇ':'w'}}, {antigens: {'D':'0','C':'+','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'+','Jkᵇ':'0','Leᵃ':'0','Leᵇ':'+','P₁':'+','M':'+','N':'0','S':'+','s':'0','Luᵃ':'0','Luᵇ':'+'}}, {antigens: {'D':'0','C':'0','E':'+','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'0','Jkᵃ':'+','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'0','P₁':'0','M':'+','N':'0','S':'+','s':'0','Luᵃ':'0','Luᵇ':'+'}}, {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'+','Fyᵇ':'+','Jkᵃ':'0','Jkᵇ':'+','Leᵃ':'+','Leᵇ':'+','P₁':'0','M':'0','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}}, {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'+','k':'+','Fyᵃ':'+','Fyᵇ':'0','Jkᵃ':'+','Jkᵇ':'0','Leᵃ':'+','Leᵇ':'+','P₁':'+','M':'0','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}}, {antigens: {'D':'0','C':'0','E':'+','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'0','Leᵃ':'+','Leᵇ':'+','P₁':'+','M':'+','N':'+','S':'0','s':'+','Luᵃ':'0','Luᵇ':'+'}}, {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'0','Jkᵃ':'0','Jkᵇ':'+','Leᵃ':'0','Leᵇ':'+','P₁':'+','M':'0','N':'+','S':'+','s':'0','Luᵃ':'0','Luᵇ':'w'}}, {antigens: {'D':'0','C':'0','E':'0','c':'+','e':'+','Cʷ':'0','K':'0','k':'+','Fyᵃ':'0','Fyᵇ':'+','Jkᵃ':'+','Jkᵇ':'0','Leᵃ':'0','Leᵇ':'+','P₁':'0','M':'+','N':'0','S':'+','s':'0','Luᵃ':'+','Luᵇ':'+'}} ];
+            const allAntibodies = [ { name: 'Anti-D', antigen: 'D', effect: 'enhance' }, { name: 'Anti-C', antigen: 'C', effect: 'enhance' }, { name: 'Anti-c', antigen: 'c', effect: 'enhance' }, { name: 'Anti-E', antigen: 'E', effect: 'enhance' }, { name: 'Anti-e', antigen: 'e', effect: 'enhance' }, { name: 'Anti-K', antigen: 'K', effect: 'unaffected' }, { name: 'Anti-k', antigen: 'k', effect: 'unaffected' }, { name: 'Anti-Fya', antigen: 'Fyᵃ', effect: 'destroy' }, { name: 'Anti-Fyb', antigen: 'Fyᵇ', effect: 'destroy' }, { name: 'Anti-Jka', antigen: 'Jkᵃ', effect: 'enhance' }, { name: 'Anti-Jkb', antigen: 'Jkᵇ', effect: 'enhance' }, { name: 'Anti-S', antigen: 'S', effect: 'destroy' }, { name: 'Anti-s', antigen: 's', effect: 'destroy' }, { name: 'Anti-M', antigen: 'M', effect: 'destroy' }, { name: 'Anti-N', antigen: 'N', effect: 'destroy' }, { name: 'Anti-P1', antigen: 'P₁', effect: 'unaffected' }, { name: 'Anti-Lea', antigen: 'Leᵃ', effect: 'unaffected' }, { name: 'Anti-Leb', antigen: 'Leᵇ', effect: 'unaffected' }, { name: 'Anti-Lua', antigen: 'Luᵃ', effect: 'unaffected' }, { name: 'Anti-Lub', antigen: 'Luᵇ', effect: 'unaffected' }, { name: 'Anti-Cw', antigen: 'Cʷ', effect: 'enhance' } ];
+            const clinicalDetailsList = ["Pre-operative screen", "Antenatal booking sample", "Investigation of anaemia", "History of transfusion reaction"];
+            const bloodGroups = ["O Positive", "A Positive", "B Positive", "AB Positive", "O Negative", "A Negative", "B Negative", "AB Negative"];
+            
+            let scenarios = { easy: [], medium: [], hard: [], auto: [] };
+            let currentScenario = {};
+            let selectedAntibodies = [];
+            let currentDifficulty = 'easy';
 
-            // --- DATA ---
-            const panelData = {
-                antigens: ['D', 'C', 'E', 'c', 'e', 'K', 'k', 'Fy_a', 'Fy_b', 'Jk_a', 'Jk_b', 'M', 'N', 'S', 's'],
-                cells: [
-                    { donor: 'R1R1', profile: ['+', '+', '0', '0', '+', '0', '+', '+', '0', '+', '0', '+', '0', '+', '0'] },
-                    { donor: 'R2R2', profile: ['+', '0', '+', '+', '0', '0', '+', '0', '+', '0', '+', '0', '+', '0', '+'] },
-                    { donor: 'rr', profile: ['0', '0', '0', '+', '+', '0', '+', '+', '+', '+', '+', '+', '+', '+', '+'] },
-                    { donor: 'rr', profile: ['0', '0', '0', '+', '+', '+', '+', '0', '0', '0', '+', '0', '0', '0', '+'] },
-                    { donor: 'R1r', profile: ['+', '+', '0', '+', '+', '0', '+', '+', '0', '+', '0', '+', '0', '+', '0'] },
-                    { donor: 'R2r', profile: ['+', '0', '+', '+', '+', '0', '+', '0', '+', '0', '+', '0', '+', '0', '+'] },
-                    { donor: 'r\'r', profile: ['0', '+', '0', '+', '+', '0', '+', '0', '+', '+', '0', '+', '+', '0', '+'] },
-                    { donor: 'r"r', profile: ['0', '0', '+', '+', '+', '0', '+', '+', '0', '0', '+', '0', '+', '+', '0'] },
-                ]
+            const ui = {
+                difficultyButtons: document.querySelectorAll('.difficulty-btn'),
+                checkAnswerBtn: document.getElementById('check-answer-btn'),
+                newPanelBtn: document.getElementById('new-panel-btn'),
+                screenBtn: document.getElementById('screen-btn'),
+                enzymePanelBtn: document.getElementById('enzyme-panel-btn'),
+                additionalPanelBtn: document.getElementById('additional-panel-btn'),
+                antibodyOptionsContainer: document.getElementById('antibody-options'),
+                antigramFeedback: document.getElementById('antigram-feedback'),
+                screenContainer: document.getElementById('screen-container'),
+                additionalPanelContainer: document.getElementById('additional-panel-container'),
+                patientBloodGroup: document.getElementById('patient-blood-group'),
+                patientDetails: document.getElementById('patient-details'),
+                autocontrolResult: document.getElementById('autocontrol-result'),
+                mainPanelTable: document.getElementById('main-panel-table'),
+                screenTable: document.getElementById('screen-table'),
+                additionalPanelTable: document.getElementById('additional-panel-table')
             };
+
+            function isScenarioSolvable(antibodies, panel) {
+                if (!antibodies || antibodies.length === 0 || !antibodies.every(ab => ab)) return false;
+                const getPattern = (abs) => panel.map(cell => abs.some(ab => cell.antigens[ab.antigen] === '+')).join('');
+                for (const ab of antibodies) { if (panel.filter(c => c.antigens[ab.antigen] === '+').length < 2 || panel.filter(c => c.antigens[ab.antigen] === '0').length < 2) return false; }
+                const mainPattern = getPattern(antibodies);
+                for (const otherAb of allAntibodies) { if (!antibodies.some(a => a.name === otherAb.name)) { if (getPattern([otherAb]) === mainPattern) return false; } }
+                if (antibodies.length > 1) { for (let i = 0; i < antibodies.length; i++) { for (let j = i + 1; j < antibodies.length; j++) { if (!panel.some(c => c.antigens[antibodies[i].antigen] === '+' && c.antigens[antibodies[j].antigen] === '0') || !panel.some(c => c.antigens[antibodies[i].antigen] === '0' && c.antigens[antibodies[j].antigen] === '+')) return false; } } }
+                return true;
+            }
+
+            function createScenarios() {
+                scenarios.easy = allAntibodies.map(ab => [ab]).filter(s => isScenarioSolvable(s, mainPanelCells));
+                scenarios.medium = [];
+                for (let i = 0; i < allAntibodies.length; i++) { for (let j = i + 1; j < allAntibodies.length; j++) { const scenario = [allAntibodies[i], allAntibodies[j]]; if (isScenarioSolvable(scenario, mainPanelCells)) scenarios.medium.push(scenario); } }
+                
+                scenarios.hard = [];
+                const keyAntibodies = allAntibodies.filter(ab => ['D', 'C', 'c', 'E', 'e', 'K', 'k', 'Fyᵃ', 'Jkᵃ', 'S', 's'].includes(ab.antigen));
+                if (keyAntibodies.length >= 3) {
+                    for (let i = 0; i < keyAntibodies.length; i++) {
+                        for (let j = i + 1; j < keyAntibodies.length; j++) {
+                            for (let k = j + 1; k < keyAntibodies.length; k++) {
+                                const scenario = [keyAntibodies[i], keyAntibodies[j], keyAntibodies[k]];
+                                if (isScenarioSolvable(scenario, mainPanelCells)) {
+                                    scenarios.hard.push(scenario);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                scenarios.auto.push({ type: 'auto', antibodies: [{ name: 'Pan-reactive Warm Autoantibody', antigen: 'auto' }], clinicalDetails: 'Investigation of Autoimmune Haemolysis', bloodGroup: 'A Positive', autocontrol: 'Positive (3+)' });
+            }
+
+            function calculateReaction(cell, antibodies) { let iatStrength = 0, enzStrength = 0; const reactingAbs = antibodies.filter(ab => ab.antigen === 'auto' || (cell.antigens[ab.antigen] && cell.antigens[ab.antigen] === '+')); if (reactingAbs.length > 0) { iatStrength = Math.floor(Math.random() * 2) + 2; const isEnzymeDestroyed = reactingAbs.every(ab => ab.effect === 'destroy'); const isEnzymeEnhanced = reactingAbs.some(ab => ab.effect === 'enhance'); if (isEnzymeDestroyed) { enzStrength = 0; } else { enzStrength = iatStrength; if (isEnzymeEnhanced) enzStrength = Math.min(4, iatStrength + 1); } } return { iat: iatStrength > 0 ? `${iatStrength}+` : '0', enz: enzStrength > 0 ? `${enzStrength}+` : '0' }; }
             
-            const gameCases = [
-                { name: 'Case 1', reactions: ['+', '+', '0', '0', '+', '0', '0', '0'], auto: '0', solution: ['Anti-D', 'Anti-C'] },
-                { name: 'Case 2', reactions: ['0', '0', '0', '+', '0', '0', '0', '0'], auto: '0', solution: ['Anti-K'] },
-                { name: 'Case 3', reactions: ['+', '0', '+', '0', '+', '0', '+', '+'], auto: '0', solution: ['Anti-Fy_a'] },
-                { name: 'Case 4', reactions: ['+', '+', '+', '0', '+', '+', '+', '+'], auto: '0', solution: ['Anti-E'] },
-                { name: 'Case 5', reactions: ['w+', '+', '+', '0', '+', '+', '+', '+'], auto: 'w+', solution: ['Autoantibody'] }
-            ];
-
-            // --- ELEMENTS ---
-            const table = document.getElementById('panel-table');
-            const answerSelect = document.getElementById('answer-select');
-            const submitButton = document.getElementById('submit-answer');
-            const nextCaseButton = document.getElementById('next-case');
-            const feedbackEl = document.getElementById('feedback');
-            const scoreEl = document.getElementById('score');
-            const tutorialButton = document.getElementById('tutorial-button');
-            const closeTutorialButton = document.getElementById('close-tutorial');
-            const modal = document.getElementById('tutorial-modal');
-
-            let currentCaseIndex = 0;
-            let currentScore = 0;
-
-            // --- FUNCTIONS ---
-            function createPanel() {
-                // Clear existing
-                table.innerHTML = '';
-                
-                // Header
-                const thead = document.createElement('thead');
-                let headerRow = '<tr><th>Donor</th>';
-                panelData.antigens.forEach(ag => {
-                    headerRow += `<th class="antigen-header" data-antigen="${ag}">${ag.replace('_', '<sup>') + (ag.includes('_') ? '</sup>' : '')}<div class="line-through"></div></th>`;
-                });
-                headerRow += '<th>Patient IAT</th></tr>';
-                thead.innerHTML = headerRow;
-                table.appendChild(thead);
-                
-                // Body
-                const tbody = document.createElement('tbody');
-                table.appendChild(tbody);
-            }
-
-            function loadCase(caseIndex) {
-                const caseData = gameCases[caseIndex];
-                const tbody = table.querySelector('tbody');
-                tbody.innerHTML = ''; // Clear previous case data
-
-                // Populate panel cells
-                panelData.cells.forEach((cell, index) => {
-                    const row = document.createElement('tr');
-                    let rowHtml = `<td>${cell.donor}</td>`;
-                    cell.profile.forEach(antigenResult => {
-                        rowHtml += `<td>${antigenResult}</td>`;
-                    });
-                    // Add patient reaction for this cell
-                    rowHtml += `<td class="reaction-cell">${caseData.reactions[index] || '0'}</td>`;
-                    row.innerHTML = rowHtml;
-                    tbody.appendChild(row);
-                });
-                
-                // Add Auto row
-                const autoRow = document.createElement('tr');
-                autoRow.innerHTML = `<td class="font-bold">Auto</td><td colspan="${panelData.antigens.length}"></td><td class="reaction-cell">${caseData.auto}</td>`;
-                tbody.appendChild(autoRow);
-
-                // Reset UI
-                feedbackEl.textContent = 'Select an antibody and click "Submit".';
-                feedbackEl.className = 'mt-1 h-6 text-lg font-semibold text-gray-500';
-                submitButton.classList.remove('hidden');
-                nextCaseButton.classList.add('hidden');
-                answerSelect.disabled = false;
-                document.querySelectorAll('.antigen-header').forEach(th => th.classList.remove('excluded'));
-            }
-
-            function populateAnswerOptions() {
-                const allAntibodies = ['Anti-D', 'Anti-C', 'Anti-E', 'Anti-c', 'Anti-e', 'Anti-K', 'Anti-k', 'Anti-Fy_a', 'Anti-Fy_b', 'Anti-Jk_a', 'Anti-Jk_b', 'Anti-M', 'Anti-N', 'Anti-S', 'Anti-s', 'Autoantibody', 'No Antibody Detected'];
-                allAntibodies.forEach(ab => {
-                    const option = document.createElement('option');
-                    option.value = ab;
-                    option.textContent = ab.replace('_', 'a');
-                    answerSelect.appendChild(option);
-                });
-            }
+            function renderTable(tableId, panelData, antibodies) { const tableEl = document.getElementById(tableId); if (!tableEl) return; tableEl.innerHTML = ''; const isScreeningPanel = (tableId === 'screen-table'); const thead = document.createElement('thead'); const headerRow = thead.insertRow(); let headerHTML = `<th class="w-12">${isScreeningPanel ? 'Screen' : 'Cell'}</th>`; headerHTML += antigens.map(ag => `<th class="antigen-header" data-antigen="${ag}">${ag}</th>`).join(''); headerHTML += `<th>IAT</th>`; if (!isScreeningPanel) { headerHTML += `<th class="enz-col hidden-col">ENZ</th>`; } headerRow.innerHTML = headerHTML; thead.appendChild(headerRow); const tbody = document.createElement('tbody'); panelData.forEach((cellData, index) => { const reaction = calculateReaction(cellData, antibodies); const row = tbody.insertRow(); let rowHTML = `<td class="font-bold">${isScreeningPanel ? ['I', 'II', 'III'][index] : index + 1}</td>`; rowHTML += antigens.map(ag => `<td data-antigen="${ag}">${cellData.antigens[ag] || '0'}</td>`).join(''); rowHTML += `<td class="${reaction.iat !== '0' ? 'reaction-pos' : ''}">${reaction.iat}</td>`; if (!isScreeningPanel) { rowHTML += `<td class="enz-col hidden-col ${reaction.enz !== '0' ? 'reaction-pos' : ''}">${reaction.enz}</td>`; } row.innerHTML = rowHTML; }); tableEl.appendChild(thead); tableEl.appendChild(tbody); }
             
-            function checkAnswer() {
-                const selectedAnswer = answerSelect.value;
-                const correctAnswers = gameCases[currentCaseIndex].solution;
+            function setupAnswerOptions() { let correctAnswers = currentScenario.antibodies.map(ab=>ab.name); let displayOptions; if(currentScenario.type === 'auto') { displayOptions = ["Pan-reactive Warm Autoantibody", "Refer to NBS", "Anti-e", "Anti-K"]; } else { let wrongOptions = allAntibodies.filter(ab => !correctAnswers.includes(ab.name)).sort(() => 0.5-Math.random()).slice(0, 8-correctAnswers.length).map(ab=>ab.name); displayOptions = [...correctAnswers, ...wrongOptions]; } ui.antibodyOptionsContainer.innerHTML = ''; [...new Set(displayOptions)].sort(() => 0.5 - Math.random()).forEach(abName => { ui.antibodyOptionsContainer.innerHTML += `<button class="antibody-choice-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">${abName}</button>`; }); }
 
-                // Simple check for this game: if selected is in the solution array
-                if (correctAnswers.includes(selectedAnswer)) {
-                    feedbackEl.textContent = 'Correct! Well done.';
-                    feedbackEl.className = 'mt-1 h-6 text-lg font-semibold text-green-600';
-                    currentScore++;
-                    scoreEl.textContent = currentScore;
+            function checkFinalAnswer() { ui.checkAnswerBtn.disabled = true; document.querySelectorAll('.action-btn, .antibody-choice-btn').forEach(btn => btn.disabled = true); const correctAnswers = currentScenario.antibodies.map(ab => ab.name).sort(); const selectedAnswers = selectedAntibodies.sort(); const isCorrect = JSON.stringify(correctAnswers) === JSON.stringify(selectedAnswers); ui.antigramFeedback.classList.remove('hidden'); if (isCorrect) { ui.antigramFeedback.textContent = `Correct! The answer is: ${correctAnswers.join(', ')}.`; ui.antigramFeedback.className = 'mt-6 p-4 rounded-lg text-lg font-semibold bg-green-100 text-green-800'; } else { ui.antigramFeedback.textContent = `Incorrect. The correct answer was: ${correctAnswers.join(', ')}.`; ui.antigramFeedback.className = 'mt-6 p-4 rounded-lg text-lg font-semibold bg-red-100 text-red-800'; } }
+            
+            function initGame() {
+                document.querySelectorAll('.action-btn, #check-answer-btn, #new-panel-btn').forEach(btn => { if(btn) btn.disabled = false; });
+                ui.antigramFeedback.classList.add('hidden');
+                ui.screenContainer.classList.add('hidden');
+                ui.additionalPanelContainer.classList.add('hidden');
+                document.querySelectorAll('.excluded').forEach(el => el.classList.remove('excluded'));
+                document.querySelectorAll('.enz-col').forEach(c => c.classList.add('hidden-col'));
+                selectedAntibodies = [];
+
+                let scenarioPool = scenarios[currentDifficulty] || [];
+                if(scenarioPool.length === 0) {
+                    ui.mainPanelTable.innerHTML = `<tbody><tr><td class="p-4 text-lg" colspan="${antigens.length + 3}">No solvable puzzles found for this difficulty. Try another level or click 'New Panel' again.</td></tr></tbody>`;
+                    ui.screenTable.innerHTML = '';
+                    ui.additionalPanelTable.innerHTML = '';
+                    ui.antibodyOptionsContainer.innerHTML = '';
+                    return;
+                }
+                
+                if (currentDifficulty !== 'easy' && Math.random() < 0.1 && scenarios.auto.length > 0) {
+                    currentScenario = scenarios.auto[0];
                 } else {
-                    feedbackEl.textContent = `Not quite. The primary antibody is ${correctAnswers.join(' and ')}.`;
-                    feedbackEl.className = 'mt-1 h-6 text-lg font-semibold text-red-600';
+                    currentScenario = { type: 'allo', antibodies: scenarioPool[Math.floor(Math.random() * scenarioPool.length)], clinicalDetails: clinicalDetailsList[Math.floor(Math.random() * clinicalDetailsList.length)], bloodGroup: bloodGroups[Math.floor(Math.random() * bloodGroups.length)], autocontrol: 'Negative' };
                 }
                 
-                submitButton.classList.add('hidden');
-                nextCaseButton.classList.remove('hidden');
-                answerSelect.disabled = true;
+                ui.patientBloodGroup.textContent = currentScenario.bloodGroup;
+                ui.patientDetails.textContent = currentScenario.clinicalDetails;
+                ui.autocontrolResult.textContent = currentScenario.autocontrol;
+                ui.autocontrolResult.classList.toggle('reaction-pos', currentScenario.autocontrol !== 'Negative');
+                
+                renderTable('main-panel-table', mainPanelCells, currentScenario.antibodies);
+                renderTable('screen-table', screeningCells, currentScenario.antibodies);
+                renderTable('additional-panel-table', additionalPanelCells, currentScenario.antibodies);
+                
+                setupAnswerOptions();
             }
-
-            // --- EVENT LISTENERS ---
-            table.addEventListener('click', (e) => {
-                const header = e.target.closest('.antigen-header');
-                if (header) {
-                    header.classList.toggle('excluded');
-                }
-            });
-
-            submitButton.addEventListener('click', checkAnswer);
             
-            nextCaseButton.addEventListener('click', () => {
-                currentCaseIndex = (currentCaseIndex + 1) % gameCases.length;
-                loadCase(currentCaseIndex);
-            });
-            
-            tutorialButton.addEventListener('click', () => modal.classList.add('active'));
-            closeTutorialButton.addEventListener('click', () => modal.classList.remove('active'));
-            modal.addEventListener('click', (e) => {
-                if(e.target === modal) {
-                    modal.classList.remove('active');
-                }
+            // FIX: Moved this event listener outside of initGame() so it's only attached once.
+            ui.antibodyOptionsContainer.addEventListener('click', e => { 
+                if (e.target.classList.contains('antibody-choice-btn')) { 
+                    e.target.classList.toggle('selected'); 
+                    const abName = e.target.textContent; 
+                    if (selectedAntibodies.includes(abName)) { 
+                        selectedAntibodies = selectedAntibodies.filter(ab => ab !== abName); 
+                    } else { 
+                        selectedAntibodies.push(abName); 
+                    } 
+                } 
             });
 
-            // --- INITIALIZATION ---
-            createPanel();
-            populateAnswerOptions();
-            loadCase(currentCaseIndex);
+            document.querySelectorAll('.antigen-header').forEach(header => { header.addEventListener('click', () => { const antigenToExclude = header.dataset.antigen; document.querySelectorAll(`[data-antigen="${antigenToExclude}"]`).forEach(cell => cell.classList.toggle('excluded')); }); });
+            ui.difficultyButtons.forEach(btn => btn.addEventListener('click', () => { ui.difficultyButtons.forEach(b => b.classList.remove('active')); btn.classList.add('active'); currentDifficulty = btn.dataset.difficulty; initGame(); }));
+            ui.screenBtn.addEventListener('click', () => ui.screenContainer.classList.toggle('hidden'));
+            ui.additionalPanelBtn.addEventListener('click', () => ui.additionalPanelContainer.classList.toggle('hidden'));
+            ui.enzymePanelBtn.addEventListener('click', () => { document.querySelectorAll('.enz-col').forEach(c => c.classList.remove('hidden-col')); ui.enzymePanelBtn.disabled = true; });
+            ui.newPanelBtn.addEventListener('click', initGame);
+            ui.checkAnswerBtn.addEventListener('click', checkFinalAnswer);
+            
+            document.querySelector('.difficulty-btn[data-difficulty="easy"]').classList.add('active');
+            createScenarios();
+            initGame();
         });
     </script>
 </body>
