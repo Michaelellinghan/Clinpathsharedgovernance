@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Management Game - Clinical Pathology</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
+
+    <div id="header-placeholder"></div>
+
+    <main class="container mx-auto px-4 py-8 flex-grow">
+        <section class="text-center mb-8">
+            <h1 class="text-4xl md:text-5xl font-bold mb-2">Stock Management Challenge</h1>
+            <p class="text-lg text-gray-600">Make the right decisions to keep the blood bank running smoothly.</p>
+        </section>
+
+        <div id="game-container" class="bg-white p-6 rounded-lg shadow-md max-w-4xl mx-auto">
+            
+            <div id="start-screen" class="text-center">
+                <h2 class="text-2xl font-bold mb-4">Welcome, Stock Manager!</h2>
+                <p class="mb-6">Your goal is to manage the blood stock for 3 days. Each day you will face a new challenge. Make the right choice to keep wastage low and ensure patient safety. Good luck!</p>
+                <button id="start-button" class="bg-blue-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-600">Start Day 1</button>
+            </div>
+
+            <div id="game-screen" class="hidden">
+                <div class="flex justify-between items-center border-b pb-4 mb-4">
+                    <div>
+                        <h2 class="text-2xl font-bold" id="day-counter">Day 1</h2>
+                        <p class="text-gray-600">Here's today's situation...</p>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-lg">Wastage: <span id="wastage-stat" class="font-bold">0 units</span></div>
+                    </div>
+                </div>
+                
+                <div id="scenario-container" class="my-4">
+                    <div id="scenario-description" class="p-4 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-800 font-semibold text-lg"></div>
+                    <div id="choices-container" class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4"></div>
+                </div>
+                <div id="feedback" class="mt-4 h-12 text-lg font-semibold text-center"></div>
+            </div>
+            
+            <div id="end-screen" class="hidden text-center">
+                 <h2 class="text-3xl font-bold mb-4">Shift Complete!</h2>
+                 <p class="text-xl mb-4">You finished your 3-day shift with a total of <span id="final-wastage" class="font-bold"></span> wasted units.</p>
+                 <p id="end-message" class="text-lg mb-6"></p>
+                 <button id="restart-button" class="bg-blue-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-600">Play Again</button>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+    <script src="js/component-loader.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const elements = {
+                startScreen: document.getElementById('start-screen'),
+                gameScreen: document.getElementById('game-screen'),
+                endScreen: document.getElementById('end-screen'),
+                startButton: document.getElementById('start-button'),
+                restartButton: document.getElementById('restart-button'),
+                dayCounter: document.getElementById('day-counter'),
+                wastageStat: document.getElementById('wastage-stat'),
+                scenarioDesc: document.getElementById('scenario-description'),
+                choicesContainer: document.getElementById('choices-container'),
+                feedback: document.getElementById('feedback'),
+                finalWastage: document.getElementById('final-wastage'),
+                endMessage: document.getElementById('end-message'),
+            };
+
+            const scenarios = [
+                {
+                    description: "A routine surgical case needs 2 units of A Positive blood for theatre cover. You have two units available: one expires in 5 days, the other in 25 days. Which do you issue?",
+                    choices: [
+                        { text: "Issue the unit expiring in 5 days.", correct: false, feedback: "Incorrect. Fresher units should be used for surgical cover in case they are returned unused." },
+                        { text: "Issue the unit expiring in 25 days.", correct: true, feedback: "Correct! Fresher units are best for surgical cover, preserving short-dated stock for patients who will definitely be transfused." }
+                    ]
+                },
+                {
+                    description: "A porter returns a unit of O Negative blood from the ward. The paperwork shows it has been out of controlled temperature storage for 45 minutes. What do you do?",
+                    choices: [
+                        { text: "Return it to the main stock fridge.", correct: false, feedback: "Incorrect. The 30-minute rule has been breached; the unit cannot be returned to stock." },
+                        { text: "Waste the unit, citing a cold chain failure.", correct: true, feedback: "Correct. Once a unit is out of the fridge for over 30 minutes, it cannot be returned to stock for another patient." }
+                    ]
+                },
+                {
+                    description: "It's the morning check. You notice a unit of platelets will expire in 24 hours. Your hospital has no patients who need it, but the other hospital site is low on platelet stock. What is the best course of action?",
+                    choices: [
+                        { text: "Keep it, just in case someone needs it.", correct: false, feedback: "Incorrect. It's likely to expire, and another hospital has a need. This would lead to wastage." },
+                        { text: "Arrange to transfer the platelet to the other site.", correct: true, feedback: "Correct! Transferring short-dated stock to a site with higher usage is a key strategy to prevent wastage." }
+                    ]
+                }
+            ];
+
+            let state;
+
+            const resetState = () => {
+                state = { wastage: 0, currentDay: 0 };
+            };
+
+            const startGame = () => {
+                resetState();
+                elements.startScreen.classList.add('hidden');
+                elements.endScreen.classList.add('hidden');
+                elements.gameScreen.classList.remove('hidden');
+                loadDay();
+            };
+
+            const loadDay = () => {
+                if (state.currentDay >= scenarios.length) {
+                    endGame();
+                    return;
+                }
+                const scenario = scenarios[state.currentDay];
+                state.currentDay++;
+                
+                elements.dayCounter.textContent = `Day ${state.currentDay}`;
+                elements.wastageStat.textContent = `${state.wastage} units`;
+                elements.scenarioDesc.textContent = scenario.description;
+                elements.feedback.textContent = '';
+                elements.choicesContainer.innerHTML = '';
+
+                scenario.choices.forEach(choice => {
+                    const button = document.createElement('button');
+                    button.textContent = choice.text;
+                    button.className = 'w-full p-4 bg-gray-200 rounded-lg hover:bg-gray-300 font-semibold text-left';
+                    button.onclick = () => handleChoice(choice);
+                    elements.choicesContainer.appendChild(button);
+                });
+            };
+
+            const handleChoice = (choice) => {
+                elements.choicesContainer.querySelectorAll('button').forEach(btn => btn.disabled = true);
+                elements.feedback.textContent = choice.feedback;
+
+                if (choice.correct) {
+                    elements.feedback.className = 'mt-4 h-12 text-lg font-semibold text-center text-green-600';
+                } else {
+                    elements.feedback.className = 'mt-4 h-12 text-lg font-semibold text-center text-red-600';
+                    state.wastage++;
+                    elements.wastageStat.textContent = `${state.wastage} units`;
+                }
+                
+                setTimeout(loadDay, 3000);
+            };
+
+            const endGame = () => {
+                elements.gameScreen.classList.add('hidden');
+                elements.endScreen.classList.remove('hidden');
+                elements.finalWastage.textContent = `${state.wastage} units`;
+                if(state.wastage === 0) {
+                    elements.endMessage.textContent = "Outstanding performance! You managed the stock perfectly with zero wastage.";
+                } else {
+                    elements.endMessage.textContent = "Good work! Stock management is challenging, and every decision counts.";
+                }
+            };
+
+            elements.startButton.addEventListener('click', startGame);
+            elements.restartButton.addEventListener('click', startGame);
+
+            resetState();
+        });
+    </script>
+</body>
+</html>
