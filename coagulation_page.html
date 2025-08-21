@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Clotting Cascade - Clinical Pathology</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .hero-bg-coag {
+            background-image: url('https://images.unsplash.com/photo-1581092916346-61a2ff2f7c02?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-position: center;
+        }
+         .text-shadow-lg {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .card-hover-effect {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .card-hover-effect:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- Header -->
+    <div id="header-placeholder"></div>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        
+        <!-- Hero Section -->
+        <section class="hero-bg-coag text-white rounded-lg p-8 md:p-16 mb-8 flex items-center justify-center text-center shadow-lg">
+            <div>
+                <h1 class="text-4xl md:text-6xl font-bold mb-4 text-shadow-lg">The Clotting Cascade</h1>
+                <p class="text-lg md:text-2xl max-w-3xl mx-auto text-shadow-lg">Investigating how your blood stops a leak.</p>
+            </div>
+        </section>
+
+        <!-- Introduction to Coagulation -->
+        <section class="bg-white p-8 rounded-lg shadow-md mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">What is Coagulation?</h2>
+            <div class="flex flex-col md:flex-row gap-8 items-center">
+                <div class="md:w-2/3">
+                    <p class="mb-4 text-lg">Coagulation is your body's amazing process for stopping bleeding. When you get a cut, a complex chain reaction, known as the 'clotting cascade', kicks off. It involves lots of different proteins in your blood called clotting factors, which work together with platelets to form a solid clot and seal the injury.</p>
+                    <p class="text-lg">Our job in the lab is to test how well this cascade is working. It's crucial for patients who are about to have surgery, those with unexplained bruising or bleeding, and for monitoring people on blood-thinning medications like warfarin.</p>
+                </div>
+                <div class="md:w-1/3 flex items-center justify-center">
+                    <img src="https://placehold.co/400x400/3b82f6/FFFFFF?text=Clotting" alt="Illustration of blood clotting" class="rounded-lg shadow-lg">
+                </div>
+            </div>
+        </section>
+
+        <!-- Core Coagulation Tests -->
+        <section class="bg-white p-8 rounded-lg shadow-md mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Our Main Clotting Tests</h2>
+            <div class="space-y-8">
+                <!-- Coagulation Screen -->
+                <div class="flex flex-col md:flex-row gap-6 items-center card-hover-effect p-4 rounded-lg">
+                    <div class="text-5xl text-blue-600 md:w-1/6 text-center"><i class="fas fa-stopwatch"></i></div>
+                    <div class="md:w-5/6">
+                        <h3 class="text-2xl font-semibold mb-2">The Coagulation Screen (PT & APTT)</h3>
+                        <p>This is our first-line investigation. We perform a couple of tests that time different parts of the clotting cascade. The <strong>Prothrombin Time (PT)</strong> and the <strong>Activated Partial Thromboplastin Time (APTT)</strong> tell us if there are any delays in the process, which could point to a missing clotting factor or another issue.</p>
+                    </div>
+                </div>
+                <!-- INR -->
+                <div class="flex flex-col md:flex-row gap-6 items-center card-hover-effect p-4 rounded-lg">
+                    <div class="text-5xl text-green-600 md:w-1/6 text-center"><i class="fas fa-chart-line"></i></div>
+                    <div class="md:w-5/6">
+                        <h3 class="text-2xl font-semibold mb-2">The INR (International Normalised Ratio)</h3>
+                        <p>If you're on a blood-thinner called Warfarin, you'll be very familiar with the INR. It's a calculation based on the PT result that allows us to standardise the measurement across all labs. It tells your doctor if your Warfarin dose is just right – not too high and not too low.</p>
+                    </div>
+                </div>
+                <!-- D-Dimer -->
+                <div class="flex flex-col md:flex-row gap-6 items-center card-hover-effect p-4 rounded-lg">
+                    <div class="text-5xl text-red-600 md:w-1/6 text-center"><i class="fas fa-search-plus"></i></div>
+                    <div class="md:w-5/6">
+                        <h3 class="text-2xl font-semibold mb-2">D-Dimer</h3>
+                        <p>When a blood clot breaks down, it releases tiny fragments called D-Dimers. We can measure these in the blood. A normal D-Dimer level is very useful for ruling out the presence of a dangerous clot, like a Deep Vein Thrombosis (DVT) in the leg. However, a high level can be caused by many things, so it's just one piece of the puzzle.</p>
+                    </div>
+                </div>
+                <!-- Fibrinogen -->
+                 <div class="flex flex-col md:flex-row gap-6 items-center card-hover-effect p-4 rounded-lg">
+                    <div class="text-5xl text-purple-600 md:w-1/6 text-center"><i class="fas fa-cubes"></i></div>
+                    <div class="md:w-5/6">
+                        <h3 class="text-2xl font-semibold mb-2">Fibrinogen</h3>
+                        <p>Fibrinogen is one of the key building blocks of a blood clot. We can measure how much of it is in your blood. This is particularly important in cases of major bleeding or a condition called Disseminated Intravascular Coagulation (DIC), where the body's clotting system goes into overdrive.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Specialist Coagulation -->
+        <section class="bg-teal-700 text-white p-8 rounded-lg shadow-md text-center card-hover-effect">
+             <a href="haemostasis_thrombophilia_page.html" class="block">
+                <h2 class="text-3xl font-bold mb-4">Specialist Section: Haemostasis & Thrombophilia</h2>
+                <p class="text-lg mb-6 max-w-3xl mx-auto">Sometimes we need to investigate bleeding or clotting problems in more detail. Click here to learn about our specialist tests for inherited conditions like Haemophilia and for investigating patients who may have a tendency to form blood clots.</p>
+                <span class="inline-block bg-white text-teal-700 font-bold py-2 px-6 rounded-full hover:bg-gray-200 transition duration-300">Explore Specialist Clotting Tests &rarr;</span>
+            </a>
+        </section>
+
+        <!-- Back to Tours -->
+        <section class="text-center mt-12">
+            <a href="video_tours.html" class="bg-gray-800 text-white font-bold py-3 px-8 rounded-full hover:bg-gray-700 transition duration-300">
+                <i class="fas fa-arrow-left mr-2"></i>Back to Laboratory Tours
+            </a>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <script src="js/component-loader.js"></script>
+</body>
+</html>
