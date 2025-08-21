@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Full Blood Count (FBC) - Clinical Pathology</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .hero-bg-fbc { background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1558611848-73f7eb4001a1?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; background-position: center; }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
+
+    <div id="header-placeholder"></div>
+
+    <main class="container mx-auto px-4 py-8 flex-grow">
+
+        <section class="hero-bg-fbc text-white rounded-lg p-16 mb-8 text-center shadow-lg">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4">The Full Blood Count (FBC)</h1>
+            <p class="text-lg md:text-2xl max-w-3xl mx-auto">A window into your health.</p>
+        </section>
+
+        <section class="bg-white p-8 rounded-lg shadow-md mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">What We Measure</h2>
+            <p class="text-lg max-w-3xl mx-auto text-center mb-8">The FBC is performed on a sophisticated analyser that uses laser technology and electrical impedance to count and measure the different cells in your blood. It gives us a detailed report with many different parameters, but they mainly fall into three categories.</p>
+            
+            <div class="space-y-8">
+                <div>
+                    <h3 class="text-2xl font-bold text-red-600 mb-4 border-b-2 border-red-200 pb-2"><i class="fas fa-tint mr-2"></i>Red Cell Parameters</h3>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="bg-red-50 p-4 rounded-lg"><strong>Haemoglobin (Hb):</strong> Measures the amount of oxygen-carrying protein in your red cells. Low levels indicate anaemia.</div>
+                        <div class="bg-red-50 p-4 rounded-lg"><strong>Red Blood Cell Count (RBC):</strong> The total number of red cells.</div>
+                        <div class="bg-red-50 p-4 rounded-lg"><strong>Haematocrit (Hct):</strong> The proportion of your blood that is made up of red cells.</div>
+                        <div class="bg-red-50 p-4 rounded-lg"><strong>Mean Cell Volume (MCV):</strong> The average size of your red cells. Small cells can suggest iron deficiency, while large cells can suggest a vitamin B12 or folate deficiency.</div>
+                        <div class="bg-red-50 p-4 rounded-lg"><strong>Mean Cell Haemoglobin (MCH):</strong> The average amount of haemoglobin inside each red cell.</div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold text-blue-600 mb-4 border-b-2 border-blue-200 pb-2"><i class="fas fa-shield-alt mr-2"></i>White Cell Parameters</h3>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="bg-blue-50 p-4 rounded-lg"><strong>White Blood Cell Count (WBC):</strong> The total number of white cells. A high count often indicates infection.</div>
+                        <div class="bg-blue-50 p-4 rounded-lg"><strong>Neutrophils:</strong> The most common type of white cell, your first line of defence against bacterial infections.</div>
+                        <div class="bg-blue-50 p-4 rounded-lg"><strong>Lymphocytes:</strong> Key players in your immune response, fighting viral infections and remembering past invaders.</div>
+                        <div class="bg-blue-50 p-4 rounded-lg"><strong>Monocytes:</strong> The 'clean-up crew' that engulfs dead cells and pathogens.</div>
+                        <div class="bg-blue-50 p-4 rounded-lg"><strong>Eosinophils & Basophils:</strong> Specialised white cells involved in allergic reactions and fighting parasites.</div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold text-yellow-600 mb-4 border-b-2 border-yellow-200 pb-2"><i class="fas fa-band-aid mr-2"></i>Platelet Parameters</h3>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="bg-yellow-50 p-4 rounded-lg"><strong>Platelet Count (Plt):</strong> The number of platelets in your blood. A low count can lead to bruising and bleeding, while a high count can increase the risk of clotting.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="text-center mt-12">
+            <a href="what_haematology_does.html" class="bg-gray-800 text-white font-bold py-3 px-8 rounded-full hover:bg-gray-700 transition duration-300">
+                <i class="fas fa-arrow-left mr-2"></i>Back to Haematology Overview
+            </a>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="js/component-loader.js"></script>
+
+</body>
+</html>
