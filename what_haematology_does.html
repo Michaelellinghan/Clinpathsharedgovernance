@@ -9,9 +9,10 @@
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <style>
         body { font-family: 'Inter', sans-serif; }
-        .hero-bg { background-image: url('https://images.unsplash.com/photo-1628334882270-038a3ba3be5b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; background-position: center; }
+        .hero-bg { background-image: url('https://images.unsplash.com/photo-1628334882270-038a3ba3be5b?q=80&w=2070&auto=format&fit=crop&ixlib-rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; background-position: center; }
         .text-shadow-lg { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
-        .card-hover-effect:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+        .card-hover-effect { transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; }
+        .card-hover-effect:hover { transform: translateY(-10px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
@@ -28,43 +29,79 @@
         </section>
 
         <section class="bg-white p-8 rounded-lg shadow-md mb-8">
-            <h2 class="text-3xl font-bold text-gray-900 mb-4">What is Haematology?</h2>
-            <p class="text-lg">Haematology is the branch of medicine dedicated to the study of blood, blood-forming organs, and blood-related diseases. When your doctor takes a blood sample, our team of 'blood detectives' analyses it to find crucial clues about your health, from diagnosing anaemia to identifying serious conditions like leukaemia.</p>
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Routine Haematology</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
+                <a href="fbc_page.html" class="block bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300">
+                    <div class="flex items-center">
+                        <div class="text-4xl text-red-500 mr-4"><i class="fas fa-file-medical-alt"></i></div>
+                        <div>
+                            <h3 class="text-2xl font-semibold mb-2">The Full Blood Count (FBC)</h3>
+                            <p>Explore the details of our most common test and what each parameter tells us about your health.</p>
+                        </div>
+                    </div>
+                </a>
+                 <a href="blood_film_morphology_page.html" class="block bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300">
+                    <div class="flex items-center">
+                        <div class="text-4xl text-blue-500 mr-4"><i class="fas fa-microscope"></i></div>
+                        <div>
+                            <h3 class="text-2xl font-semibold mb-2">Blood Film Morphology</h3>
+                            <p>Discover the art of looking at blood cells under the microscope to find crucial diagnostic clues.</p>
+                        </div>
+                    </div>
+                </a>
+                <a href="coagulation_page.html" class="block bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300">
+                    <div class="flex items-center">
+                        <div class="text-4xl text-teal-500 mr-4"><i class="fas fa-hourglass-half"></i></div>
+                        <div>
+                            <h3 class="text-2xl font-semibold mb-2">Routine Coagulation</h3>
+                            <p>Learn how we perform routine tests on your blood's ability to clot, such as the INR and APTT.</p>
+                        </div>
+                    </div>
+                </a>
+                <a href="further_haematology_tests_page.html" class="block bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300">
+                    <div class="flex items-center">
+                         <div class="text-4xl text-indigo-500 mr-4"><i class="fas fa-vial"></i></div>
+                         <div>
+                             <h3 class="text-2xl font-semibold mb-2">Further Haematology Tests</h3>
+                             <p>Learn about other key tests like Malaria screens, ESR, and Infectious Mononucleosis testing.</p>
+                         </div>
+                     </div>
+                 </a>
+            </div>
         </section>
 
         <section class="bg-white p-8 rounded-lg shadow-md mb-8">
-            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">The Journey of a Haematology Sample</h2>
-            <ol class="relative border-l-4 border-blue-500 ml-4">                  
-                <li class="mb-10 ml-8">            
-                    <span class="absolute flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full -left-5 ring-8 ring-white">
-                        <i class="fas fa-truck text-blue-600"></i>
-                    </span>
-                    <h3 class="flex items-center mb-1 text-xl font-semibold text-gray-900">Step 1: Arrival & Booking In</h3>
-                    <p class="text-base font-normal text-gray-600">The journey begins when a blood sample, typically in a purple-top tube, arrives in Specimen Reception and is booked into our system.</p>
-                </li>
-                <li class="mb-10 ml-8">
-                    <span class="absolute flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full -left-5 ring-8 ring-white">
-                        <i class="fas fa-file-medical-alt text-blue-600"></i>
-                    </span>
-                    <h3 class="mb-1 text-xl font-semibold text-gray-900">Step 2: The Full Blood Count (FBC)</h3>
-                    <p class="text-base font-normal text-gray-600">The sample's first stop is our automated analyser for an FBC, which counts and measures all the different types of blood cells, giving a vital snapshot of the patient's health.</p>
-                </li>
-                <li class="mb-10 ml-8">
-                    <span class="absolute flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full -left-5 ring-8 ring-white">
-                        <i class="fas fa-microscope text-blue-600"></i>
-                    </span>
-                    <h3 class="mb-1 text-xl font-semibold text-gray-900">Step 3: Blood Film Morphology</h3>
-                    <p class="text-base font-normal text-gray-600">If the FBC results are abnormal, a blood film is made. A skilled scientist examines the cells under a microscope, looking for visual clues that the machines can't see.</p>
-                </li>
-                 <li class="ml-8">
-                    <span class="absolute flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full -left-5 ring-8 ring-white">
-                        <i class="fas fa-hourglass-half text-blue-600"></i>
-                    </span>
-                    <h3 class="mb-1 text-xl font-semibold text-gray-900">Step 4: Specialist Testing</h3>
-                    <p class="text-base font-normal text-gray-600">Depending on the clinical details or initial findings, the sample may proceed to more specialist tests, such as coagulation studies or investigations for inherited red cell disorders.</p>
-                </li>
-            </ol>
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Specialist Haematology Areas</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <a href="red_cell_investigations_page.html" class="block bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300">
+                     <div class="flex items-center">
+                        <div class="text-4xl text-red-500 mr-4"><i class="fas fa-dna"></i></div>
+                        <div>
+                            <h3 class="text-2xl font-semibold mb-2">Red Cell Investigations</h3>
+                            <p>Explore the specialist area of Haemoglobinopathy screening for conditions like Sickle Cell.</p>
+                        </div>
+                    </div>
+                </a>
+                <a href="haemostasis_thrombophilia_page.html" class="block bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300">
+                    <div class="flex items-center">
+                       <div class="text-4xl text-purple-500 mr-4"><i class="fas fa-search-plus"></i></div>
+                       <div>
+                           <h3 class="text-2xl font-semibold mb-2">Haemostasis & Thrombophilia</h3>
+                           <p>Dive deeper into our specialised tests for diagnosing inherited bleeding and clotting disorders.</p>
+                       </div>
+                   </div>
+               </a>
+            </div>
         </section>
 
-        <section class="bg-gray-50 p-8 rounded-lg shadow-inner">
-            <h2 class="text-3xl font-bold text
+        <section class="text-center mt-12">
+            <a href="video_tours.html" class="bg-gray-800 text-white font-bold py-3 px-8 rounded-full hover:bg-gray-700 transition duration-300">
+                <i class="fas fa-arrow-left mr-2"></i>Back to Laboratory Tours
+            </a>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+    <script src="js/component-loader.js"></script>
+</body>
+</html>
