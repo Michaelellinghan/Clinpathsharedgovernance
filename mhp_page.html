@@ -11,8 +11,6 @@
         body { font-family: 'Inter', sans-serif; }
         .hero-bg-mhp { background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1559742810-1d2b59a2664b?q=80&w=2070&auto=format&fit=crop&ixlib-rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; background-position: center; }
         .text-shadow-lg { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
-        .tab-button { padding: 0.75rem 1.5rem; cursor: pointer; border-bottom: 4px solid transparent; transition: all 0.3s ease; }
-        .tab-button.active { border-bottom-color: #ef4444; /* red-500 */ color: #ef4444; font-weight: 600; }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
@@ -28,81 +26,73 @@
 
         <section class="bg-white p-8 rounded-lg shadow-md mb-8">
             <h2 class="text-3xl font-bold text-gray-900 mb-4">Activation and Communication</h2>
-            <p class="text-lg mb-4">The MHP is activated by a senior clinician when a patient's blood loss is life-threatening. This single action triggers an immediate, high-priority response from the transfusion lab. The first critical step for the Biomedical Scientist is to call the activating area, confirm patient identity, and provide a dedicated phone extension for all MHP-related communication. All actions and component issues are meticulously recorded on the MHP Record Sheet to ensure a full audit trail.</p>
+            <p class="text-lg mb-4">The MHP is activated by a senior clinician when a patient's blood loss is life-threatening. This single action triggers an immediate, high-priority response from the transfusion lab. The first critical step for the Biomedical Scientist is to call the activating area, confirm patient identity, and ensure a clear line of communication is established for the duration of the event. All actions and component issues are meticulously recorded on the MHP Record Sheet to ensure a full audit trail.</p>
         </section>
         
-        <section class="bg-white p-8 rounded-lg shadow-md mb-8">
+        <section class="bg-gray-50 p-8 rounded-lg shadow-inner">
             <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">MHP Pathways: A Tailored Response</h2>
-            
-            <div class="border-b border-gray-200">
-                <nav class="-mb-px flex flex-wrap justify-center" aria-label="Tabs">
-                    <button class="tab-button active" onclick="openTab(event, 'trauma')">Trauma</button>
-                    <button class="tab-button" onclick="openTab(event, 'obstetric')">Obstetric</button>
-                    <button class="tab-button" onclick="openTab(event, 'surgical')">Surgical/Medical</button>
-                    <button class="tab-button" onclick="openTab(event, 'cardiac')">Cardiac</button>
-                    <button class="tab-button" onclick="openTab(event, 'paediatric')">Paediatric</button>
-                </nav>
-            </div>
-
-            <div id="trauma" class="tab-content pt-6">
-                <h3 class="font-bold text-2xl mb-2 text-red-800"><i class="fas fa-car-crash mr-2"></i>Trauma Haemorrhage Pathway</h3>
-                <p class="mb-4">For major trauma, the response is aggressive, using pre-defined packs with a balanced ratio of components to combat shock and coagulopathy early.</p>
-                <div class="grid md:grid-cols-2 gap-6 text-left">
-                    <div class="bg-red-50 p-4 rounded-lg">
-                        <h4 class="font-bold text-lg">Pack 1</h4>
-                        <ul class="list-disc list-inside mt-2 space-y-1">
-                            <li>4 units Red Cells (O Pos/Neg based on demographics)</li>
-                            <li>4 units FFP</li>
-                        </ul>
-                    </div>
-                    <div class="bg-red-50 p-4 rounded-lg">
-                        <h4 class="font-bold text-lg">Pack 2 & Beyond</h4>
-                        <ul class="list-disc list-inside mt-2 space-y-1">
-                             <li>6 units Red Cells (Group Specific)</li>
-                             <li>4 units FFP</li>
-                             <li>1 unit Platelets</li>
-                             <li>2 units Cryoprecipitate (from Pack 3)</li>
-                        </ul>
+            <div class="space-y-8">
+                
+                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-red-500">
+                    <h3 class="font-bold text-2xl mb-2 text-red-800"><i class="fas fa-car-crash mr-2"></i>Trauma Haemorrhage Pathway</h3>
+                    <p class="mb-4">For major trauma, the response is aggressive, using pre-defined packs with a balanced ratio of components to combat shock and coagulopathy early.</p>
+                    <div class="grid md:grid-cols-2 gap-6 text-left">
+                        <div class="bg-red-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-lg">Pack 1</h4>
+                            <ul class="list-disc list-inside mt-2 space-y-1">
+                                <li>4 units Red Cells (O Pos/Neg based on demographics)</li>
+                                <li>4 units FFP</li>
+                            </ul>
+                        </div>
+                        <div class="bg-red-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-lg">Pack 2 & Beyond</h4>
+                            <ul class="list-disc list-inside mt-2 space-y-1">
+                                 <li>6 units Red Cells (Group Specific)</li>
+                                 <li>4 units FFP</li>
+                                 <li>1 unit Platelets</li>
+                                 <li>2 units Cryoprecipitate (from Pack 3)</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div id="obstetric" class="tab-content pt-6 hidden">
-                <h3 class="font-bold text-2xl mb-2 text-pink-800"><i class="fas fa-baby mr-2"></i>Obstetric Haemorrhage Pathway</h3>
-                <p class="mb-4">The obstetric MHP is activated for severe postpartum haemorrhage. The response prioritises red cells and then uses targeted components based on lab results, especially Fibrinogen levels.</p>
-                <ul class="list-disc list-inside space-y-2">
-                    <li><strong>Initial Step:</strong> Issue 4-6 units of emergency (O Negative) or group-specific Red Cells immediately.</li>
-                    <li><strong>Second Step:</strong> Issue FFP and Cryoprecipitate. Cryoprecipitate is crucial for replacing Fibrinogen, which is often rapidly depleted in obstetric bleeds.</li>
-                    <li><strong>Further Support:</strong> Platelets and further components are guided by ongoing lab results.</li>
-                </ul>
-            </div>
-            
-            <div id="surgical" class="tab-content pt-6 hidden">
-                <h3 class="font-bold text-2xl mb-2 text-blue-800"><i class="fas fa-procedures mr-2"></i>Surgical/Medical Haemorrhage Pathway</h3>
-                <p class="mb-4">For unexpected bleeds in theatre, recovery, or on the ward. This pathway is flexible and guided by the clinical team and lab results rather than fixed packs.</p>
-                 <ul class="list-disc list-inside space-y-2">
-                    <li><strong>Initial Step:</strong> Provide 4-6 units of emergency or group-specific Red Cells.</li>
-                    <li><strong>Guided Therapy:</strong> Thaw and issue FFP, Cryoprecipitate, and Platelets only when requested by the clinical team, often after reviewing coagulation screen results. The Haematology registrar is a key point of contact for advising on component choice.</li>
-                </ul>
-            </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-pink-500">
+                    <h3 class="font-bold text-2xl mb-2 text-pink-800"><i class="fas fa-baby mr-2"></i>Obstetric Haemorrhage Pathway</h3>
+                    <p class="mb-4">The obstetric MHP is activated for severe postpartum haemorrhage. The response prioritises red cells and then uses targeted components based on lab results, especially Fibrinogen levels.</p>
+                    <ul class="list-disc list-inside space-y-2">
+                        <li><strong>Initial Step:</strong> Issue 4-6 units of emergency (O Negative) or group-specific Red Cells immediately.</li>
+                        <li><strong>Second Step:</strong> Issue FFP and Cryoprecipitate. Cryoprecipitate is crucial for replacing Fibrinogen, which is often rapidly depleted in obstetric bleeds.</li>
+                        <li><strong>Further Support:</strong> Platelets and further components are guided by ongoing lab results.</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-blue-500">
+                    <h3 class="font-bold text-2xl mb-2 text-blue-800"><i class="fas fa-procedures mr-2"></i>Surgical/Medical Haemorrhage Pathway</h3>
+                    <p class="mb-4">For unexpected bleeds in theatre, recovery, or on the ward. This pathway is flexible and guided by the clinical team and lab results rather than fixed packs.</p>
+                     <ul class="list-disc list-inside space-y-2">
+                        <li><strong>Initial Step:</strong> Provide 4-6 units of emergency or group-specific Red Cells.</li>
+                        <li><strong>Guided Therapy:</strong> Thaw and issue FFP, Cryoprecipitate, and Platelets only when requested by the clinical team, often after reviewing coagulation screen results. The Haematology registrar is a key point of contact for advising on component choice.</li>
+                    </ul>
+                </div>
 
-            <div id="cardiac" class="tab-content pt-6 hidden">
-                 <h3 class="font-bold text-2xl mb-2 text-purple-800"><i class="fas fa-heartbeat mr-2"></i>Cardiac Surgery Pathway</h3>
-                <p class="mb-4">This pathway is used for catastrophic bleeding during or after cardiac surgery. It often involves point-of-care testing (ROTEM/TEG) alongside laboratory tests to guide very specific product use.</p>
-                 <ul class="list-disc list-inside space-y-2">
-                    <li>Initial components can be issued without haematology authorisation up to a limit (e.g., 4 RBC, 4 FFP, 2 Cryo, 2 Platelets).</li>
-                    <li>Therapy is highly targeted to correct specific deficits shown on testing, for example, giving Cryoprecipitate to correct a low fibrinogen level.</li>
-                </ul>
-            </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-purple-500">
+                     <h3 class="font-bold text-2xl mb-2 text-purple-800"><i class="fas fa-heartbeat mr-2"></i>Cardiac Surgery Pathway</h3>
+                    <p class="mb-4">This pathway is used for catastrophic bleeding during or after cardiac surgery. It often involves point-of-care testing (ROTEM/TEG) alongside laboratory tests to guide very specific product use.</p>
+                     <ul class="list-disc list-inside space-y-2">
+                        <li>Initial components can be issued without haematology authorisation up to a limit (e.g., 4 RBC, 4 FFP, 2 Cryo, 2 Platelets).</li>
+                        <li>Therapy is highly targeted to correct specific deficits shown on testing, for example, giving Cryoprecipitate to correct a low fibrinogen level.</li>
+                    </ul>
+                </div>
 
-            <div id="paediatric" class="tab-content pt-6 hidden">
-                <h3 class="font-bold text-2xl mb-2 text-green-800"><i class="fas fa-child mr-2"></i>Paediatric Haemorrhage Pathway</h3>
-                <p class="mb-4">The paediatric MHP does not use fixed adult packs. All component volumes are carefully calculated based on the child's weight to provide life-saving treatment while avoiding fluid overload.</p>
-                <ul class="list-disc list-inside space-y-2">
-                    <li><strong>Red Cells / FFP:</strong> Typically dosed at 20 ml/kg.</li>
-                    <li><strong>Cryoprecipitate:</strong> Typically dosed at 10 ml/kg.</li>
-                    <li>Emergency blood is always O Negative, CMV Negative, and Irradiated.</li>
-                </ul>
+                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-green-500">
+                    <h3 class="font-bold text-2xl mb-2 text-green-800"><i class="fas fa-child mr-2"></i>Paediatric Haemorrhage Pathway</h3>
+                    <p class="mb-4">The paediatric MHP does not use fixed adult packs. All component volumes are carefully calculated based on the child's weight to provide life-saving treatment while avoiding fluid overload.</p>
+                    <ul class="list-disc list-inside space-y-2">
+                        <li><strong>Red Cells / FFP:</strong> Typically dosed at 20 ml/kg.</li>
+                        <li><strong>Cryoprecipitate:</strong> Typically dosed at 10 ml/kg.</li>
+                        <li>Emergency blood is always O Negative, CMV Negative, and Irradiated.</li>
+                    </ul>
+                </div>
             </div>
         </section>
 
@@ -116,20 +106,5 @@
 
     <div id="footer-placeholder"></div>
     <script src="js/component-loader.js"></script>
-    <script>
-        function openTab(evt, tabName) {
-            let i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("tab-content");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].classList.add("hidden");
-            }
-            tablinks = document.getElementsByClassName("tab-button");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].classList.remove("active");
-            }
-            document.getElementById(tabName).classList.remove("hidden");
-            evt.currentTarget.classList.add("active");
-        }
-    </script>
 </body>
 </html>
