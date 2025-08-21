@@ -6,56 +6,64 @@
     <title>Group & Screen - Clinical Pathology</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        .hero-bg-gs {
-            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1579154286823-0c4e12354a63?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
-            background-size: cover;
-            background-position: center;
-        }
+        body { font-family: 'Inter', sans-serif; }
+        .hero-bg-gs { background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1579154286823-0c4e12354a63?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%D%D'); background-size: cover; background-position: center; }
+        .text-shadow-lg { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
     </style>
 </head>
-<body class="bg-gray-100 text-gray-800">
+<body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
 
     <div id="header-placeholder"></div>
 
-    <main class="container mx-auto px-4 py-8">
+    <main class="container mx-auto px-4 py-8 flex-grow">
         
         <section class="hero-bg-gs text-white rounded-lg p-16 mb-8 text-center shadow-lg">
-            <h1 class="text-4xl md:text-6xl font-bold mb-4">The Group & Screen</h1>
-            <p class="text-lg md:text-2xl max-w-3xl mx-auto">The cornerstone of safe transfusion practice.</p>
+            <h1 class="text-4xl md:text-6xl font-bold mb-4 text-shadow-lg">The Group & Screen</h1>
+            <p class="text-lg md:text-2xl max-w-3xl mx-auto text-shadow-lg">The cornerstone of safe transfusion practice.</p>
         </section>
 
         <section class="bg-white p-8 rounded-lg shadow-md mb-8">
-            <h2 class="text-3xl font-bold text-gray-900 mb-4">What is a Group and Screen?</h2>
-            <p class="text-lg">The "Group and Screen" (G&S) is one of the most common tests we perform. It's the first and most critical step in pre-transfusion testing. The test has two essential parts: determining the patient's blood group and screening their plasma for any unexpected red cell antibodies.</p>
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">The First Step: The Right Sample</h2>
+            <p class="text-lg mb-4">Before any analysis can begin, we must have a correctly collected and labelled blood sample. Patient identification is the single most critical step in ensuring transfusion safety. The sample must be a 6mL EDTA tube (pink top), and the label must contain four key identifiers: <strong>First Name</strong>, <strong>Last Name</strong>, <strong>Date of Birth</strong>, and the <strong>Hospital/NHS Number</strong>. The details on the sample must exactly match the details on the request form. [cite_start]Any discrepancy will lead to the sample being rejected[cite: 3].</p>
         </section>
-
+        
         <section class="bg-white p-8 rounded-lg shadow-md mb-8">
-            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">The Two Parts of the Test</h2>
-            <div class="flex flex-col md:flex-row gap-8">
-                <div class="md:w-1/2 bg-gray-50 p-6 rounded-lg">
-                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-dna text-red-500 mr-2"></i>1. The 'Group' (ABO and D Typing)</h3>
-                    <p class="mb-4">This part of the test determines the patient's blood group. We perform two checks:</p>
-                    <ul class="list-disc list-inside space-y-2">
-                        <li><strong>Forward Group:</strong> We test the patient's red blood cells to see which antigens (A, B, and D) are present on their surface.</li>
-                        <li><strong>Reverse Group:</strong> We test the patient's plasma to see which antibodies (Anti-A and Anti-B) they have.</li>
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">The 'Group': What's Your Type?</h2>
+            <div class="flex flex-col md:flex-row gap-8 items-center">
+                <div class="md:w-1/2">
+                    <p class="mb-4">The 'Group' determines a patient's ABO and RhD blood type. We do this in two ways simultaneously to ensure accuracy, a principle known as <strong>Landsteiner's Law</strong>.</p>
+                    <ul class="list-disc list-inside space-y-3 pl-4">
+                        <li><strong>Forward Group (Cell Grouping):</strong> We use manufactured antibodies (Anti-A, Anti-B, Anti-D) to test the patient's red blood cells for the presence of A, B, and D antigens on their surface.</li>
+                        <li><strong>Reverse Group (Plasma Grouping):</strong> We use manufactured A and B red cells to test the patient's plasma for the presence of Anti-A and Anti-B antibodies.</li>
                     </ul>
-                    <p class="mt-4">According to Landsteiner's Law, the forward and reverse group results must be a mirror image of each other for the group to be valid. For example, a group A patient will have A antigens on their cells and Anti-B antibodies in their plasma.</p>
+                    <p class="mt-4">The results must be a perfect mirror image. For example, a Group A patient's red cells will react with Anti-A, and their plasma will react with B cells. [cite_start]Any discrepancy indicates a grouping anomaly that must be investigated before a final blood group can be assigned[cite: 5]. [cite_start]This testing is performed on our automated Bio-Rad IH-1000 analysers[cite: 1].</p>
                 </div>
-                <div class="md:w-1/2 bg-gray-50 p-6 rounded-lg">
-                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-search-plus text-blue-500 mr-2"></i>2. The 'Screen' (Antibody Screen)</h3>
-                    <p class="mb-4">This test looks for "atypical" or "unexpected" antibodies in the patient's plasma. These are antibodies against other red cell antigens outside of the ABO system.</p>
-                     <p class="mb-4">Patients can develop these antibodies after being exposed to red cells that are different from their own, which can happen during:</p>
-                    <ul class="list-disc list-inside space-y-2">
-                        <li>A previous blood transfusion</li>
-                        <li>Pregnancy</li>
-                    </ul>
-                     <p class="mt-4">If the screen is positive, we must perform further tests to identify the specific antibody. This is crucial because if a patient receives blood with the corresponding antigen, it can cause a serious transfusion reaction. Finding and identifying antibodies before a transfusion is a key part of our job.</p>
+                <div class="md:w-1/2">
+                    <img src="https://placehold.co/500x300/dc2626/FFFFFF?text=Blood+Grouping" alt="Illustration of blood grouping reactions" class="rounded-lg shadow-md">
                 </div>
             </div>
+        </section>
+
+        <section class="bg-white p-8 rounded-lg shadow-md mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">The 'Screen': Looking for Unexpected Antibodies</h2>
+            <div class="flex flex-col md:flex-row-reverse gap-8 items-center">
+                <div class="md:w-1/2">
+                     <p class="mb-4">The 'Screen' is a test to detect "atypical" red cell antibodies in the patient's plasma. These are antibodies other than the naturally occurring Anti-A and Anti-B. They are typically formed after a person is exposed to red cells different from their own, for example through a previous transfusion or pregnancy.</p>
+                     <p class="mb-4">We test the patient's plasma against three different group O screening cells. These cells are specially chosen because, between them, they carry all the most common and clinically significant red cell antigens.</p>
+                     <p>If the antibody screen is negative, it's highly likely the patient can receive a safe transfusion. If it's positive, we must perform <a href="antibody_investigation_page.html" class="text-blue-600 hover:underline font-semibold">further investigations</a> to identify the antibody before any blood can be issued.</p>
+                </div>
+                 <div class="md:w-1/2">
+                    <img src="https://placehold.co/500x300/3b82f6/FFFFFF?text=Antibody+Screen" alt="Illustration of antibody screening" class="rounded-lg shadow-md">
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-teal-600 text-white p-8 rounded-lg shadow-md text-center">
+            <h2 class="text-3xl font-bold mb-4">Test Your Knowledge!</h2>
+            <p class="text-lg mb-6 max-w-3xl mx-auto">Think you've mastered the basics of blood grouping? Head over to our game and see if you can correctly group the samples and save a patient's life!</p>
+            <a href="blood_group_game.html" class="inline-block bg-white text-teal-700 font-bold py-3 px-8 rounded-full hover:bg-gray-200 transition duration-300">Play the Blood Group Game</a>
         </section>
 
         <section class="text-center mt-12">
@@ -67,12 +75,7 @@
 
     <div id="footer-placeholder"></div>
 
-      <script src="js/component-loader.js"></script>
+    <script src="js/component-loader.js"></script>
     
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            feather.replace();
-        });
-   </script>
 </body>
 </html>
