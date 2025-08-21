@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Further Investigations - Clinical Pathology</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .hero-bg-further { background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1578496479532-35d214c4625b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; background-position: center; }
+        .text-shadow-lg { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
+        .card-hover-effect { transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; }
+        .card-hover-effect:hover { transform: translateY(-10px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
+
+    <div id="header-placeholder"></div>
+
+    <main class="container mx-auto px-4 py-8 flex-grow">
+        
+        <section class="hero-bg-further text-white rounded-lg p-16 mb-8 text-center shadow-lg">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4 text-shadow-lg">Further Investigations</h1>
+            <p class="text-lg md:text-2xl max-w-3xl mx-auto text-shadow-lg">Exploring the specialist areas of haematology and transfusion.</p>
+        </section>
+
+        <section class="bg-white p-8 rounded-lg shadow-md mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">Specialist Areas</h2>
+            <p class="text-lg">Beyond the routine Full Blood Count and Group & Screen, our laboratory performs a wide range of specialised tests to diagnose complex conditions. These investigations are grouped into three main specialist areas. Click on a section to learn more.</p>
+        </section>
+
+        <section>
+            <div class="grid md:grid-cols-1 lg:grid-cols-3 gap-8">
+                <a href="red_cell_investigations_page.html" class="block bg-white p-6 rounded-lg shadow-md card-hover-effect">
+                    <div class="text-center">
+                        <div class="text-6xl text-red-500 mb-4"><i class="fas fa-dna"></i></div>
+                        <h3 class="text-2xl font-semibold mb-2">Red Cell Investigations</h3>
+                        <p>Learn about screening for inherited red cell disorders like Sickle Cell Disease and Thalassaemia, and how we hunt for blood parasites like Malaria.</p>
+                    </div>
+                </a>
+                <a href="haemostasis_thrombophilia_page.html" class="block bg-white p-6 rounded-lg shadow-md card-hover-effect">
+                    <div class="text-center">
+                        <div class="text-6xl text-blue-500 mb-4"><i class="fas fa-balance-scale-right"></i></div>
+                        <h3 class="text-2xl font-semibold mb-2">Haemostasis & Thrombophilia</h3>
+                        <p>Explore our in-depth investigations into the clotting system, diagnosing both bleeding disorders and conditions that cause excessive clotting.</p>
+                    </div>
+                </a>
+                <a href="antenatal_screening_page.html" class="block bg-white p-6 rounded-lg shadow-md card-hover-effect">
+                    <div class="text-center">
+                        <div class="text-6xl text-pink-500 mb-4"><i class="fas fa-baby"></i></div>
+                        <h3 class="text-2xl font-semibold mb-2">Antenatal Screening</h3>
+                        <p>Discover the vital tests we perform during pregnancy to protect the health of both mother and baby, including Anti-D prophylaxis.</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <section class="text-center mt-12">
+            <a href="video_tours.html" class="bg-gray-800 text-white font-bold py-3 px-8 rounded-full hover:bg-gray-700 transition duration-300">
+                <i class="fas fa-arrow-left mr-2"></i>Back to Laboratory Tours
+            </a>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="js/component-loader.js"></script>
+
+</body>
+</html>
