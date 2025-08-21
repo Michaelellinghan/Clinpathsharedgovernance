@@ -6,79 +6,44 @@
     <title>Haemostasis and Thrombophilia - Clinical Pathology</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        .hero-bg-haemostasis {
-            background-image: url('https://images.unsplash.com/photo-1618939303117-b236f38d391a?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
-            background-size: cover;
-            background-position: center;
-        }
-         .text-shadow-lg {
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-        .card-hover-effect {
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-        }
-        .card-hover-effect:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-        .tab-button {
-            padding: 0.75rem 1.5rem;
-            cursor: pointer;
-            border-bottom: 4px solid transparent;
-            transition: all 0.3s ease;
-        }
-        .tab-button.active {
-            border-bottom-color: #0d9488; /* teal-600 */
-            color: #0d9488;
-            font-weight: 600;
-        }
+        body { font-family: 'Inter', sans-serif; }
+        .hero-bg-haemostasis { background-image: url('https://images.unsplash.com/photo-1618939303117-b236f38d391a?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; background-position: center; }
+        .text-shadow-lg { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
+        .card-hover-effect { transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; }
+        .card-hover-effect:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+        .tab-button { padding: 0.75rem 1.5rem; cursor: pointer; border-bottom: 4px solid transparent; transition: all 0.3s ease; }
+        .tab-button.active { border-bottom-color: #0d9488; /* teal-600 */ color: #0d9488; font-weight: 600; }
     </style>
 </head>
-<body class="bg-gray-100 text-gray-800">
+<body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
 
-    <!-- Header -->
     <div id="header-placeholder"></div>
 
-    <!-- Main Content -->
-    <main class="container mx-auto px-4 py-8">
+    <main class="container mx-auto px-4 py-8 flex-grow">
         
-        <!-- Hero Section -->
-        <section class="hero-bg-haemostasis text-white rounded-lg p-8 md:p-16 mb-8 flex items-center justify-center text-center shadow-lg">
+        <section class="hero-bg-haemostasis text-white rounded-lg p-16 mb-8 text-center shadow-lg">
             <div>
                 <h1 class="text-4xl md:text-6xl font-bold mb-4 text-shadow-lg">Haemostasis & Thrombophilia</h1>
                 <p class="text-lg md:text-2xl max-w-3xl mx-auto text-shadow-lg">A deeper look into bleeding and clotting disorders.</p>
             </div>
         </section>
 
-        <!-- Introduction -->
         <section class="bg-white p-8 rounded-lg shadow-md mb-8">
             <h2 class="text-3xl font-bold text-gray-900 mb-4">Getting the Balance Right</h2>
-             <div class="flex flex-col md:flex-row gap-8 items-center">
-                <div class="md:w-2/3">
-                    <p class="mb-4 text-lg"><strong>Haemostasis</strong> is the scientific term for the whole process of stopping bleeding. <strong>Thrombophilia</strong> describes a condition where the blood has an increased tendency to form clots. Our specialist Haemostasis and Thrombophilia section investigates both sides of this delicate balance.</p>
-                    <p class="text-lg">These tests are highly specialised and are only performed when a routine coagulation screen is abnormal, or when a doctor has a strong suspicion that a patient has an underlying bleeding or clotting disorder. These investigations are always requested after a discussion with one of our Consultant Haematologists.</p>
-                </div>
-                <div class="md:w-1/3 flex items-center justify-center">
-                    <img src="https://placehold.co/400x400/8b5cf6/FFFFFF?text=Specialist+Tests" alt="Illustration of specialist tests" class="rounded-lg shadow-lg">
-                </div>
-            </div>
+            <p class="text-lg"><strong>Haemostasis</strong> is the scientific term for stopping bleeding. <strong>Thrombophilia</strong> describes a condition where the blood has an increased tendency to form clots. These specialised tests investigate both sides of this delicate balance and are requested by a Consultant Haematologist when a routine screen is abnormal or there's a strong clinical suspicion of an underlying disorder.</p>
         </section>
 
-        <!-- Tabs -->
         <div class="mb-8">
-            <div class="flex justify-center border-b border-gray-200">
+            <div class="flex justify-center border-b border-gray-200 bg-white rounded-t-lg shadow-sm">
                 <button class="tab-button active" onclick="openTab(event, 'bleeding')">Investigating Bleeding</button>
                 <button class="tab-button" onclick="openTab(event, 'clotting')">Investigating Clotting</button>
             </div>
         </div>
 
-        <!-- Bleeding Content -->
         <div id="bleeding" class="tab-content">
-            <section class="bg-white p-8 rounded-lg shadow-md mb-8">
+            <section class="bg-white p-8 rounded-b-lg shadow-md mb-8">
                 <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Investigating a Bleeding Problem</h2>
                 <div class="space-y-8">
                     <div class="flex flex-col md:flex-row gap-6 items-center card-hover-effect p-4 rounded-lg">
@@ -106,9 +71,8 @@
             </section>
         </div>
 
-        <!-- Clotting Content -->
         <div id="clotting" class="tab-content hidden">
-            <section class="bg-white p-8 rounded-lg shadow-md mb-8">
+            <section class="bg-white p-8 rounded-b-lg shadow-md mb-8">
                 <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Investigating a Clotting Problem (Thrombophilia)</h2>
                  <div class="space-y-8">
                     <div class="flex flex-col md:flex-row gap-6 items-center card-hover-effect p-4 rounded-lg">
@@ -136,29 +100,23 @@
             </section>
         </div>
         
-        <!-- Back to Tours -->
         <section class="text-center mt-12">
-            <a href="video_tours.html" class="bg-gray-800 text-white font-bold py-3 px-8 rounded-full hover:bg-gray-700 transition duration-300">
-                <i class="fas fa-arrow-left mr-2"></i>Back to Laboratory Tours
+            <a href="coagulation_page.html" class="bg-gray-800 text-white font-bold py-3 px-8 rounded-full hover:bg-gray-700 transition duration-300">
+                <i class="fas fa-arrow-left mr-2"></i>Back to Coagulation Overview
             </a>
         </section>
 
     </main>
 
-    <!-- Footer -->
     <div id="footer-placeholder"></div>
 
     <script>
         function openTab(evt, tabName) {
             var i, tabcontent, tablinks;
             tabcontent = document.getElementsByClassName("tab-content");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-            }
+            for (i = 0; i < tabcontent.length; i++) { tabcontent[i].style.display = "none"; }
             tablinks = document.getElementsByClassName("tab-button");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", "");
-            }
+            for (i = 0; i < tablinks.length; i++) { tablinks[i].className = tablinks[i].className.replace(" active", ""); }
             document.getElementById(tabName).style.display = "block";
             evt.currentTarget.className += " active";
         }
@@ -166,10 +124,5 @@
 
     <script src="js/component-loader.js"></script>
     
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            feather.replace();
-        });
-    </script>
 </body>
 </html>
