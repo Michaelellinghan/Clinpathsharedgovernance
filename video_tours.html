@@ -1,80 +1,109 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Tours - SGC</title>
+    <title>Laboratory Tours - Clinical Pathology</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#005EB8">
     <style>
         body { font-family: 'Inter', sans-serif; }
-        .nhs-blue { background-color: #005EB8; }
-        .nhs-dark-blue { background-color: #003087; }
-        .nhs-light-grey { background-color: #F0F4F5; }
-        .nhs-text-blue { color: #005EB8; }
-        .nhs-text-dark-blue { color: #003087; }
+        .hero-bg-tours { 
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1576091160550-2173dba999ab?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-position: center;
+        }
+        .text-shadow-lg { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
+        .tour-card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .tour-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .coming-soon-card {
+            position: relative;
+            overflow: hidden;
+            background-color: #f3f4f6; /* gray-200 */
+            cursor: not-allowed;
+        }
+        .coming-soon-card .content {
+            filter: grayscale(100%);
+            opacity: 0.6;
+        }
+        .coming-soon-badge {
+            position: absolute;
+            top: 10px;
+            right: -35px;
+            background-color: #6b7280; /* gray-500 */
+            color: white;
+            padding: 4px 30px;
+            transform: rotate(45deg);
+            font-weight: bold;
+            font-size: 0.75rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
 
     <div id="header-placeholder"></div>
 
-    <main class="py-16">
-        <div class="container mx-auto px-6 max-w-4xl">
-            <a href="projects.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8">
-                <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Projects
-            </a>
-            <h2 class="text-3xl font-bold nhs-text-dark-blue mb-4">Laboratory Video Tours & Guides</h2>
-            <p class="text-gray-700 mb-6">We're curating a series of videos and guides for each department in Clinical Pathology to teach the wards and GPs what we do and what they can do to help us improve patient care. These short, engaging resources will cover key aspects of the pathology process, from sample collection to result interpretation, providing a valuable educational resource for clinical staff.</p>
-            
-            <div class="mt-12 space-y-8">
-                <a href="what_haematology_does.html" class="block bg-white p-8 rounded-lg shadow-lg transform hover:-translate-y-1 transition duration-300">
-                    <div class="flex items-center">
-                        <i data-feather="droplet" class="h-12 w-12 text-nhs-blue"></i>
-                        <div class="ml-6 text-left">
-                            <h3 class="text-xl font-semibold text-gray-800">What Does Haematology Do?</h3>
-                            <p class="text-gray-600 mt-1">Explore the world of blood cells, from the Full Blood Count to the art of morphology.</p>
-                        </div>
-                    </div>
+    <main class="container mx-auto px-4 py-8 flex-grow">
+        
+        <section class="hero-bg-tours text-white rounded-lg p-16 mb-8 text-center shadow-lg">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4 text-shadow-lg">Virtual Laboratory Tours</h1>
+            <p class="text-lg md:text-2xl max-w-3xl mx-auto text-shadow-lg">Step inside the lab without leaving your seat. Explore our departments to see how we turn your samples into vital results.</p>
+        </section>
+
+        <section class="p-8 rounded-lg">
+            <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">Choose Your Tour</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <a href="what_haematology_does.html" class="tour-card block bg-white p-6 rounded-lg shadow-md text-center">
+                    <div class="text-6xl text-red-500 mb-4"><i class="fas fa-microscope"></i></div>
+                    <h3 class="text-2xl font-semibold mb-2">Haematology</h3>
+                    <p class="text-gray-600">Discover the world of blood cells with the 'blood detectives'. Learn about the Full Blood Count, blood film morphology, and how we investigate bleeding disorders.</p>
                 </a>
                 
-                <a href="what_chemisty_does.html" class="block bg-white p-8 rounded-lg shadow-lg transform hover:-translate-y-1 transition duration-300">
-                    <div class="flex items-center">
-                        <i data-feather="flask-conical" class="h-12 w-12 text-nhs-blue"></i>
-                        <div class="ml-6 text-left">
-                            <h3 class="text-xl font-semibold text-gray-800">What Does Clinical Chemistry Do?</h3>
-                            <p class="text-gray-600 mt-1">A visual guide to the journey of a sample through the chemistry lab, from receipt to result.</p>
-                        </div>
-                    </div>
+                <a href="what_transfusion_does.html" class="tour-card block bg-white p-6 rounded-lg shadow-md text-center">
+                    <div class="text-6xl text-blue-500 mb-4"><i class="fas fa-tint"></i></div>
+                    <h3 class="text-2xl font-semibold mb-2">Blood Transfusion</h3>
+                    <p class="text-gray-600">Explore the science behind the gift of life. See how we ensure every unit of blood is safe and compatible for our patients, from routine tests to emergency protocols.</p>
                 </a>
+                
+                <a href="what_chemisty_does.html" class="tour-card block bg-white p-6 rounded-lg shadow-md text-center">
+                    <div class="text-6xl text-green-500 mb-4"><i class="fas fa-flask"></i></div>
+                    <h3 class="text-2xl font-semibold mb-2">Clinical Chemistry</h3>
+                    <p class="text-gray-600">Follow the journey of a sample through our automated analysers. Learn how we test for everything from liver function and cardiac markers to hormone levels.</p>
+                </a>
+                
+                <div class="coming-soon-card p-6 rounded-lg shadow-md text-center">
+                    <div class="coming-soon-badge">SOON</div>
+                    <div class="content">
+                        <div class="text-6xl text-gray-500 mb-4"><i class="fas fa-shield-alt"></i></div>
+                        <h3 class="text-2xl font-semibold mb-2 text-gray-700">Immunology</h3>
+                        <p class="text-gray-500">Our immunology tour is currently in production! Soon you'll be able to explore how we investigate autoimmune diseases and allergies.</p>
+                    </div>
+                </div>
 
-                <a href="what_transfusion_does.html" class="block bg-white p-8 rounded-lg shadow-lg transform hover:-translate-y-1 transition duration-300">
-                    <div class="flex items-center">
-                        <i data-feather="shield" class="h-12 w-12 text-nhs-blue"></i>
-                        <div class="ml-6 text-left">
-                            <h3 class="text-xl font-semibold text-gray-800">What Does Transfusion Do?</h3>
-                             <p class="text-gray-600 mt-1">A guide to blood groups, antibodies, and ensuring safe transfusions.</p>
-                        </div>
+                <div class="coming-soon-card p-6 rounded-lg shadow-md text-center">
+                    <div class="coming-soon-badge">SOON</div>
+                    <div class="content">
+                        <div class="text-6xl text-gray-500 mb-4"><i class="fas fa-inbox"></i></div>
+                        <h3 class="text-2xl font-semibold mb-2 text-gray-700">Specimen Reception</h3>
+                        <p class="text-gray-500">Filming is underway! This tour will show you the critical first step for every sample that arrives in the laboratory.</p>
                     </div>
-                </a>
-              
+                </div>
+
             </div>
-        </div>
+        </section>
+
     </main>
 
     <div id="footer-placeholder"></div>
+    <script src="js/component-loader.js"></script>
 
-      <script src="js/component-loader.js"></script>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            feather.replace();
-        });
-    </script>
 </body>
 </html>
