@@ -1,154 +1,143 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pathology Games - SGC</title>
+    <title>Pathology Games - Clinical Pathology</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#005EB8">
     <style>
         body { font-family: 'Inter', sans-serif; }
-        .nhs-blue { background-color: #005EB8; }
-        .nhs-dark-blue { background-color: #003087; }
-        .nhs-light-grey { background-color: #F0F4F5; }
-        .nhs-text-blue { color: #005EB8; }
-        .nhs-text-dark-blue { color: #003087; }
+        .hero-bg-games { 
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1579373903781-fd5c08365875?q=80&w=2070&auto=format&fit=crop&ixlib-rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-position: center;
+        }
+        .text-shadow-lg { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
+        .game-card {
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .game-card-content {
+            flex-grow: 1;
+        }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
 
     <div id="header-placeholder"></div>
 
-    <main class="py-16">
-        <div class="container mx-auto px-6">
-            <a href="index.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8">
-                <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Home
-            </a>
-            <h2 class="text-4xl font-bold text-center mb-12 nhs-text-dark-blue">Pathology Games</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <main class="container mx-auto px-4 py-8 flex-grow">
+        
+        <section class="hero-bg-games text-white rounded-lg p-16 mb-8 text-center shadow-lg">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4 text-shadow-lg">Pathology Games Arcade</h1>
+            <p class="text-lg md:text-2xl max-w-3xl mx-auto text-shadow-lg">Learn about clinical pathology in a fun and interactive way. Test your knowledge and skills with our collection of educational games!</p>
+        </section>
+
+        <section class="p-8 rounded-lg">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                 
-                <a href="transfusion_game.html" class="block bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Antibody ID Challenge</h3>
-                        <p class="text-gray-600">Use the antigrams and patient details to identify complex antibodies.</p>
+                <a href="transfusion_game.html" class="game-card block bg-white p-6 rounded-lg shadow-md">
+                    <div class="game-card-content text-center">
+                        <div class="text-6xl text-red-500 mb-4"><i class="fas fa-search-plus"></i></div>
+                        <h3 class="text-xl font-semibold mb-2">Antibody ID Challenge</h3>
+                        <p class="text-gray-600">Solve complex antibody panels. Use exclusion techniques and enzyme panels to identify single and multiple antibodies.</p>
                     </div>
                 </a>
-
-                <a href="haem_game.html" class="block bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Morphology Mastermind</h3>
-                        <p class="text-gray-600">Identify haematological features from their classic descriptions.</p>
+                <a href="mhp_game.html" class="game-card block bg-white p-6 rounded-lg shadow-md">
+                    <div class="game-card-content text-center">
+                        <div class="text-6xl text-red-500 mb-4"><i class="fas fa-shipping-fast"></i></div>
+                        <h3 class="text-xl font-semibold mb-2">MHP Simulation</h3>
+                        <p class="text-gray-600">Respond to a Massive Haemorrhage bleep! Make critical decisions under pressure to save your patient.</p>
                     </div>
                 </a>
-
-                <a href="Patho-Word.html" class="block bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Patho-Word</h3>
-                        <p class="text-gray-600">Wordle but with Pathology associated words. Harder than it looks.</p>
+                 <a href="blood_group_game.html" class="game-card block bg-white p-6 rounded-lg shadow-md">
+                    <div class="game-card-content text-center">
+                        <div class="text-6xl text-red-500 mb-4"><i class="fas fa-vials"></i></div>
+                        <h3 class="text-xl font-semibold mb-2">Blood Grouping Challenge</h3>
+                        <p class="text-gray-600">Interpret agglutination reactions to determine the correct ABO/RhD blood group for your sample.</p>
                     </div>
                 </a>
-
-                <a href="fbc_challenge.html" class="block bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Name That Condition</h3>
-                        <p class="text-gray-600">Analyse FBC results and clinical clues to find the diagnosis.</p>
+                <a href="stock_management_game.html" class="game-card block bg-white p-6 rounded-lg shadow-md">
+                    <div class="game-card-content text-center">
+                        <div class="text-6xl text-red-500 mb-4"><i class="fas fa-boxes"></i></div>
+                        <h3 class="text-xl font-semibold mb-2">Stock Management Challenge</h3>
+                        <p class="text-gray-600">You're in charge of the blood fridge. Make smart decisions to meet patient needs and minimise wastage.</p>
                     </div>
                 </a>
-
-                <a href="coagulation_game.html" class="block bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Coagulation Cascade</h3>
-                        <p class="text-gray-600">A drag-and-drop challenge to build the coagulation pathways.</p>
-                    </div>
-                </a>
-
-                <a href="disease_association_game.html" class="block bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Antibody & Disease Association</h3>
-                        <p class="text-gray-600">Test your knowledge of serological markers in autoimmune diseases.</p>
+                <a href="compatibility_game.html" class="game-card block bg-white p-6 rounded-lg shadow-md">
+                    <div class="game-card-content text-center">
+                        <div class="text-6xl text-red-500 mb-4"><i class="fas fa-check-double"></i></div>
+                        <h3 class="text-xl font-semibold mb-2">Compatibility Game</h3>
+                        <p class="text-gray-600">Drag and drop the correct blood bags to safely transfuse your patient.</p>
                     </div>
                 </a>
                 
-                <a href="chemistry_game.html" class="block bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Clinical Chemistry Case Challenge</h3>
-                        <p class="text-gray-600">Analyse the biochemistry results and solve the case.</p>
+                <a href="fbc_challenge.html" class="game-card block bg-white p-6 rounded-lg shadow-md">
+                    <div class="game-card-content text-center">
+                        <div class="text-6xl text-blue-500 mb-4"><i class="fas fa-file-medical-alt"></i></div>
+                        <h3 class="text-xl font-semibold mb-2">FBC Challenge</h3>
+                        <p class="text-gray-600">Analyse Full Blood Count results and identify the abnormalities.</p>
                     </div>
                 </a>
-
-                <a href="tube_sorter_game.html" class="block bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Specimen Reception: Tube Sorter</h3>
-                        <p class="text-gray-600">Sort blood tubes into the correct departments or choose the right sample type.</p>
+                 <a href="coagulation_game.html" class="game-card block bg-white p-6 rounded-lg shadow-md">
+                    <div class="game-card-content text-center">
+                        <div class="text-6xl text-blue-500 mb-4"><i class="fas fa-hourglass-half"></i></div>
+                        <h3 class="text-xl font-semibold mb-2">Coagulation Game</h3>
+                        <p class="text-gray-600">Test your knowledge of the clotting cascade and its associated tests.</p>
                     </div>
                 </a>
-
-                <a href="compatibility_game.html" class="block bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Blood Group BATTLE</h3>
-                        <p class="text-gray-600">Is it a compatible transfusion? Make the right call!</p>
-                    </div>
-                </a>
-                
-                <a href="immunology_game.html" class="block bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Immunology Word Search</h3>
-                        <p class="text-gray-600">Find the hidden immunology terms in the grid.</p>
+                <a href="cell_counter.html" class="game-card block bg-white p-6 rounded-lg shadow-md">
+                    <div class="game-card-content text-center">
+                        <div class="text-6xl text-blue-500 mb-4"><i class="fas fa-microscope"></i></div>
+                        <h3 class="text-xl font-semibold mb-2">Manual Cell Counter</h3>
+                        <p class="text-gray-600">Practice performing a manual white cell differential count, just like on a real blood film.</p>
                     </div>
                 </a>
                 
-                <a href="pre_analytical_game.html" class="block bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Pre-analytical Pitfalls</h3>
-                        <p class="text-gray-600">Identify sample collection errors and their impact on results.</p>
+                <a href="pre_analytical_game.html" class="game-card block bg-white p-6 rounded-lg shadow-md">
+                    <div class="game-card-content text-center">
+                        <div class="text-6xl text-purple-500 mb-4"><i class="fas fa-ruler-combined"></i></div>
+                        <h3 class="text-xl font-semibold mb-2">Sample Sorter</h3>
+                        <p class="text-gray-600">Sort the incoming blood tubes into the correct racks for analysis before the time runs out!</p>
+                    </div>
+                </a>
+                <a href="Anticoagulant_Challenge.html" class="game-card block bg-white p-6 rounded-lg shadow-md">
+                    <div class="game-card-content text-center">
+                        <div class="text-6xl text-purple-500 mb-4"><i class="fas fa-prescription-bottle"></i></div>
+                        <h3 class="text-xl font-semibold mb-2">Anticoagulant Challenge</h3>
+                        <p class="text-gray-600">Match the blood tube top colour to the correct anticoagulant and department.</p>
                     </div>
                 </a>
 
-                <a href="anticoagulant_challenge.html" class="block bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Anticoagulant Challenge</h3>
-                        <p class="text-gray-600">Test your knowledge on how different drugs affect coagulation results.</p>
+                <a href="Patho-Word.html" class="game-card block bg-white p-6 rounded-lg shadow-md">
+                    <div class="game-card-content text-center">
+                        <div class="text-6xl text-gray-500 mb-4"><i class="fas fa-font"></i></div>
+                        <h3 class="text-xl font-semibold mb-2">Patho-Word</h3>
+                        <p class="text-gray-600">Test your vocabulary with our pathology-themed word guessing game!</p>
                     </div>
                 </a>
-
-                <a href="acronym_attack_game.html" class="block bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Lab Acronym Attack</h3>
-                        <p class="text-gray-600">Define as many acronyms as you can before the time runs out.</p>
-                    </div>
-                </a>
-
-                <a href="lab_discussions.html" class="block bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Lab Questions</h3>
-                        <p class="text-gray-600">Get a random question of the month to discuss with colleagues!</p>
-                    </div>
-                </a>
-
-                <a href="morphology_cases.html" class="block bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Morphology Training</h3>
-                        <p class="text-gray-600">Learn morphology with real cases</p>
+                 <a href="acronym_attack_game.html" class="game-card block bg-white p-6 rounded-lg shadow-md">
+                    <div class="game-card-content text-center">
+                        <div class="text-6xl text-gray-500 mb-4"><i class="fas fa-bolt"></i></div>
+                        <h3 class="text-xl font-semibold mb-2">Acronym Attack</h3>
+                        <p class="text-gray-600">How well do you know your lab acronyms? Match the abbreviation to its full meaning in this fast-paced game.</p>
                     </div>
                 </a>
 
             </div>
-        </div>
+        </section>
+
     </main>
 
     <div id="footer-placeholder"></div>
+    <script src="js/component-loader.js"></script>
 
-      <script src="js/component-loader.js"></script>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            feather.replace();
-        });
-    </script>
 </body>
 </html>
