@@ -8,24 +8,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        .hero-bg-transfusion {
-            background-image: url('https://images.unsplash.com/photo-1581091224254-7a7b82c16a3c?q=80&w=2070&auto=format&fit=crop&ixlib-rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
-            background-size: cover;
-            background-position: center;
-        }
-        .text-shadow-lg {
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-        .card-hover-effect {
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-        }
-        .card-hover-effect:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
+        body { font-family: 'Inter', sans-serif; }
+        .hero-bg-transfusion { background-image: url('https://images.unsplash.com/photo-1581091224254-7a7b82c16a3c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; background-position: center; }
+        .text-shadow-lg { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
+        .card-hover-effect { transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; }
+        .card-hover-effect:hover { transform: translateY(-10px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
@@ -34,69 +21,65 @@
 
     <main class="container mx-auto px-4 py-8 flex-grow">
         
-        <section class="hero-bg-transfusion text-white rounded-lg p-8 md:p-16 mb-8 flex items-center justify-center text-center shadow-lg">
+        <section class="hero-bg-transfusion text-white rounded-lg p-16 mb-8 text-center shadow-lg">
             <div>
                 <h1 class="text-4xl md:text-6xl font-bold mb-4 text-shadow-lg">Blood Transfusion</h1>
-                <p class="text-lg md:text-2xl max-w-3xl mx-auto text-shadow-lg">Ensuring the right blood gets to the right patient at the right time.</p>
+                <p class="text-lg md:text-2xl max-w-3xl mx-auto text-shadow-lg">The science behind the gift of life.</p>
             </div>
         </section>
 
         <section class="bg-white p-8 rounded-lg shadow-md mb-8">
-            <h2 class="text-3xl font-bold text-gray-900 mb-4">What is the Blood Transfusion Lab?</h2>
-            <div class="flex flex-col md:flex-row gap-8 items-center">
-                <div class="md:w-2/3">
-                    <p class="mb-4 text-lg">The Blood Transfusion department is the vital link between a blood donation and a patient receiving a life-saving transfusion. Our primary role is to ensure that every bag of blood or blood component is safe and, most importantly, compatible with the patient who needs it.</p>
-                    <p class="text-lg">We perform a series of critical tests to match donated blood with a patient's own blood type. We're on call 24/7, ready to respond to routine requests for surgery and to life-or-death emergencies where every second counts. Explore our detailed pages to learn more about our key processes.</p>
-                </div>
-                <div class="md:w-1/3 h-64 flex items-center justify-center">
-                    <img src="lab.jpg" alt="Blood bank refrigerator" class="rounded-lg shadow-lg w-full h-full object-cover">
-                </div>
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Core Transfusion Science</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
+                <a href="group_and_screen_page.html" class="block bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300">
+                    <div class="flex items-center">
+                        <div class="text-4xl text-red-500 mr-4"><i class="fas fa-vials"></i></div>
+                        <div>
+                            <h3 class="text-2xl font-semibold mb-2">Group & Screen</h3>
+                            <p>Discover the foundational test for safe transfusion.</p>
+                        </div>
+                    </div>
+                </a>
+                <a href="crossmatch_and_issue_page.html" class="block bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300">
+                    <div class="flex items-center">
+                        <div class="text-4xl text-green-500 mr-4"><i class="fas fa-check-double"></i></div>
+                        <div>
+                            <h3 class="text-2xl font-semibold mb-2">Crossmatch & Issue</h3>
+                            <p>Understand the final compatibility checks before blood is released.</p>
+                        </div>
+                    </div>
+                </a>
+                <a href="antibody_investigation_page.html" class="block bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300">
+                    <div class="flex items-center">
+                        <div class="text-4xl text-blue-500 mr-4"><i class="fas fa-search"></i></div>
+                        <div>
+                            <h3 class="text-2xl font-semibold mb-2">Antibody Investigation</h3>
+                            <p>Learn how we identify specific antibodies in patient blood.</p>
+                        </div>
+                    </div>
+                </a>
+                <a href="mhp_page.html" class="block bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300">
+                    <div class="flex items-center">
+                        <div class="text-4xl text-orange-500 mr-4"><i class="fas fa-shipping-fast"></i></div>
+                        <div>
+                            <h3 class="text-2xl font-semibold mb-2">Massive Haemorrhage</h3>
+                            <p>Find out about our emergency protocol for critical bleeding.</p>
+                        </div>
+                    </div>
+                </a>
             </div>
         </section>
-
-        <section class="bg-gray-50 p-8 rounded-lg shadow-inner mb-8">
-            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Explore Our Work</h2>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <a href="group_and_screen_page.html" class="block bg-white p-6 rounded-lg shadow-md card-hover-effect">
-                    <div class="text-center">
-                        <div class="text-5xl text-red-500 mb-4"><i class="fas fa-vials"></i></div>
-                        <h3 class="text-xl font-semibold mb-2">Group & Screen</h3>
-                        <p>Discover the foundational test that determines a patient's blood group and screens for antibodies.</p>
-                    </div>
-                </a>
-                <a href="antibody_investigation_page.html" class="block bg-white p-6 rounded-lg shadow-md card-hover-effect">
-                    <div class="text-center">
-                        <div class="text-5xl text-blue-500 mb-4"><i class="fas fa-search"></i></div>
-                        <h3 class="text-xl font-semibold mb-2">Antibody Investigation</h3>
-                        <p>Learn how we identify specific antibodies in a patient's blood to ensure safe transfusions.</p>
-                    </div>
-                </a>
-                <a href="crossmatch_and_issue_page.html" class="block bg-white p-6 rounded-lg shadow-md card-hover-effect">
-                    <div class="text-center">
-                        <div class="text-5xl text-green-500 mb-4"><i class="fas fa-check-double"></i></div>
-                        <h3 class="text-xl font-semibold mb-2">Crossmatch & Electronic Issue</h3>
-                        <p>Understand the final compatibility checks performed before blood is released to a patient.</p>
-                    </div>
-                </a>
-                <a href="mhp_page.html" class="block bg-white p-6 rounded-lg shadow-md card-hover-effect">
-                    <div class="text-center">
-                        <div class="text-5xl text-orange-500 mb-4"><i class="fas fa-shipping-fast"></i></div>
-                        <h3 class="text-xl font-semibold mb-2">Massive Haemorrhage</h3>
-                        <p>Find out about our emergency protocol for life-threatening bleeding situations.</p>
-                    </div>
-                </a>
-                <a href="stock_management_page.html" class="block bg-white p-6 rounded-lg shadow-md card-hover-effect">
-                    <div class="text-center">
-                        <div class="text-5xl text-purple-500 mb-4"><i class="fas fa-boxes"></i></div>
-                        <h3 class="text-xl font-semibold mb-2">Stock Management</h3>
-                        <p>See how we manage our inventory of precious blood components to meet patient needs.</p>
-                    </div>
-                </a>
-                 <a href="antenatal_screening_page.html" class="block bg-white p-6 rounded-lg shadow-md card-hover-effect">
-                    <div class="text-center">
-                        <div class="text-5xl text-pink-500 mb-4"><i class="fas fa-baby"></i></div>
-                        <h3 class="text-xl font-semibold mb-2">Antenatal Screening</h3>
-                        <p>Learn about specialized testing to protect mothers and babies during pregnancy.</p>
+        
+        <section class="bg-white p-8 rounded-lg shadow-md mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Specialist Transfusion Areas</h2>
+            <div class="grid md:grid-cols-1 gap-8">
+                 <a href="antenatal_screening_page.html" class="block bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300">
+                    <div class="flex items-center">
+                        <div class="text-4xl text-pink-500 mr-4"><i class="fas fa-baby"></i></div>
+                        <div>
+                            <h3 class="text-2xl font-semibold mb-2">Antenatal Screening</h3>
+                            <p>Learn about the specialized testing we perform during pregnancy to protect the health of both mother and baby, including Anti-D prophylaxis and feto-maternal haemorrhage estimation.</p>
+                        </div>
                     </div>
                 </a>
             </div>
@@ -110,15 +93,6 @@
     </main>
 
     <div id="footer-placeholder"></div>
-
     <script src="js/component-loader.js"></script>
-    
-    <script>
-        // This script is now only for initializing icons on the main page.
-        // The component-loader will handle icons inside the header/footer.
-        document.addEventListener('DOMContentLoaded', () => {
-            feather.replace();
-        });
-   </script>
 </body>
 </html>
