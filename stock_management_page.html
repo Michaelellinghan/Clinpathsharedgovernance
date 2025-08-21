@@ -6,53 +6,55 @@
     <title>Stock Management - Clinical Pathology</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        .hero-bg-stock {
-            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1605719951673-c157d612c3f1?q=80&w=1932&auto=format&fit=crop&ixlib-rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
-            background-size: cover;
-            background-position: center;
-        }
+        body { font-family: 'Inter', sans-serif; }
+        .hero-bg-stock { background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1605719951673-c157d63847a1?q=80&w=1932&auto=format&fit=crop&ixlib-rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; background-position: center; }
+        .text-shadow-lg { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
     </style>
 </head>
-<body class="bg-gray-100 text-gray-800">
+<body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
 
     <div id="header-placeholder"></div>
 
-    <main class="container mx-auto px-4 py-8">
+    <main class="container mx-auto px-4 py-8 flex-grow">
         
         <section class="hero-bg-stock text-white rounded-lg p-16 mb-8 text-center shadow-lg">
-            <h1 class="text-4xl md:text-6xl font-bold mb-4">Blood Stock Management</h1>
-            <p class="text-lg md:text-2xl max-w-3xl mx-auto">A precious resource, carefully managed.</p>
+            <h1 class="text-4xl md:text-6xl font-bold mb-4 text-shadow-lg">Blood Stock Management</h1>
+            <p class="text-lg md:text-2xl max-w-3xl mx-auto text-shadow-lg">A precious resource, carefully managed.</p>
         </section>
 
         <section class="bg-white p-8 rounded-lg shadow-md mb-8">
-            <h2 class="text-3xl font-bold text-gray-900 mb-4">Balancing Supply and Demand</h2>
-            <p class="text-lg">Managing our inventory of blood components is a critical daily task. We need to have enough stock on the shelves to meet the demands of routine surgeries and unexpected emergencies, while also minimizing wastage of these precious, life-saving products. All our blood components are supplied by NHS Blood and Transplant (NHSBT).</p>
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">The Core Principles of Stock Control</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-2"><i class="fas fa-tasks text-blue-500 mr-2"></i>Optimal Levels & Ordering</h3>
+                    <p>We maintain carefully calculated stock levels to balance patient demand with the risk of wastage. Daily stock counts are performed and orders are placed with NHSBT via the Online Blood Ordering System (OBOS) to replenish stocks for routine deliveries.</p>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-2"><i class="fas fa-calendar-alt text-red-500 mr-2"></i>Strict Stock Rotation</h3>
+                    <p>To prevent expiry, we operate a "first in, first out" system. However, we also use logic: the oldest units are selected first for top-up transfusions, while units with a longer shelf-life are chosen for surgical cover where blood may be returned unused.</p>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-2"><i class="fas fa-temperature-low text-teal-500 mr-2"></i>The Cold Chain</h3>
+                    <p>All red cell components must be kept within a tightly controlled temperature range of 2-6°C. We ensure this "cold chain" integrity is maintained from the point of donation to the moment of transfusion to guarantee the safety and efficacy of the blood.</p>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-2"><i class="fas fa-shoe-prints text-purple-500 mr-2"></i>Vein-to-Vein Traceability</h3>
+                    <p>It is a mandatory requirement to ensure full traceability of every blood component. We must know the location and final fate of every unit, whether it is transfused, transferred to another hospital, or wasted for any reason.</p>
+                </div>
+            </div>
         </section>
         
         <section class="bg-white p-8 rounded-lg shadow-md mb-8">
-            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Our Stock Management Strategy</h2>
-            <div class="grid md:grid-cols-2 gap-8">
-                <div class="bg-gray-50 p-6 rounded-lg">
-                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-sort-amount-down-alt text-blue-500 mr-2"></i>Optimal Stock Levels</h3>
-                    <p>We have carefully calculated optimal stock levels for each blood component, based on historical usage and the clinical needs of our hospitals. We monitor these levels daily and place orders with NHSBT to replenish our stocks as needed. We receive routine deliveries twice a day on weekdays and once a day on weekends.</p>
-                </div>
-                <div class="bg-gray-50 p-6 rounded-lg">
-                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-calendar-alt text-red-500 mr-2"></i>Stock Rotation</h3>
-                    <p>Blood components have a limited shelf life (e.g., 35 days for red cells, 7 days for platelets). To minimize wastage, we operate a strict "first in, first out" system. The oldest units are always selected first for transfusion. Units nearing their expiry date are flagged, and we make every effort to use them before they expire, sometimes by transferring them between our two hospital sites to where they are most needed.</p>
-                </div>
-                <div class="bg-gray-50 p-6 rounded-lg">
-                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-shipping-fast text-green-500 mr-2"></i>Emergency Supply</h3>
-                    <p>For urgent or rare requirements that we cannot meet from our own stock, we can place ad-hoc or "blue light" emergency orders with NHSBT, who can deliver to us within a couple of hours. This ensures we can always get the right blood for any patient, no matter their requirements.</p>
-                </div>
-                <div class="bg-gray-50 p-6 rounded-lg">
-                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-archive text-purple-500 mr-2"></i>Traceability</h3>
-                    <p>Every single blood component has a unique donation number. We have a robust "vein-to-vein" traceability system, meaning we can track every unit from the donor, through our laboratory, to the final recipient. This is a legal requirement and a cornerstone of blood safety.</p>
-                </div>
-            </div>
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">Minimising Wastage: A Precious Resource</h2>
+            <p class="text-lg mb-4">Blood is a precious gift, and we have a responsibility to minimise wastage. Any unit that is unsuitable for transfusion must be disposed of and recorded electronically to maintain the audit trail. Wastage to WPE.docx] Reasons for wastage can include units expiring, being accidentally damaged, or suffering a cold chain failure (e.g., being left out of a fridge for too long). Wastage to WPE.docx] Our stock management procedures, such as transferring short-dated platelets between hospital sites, are designed to reduce expiry and ensure as many components as possible are used for patients.</p>
+        </section>
+
+        <section class="bg-teal-600 text-white p-8 rounded-lg shadow-md text-center">
+            <h2 class="text-3xl font-bold mb-4">Can You Manage the Blood Fridge?</h2>
+            <p class="text-lg mb-6 max-w-3xl mx-auto">You're in charge of the blood stock for the day. Can you make the right decisions to meet patient needs while keeping wastage to a minimum? Try our Stock Management Challenge!</p>
+            <a href="stock_management_game.html" class="inline-block bg-white text-teal-700 font-bold py-3 px-8 rounded-full hover:bg-gray-200 transition duration-300">Play the Stock Challenge</a>
         </section>
 
         <section class="text-center mt-12">
@@ -63,13 +65,6 @@
     </main>
 
     <div id="footer-placeholder"></div>
-
-      <script src="js/component-loader.js"></script>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            feather.replace();
-        });
-   </script>
+    <script src="js/component-loader.js"></script>
 </body>
 </html>
