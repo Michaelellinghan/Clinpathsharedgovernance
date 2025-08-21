@@ -11,8 +11,6 @@
         body { font-family: 'Inter', sans-serif; }
         .hero-bg-mhp { background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1559742810-1d2b59a2664b?q=80&w=2070&auto=format&fit=crop&ixlib-rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; background-position: center; }
         .text-shadow-lg { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
-        .tab-button { padding: 0.75rem 1.5rem; cursor: pointer; border-bottom: 4px solid transparent; transition: all 0.3s ease; }
-        .tab-button.active { border-bottom-color: #ef4444; /* red-500 */ color: #ef4444; font-weight: 600; }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
@@ -33,28 +31,56 @@
 
         <section class="bg-white p-8 rounded-lg shadow-md mb-8">
             <h2 class="text-3xl font-bold text-gray-900 mb-4">The Team Response & Communication</h2>
-            <p class="text-lg mb-4">When the MHP bleep is activated, it triggers an immediate response. This is a high-priority event that overrides all other routine work. Clear and concise communication is essential. The laboratory staff will confirm the patient's details and provide the clinical area with a dedicated MHP phone number (QMC 80552 / City 78067) to ensure a clear line of communication remains open. Every component issued is meticulously documented on the <strong>Massive Haemorrhage and Emergency Blood Record Sheet</strong> to ensure full traceability.</p>
+            <p class="text-lg mb-4">When the MHP bleep is activated, it triggers an immediate response. This is a high-priority event that overrides all other routine work. Clear and concise communication is essential. The laboratory staff will confirm the patient's details and location, and every component issued is meticulously documented on the <strong>Massive Haemorrhage and Emergency Blood Record Sheet</strong> to ensure full traceability.</p>
         </section>
         
         <section class="bg-white p-8 rounded-lg shadow-md mb-8">
-            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">The MHP Packs: Tailored to the Situation</h2>
-            <p class="text-lg text-center max-w-4xl mx-auto mb-6">The contents of the MHP packs vary depending on the clinical situation, primarily distinguished by whether the bleed is due to trauma or is non-traumatic (e.g., obstetric or surgical).</p>
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">MHP Pathways: Tailored to the Situation</h2>
+            <p class="text-lg text-center max-w-4xl mx-auto mb-6">The laboratory response is tailored to the specific clinical scenario. The contents of the MHP packs and the overall strategy can vary significantly depending on the cause and location of the bleed.</p>
             
-            <div class="border-b border-gray-200">
-                <nav class="-mb-px flex justify-center" aria-label="Tabs">
-                    <button class="tab-button active" onclick="openTab(event, 'trauma')">Traumatic Haemorrhage</button>
-                    <button class="tab-button" onclick="openTab(event, 'nontrauma')">Non-Traumatic Haemorrhage</button>
-                </nav>
-            </div>
-
-            <div id="trauma" class="tab-content pt-6">
+            <div class="space-y-8">
+                <div class="p-6 bg-red-50 rounded-lg border border-red-200">
+                    <h3 class="font-bold text-2xl mb-2 text-red-800"><i class="fas fa-car-crash mr-2"></i>Trauma Haemorrhage (ED/Resus)</h3>
+                    <p class="mb-4">For trauma patients arriving in the Emergency Department, a standardised, aggressive approach is used with pre-defined packs to treat shock and coagulopathy early.</p>
+                    <div class="grid md:grid-cols-3 gap-4 text-center">
+                        <div class="bg-white p-4 rounded">
+                            <h4 class="font-bold text-lg">Pack 1</h4>
+                            <ul class="list-none text-left mt-2 space-y-1">
+                                <li><i class="fas fa-tint text-red-500"></i> 4 units Red Cells (O Pos/Neg)</li>
+                                <li><i class="fas fa-vial text-yellow-400"></i> 4 units FFP</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-4 rounded">
+                            <h4 class="font-bold text-lg">Pack 2</h4>
+                            <ul class="list-none text-left mt-2 space-y-1">
+                                <li><i class="fas fa-tint text-red-500"></i> 6 units Red Cells (Group Specific)</li>
+                                <li><i class="fas fa-vial text-yellow-400"></i> 4 units FFP</li>
+                                <li><i class="fas fa-band-aid text-yellow-600"></i> 1 unit Platelets</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-4 rounded">
+                            <h4 class="font-bold text-lg">Pack 3 & Beyond</h4>
+                            <ul class="list-none text-left mt-2 space-y-1">
+                                <li>As per Pack 2, plus:</li>
+                                <li><i class="fas fa-cubes text-blue-400"></i> 2 units Cryoprecipitate</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-            <div id="nontrauma" class="tab-content pt-6 hidden">
-                </div>
 
-            <div class="mt-6 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded-r-lg">
-                <h4 class="font-bold">Special Considerations</h4>
-                <p>If a patient has known red cell antibodies, the laboratory must be informed immediately. While the initial emergency O Negative units are safe, finding compatible group-specific blood may take longer. The Haematology Registrar will be informed to help manage the clinical situation.</p>
+                <div class="p-6 bg-blue-50 rounded-lg border border-blue-200">
+                    <h3 class="font-bold text-2xl mb-2 text-blue-800"><i class="fas fa-procedures mr-2"></i>Obstetric, Surgical & Cardiac Haemorrhage</h3>
+                    <p class="mb-4">For non-traumatic bleeds in areas like obstetrics or theatres, the protocol is more flexible. The initial response focuses on providing red cells quickly, while subsequent components are guided by laboratory results and point-of-care testing to provide targeted therapy.</p>
+                     <ul class="list-disc list-inside text-left mt-4 space-y-2">
+                        <li><strong>Initial Step:</strong> Provide 4-6 units of emergency or group-specific Red Cells immediately.</li>
+                        <li><strong>Subsequent Support:</strong> FFP, Platelets, and Cryoprecipitate are issued based on the results of coagulation screens and in discussion with the Haematology Registrar.</li>
+                        <li><strong>Cardiac Surgery:</strong> Often uses point-of-care machines (ROTEM/TEG) to guide specific product usage, such as Cryoprecipitate for low fibrinogen.</li>
+                    </ul>
+                </div>
+                 <div class="p-6 bg-green-50 rounded-lg border border-green-200">
+                    <h3 class="font-bold text-2xl mb-2 text-green-800"><i class="fas fa-child mr-2"></i>Paediatric Haemorrhage</h3>
+                    <p class="mb-4">For children, pre-defined adult packs are not used. All component doses are carefully calculated based on the child's weight (e.g., 20ml/kg for red cells and FFP). This ensures life-saving treatment without the risk of fluid overload. The principles of using O Negative red cells first and switching to group-specific remain the same.</p>
+                </div>
             </div>
         </section>
 
@@ -73,21 +99,6 @@
 
     <div id="footer-placeholder"></div>
     <script src="js/component-loader.js"></script>
-    <script>
-        // JS for tabs remains the same
-        function openTab(evt, tabName) {
-            let i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("tab-content");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].classList.add("hidden");
-            }
-            tablinks = document.getElementsByClassName("tab-button");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].classList.remove("active");
-            }
-            document.getElementById(tabName).classList.remove("hidden");
-            evt.currentTarget.classList.add("active");
-        }
-    </script>
+
 </body>
 </html>
