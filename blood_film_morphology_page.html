@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Film Morphology - Clinical Pathology</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .hero-bg-morph { background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1579154293493-0cb8c3f2d590?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; background-position: center; }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
+
+    <div id="header-placeholder"></div>
+
+    <main class="container mx-auto px-4 py-8 flex-grow">
+        <section class="hero-bg-morph text-white rounded-lg p-16 mb-8 text-center shadow-lg">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4">Blood Film Morphology</h1>
+            <p class="text-lg md:text-2xl max-w-3xl mx-auto">The art of looking at blood.</p>
+        </section>
+
+        <section class="bg-white p-8 rounded-lg shadow-md mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">When Numbers Aren't Enough</h2>
+            <p class="text-lg">Our automated analysers provide a wealth of numerical data, but they can't see everything. When an FBC result is flagged as abnormal, or if a doctor has a specific clinical suspicion, we turn to the gold standard: the manual blood film examination.</p>
+            <p class="text-lg mt-2"><strong>Morphology</strong> is the study of the form and structure of cells. By looking at a stained blood film under a microscope, our highly trained Biomedical Scientists can spot abnormalities that a machine might miss, providing crucial clues for diagnosis.</p>
+        </section>
+
+        <section class="bg-white p-8 rounded-lg shadow-md mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">What We Look For</h2>
+            <div class="grid md:grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="bg-red-50 p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-2 text-red-700">In Red Blood Cells...</h3>
+                    <ul class="list-disc list-inside space-y-2">
+                        <li><strong>Size & Shape:</strong> Are they too big, too small, or abnormally shaped (e.g., sickle-shaped, tear-drop shaped)?</li>
+                        <li><strong>Colour:</strong> Are they pale (hypochromic), suggesting low haemoglobin content?</li>
+                        <li><strong>Inclusions:</strong> Are there any unusual bodies inside the cells, like Howell-Jolly bodies or malaria parasites?</li>
+                    </ul>
+                </div>
+                <div class="bg-blue-50 p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-2 text-blue-700">In White Blood Cells...</h3>
+                     <ul class="list-disc list-inside space-y-2">
+                        <li><strong>Maturity:</strong> Are there immature 'blast' cells present, which can be a sign of acute leukaemia?</li>
+                        <li><strong>Features:</strong> Do the cells look abnormal, with features like toxic granulation (in infection) or hypersegmented nuclei (in vitamin deficiency)?</li>
+                        <li><strong>Proportions:</strong> Does the differential count look correct, or is one cell line dramatically increased?</li>
+                    </ul>
+                </div>
+                <div class="bg-yellow-50 p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-2 text-yellow-700">In Platelets...</h3>
+                     <ul class="list-disc list-inside space-y-2">
+                        <li><strong>Size:</strong> Are they abnormally large or small?</li>
+                        <li><strong>Clumping:</strong> Are they clumping together on the slide? This can sometimes cause a falsely low platelet count from the analyser.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-teal-600 text-white p-8 rounded-lg shadow-md text-center">
+            <h2 class="text-3xl font-bold mb-4">Test Your Skills!</h2>
+            <p class="text-lg mb-6 max-w-3xl mx-auto">Think you have what it takes to be a blood detective? We regularly post interesting cases for you to examine. Put your morphology skills to the test!</p>
+            <a href="morphology_cases.html" class="inline-block bg-white text-teal-700 font-bold py-3 px-8 rounded-full hover:bg-gray-200 transition duration-300">View Morphology Cases</a>
+        </section>
+
+        <section class="text-center mt-12">
+            <a href="what_haematology_does.html" class="bg-gray-800 text-white font-bold py-3 px-8 rounded-full hover:bg-gray-700 transition duration-300">
+                <i class="fas fa-arrow-left mr-2"></i>Back to Haematology Overview
+            </a>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="js/component-loader.js"></script>
+    
+</body>
+</html>
