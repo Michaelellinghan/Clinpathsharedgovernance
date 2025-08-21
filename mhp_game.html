@@ -9,9 +9,8 @@
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <style>
         body { font-family: 'Inter', sans-serif; }
-        .component-btn { transition: all 0.2s; }
-        .component-btn.selected { transform: scale(1.05); background-color: #22c55e; border-color: #16a34a; color: white; }
-        .disabled-choice { opacity: 0.5; cursor: not-allowed; }
+        .choice-btn { transition: all 0.2s; }
+        .choice-btn.selected { transform: scale(1.05); background-color: #fbbf24; /* amber-400 */ border-color: #f59e0b; /* amber-500 */ }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
@@ -27,8 +26,8 @@
         <div id="game-container" class="bg-white p-6 rounded-lg shadow-md max-w-4xl mx-auto">
             
             <div id="start-screen" class="text-center">
-                <h2 class="text-2xl font-bold mb-4">Massive Haemorrhage Protocol Simulation</h2>
-                <p class="mb-6">You are the Biomedical Scientist. An MHP is about to be activated. Your job is to follow the procedure correctly and dispatch the right components. Are you ready?</p>
+                <h2 class="text-2xl font-bold mb-4">MHP Simulation Training</h2>
+                <p class="mb-6">An MHP has been activated. Your job is to follow the procedure correctly. You will be scored on speed and accuracy. Are you ready?</p>
                 <button id="start-button" class="bg-blue-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-600">Start Simulation</button>
             </div>
 
@@ -39,16 +38,17 @@
                         <p class="text-gray-600" id="scenario-description"></p>
                     </div>
                     <div class="text-right">
-                        <div id="timer-container" class="text-xl font-bold text-red-600">Time: <span id="timer">30</span>s</div>
+                        <div class="text-xl font-bold text-red-600">Time: <span id="timer"></span>s</div>
                         <div class="text-lg">Score: <span id="score">0</span></div>
                     </div>
                 </div>
                 
                 <div id="task-container">
                     <div id="task-description" class="my-4 p-4 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 font-semibold"></div>
-                    <div id="choices-container"></div>
+                    <div id="choices-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
                 </div>
                 <div id="feedback" class="mt-4 h-12 text-lg font-semibold text-center"></div>
+                <button id="next-stage-button" class="w-full mt-4 bg-gray-600 text-white font-bold py-3 rounded-lg hover:bg-gray-700 hidden">Next Stage</button>
             </div>
             
             <div id="end-screen" class="hidden text-center">
@@ -64,7 +64,6 @@
     <script src="js/component-loader.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- Elements ---
             const elements = {
                 startScreen: document.getElementById('start-screen'),
                 gameScreen: document.getElementById('game-screen'),
@@ -78,50 +77,41 @@
                 taskDesc: document.getElementById('task-description'),
                 choicesContainer: document.getElementById('choices-container'),
                 feedback: document.getElementById('feedback'),
+                nextStageButton: document.getElementById('next-stage-button'),
                 finalScore: document.getElementById('final-score'),
             };
 
-            // --- Game Data & State ---
-            const allComponents = [
-                { id: 'o_neg_rbc', name: 'O Neg RBC' }, { id: 'o_pos_rbc', name: 'O Pos RBC' },
-                { id: 'a_pos_rbc', name: 'A Pos RBC' }, { id: 'k_neg_rbc', name: 'K-Neg RBC' },
-                { id: 'ffp', name: 'FFP' }, { id: 'platelets', name: 'Platelets' }, { id: 'cryo', name: 'Cryo' }
-            ];
-
             const scenarios = [
                 {
-                    title: 'Trauma Case',
-                    description: '32 year old Female, Major Trauma from RTA.',
-                    patientGroup: 'A Positive',
-                    specialReq: 'None',
+                    title: 'Trauma MHP',
+                    description: '28 year old female, unknown identity, major trauma.',
                     stages: [
-                        { type: 'choice', task: 'MHP Activated! First, confirm the dedicated phone line has been given to the clinical team.', choices: [{ text: 'Confirm Phone Line Given', correct: true }], solution: ['Confirm Phone Line Given'] },
-                        { type: 'pack', task: 'Select components for TRAUMA PACK 1.', components: ['o_neg_rbc', 'o_pos_rbc', 'ffp', 'platelets'], solution: ['o_neg_rbc', 'ffp'], counts: { o_neg_rbc: 4, ffp: 4 }, feedback: "Correct! O Neg RBCs are used for females of child-bearing age in trauma." },
-                        { type: 'pack', task: 'Sample arrived: Patient is A Positive. Select components for TRAUMA PACK 2.', components: ['a_pos_rbc', 'o_neg_rbc', 'ffp', 'platelets', 'cryo'], solution: ['a_pos_rbc', 'ffp', 'platelets'], counts: { a_pos_rbc: 6, ffp: 4, platelets: 1 }, feedback: "Correct! Group-specific blood is now used." }
+                        { task: 'MHP Activated! What is your FIRST action?', timer: 15, choices: [{ text: 'Start thawing FFP', correct: false }, { text: 'Call the activating area', correct: true }, { text: 'Grab emergency blood', correct: false }], feedback: "Correct! Communication is the first critical step." },
+                        { task: 'What blood do you prepare for PACK 1?', timer: 20, choices: [{ text: '4x O Pos RBC, 4x FFP', correct: false }, { text: '4x O Neg RBC, 4x FFP', correct: true }, { text: '6x Group Specific RBC', correct: false }, { text: '4x O Neg RBC only', correct: false }], feedback: "Correct! Females of child-bearing age receive O Negative blood." },
+                        { task: 'The patient is Group B Positive. A porter arrives for Pack 2. What do you give them?', timer: 25, choices: [{ text: '6x O Neg RBC, 4x FFP, 1x Plt', correct: false }, { text: '6x B Pos RBC only', correct: false }, { text: '6x B Pos RBC, 4x FFP, 1x Plt', correct: true }, { text: '6x O Pos RBC, 4x FFP, 1x Plt', correct: false }], feedback: "Correct! Switch to group-specific blood as soon as possible." }
                     ]
                 },
                 {
-                    title: 'Non-Trauma Case',
-                    description: '75 year old Male, post-operative bleed. A valid sample is in the lab.',
-                    patientGroup: 'B Negative',
-                    specialReq: 'Anti-K',
+                    title: 'Obstetric MHP',
+                    description: '35 year old female, Post-Partum Haemorrhage. She is group A Positive.',
                     stages: [
-                        { type: 'pack', task: 'MHP Activated for a non-trauma bleed with a valid sample. Issue the first wave of red cells.', components: ['o_neg_rbc', 'o_pos_rbc', 'group_rbc'], solution: ['group_rbc'], counts: { group_rbc: 6 }, feedback: 'Correct! With a valid sample, we can issue group-specific blood immediately.' },
-                        { type: 'choice', task: "The patient's record shows they have Anti-K. What must you ensure for all subsequent red cell units?", choices: [{ text: 'Select K-Negative Red Cells', correct: true }, { text: 'Irradiate all units', correct: false }, { text: 'Call the consultant', correct: false }], solution: ['Select K-Negative Red Cells'] },
-                        { type: 'pack', task: 'The clinical team requests FFP and Platelets.', components: ['ffp', 'platelets', 'cryo'], solution: ['ffp', 'platelets'], counts: { ffp: 4, platelets: 1 }, feedback: 'Correct! Components are issued as requested and guided by the clinical team.' }
+                        { task: 'MHP Activated! The midwife requests blood. What is your priority?', timer: 15, choices: [{ text: 'Issue 4 units A Pos RBC', correct: true }, { text: 'Issue Pack 1 (4 RBC, 4 FFP)', correct: false }, { text: 'Wait for coagulation results', correct: false }], feedback: "Correct! For non-trauma, red cells are the immediate priority." },
+                        { task: 'The Fibrinogen result is 0.8 g/L (critically low). What component is now most urgently needed?', timer: 20, choices: [{ text: 'More Red Cells', correct: false }, { text: 'Platelets', correct: false }, { text: 'Cryoprecipitate', correct: true }, { text: 'Fresh Frozen Plasma (FFP)', correct: false }], feedback: "Correct! Cryoprecipitate is rich in fibrinogen and vital in obstetric bleeds." },
+                        { task: 'The Haematology registrar has been informed. The bleed is ongoing. What is your next action?', timer: 20, choices: [{ text: 'Continue issuing components as requested', correct: true }, { text: 'Activate the Major Incident Plan', correct: false }, { text: 'Stand down the MHP', correct: false }], feedback: "Correct! Follow the guidance of the clinical and haematology teams." }
                     ]
                 }
             ];
 
-            let state = { score: 0, timer: 30, timerInterval: null, currentScenario: null, currentStage: 0 };
+            let state;
 
-            // --- Functions ---
+            const resetState = () => {
+                state = { score: 0, timer: 0, timerInterval: null, currentScenario: null, currentStage: 0 };
+            };
+
             const startGame = () => {
-                state.score = 0;
+                resetState();
                 state.currentScenario = scenarios[Math.floor(Math.random() * scenarios.length)];
-                state.currentStage = 0;
                 elements.score.textContent = state.score;
-                
                 elements.startScreen.classList.add('hidden');
                 elements.endScreen.classList.add('hidden');
                 elements.gameScreen.classList.remove('hidden');
@@ -135,68 +125,38 @@
                 elements.taskDesc.textContent = stage.task;
                 elements.feedback.textContent = '';
                 elements.choicesContainer.innerHTML = '';
+                elements.nextStageButton.classList.add('hidden');
 
-                if (stage.type === 'choice') {
-                    stage.choices.forEach(choice => {
-                        const button = document.createElement('button');
-                        button.textContent = choice.text;
-                        button.className = 'w-full mt-2 p-3 bg-gray-200 rounded-lg hover:bg-gray-300';
-                        button.onclick = () => checkAnswer([choice.text]);
-                        elements.choicesContainer.appendChild(button);
-                    });
-                }
-
-                if (stage.type === 'pack') {
-                    elements.choicesContainer.className = 'grid grid-cols-2 md:grid-cols-3 gap-4';
-                    stage.components.forEach(compId => {
-                        const comp = allComponents.find(c => c.id.startsWith(compId.split('_')[0]));
-                        if (comp) {
-                            const button = document.createElement('button');
-                            const count = stage.counts[compId] || stage.counts[comp.id];
-                            let btnText = comp.id === 'group_rbc' ? `${state.currentScenario.patientGroup} RBC` : comp.name;
-                            button.textContent = `${btnText} (x${count})`;
-                            button.dataset.component = compId;
-                            button.className = 'component-btn p-4 border-2 rounded-lg font-semibold';
-                            button.addEventListener('click', () => button.classList.toggle('selected'));
-                            elements.choicesContainer.appendChild(button);
-                        }
-                    });
-                    const submitButton = document.createElement('button');
-                    submitButton.id = 'submit-pack-button';
-                    submitButton.textContent = 'Dispatch Pack';
-                    submitButton.className = 'w-full mt-4 bg-red-600 text-white font-bold py-3 rounded-lg hover:bg-red-700 col-span-full';
-                    submitButton.onclick = () => {
-                        const selected = Array.from(elements.choicesContainer.querySelectorAll('.selected')).map(btn => btn.dataset.component);
-                        checkAnswer(selected);
-                    };
-                    elements.choicesContainer.appendChild(submitButton);
-                }
-                startTimer();
+                stage.choices.forEach(choice => {
+                    const button = document.createElement('button');
+                    button.textContent = choice.text;
+                    button.className = 'choice-btn w-full p-4 bg-gray-200 rounded-lg hover:bg-gray-300 font-semibold';
+                    button.onclick = () => checkAnswer(choice.correct, stage.feedback);
+                    elements.choicesContainer.appendChild(button);
+                });
+                
+                startTimer(stage.timer);
             };
 
-            const startTimer = () => {
+            const startTimer = (duration) => {
                 clearInterval(state.timerInterval);
-                state.timer = 30;
+                state.timer = duration;
                 elements.timer.textContent = state.timer;
                 state.timerInterval = setInterval(() => {
                     state.timer--;
                     elements.timer.textContent = state.timer;
                     if (state.timer <= 0) {
                         clearInterval(state.timerInterval);
-                        handleResult(false, 0, "Time's up!");
+                        handleResult(false, 0, "Time's up! Moving to next stage...");
                     }
                 }, 1000);
             };
 
-            const checkAnswer = (selectedAnswers) => {
+            const checkAnswer = (isCorrect, feedbackText) => {
                 clearInterval(state.timerInterval);
-                const stage = state.currentScenario.stages[state.currentStage];
-                const solution = stage.solution;
-                const isCorrect = selectedAnswers.length === solution.length && selectedAnswers.every(val => solution.includes(val));
-                
                 const points = isCorrect ? state.timer : 0;
-                const feedbackText = isCorrect ? (stage.feedback || 'Correct!') : 'Incorrect. Reviewing procedure...';
-                handleResult(isCorrect, points, feedbackText);
+                const text = isCorrect ? feedbackText : 'Incorrect. That was not the priority action.';
+                handleResult(isCorrect, points, text);
             };
 
             const handleResult = (correct, points, text) => {
@@ -208,8 +168,11 @@
                     elements.feedback.className = 'mt-4 h-12 text-lg font-semibold text-center text-red-600';
                 }
                 elements.feedback.textContent = text;
-                elements.choicesContainer.querySelectorAll('button').forEach(btn => btn.disabled = true);
-                setTimeout(nextStage, 2500);
+                elements.choicesContainer.querySelectorAll('button').forEach(btn => {
+                    btn.disabled = true;
+                    btn.classList.add('opacity-50', 'cursor-not-allowed');
+                });
+                elements.nextStageButton.classList.remove('hidden');
             };
 
             const nextStage = () => {
@@ -227,9 +190,9 @@
                 elements.finalScore.textContent = state.score;
             };
 
-            // --- Event Listeners ---
             elements.startButton.addEventListener('click', startGame);
             elements.restartButton.addEventListener('click', startGame);
+            elements.nextStageButton.addEventListener('click', nextStage);
         });
     </script>
 </body>
