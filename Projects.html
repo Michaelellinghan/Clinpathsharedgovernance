@@ -16,17 +16,10 @@
         }
         .text-shadow-lg { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
         .project-card {
-            display: flex;
-            flex-direction: column;
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-            border-top: 4px solid #005EB8; /* NHS Blue */
+            transition: box-shadow 0.3s ease-in-out;
         }
         .project-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-        .project-card-content {
-            flex-grow: 1;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
     </style>
 </head>
@@ -43,78 +36,51 @@
             </div>
         </section>
 
-        <div class="container mx-auto px-4 py-12">
+        <div class="container mx-auto px-4 py-16">
             
-            <section>
-                <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">Our Ongoing Projects</h2>
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    
-                    <div class="project-card bg-white p-6 rounded-lg shadow-md">
-                        <div class="project-card-content">
-                            <div class="text-4xl text-blue-600 mb-4"><i class="fas fa-vr-cardboard"></i></div>
-                            <h3 class="text-2xl font-bold text-gray-800 mb-2">Virtual Lab Tours</h3>
-                            <p class="text-gray-600 mb-4">An ongoing project to create an immersive and educational virtual tour of every department within Clinical Pathology, showcasing our technology and processes.</p>
-                        </div>
-                        <a href="video_tours.html" class="font-semibold text-blue-600 hover:underline self-start">Explore the Tours &rarr;</a>
+            <h2 class="text-3xl font-bold text-gray-900 mb-10 text-center">Our Ongoing Initiatives</h2>
+            <div class="space-y-12">
+                
+                <div class="project-card bg-white rounded-lg shadow-lg overflow-hidden flex flex-col md:flex-row">
+                    <div class="md:w-1/2">
+                        <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ab?q=80&w=2070&auto=format&fit=crop" alt="Scientist at a computer in a lab" class="w-full h-64 md:h-full object-cover">
                     </div>
-                    
-                    <div class="project-card bg-white p-6 rounded-lg shadow-md">
-                        <div class="project-card-content">
-                            <div class="text-4xl text-green-600 mb-4"><i class="fas fa-leaf"></i></div>
-                            <h3 class="text-2xl font-bold text-gray-800 mb-2">Sustainability Corner</h3>
-                            <p class="text-gray-600 mb-4">Focusing on making our labs greener. This includes the QMC rooftop garden initiative and new strategies for waste management.</p>
-                        </div>
-                        <a href="sustainability_corner.html" class="font-semibold text-blue-600 hover:underline self-start">Learn About Green Labs &rarr;</a>
+                    <div class="md:w-1/2 p-8 flex flex-col justify-center">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-3">Virtual Lab Tours</h3>
+                        <p class="text-gray-600 mb-6">An ongoing project to create an immersive and educational virtual tour of every department. We're showcasing our state-of-the-art technology and the complex processes our teams perform every day to provide the best possible patient care.</p>
+                        <a href="video_tours.html" class="self-start bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition duration-300">Explore the Tours &rarr;</a>
                     </div>
+                </div>
 
-                     <div class="project-card bg-white p-6 rounded-lg shadow-md">
-                        <div class="project-card-content">
-                            <div class="text-4xl text-purple-600 mb-4"><i class="fas fa-comment-dots"></i></div>
-                            <h3 class="text-2xl font-bold text-gray-800 mb-2">Patient Experience Interviews</h3>
-                            <p class="text-gray-600 mb-4">We are actively speaking with patients whose lives have been impacted by the work we do to better understand and share the importance of our role in their journey.</p>
-                        </div>
-                        <a href="patient_interviews.html" class="font-semibold text-blue-600 hover:underline self-start">Read Patient Stories &rarr;</a>
+                <div class="project-card bg-white rounded-lg shadow-lg overflow-hidden flex flex-col md:flex-row-reverse">
+                     <div class="md:w-1/2">
+                        <img src="https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?q=80&w=2070&auto=format&fit=crop" alt="Rooftop garden with plants" class="w-full h-64 md:h-full object-cover">
                     </div>
-                 </div>
-            </section>
-        </div>
+                    <div class="md:w-1/2 p-8 flex flex-col justify-center">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-3">The Garden Project</h3>
+                        <p class="text-gray-600 mb-6">Focusing on staff wellbeing and sustainability, this project has transformed the rooftop space at QMC into a vibrant garden for staff to enjoy. It's a green escape for relaxation and a great example of our commitment to a positive work environment.</p>
+                        </div>
+                </div>
+
+                <div class="project-card bg-white rounded-lg shadow-lg overflow-hidden flex flex-col md:flex-row">
+                    <div class="md:w-1/2">
+                        <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=1932&auto=format&fit=crop" alt="Two people having a positive conversation" class="w-full h-64 md:h-full object-cover">
+                    </div>
+                    <div class="md:w-1/2 p-8 flex flex-col justify-center">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-3">Patient Experience Interviews</h3>
+                        <p class="text-gray-600 mb-6">We are actively speaking with patients whose lives have been directly impacted by the work we do. This project helps us better understand and share the profound importance of our role in the patient journey, connecting our daily tasks to real-world outcomes.</p>
+                        <a href="patient_interviews.html" class="self-start bg-purple-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-purple-700 transition duration-300">Read Patient Stories &rarr;</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
     </main>
 
     <div id="footer-placeholder"></div>
 
     <script src="js/component-loader.js"></script>
     
-</body>
-</html>                        <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Patient Interviews & Tours</h3>
-                        <p class="text-gray-600">Learn more about our patient-focused initiatives.</p>
-                    </div>
-                </a>
-                <a href="video_tours.html" class="block bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
-                    <img src="lab.jpg" onerror="this.onerror=null;this.src='https://placehold.co/600x400/4CAF50/FFFFFF?text=Image';" alt="A modern science laboratory with microscopes" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Laboratory Video Tours</h3>
-                        <p class="text-gray-600">Discover our video series for wards and GPs.</p>
-                    </div>
-                </a>
-                <a href="garden_project.html" class="block bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
-                    <img src="garden.jpg" onerror="this.onerror=null;this.src='https://placehold.co/600x400/8BC34A/FFFFFF?text=Image';" alt="A peaceful hospital garden courtyard with benches and potted plants" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Garden Project</h3>
-                        <p class="text-gray-600">See how we're creating a space for wellbeing.</p>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </main>
-
-    <div id="footer-placeholder"></div>
-
-      <script src="js/component-loader.js"></script>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            feather.replace();
-        });
-   </script>
 </body>
 </html>
