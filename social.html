@@ -1,109 +1,107 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Social Media - SGC</title>
+    <title>Social Media Showcase - Clinical Pathology</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#005EB8">
     <style>
         body { font-family: 'Inter', sans-serif; }
-        .nhs-blue { background-color: #005EB8; }
-        .nhs-dark-blue { background-color: #003087; }
-        .nhs-light-grey { background-color: #F0F4F5; }
-        .nhs-text-blue { color: #005EB8; }
-        .nhs-text-dark-blue { color: #003087; }
-        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000; border-radius: 0.5rem; }
-        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-        .short-video-container { position: relative; padding-bottom: 177.77%; height: 0; overflow: hidden; max-width: 100%; background: #000; border-radius: 0.5rem; }
-        .short-video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        .hero-bg-social { 
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-position: center;
+        }
+        .text-shadow-lg { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
+        .video-card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
 
     <div id="header-placeholder"></div>
 
-    <main class="py-16 bg-nhs-light-grey">
-        <div class="container mx-auto px-6 max-w-6xl">
-            <a href="index.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8">
-                <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Home
-            </a>
-            <div class="text-center">
-                <h2 class="text-4xl font-bold nhs-text-dark-blue mb-4">Social Media Showcase</h2>
-                <p class="text-lg text-gray-600 max-w-3xl mx-auto">We're looking for staff to help us create a series of videos for all departments, promoting our role and what we do in the lab. Please send us your videos to help kick-start this exciting project!</p>
-                <a href="mailto:michael.ellingham@nhs.net?subject=SGC%20Video%20Submission" class="inline-block mt-6 mb-12 bg-nhs-blue text-white font-bold py-3 px-6 rounded-lg hover:bg-nhs-dark-blue transition duration-300">Submit Your Video Idea</a>
+    <main class="flex-grow">
+        
+        <section class="hero-bg-social text-white text-center py-20 md:py-24">
+            <div class="container mx-auto px-4">
+                <h1 class="text-4xl md:text-6xl font-bold mb-4 text-shadow-lg">Social Media Showcase</h1>
+                <p class="text-lg md:text-2xl max-w-3xl mx-auto text-shadow-lg">Promoting the vital role of Biomedical Scientists and sharing our world with the public.</p>
             </div>
-            <h3 class="text-2xl font-semibold text-center text-gray-700 mb-10">For Now, Get Inspired by These Videos...</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:max-w-4xl lg:mx-auto">
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden group">
-                    <a href="https://vm.tiktok.com/ZNdBGuPcg/" target="_blank" rel="noopener noreferrer" class="block relative">
-                        <img src="tiktok-thumbnail.jpg" onerror="this.onerror=null;this.src='https://placehold.co/400x711/1a1a1a/ffffff?text=Image+Not+Found';" alt="Video thumbnail of biomedical scientists at work" class="w-full h-96 object-cover">
-                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-300 flex items-center justify-center">
-                            <i data-feather="play-circle" class="w-20 h-20 text-white opacity-0 group-hover:opacity-90 transform scale-75 group-hover:scale-100 transition-all duration-300"></i>
+        </section>
+
+        <div class="container mx-auto px-4 py-12">
+
+            <section class="mb-12 bg-white p-8 rounded-lg shadow-md text-center">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Get Involved!</h2>
+                <p class="text-lg text-gray-700 max-w-3xl mx-auto mb-6">We're looking for staff from all departments to help us create a series of videos promoting what we do in the lab. If you have an idea or want to be in front of (or behind) the camera, we'd love to hear from you!</p>
+                <a href="mailto:michael.ellingham@nhs.net?subject=SGC%20Video%20Submission" class="inline-block bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition duration-300">
+                    Submit Your Video Idea
+                </a>
+            </section>
+            
+            <section>
+                <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">Inspiration Corner</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
+                    
+                    <div class="video-card bg-white rounded-lg shadow-lg overflow-hidden">
+                        <a href="https://vm.tiktok.com/ZNdBGuPcg/" target="_blank" class="block">
+                            <img src="tiktok-thumbnail.jpg" alt="A collage of lab activities" class="w-full h-72 object-cover">
+                        </a>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">A Day in the Life (TikTok)</h3>
+                            <p class="text-gray-600">A great short video showcasing the varied and fast-paced work of Biomedical Scientists.</p>
                         </div>
-                    </a>
-                    <div class="p-6">
-                         <h3 class="font-semibold text-lg mb-2 nhs-text-dark-blue">A Day in the Life (TikTok)</h3>
-                         <p class="text-gray-600 mb-4 text-sm">A great short video showcasing the work of Biomedical Scientists.</p>
-                         <a href="https://vm.tiktok.com/ZNdBGuPcg/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center space-x-2 text-nhs-blue font-semibold hover:underline"><span>Watch on TikTok</span><i data-feather="external-link" class="w-4 h-4"></i></a>
+                    </div>
+
+                    <div class="video-card bg-white rounded-lg shadow-lg overflow-hidden">
+                        <div class="aspect-w-16 aspect-h-9">
+                            <iframe src="https://www.youtube.com/embed/4AI7y--kvs0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full"></iframe>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">"Biomedical Science is like medicine but easier"</h3>
+                            <p class="text-gray-600">A Q&A short addressing this common and frustrating misconception.</p>
+                        </div>
+                    </div>
+
+                    <div class="video-card bg-white rounded-lg shadow-lg overflow-hidden">
+                        <div class="aspect-w-16 aspect-h-9">
+                            <iframe src="https://www.youtube.com/embed/vjMLVGA2JuU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full"></iframe>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">All About Blood Smears (Part 1)</h3>
+                            <p class="text-gray-600">A quick and informative look at the art and science of creating blood smears in the lab.</p>
+                        </div>
+                    </div>
+
+                    <div class="video-card bg-white rounded-lg shadow-lg overflow-hidden">
+                        <div class="aspect-w-16 aspect-h-9">
+                            <iframe src="https://www.youtube.com/embed/Z2yLTLG2xN8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full"></iframe>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Q&A with a BMS Apprentice</h3>
+                            <p class="text-gray-600">An insightful Q&A session with an NHS apprentice Biomedical Scientist about their journey.</p>
+                        </div>
                     </div>
                 </div>
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden group">
-                    <div class="video-container rounded-t-xl">
-                        <iframe src="https://www.youtube.com/embed/4AI7y--kvs0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="font-semibold text-lg mb-2 nhs-text-dark-blue">"Biomedical Science is like medicine but easier"</h3>
-                        <p class="text-gray-600 mb-4 text-sm">A Q&A short addressing this common misconception.</p>
-                        <a href="https://youtube.com/shorts/4AI7y--kvs0?si=dpU7xxFqdgbOhzNp" target="_blank" rel="noopener noreferrer" class="inline-flex items-center space-x-2 text-nhs-blue font-semibold hover:underline"><span>Watch on YouTube</span><i data-feather="external-link" class="w-4 h-4"></i></a>
-                    </div>
-                </div>
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden group">
-                    <div class="video-container rounded-t-xl">
-                        <iframe src="https://www.youtube.com/embed/vjMLVGA2JuU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="font-semibold text-lg mb-2 nhs-text-dark-blue">All about blood smears (Part 1)</h3>
-                        <p class="text-gray-600 mb-4 text-sm">A quick and informative look at creating blood smears in the lab.</p>
-                        <a href="https://youtube.com/shorts/vjMLVGA2JuU?si=fyL6YpHb4jKTkS5l" target="_blank" rel="noopener noreferrer" class="inline-flex items-center space-x-2 text-nhs-blue font-semibold hover:underline"><span>Watch on YouTube</span><i data-feather="external-link" class="w-4 h-4"></i></a>
-                    </div>
-                </div>
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden group">
-                    <div class="video-container rounded-t-xl">
-                        <iframe src="https://www.youtube.com/embed/Z2yLTLG2xN8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="font-semibold text-lg mb-2 nhs-text-dark-blue">Q&A with a BMS Apprentice</h3>
-                        <p class="text-gray-600 mb-4 text-sm">An insightful Q&A session with an NHS apprentice Biomedical Scientist.</p>
-                        <a href="https://youtu.be/Z2yLTLG2xN8?si=YCsYAwo7Fk82fJGi" target="_blank" rel="noopener noreferrer" class="inline-flex items-center space-x-2 text-nhs-blue font-semibold hover:underline"><span>Watch on YouTube</span><i data-feather="external-link" class="w-4 h-4"></i></a>
-                    </div>
-                </div>
-            </div>
+            </section>
+            
+            <section class="text-center mt-12">
+                <a href="Index.html" class="bg-gray-800 text-white font-bold py-3 px-8 rounded-full hover:bg-gray-700 transition duration-300">
+                    <i class="fas fa-arrow-left mr-2"></i>Back to Home
+                </a>
+            </section>
         </div>
     </main>
 
     <div id="footer-placeholder"></div>
-
-      <script src="js/component-loader.js"></script>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            feather.replace();
-        });
-   </script>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
-            feather.replace();
-        });
-   </script>
+    <script src="js/component-loader.js"></script>
 </body>
 </html>
