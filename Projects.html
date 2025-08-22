@@ -1,40 +1,91 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Projects - SGC</title>
+    <title>Our Projects - Clinical Pathology</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#005EB8">
     <style>
         body { font-family: 'Inter', sans-serif; }
-        .nhs-blue { background-color: #005EB8; }
-        .nhs-dark-blue { background-color: #003087; }
-        .nhs-light-grey { background-color: #F0F4F5; }
-        .nhs-text-blue { color: #005EB8; }
-        .nhs-text-dark-blue { color: #003087; }
+        .hero-bg-projects { 
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=2070&auto=format&fit=crop&ixlib-rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-position: center;
+        }
+        .text-shadow-lg { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
+        .project-card {
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            border-top: 4px solid #005EB8; /* NHS Blue */
+        }
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .project-card-content {
+            flex-grow: 1;
+        }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
 
     <div id="header-placeholder"></div>
 
-    <main class="py-16">
-        <div class="container mx-auto px-6">
-            <a href="index.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8">
-                <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Home
-            </a>
-            <h2 class="text-4xl font-bold text-center mb-12 nhs-text-dark-blue">Our Projects</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <a href="patient_interviews.html" class="block bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition duration-300">
-                    <img src="interview.jpeg" onerror="this.onerror=null;this.src='https://placehold.co/600x400/005EB8/FFFFFF?text=Image';" alt="A person being interviewed in a bright room" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Patient Interviews & Tours</h3>
+    <main class="flex-grow">
+        
+        <section class="hero-bg-projects text-white text-center py-20 md:py-24">
+            <div class="container mx-auto px-4">
+                <h1 class="text-4xl md:text-6xl font-bold mb-4 text-shadow-lg">Our Projects</h1>
+                <p class="text-lg md:text-2xl max-w-3xl mx-auto text-shadow-lg">Driving positive change and innovation across Clinical Pathology through staff-led initiatives.</p>
+            </div>
+        </section>
+
+        <div class="container mx-auto px-4 py-12">
+            
+            <section>
+                <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">Our Ongoing Projects</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <div class="project-card bg-white p-6 rounded-lg shadow-md">
+                        <div class="project-card-content">
+                            <div class="text-4xl text-blue-600 mb-4"><i class="fas fa-vr-cardboard"></i></div>
+                            <h3 class="text-2xl font-bold text-gray-800 mb-2">Virtual Lab Tours</h3>
+                            <p class="text-gray-600 mb-4">An ongoing project to create an immersive and educational virtual tour of every department within Clinical Pathology, showcasing our technology and processes.</p>
+                        </div>
+                        <a href="video_tours.html" class="font-semibold text-blue-600 hover:underline self-start">Explore the Tours &rarr;</a>
+                    </div>
+                    
+                    <div class="project-card bg-white p-6 rounded-lg shadow-md">
+                        <div class="project-card-content">
+                            <div class="text-4xl text-green-600 mb-4"><i class="fas fa-leaf"></i></div>
+                            <h3 class="text-2xl font-bold text-gray-800 mb-2">Sustainability Corner</h3>
+                            <p class="text-gray-600 mb-4">Focusing on making our labs greener. This includes the QMC rooftop garden initiative and new strategies for waste management.</p>
+                        </div>
+                        <a href="sustainability_corner.html" class="font-semibold text-blue-600 hover:underline self-start">Learn About Green Labs &rarr;</a>
+                    </div>
+
+                     <div class="project-card bg-white p-6 rounded-lg shadow-md">
+                        <div class="project-card-content">
+                            <div class="text-4xl text-purple-600 mb-4"><i class="fas fa-comment-dots"></i></div>
+                            <h3 class="text-2xl font-bold text-gray-800 mb-2">Patient Experience Interviews</h3>
+                            <p class="text-gray-600 mb-4">We are actively speaking with patients whose lives have been impacted by the work we do to better understand and share the importance of our role in their journey.</p>
+                        </div>
+                        <a href="patient_interviews.html" class="font-semibold text-blue-600 hover:underline self-start">Read Patient Stories &rarr;</a>
+                    </div>
+                 </div>
+            </section>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="js/component-loader.js"></script>
+    
+</body>
+</html>                        <h3 class="text-xl font-semibold mb-2 nhs-text-blue">Patient Interviews & Tours</h3>
                         <p class="text-gray-600">Learn more about our patient-focused initiatives.</p>
                     </div>
                 </a>
