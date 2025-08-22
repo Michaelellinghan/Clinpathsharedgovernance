@@ -1,94 +1,121 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Newsletters - SGC</title>
+    <title>Newsletters - Clinical Pathology</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#005EB8">
     <style>
         body { font-family: 'Inter', sans-serif; }
-        .nhs-blue { background-color: #005EB8; }
-        .nhs-dark-blue { background-color: #003087; }
-        .nhs-light-grey { background-color: #F0F4F5; }
-        .nhs-text-blue { color: #005EB8; }
-        .nhs-text-dark-blue { color: #003087; }
+        .hero-bg-news { 
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1495020689067-958852a7765e?q=80&w=2069&auto=format&fit=crop&ixlib-rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-position: center;
+        }
+        .text-shadow-lg { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
+        .newsletter-card {
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .newsletter-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .newsletter-card-content {
+            flex-grow: 1;
+        }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
 
     <div id="header-placeholder"></div>
 
-    <main class="py-16">
-        <div class="container mx-auto px-6">
-            <a href="index.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8">
-                <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Home
-            </a>
-            <h2 class="text-3xl font-bold text-center mb-12 nhs-text-dark-blue">Council Newsletters</h2>
-            <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8">
-                <div class="space-y-4">
-                    <a href="https://www.canva.com/design/DAGtyHCaeSU/WnZe8RkVhK-pEiuxwuokiQ/view" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-4 p-4 rounded-lg hover:bg-gray-100 transition duration-300">
-                        <i data-feather="file-text" class="flex-shrink-0 h-6 w-6 nhs-text-blue"></i>
-                        <span class="font-semibold text-gray-700">August 2025 Edition</span>
-                        <span class="ml-auto text-sm font-medium nhs-text-blue hover:underline">View Now &rarr;</span>
-                    </a>
-                    <a href="https://www.canva.com/design/DAGq_W5r-H4/7ZHZKr-ctFrh4vkM6JyN_g/view" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-4 p-4 rounded-lg hover:bg-gray-100 transition duration-300">
-                        <i data-feather="file-text" class="flex-shrink-0 h-6 w-6 nhs-text-blue"></i>
-                        <span class="font-semibold text-gray-700">July 2025 Edition</span>
-                        <span class="ml-auto text-sm font-medium nhs-text-blue hover:underline">View Now &rarr;</span>
-                    </a>
-                    <a href="https://www.canva.com/design/DAGnXoAq70Y/0VKC3AAIqPUdaLLZ3cpQUg/view" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-4 p-4 rounded-lg hover:bg-gray-100 transition duration-300">
-                        <i data-feather="file-text" class="flex-shrink-0 h-6 w-6 nhs-text-blue"></i>
-                        <span class="font-semibold text-gray-700">June 2025 Edition</span>
-                        <span class="ml-auto text-sm font-medium nhs-text-blue hover:underline">View Now &rarr;</span>
-                    </a>
-                    <a href="https://www.canva.com/design/DAGj3M0ceJ4/nLv3uC_Jojrf20YVExh8Vw/view" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-4 p-4 rounded-lg hover:bg-gray-100 transition duration-300">
-                        <i data-feather="file-text" class="flex-shrink-0 h-6 w-6 nhs-text-blue"></i>
-                        <span class="font-semibold text-gray-700">May 2025 Edition</span>
-                        <span class="ml-auto text-sm font-medium nhs-text-blue hover:underline">View Now &rarr;</span>
-                    </a>
-                    <a href="https://www.canva.com/design/DAGhotuowcw/bUjeV9GXeNrwuFZTfrObjA/view" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-4 p-4 rounded-lg hover:bg-gray-100 transition duration-300">
-                        <i data-feather="file-text" class="flex-shrink-0 h-6 w-6 nhs-text-blue"></i>
-                        <span class="font-semibold text-gray-700">April 2025 Edition</span>
-                        <span class="ml-auto text-sm font-medium nhs-text-blue hover:underline">View Now &rarr;</span>
-                    </a>
-                    <a href="https://www.canva.com/design/DAGecEbcDF4/bbbGy79e_uK0gRLLYJa4nA/view" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-4 p-4 rounded-lg hover:bg-gray-100 transition duration-300">
-                        <i data-feather="file-text" class="flex-shrink-0 h-6 w-6 nhs-text-blue"></i>
-                        <span class="font-semibold text-gray-700">March 2025 Edition</span>
-                        <span class="ml-auto text-sm font-medium nhs-text-blue hover:underline">View Now &rarr;</span>
-                    </a>
-                    <a href="https://www.canva.com/design/DAGSvAh8E6I/b4ZBT3LhYVKWDxoh-OYN5g/view" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-4 p-4 rounded-lg hover:bg-gray-100 transition duration-300">
-                        <i data-feather="file-text" class="flex-shrink-0 h-6 w-6 nhs-text-blue"></i>
-                        <span class="font-semibold text-gray-700">January 2025 Edition</span>
-                        <span class="ml-auto text-sm font-medium nhs-text-blue hover:underline">View Now &rarr;</span>
-                    </a>
-                </div>
+    <main class="flex-grow">
+        
+        <section class="hero-bg-news text-white text-center py-20 md:py-24">
+            <div class="container mx-auto px-4">
+                <h1 class="text-4xl md:text-6xl font-bold mb-4 text-shadow-lg">Council Newsletters</h1>
+                <p class="text-lg md:text-2xl max-w-3xl mx-auto text-shadow-lg">Catch up on the latest news, project updates, and staff spotlights from the Clinical Pathology Shared Governance Council.</p>
             </div>
+        </section>
+
+        <div class="container mx-auto px-4 py-12">
+            
+            <section>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                    
+                    <div class="newsletter-card bg-white p-6 rounded-lg shadow-md">
+                        <div class="newsletter-card-content">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-2">August 2025 Edition</h3>
+                            <p class="text-gray-600 mb-4">Read the full newsletter for all the latest updates from the council.</p>
+                        </div>
+                        <a href="#" class="font-semibold text-blue-600 hover:underline self-start">View Now &rarr;</a>
+                    </div>
+                    
+                    <div class="newsletter-card bg-white p-6 rounded-lg shadow-md">
+                        <div class="newsletter-card-content">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-2">July 2025 Edition</h3>
+                            <p class="text-gray-600 mb-4">Featuring staff achievements, weddings, and a huge well done to our Manchester Marathon runners!</p>
+                        </div>
+                        <a href="July 2025.pdf" target="_blank" class="font-semibold text-blue-600 hover:underline self-start">View Now &rarr;</a>
+                    </div>
+                    
+                    <div class="newsletter-card bg-white p-6 rounded-lg shadow-md">
+                        <div class="newsletter-card-content">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-2">June 2025 Edition</h3>
+                            <p class="text-gray-600 mb-4">Celebrating our successful UKAS accreditation, new coffee machines, and getting ready for Biomedical Science Day 2025!</p>
+                        </div>
+                        <a href="June 2025.pdf" target="_blank" class="font-semibold text-blue-600 hover:underline self-start">View Now &rarr;</a>
+                    </div>
+
+                    <div class="newsletter-card bg-white p-6 rounded-lg shadow-md">
+                        <div class="newsletter-card-content">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-2">May 2025 Edition</h3>
+                            <p class="text-gray-600 mb-4">Introducing the Pathology Garden Project and a recap of our patient story filming day with the inspiring Nikki Fretwell.</p>
+                        </div>
+                        <a href="May 2025.pdf" target="_blank" class="font-semibold text-blue-600 hover:underline self-start">View Now &rarr;</a>
+                    </div>
+
+                    <div class="newsletter-card bg-white p-6 rounded-lg shadow-md">
+                        <div class="newsletter-card-content">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-2">April 2025 Edition</h3>
+                            <p class="text-gray-600 mb-4">Celebrating outstanding UKAS feedback, launching our annual charity raffle, and supporting Myanmar earthquake relief.</p>
+                        </div>
+                        <a href="April 2025.pdf" target="_blank" class="font-semibold text-blue-600 hover:underline self-start">View Now &rarr;</a>
+                    </div>
+
+                    <div class="newsletter-card bg-white p-6 rounded-lg shadow-md">
+                        <div class="newsletter-card-content">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-2">March 2025 Edition</h3>
+                            <p class="text-gray-600 mb-4">Welcoming new faces to the team, celebrating specialist portfolio passes, and a look at upcoming charity fundraising events.</p>
+                        </div>
+                        <a href="March 25.pdf" target="_blank" class="font-semibold text-blue-600 hover:underline self-start">View Now &rarr;</a>
+                    </div>
+
+                    <div class="newsletter-card bg-white p-6 rounded-lg shadow-md">
+                        <div class="newsletter-card-content">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-2">January 2025 Edition</h3>
+                            <p class="text-gray-600 mb-4">Kicking off the new year with a look back at 2024, a festive quiz, and new staff wellbeing initiatives to get involved with.</p>
+                        </div>
+                        <a href="January 25.pdf" target="_blank" class="font-semibold text-blue-600 hover:underline self-start">View Now &rarr;</a>
+                    </div>
+
+                </div>
+            </section>
+
+            <section class="text-center mt-12">
+                <a href="Index.html" class="bg-gray-800 text-white font-bold py-3 px-8 rounded-full hover:bg-gray-700 transition duration-300">
+                    <i class="fas fa-arrow-left mr-2"></i>Back to Home
+                </a>
+            </section>
         </div>
     </main>
 
     <div id="footer-placeholder"></div>
-
-      <script src="js/component-loader.js"></script>
+    <script src="js/component-loader.js"></script>
     
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            feather.replace();
-        });
-   </script>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
-            feather.replace();
-        });
-   </script>
 </body>
 </html>
