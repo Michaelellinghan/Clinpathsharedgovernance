@@ -3,22 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us - Clinical Pathology</title>
+    <title>Social Media Showcase - Clinical Pathology</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <style>
         body { font-family: 'Inter', sans-serif; }
-        .hero-bg-about { 
-            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1579548122080-c35154045418?q=80&w=2070&auto=format&fit=crop&ixlib-rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+        .hero-bg-social { 
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
             background-size: cover;
             background-position: center;
         }
         .text-shadow-lg { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
-        .member-card {
+        .video-card {
             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
         }
-        .member-card:hover {
+        .video-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
@@ -30,64 +30,66 @@
 
     <main class="flex-grow">
         
-        <section class="hero-bg-about text-white text-center py-20 md:py-24">
+        <section class="hero-bg-social text-white text-center py-20 md:py-24">
             <div class="container mx-auto px-4">
-                <h1 class="text-4xl md:text-6xl font-bold mb-4 text-shadow-lg">About the Council</h1>
-                <p class="text-lg md:text-2xl max-w-3xl mx-auto text-shadow-lg">We are a team of passionate laboratory staff dedicated to improving our workplace and showcasing the vital role of clinical pathology.</p>
+                <h1 class="text-4xl md:text-6xl font-bold mb-4 text-shadow-lg">Social Media Showcase</h1>
+                <p class="text-lg md:text-2xl max-w-3xl mx-auto text-shadow-lg">Promoting the vital role of Biomedical Scientists and sharing our world with the public.</p>
             </div>
         </section>
 
         <div class="container mx-auto px-4 py-12">
 
-            <section class="mb-12 bg-white p-8 rounded-lg shadow-md">
-                <h2 class="text-3xl font-bold text-gray-900 mb-4 text-center">Our Mission</h2>
-                <p class="text-lg text-gray-700 max-w-3xl mx-auto text-center">Our Shared Governance Council is a staff-led body that aims to empower all members of the Clinical Pathology department. We work collaboratively to identify opportunities for improvement, launch innovative projects, and foster a positive, engaging, and supportive work environment. We are the bridge between staff and management, ensuring every voice is heard.</p>
+            <section class="mb-12 bg-white p-8 rounded-lg shadow-md text-center">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Get Involved!</h2>
+                <p class="text-lg text-gray-700 max-w-3xl mx-auto mb-6">We're looking for staff from all departments to help us create a series of videos promoting what we do in the lab. If you have an idea or want to be in front of (or behind) the camera, we'd love to hear from you!</p>
+                <a href="mailto:michael.ellingham@nhs.net?subject=SGC%20Video%20Submission" class="inline-block bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition duration-300">
+                    Submit Your Video Idea
+                </a>
             </section>
             
             <section>
-                <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">Meet the Council Members</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
+                <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">Inspiration Corner</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
                     
-                    <div class="member-card bg-white rounded-lg shadow-lg text-center p-6">
-                        <i data-feather="user" class="h-16 w-16 mx-auto mb-4 text-white bg-blue-600 p-4 rounded-full"></i>
-                        <h3 class="text-xl font-bold text-gray-800">Michael Ellingham</h3>
-                        <p class="font-semibold text-blue-600">Chair</p>
-                        <p class="text-gray-600">Haematology & Blood Transfusion</p>
-                        <a href="mailto:Michael.ellingham@nhs.net" class="inline-flex items-center space-x-2 text-sm text-blue-600 hover:underline mt-2"><i data-feather="mail" class="w-4 h-4"></i><span>Michael.ellingham@nhs.net</span></a>
+                    <div class="video-card bg-white rounded-lg shadow-lg overflow-hidden">
+                        <a href="https://vm.tiktok.com/ZNdBGuPcg/" target="_blank" class="block">
+                            <img src="tiktok-thumbnail.jpg" alt="A collage of lab activities" class="w-full h-72 object-cover">
+                        </a>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">A Day in the Life (TikTok)</h3>
+                            <p class="text-gray-600">A great short video showcasing the varied and fast-paced work of Biomedical Scientists.</p>
+                        </div>
                     </div>
 
-                    <div class="member-card bg-white rounded-lg shadow-lg text-center p-6">
-                         <i data-feather="user" class="h-16 w-16 mx-auto mb-4 text-white bg-blue-600 p-4 rounded-full"></i>
-                        <h3 class="text-xl font-bold text-gray-800">Katarzyna Fijalkowska</h3>
-                        <p class="font-semibold text-blue-600">Vice-Chair</p>
-                        <p class="text-gray-600">Haematology & Blood Transfusion</p>
-                        <a href="mailto:katarzyna.fijalkowska@nhs.net" class="inline-flex items-center space-x-2 text-sm text-blue-600 hover:underline mt-2"><i data-feather="mail" class="w-4 h-4"></i><span>katarzyna.fijalkowska@nhs.net</span></a>
+                    <div class="video-card bg-white rounded-lg shadow-lg overflow-hidden">
+                        <div class="aspect-w-16 aspect-h-9">
+                            <iframe src="https://www.youtube.com/embed/4AI7y--kvs0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full"></iframe>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">"Biomedical Science is like medicine but easier"</h3>
+                            <p class="text-gray-600">A Q&A short addressing this common and frustrating misconception.</p>
+                        </div>
                     </div>
 
-                    <div class="member-card bg-white rounded-lg shadow-lg text-center p-6">
-                         <i data-feather="user" class="h-16 w-16 mx-auto mb-4 text-white bg-blue-600 p-4 rounded-full"></i>
-                        <h3 class="text-xl font-bold text-gray-800">Akwasi Boakye</h3>
-                        <p class="font-semibold text-blue-600">Secretary</p>
-                        <p class="text-gray-600">Immunology</p>
-                        <a href="mailto:akwasi.boakye1@nhs.net" class="inline-flex items-center space-x-2 text-sm text-blue-600 hover:underline mt-2"><i data-feather="mail" class="w-4 h-4"></i><span>akwasi.boakye1@nhs.net</span></a>
+                    <div class="video-card bg-white rounded-lg shadow-lg overflow-hidden">
+                        <div class="aspect-w-16 aspect-h-9">
+                            <iframe src="https://www.youtube.com/embed/vjMLVGA2JuU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full"></iframe>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">All About Blood Smears (Part 1)</h3>
+                            <p class="text-gray-600">A quick and informative look at the art and science of creating blood smears in the lab.</p>
+                        </div>
                     </div>
 
-                    <div class="member-card bg-white rounded-lg shadow-lg text-center p-6">
-                         <i data-feather="user" class="h-16 w-16 mx-auto mb-4 text-white bg-blue-600 p-4 rounded-full"></i>
-                        <h3 class="text-xl font-bold text-gray-800">Yasmin Dixon</h3>
-                        <p class="font-semibold text-blue-600">Council Member</p>
-                        <p class="text-gray-600">Chemistry</p>
-                        <a href="mailto:yasmin.dixon1@nhs.net" class="inline-flex items-center space-x-2 text-sm text-blue-600 hover:underline mt-2"><i data-feather="mail" class="w-4 h-4"></i><span>yasmin.dixon1@nhs.net</span></a>
+                    <div class="video-card bg-white rounded-lg shadow-lg overflow-hidden">
+                        <div class="aspect-w-16 aspect-h-9">
+                            <iframe src="https://www.youtube.com/embed/Z2yLTLG2xN8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full"></iframe>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Q&A with a BMS Apprentice</h3>
+                            <p class="text-gray-600">An insightful Q&A session with an NHS apprentice Biomedical Scientist about their journey.</p>
+                        </div>
                     </div>
-
-                    <div class="member-card bg-white rounded-lg shadow-lg text-center p-6">
-                         <i data-feather="user" class="h-16 w-16 mx-auto mb-4 text-white bg-blue-600 p-4 rounded-full"></i>
-                        <h3 class="text-xl font-bold text-gray-800">Matthew Rodgers</h3>
-                         <p class="font-semibold text-blue-600">Council Member</p>
-                        <p class="text-gray-600">Chemistry</p>
-                         <a href="mailto:matthew.rodgers6@nhs.net" class="inline-flex items-center space-x-2 text-sm text-blue-600 hover:underline mt-2"><i data-feather="mail" class="w-4 h-4"></i><span>matthew.rodgers6@nhs.net</span></a>
-                    </div>
-
                 </div>
             </section>
             
@@ -96,13 +98,10 @@
                     <i class="fas fa-arrow-left mr-2"></i>Back to Home
                 </a>
             </section>
-
         </div>
     </main>
 
     <div id="footer-placeholder"></div>
-
     <script src="js/component-loader.js"></script>
-    
 </body>
 </html>
