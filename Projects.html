@@ -3,23 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Projects - Clinical Pathology</title>
+    <title>Patient Stories - Clinical Pathology</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <style>
         body { font-family: 'Inter', sans-serif; }
-        .hero-bg-projects { 
-            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=2070&auto=format&fit=crop&ixlib-rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+        .hero-bg-interviews { 
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('interview.jpeg');
             background-size: cover;
             background-position: center;
         }
         .text-shadow-lg { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
-        .project-card {
-            transition: box-shadow 0.3s ease-in-out;
+        .story-card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
         }
-        .project-card:hover {
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        .story-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
     </style>
 </head>
@@ -29,54 +30,65 @@
 
     <main class="flex-grow">
         
-        <section class="hero-bg-projects text-white text-center py-20 md:py-24">
+        <section class="hero-bg-interviews text-white text-center py-20 md:py-24">
             <div class="container mx-auto px-4">
-                <h1 class="text-4xl md:text-6xl font-bold mb-4 text-shadow-lg">Our Projects</h1>
-                <p class="text-lg md:text-2xl max-w-3xl mx-auto text-shadow-lg">Driving positive change and innovation across Clinical Pathology through staff-led initiatives.</p>
+                <h1 class="text-4xl md:text-6xl font-bold mb-4 text-shadow-lg">The Patient Behind the Sample</h1>
+                <p class="text-lg md:text-2xl max-w-3xl mx-auto text-shadow-lg">Sharing the stories of the lives we impact every day.</p>
             </div>
         </section>
 
-        <div class="container mx-auto px-4 py-16">
+        <div class="container mx-auto px-4 py-12">
+
+            <section class="mb-12 bg-white p-8 rounded-lg shadow-md">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4 text-center">Why This Project is Important</h2>
+                <div class="max-w-3xl mx-auto text-center">
+                    <p class="text-lg text-gray-700">"It's easy to forget that there's a patient behind every sample tube we receive in the laboratory. Knowing why every single sample is important, and putting faces to them, will hopefully improve our role in patient care."</p>
+                </div>
+            </section>
             
-            <h2 class="text-3xl font-bold text-gray-900 mb-10 text-center">Our Ongoing Initiatives</h2>
-            <div class="space-y-12">
-                
-                <div class="project-card bg-white rounded-lg shadow-lg overflow-hidden flex flex-col md:flex-row">
-                    <div class="md:w-1/2">
-                        <img src="lab.jpg" alt="A view inside the clinical laboratory" class="w-full h-64 md:h-full object-cover">
+            <section class="mb-12 bg-white p-8 rounded-lg shadow-md">
+                <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Our Model for Improvement</h2>
+                <div class="grid md:grid-cols-3 gap-8 text-center">
+                    <div class="bg-blue-50 p-6 rounded-lg">
+                        <div class="text-4xl text-blue-600 mb-3"><i class="fas fa-bullseye"></i></div>
+                        <h3 class="text-xl font-bold mb-2">What are we trying to accomplish? (Aim)</h3>
+                        <p>To reconnect laboratory staff with the human impact of their work, fostering a stronger sense of purpose and improving our collective role in patient care.</p>
                     </div>
-                    <div class="md:w-1/2 p-8 flex flex-col justify-center">
-                        <h3 class="text-2xl font-bold text-gray-800 mb-3">Lab Tours</h3>
-                        <p class="text-gray-600 mb-6">An ongoing project to create an immersive and educational tour of every department. We're showcasing our state-of-the-art technology and the complex processes our teams perform every day to provide the best possible patient care.</p>
-                        <a href="video_tours.html" class="self-start bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition duration-300">Explore the Tours &rarr;</a>
+                    <div class="bg-green-50 p-6 rounded-lg">
+                        <div class="text-4xl text-green-600 mb-3"><i class="fas fa-chart-line"></i></div>
+                        <h3 class="text-xl font-bold mb-2">How will we know a change is an improvement? (Measure)</h3>
+                        <p>We will gather qualitative feedback from staff and share anecdotal evidence of increased engagement and motivation, demonstrating a positive shift in our workplace culture.</p>
                     </div>
-                </div>
-
-                <div class="project-card bg-white rounded-lg shadow-lg overflow-hidden flex flex-col md:flex-row-reverse">
-                     <div class="md:w-1/2">
-                        <img src="garden.jpg" alt="The rooftop garden with plants and seating" class="w-full h-64 md:h-full object-cover">
-                    </div>
-                    <div class="md:w-1/2 p-8 flex flex-col justify-center">
-                        <h3 class="text-2xl font-bold text-gray-800 mb-3">The Garden Project</h3>
-                        <p class="text-gray-600 mb-6">Focusing on staff wellbeing and sustainability, this project is to transform the space outside the pathology staff room at QMC into a vibrant garden for staff to enjoy. It's to become green escape for relaxation and a great example of our commitment to a positive work environment.</p>
-                         <a href="garden_project.html" class="self-start bg-green-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-green-700 transition duration-300">See the Garden &rarr;</a>
+                    <div class="bg-purple-50 p-6 rounded-lg">
+                        <div class="text-4xl text-purple-600 mb-3"><i class="fas fa-lightbulb"></i></div>
+                        <h3 class="text-xl font-bold mb-2">What change can we make? (Change Idea)</h3>
+                        <p>By actively conducting, sharing, and promoting interviews with patients, we can make their stories a visible and integral part of our departmental identity.</p>
                     </div>
                 </div>
+            </section>
 
-                <div class="project-card bg-white rounded-lg shadow-lg overflow-hidden flex flex-col md:flex-row">
-                    <div class="md:w-1/2">
-                        <img src="interview.jpeg" alt="A patient sharing their story" class="w-full h-64 md:h-full object-cover">
+            <section>
+                <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">Our Patient Stories</h2>
+                 <div class="grid md:grid-cols-1 lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    
+                    <a href="nikki_story.html" class="story-card bg-white rounded-lg shadow-lg overflow-hidden flex flex-col">
+                        <img class="w-full h-56 object-cover object-center" src="nikki-quote.jpg" alt="Portrait of Nikki">
+                        <div class="p-6 flex-grow flex flex-col">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-3">Nikki's Story</h3>
+                            <p class="text-gray-600 mb-6 flex-grow">"Without blood transfusions, I wouldn't be here... It's not just a bag of blood, it's the difference between me seeing my kids grow up."</p>
+                            <span class="self-start font-semibold text-blue-600 hover:underline">Read Nikki's Full Story &rarr;</span>
+                        </div>
+                    </a>
+                    
+                    <div class="story-card bg-gray-200 rounded-lg overflow-hidden flex flex-col items-center justify-center p-6 text-center border-2 border-dashed">
+                         <div class="text-6xl text-gray-400 mb-4"><i class="fas fa-user-plus"></i></div>
+                         <h3 class="text-2xl font-bold text-gray-600 mb-3">More Stories Coming Soon</h3>
+                         <p class="text-gray-500">We are actively working on bringing more patient stories to light. Check back soon for new interviews.</p>
                     </div>
-                    <div class="md:w-1/2 p-8 flex flex-col justify-center">
-                        <h3 class="text-2xl font-bold text-gray-800 mb-3">Patient Experience Interviews</h3>
-                        <p class="text-gray-600 mb-6">We are actively speaking with patients whose lives have been directly impacted by the work we do. This project helps us better understand and share the profound importance of our role in the patient journey, connecting our daily tasks to real-world outcomes.</p>
-                        <a href="patient_interviews.html" class="self-start bg-purple-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-purple-700 transition duration-300">Read Patient Stories &rarr;</a>
-                    </div>
-                </div>
 
-            </div>
-        </section>
-
+                 </div>
+            </section>
+        </div>
     </main>
 
     <div id="footer-placeholder"></div>
