@@ -1,65 +1,58 @@
-<header class="bg-white shadow-md sticky top-0 z-50">
-    <div class="container mx-auto px-6 py-3 flex justify-between items-center">
-        <a href="index.html" class="cursor-pointer">
-            <img src="logo.jpg" alt="Clinical Pathology Shared Governance Council Logo" class="h-20 w-auto">
-        </a>
-        
-        <nav class="hidden lg:flex items-center space-x-8">
-            <a href="index.html" class="font-semibold text-gray-600 hover:text-blue-600 transition duration-300">Home</a>
-
-            <div class="relative group">
-                <button class="font-semibold text-gray-600 hover:text-blue-600 transition duration-300 flex items-center">
-                    <span>Explore Our Labs</span>
-                    <i data-feather="chevron-down" class="w-4 h-4 ml-1"></i>
-                </button>
-                <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-md mt-2 py-2 w-48">
-                    <a href="video_tours.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Lab Tours</a>
-                    <a href="games.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Pathology Games</a>
-                </div>
-            </div>
-
-             <div class="relative group">
-                <button class="font-semibold text-gray-600 hover:text-blue-600 transition duration-300 flex items-center">
-                    <span>Resources</span>
-                    <i data-feather="chevron-down" class="w-4 h-4 ml-1"></i>
-                </button>
-                <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-md mt-2 py-2 w-48">
-                    <a href="helpful_tools.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Helpful Tools</a>
-                    <a href="links.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Learning Links</a>
-                    <a href="newsletters.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Newsletters</a>
-                </div>
-            </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Header</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+</head>
+<body>
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-2 flex justify-between items-center">
+            <a href="index.html" class="cursor-pointer">
+                <img src="logo.jpg" alt="Clinical Pathology Shared Governance Council Logo" class="h-24 w-auto">
+            </a>
             
-            <a href="projects.html" class="font-semibold text-gray-600 hover:text-blue-600 transition duration-300">Projects</a>
+            <nav class="hidden lg:flex items-center space-x-8">
+                <a href="index.html" class="font-semibold text-gray-600 hover:text-blue-600 transition duration-300">Home</a>
+                <a href="projects.html" class="font-semibold text-gray-600 hover:text-blue-600 transition duration-300">Projects</a>
+                <a href="video_tours.html" class="font-semibold text-gray-600 hover:text-blue-600 transition duration-300">Lab Tours</a>
+                <a href="games.html" class="font-semibold text-gray-600 hover:text-blue-600 transition duration-300">Games</a>
 
-            <div class="relative group">
-                <button class="font-semibold text-gray-600 hover:text-blue-600 transition duration-300 flex items-center">
-                    <span>About</span>
-                    <i data-feather="chevron-down" class="w-4 h-4 ml-1"></i>
-                </button>
-                <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-md mt-2 py-2 w-48 right-0">
-                    <a href="about.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">About Us</a>
-                    <a href="social.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Social Media</a>
-                    <a href="contact.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Suggestions</a>
+                <div class="relative">
+                    <button id="more-menu-button" class="font-semibold text-gray-600 hover:text-blue-600 transition duration-300 flex items-center">
+                        <span>More</span>
+                        <i data-feather="chevron-down" class="w-4 h-4 ml-1"></i>
+                    </button>
+                    <div id="more-menu" class="absolute hidden bg-white shadow-lg rounded-md mt-2 py-2 w-48 right-0">
+                        <a href="helpful_tools.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Helpful Tools</a>
+                        <a href="links.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Learning Links</a>
+                        <a href="newsletters.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Newsletters</a>
+                        <a href="about.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">About Us</a>
+                        <a href="social.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Social Media</a>
+                        <a href="contact.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Suggestions</a>
+                    </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
+            
+            <button id="mobile-menu-button" class="lg:hidden">
+                <i data-feather="menu" class="h-8 w-8 text-gray-600"></i>
+            </button>
+        </div>
         
-        <button id="mobile-menu-button" class="lg:hidden">
-            <i data-feather="menu"></i>
-        </button>
-    </div>
-    
-    <div id="mobile-menu" class="hidden lg:hidden bg-white px-6 pb-4">
-        <a href="index.html" class="block py-2 text-gray-600 hover:text-blue-600">Home</a>
-        <a href="video_tours.html" class="block py-2 text-gray-600 hover:text-blue-600">Lab Tours</a>
-        <a href="games.html" class="block py-2 text-gray-600 hover:text-blue-600">Pathology Games</a>
-        <a href="helpful_tools.html" class="block py-2 text-gray-600 hover:text-blue-600">Helpful Tools</a>
-        <a href="links.html" class="block py-2 text-gray-600 hover:text-blue-600">Learning Links</a>
-        <a href="newsletters.html" class="block py-2 text-gray-600 hover:text-blue-600">Newsletters</a>
-        <a href="projects.html" class="block py-2 text-gray-600 hover:text-blue-600">Projects</a>
-        <a href="about.html" class="block py-2 text-gray-600 hover:text-blue-600">About Us</a>
-        <a href="social.html" class="block py-2 text-gray-600 hover:text-blue-600">Social Media</a>
-        <a href="contact.html" class="block py-2 text-gray-600 hover:text-blue-600">Suggestions</a>
-    </div>
-</header>
+        <div id="mobile-menu" class="hidden lg:hidden bg-white px-6 pb-4 border-t">
+            <a href="index.html" class="block py-2 text-gray-600 hover:text-blue-600">Home</a>
+            <a href="projects.html" class="block py-2 text-gray-600 hover:text-blue-600">Projects</a>
+            <a href="video_tours.html" class="block py-2 text-gray-600 hover:text-blue-600">Lab Tours</a>
+            <a href="games.html" class="block py-2 text-gray-600 hover:text-blue-600">Games</a>
+            <a href="helpful_tools.html" class="block py-2 text-gray-600 hover:text-blue-600">Helpful Tools</a>
+            <a href="links.html" class="block py-2 text-gray-600 hover:text-blue-600">Learning Links</a>
+            <a href="newsletters.html" class="block py-2 text-gray-600 hover:text-blue-600">Newsletters</a>
+            <a href="about.html" class="block py-2 text-gray-600 hover:text-blue-600">About Us</a>
+            <a href="social.html" class="block py-2 text-gray-600 hover:text-blue-600">Social Media</a>
+            <a href="contact.html" class="block py-2 text-gray-600 hover:text-blue-600">Suggestions</a>
+        </div>
+    </header>
+</body>
+</html>
