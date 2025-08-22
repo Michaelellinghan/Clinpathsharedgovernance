@@ -1,119 +1,123 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Helpful Tools - SGC</title>
+    <title>Helpful Tools - Clinical Pathology</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <style>
         body { font-family: 'Inter', sans-serif; }
-        .nhs-text-blue { color: #005EB8; }
-        .nhs-dark-blue { color: #003087; }
+        .hero-bg-tools { 
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1518152006812-edb29b0d380c?q=80&w=2070&auto=format&fit=crop&ixlib-rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%D%D');
+            background-size: cover;
+            background-position: center;
+        }
+        .text-shadow-lg { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
         .tool-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            border-top: 4px solid #005EB8; /* NHS Blue */
         }
         .tool-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .tool-card-content {
+            flex-grow: 1;
         }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
 
     <div id="header-placeholder"></div>
 
-    <main class="py-16">
-        <div class="container mx-auto px-6">
-            <a href="index.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8">
-                <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Home
-            </a>
-            <h2 class="text-4xl font-bold text-center mb-12 nhs-text-dark-blue">Helpful Laboratory Tools</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                
-                <a href="pre_analytical_tool.html" class="tool-card block bg-white rounded-lg shadow-lg overflow-hidden">
-                    <div class="p-6">
-                        <div class="flex items-center text-nhs-blue mb-3">
-                            <i data-feather="search" class="w-8 h-8"></i>
-                            <h3 class="text-xl font-semibold ml-3">Pre-analytical Query Tool</h3>
-                        </div>
-                        <p class="text-gray-600">Instantly find sample requirements and turnaround times for any test in our directory.</p>
-                    </div>
-                </a>
-
-                <a href="interpretive_guide.html" class="tool-card block bg-white rounded-lg shadow-lg overflow-hidden">
-                    <div class="p-6">
-                        <div class="flex items-center text-nhs-blue mb-3">
-                            <i data-feather="message-circle" class="w-8 h-8"></i>
-                            <h3 class="text-xl font-semibold ml-3">Interpretive Comment Guide</h3>
-                        </div>
-                        <p class="text-gray-600">A searchable database to understand the meaning and next steps for common report comments.</p>
-                    </div>
-                </a>
-
-                <a href="glossary.html" class="tool-card block bg-white rounded-lg shadow-lg overflow-hidden">
-                     <div class="p-6">
-                        <div class="flex items-center text-nhs-blue mb-3">
-                            <i data-feather="book-open" class="w-8 h-8"></i>
-                            <h3 class="text-xl font-semibold ml-3">Interactive Pathology Glossary</h3>
-                        </div>
-                        <p class="text-gray-600">A comprehensive A-Z guide to all the key terms and definitions used in the laboratory.</p>
-                    </div>
-                </a>
-
-                <a href="rejection_troubleshooter.html" class="tool-card block bg-white rounded-lg shadow-lg overflow-hidden">
-                     <div class="p-6">
-                        <div class="flex items-center text-nhs-blue mb-3">
-                            <i data-feather="x-octagon" class="w-8 h-8"></i>
-                            <h3 class="text-xl font-semibold ml-3">Sample Rejection Troubleshooter</h3>
-                        </div>
-                        <p class="text-gray-600">Understand why samples are rejected and learn how to prevent common collection errors.</p>
-                    </div>
-                </a>
-
-                                <a href="cell_counter.html" class="tool-card block bg-white rounded-lg shadow-lg overflow-hidden">
-                     <div class="p-6">
-                        <div class="flex items-center text-nhs-blue mb-3">
-                            <i data-feather="book-open" class="w-8 h-8"></i>
-                            <h3 class="text-xl font-semibold ml-3">Blood Cell Counter</h3>
-                        </div>
-                        <p class="text-gray-600">A cell counter to aid in morphology.</p>
-                    </div>
-                </a>
-
-                                <a href="lipaemia_calculator.html" class="tool-card block bg-white rounded-lg shadow-lg overflow-hidden">
-                     <div class="p-6">
-                        <div class="flex items-center text-nhs-blue mb-3">
-                            <i data-feather="book-open" class="w-8 h-8"></i>
-                            <h3 class="text-xl font-semibold ml-3">Lipaemia Calculator</h3>
-                        </div>
-                        <p class="text-gray-600">A simple guide and calculator for calculating red cell indices when lipaemia is present.</p>
-                    </div>
-                </a>
-                
-                <a href="sustainability_corner.html" class="tool-card block bg-white rounded-lg shadow-lg overflow-hidden">
-                     <div class="p-6">
-                        <div class="flex items-center text-nhs-blue mb-3">
-                            <i data-feather="leaf" class="w-8 h-8"></i>
-                            <h3 class="text-xl font-semibold ml-3">Resource & Sustainability Corner</h3>
-                        </div>
-                        <p class="text-gray-600">Promoting the mindful and efficient use of laboratory resources and reducing our environmental impact.</p>
-                    </div>
-                </a>
-
+    <main class="flex-grow">
+        
+        <section class="hero-bg-tools text-white text-center py-20 md:py-24">
+            <div class="container mx-auto px-4">
+                <h1 class="text-4xl md:text-6xl font-bold mb-4 text-shadow-lg">Helpful Tools & Utilities</h1>
+                <p class="text-lg md:text-2xl max-w-3xl mx-auto text-shadow-lg">A collection of practical tools and guides designed to assist with day-to-day tasks and troubleshooting in the lab.</p>
             </div>
+        </section>
+
+        <div class="container mx-auto px-4 py-12">
+            
+            <section>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <a href="pre_analytical_tool.html" class="tool-card bg-white p-6 rounded-lg shadow-md">
+                        <div class="tool-card-content">
+                            <div class="text-4xl text-blue-600 mb-4"><i class="fas fa-question-circle"></i></div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Pre-analytical Query Tool</h3>
+                            <p class="text-gray-600 mb-4">Instantly find sample requirements, bottle types, and turnaround times for any test in our directory.</p>
+                        </div>
+                    </a>
+                    
+                    <a href="interpretive_guide.html" class="tool-card bg-white p-6 rounded-lg shadow-md">
+                        <div class="tool-card-content">
+                            <div class="text-4xl text-purple-600 mb-4"><i class="fas fa-comments"></i></div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Interpretive Comment Guide</h3>
+                            <p class="text-gray-600 mb-4">A searchable database to understand the meaning and next steps for common report comments.</p>
+                        </div>
+                    </a>
+
+                    <a href="glossary.html" class="tool-card bg-white p-6 rounded-lg shadow-md">
+                        <div class="tool-card-content">
+                            <div class="text-4xl text-teal-600 mb-4"><i class="fas fa-book"></i></div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Interactive Pathology Glossary</h3>
+                            <p class="text-gray-600 mb-4">A comprehensive A-Z guide to all the key terms, acronyms, and definitions used in the laboratory.</p>
+                        </div>
+                    </a>
+
+                    <a href="rejection_troubleshooter.html" class="tool-card bg-white p-6 rounded-lg shadow-md">
+                        <div class="tool-card-content">
+                            <div class="text-4xl text-red-600 mb-4"><i class="fas fa-exclamation-triangle"></i></div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Sample Rejection Troubleshooter</h3>
+                            <p class="text-gray-600 mb-4">Understand why samples are rejected and learn how to prevent common pre-analytical and collection errors.</p>
+                        </div>
+                    </a>
+
+                    <a href="cell_counter.html" class="tool-card bg-white p-6 rounded-lg shadow-md">
+                        <div class="tool-card-content">
+                            <div class="text-4xl text-indigo-600 mb-4"><i class="fas fa-calculator"></i></div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Blood Cell Counter</h3>
+                            <p class="text-gray-600 mb-4">A handy digital tool to aid in performing manual white cell differentials during blood film morphology.</p>
+                        </div>
+                    </a>
+
+                    <a href="lipaemia_calculator.html" class="tool-card bg-white p-6 rounded-lg shadow-md">
+                        <div class="tool-card-content">
+                            <div class="text-4xl text-yellow-600 mb-4"><i class="fas fa-vial"></i></div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Lipaemia Calculator</h3>
+                            <p class="text-gray-600 mb-4">A simple guide and calculator for correcting red cell indices when a sample is affected by lipaemia.</p>
+                        </div>
+                    </a>
+
+                    <a href="sustainability_corner.html" class="tool-card bg-white p-6 rounded-lg shadow-md">
+                        <div class="tool-card-content">
+                            <div class="text-4xl text-green-600 mb-4"><i class="fas fa-recycle"></i></div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Resource & Sustainability Corner</h3>
+                            <p class="text-gray-600 mb-4">Promoting the mindful use of laboratory resources and helping to reduce our environmental impact.</p>
+                        </div>
+                    </a>
+
+                </div>
+            </section>
+
+            <section class="text-center mt-12">
+                <a href="Index.html" class="bg-gray-800 text-white font-bold py-3 px-8 rounded-full hover:bg-gray-700 transition duration-300">
+                    <i class="fas fa-arrow-left mr-2"></i>Back to Home
+                </a>
+            </section>
         </div>
     </main>
 
     <div id="footer-placeholder"></div>
 
-      <script src="js/component-loader.js"></script>
+    <script src="js/component-loader.js"></script>
     
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            feather.replace();
-        });
-   </script>
 </body>
 </html>
