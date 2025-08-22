@@ -1,86 +1,113 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us - SGC</title>
+    <title>About Us - Clinical Pathology</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#005EB8">
     <style>
         body { font-family: 'Inter', sans-serif; }
-        .nhs-blue { background-color: #005EB8; }
-        .nhs-dark-blue { background-color: #003087; }
-        .nhs-light-grey { background-color: #F0F4F5; }
-        .nhs-text-blue { color: #005EB8; }
-        .nhs-text-dark-blue { color: #003087; }
+        .hero-bg-about { 
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1579548122080-c35154045418?q=80&w=2070&auto=format&fit=crop&ixlib-rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-position: center;
+        }
+        .text-shadow-lg { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
+        .member-card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .member-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
 
     <div id="header-placeholder"></div>
 
-    <main class="py-16 bg-white">
-        <div class="container mx-auto px-6 max-w-5xl">
-            <a href="index.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8">
-                <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Home
-            </a>
-            <div class="text-center">
-                <h2 class="text-4xl font-bold nhs-text-dark-blue mb-4">About Us & The Council</h2>
+    <main class="flex-grow">
+        
+        <section class="hero-bg-about text-white text-center py-20 md:py-24">
+            <div class="container mx-auto px-4">
+                <h1 class="text-4xl md:text-6xl font-bold mb-4 text-shadow-lg">About the Council</h1>
+                <p class="text-lg md:text-2xl max-w-3xl mx-auto text-shadow-lg">We are a team of passionate laboratory staff dedicated to improving our workplace and showcasing the vital role of clinical pathology.</p>
             </div>
-            <div class="max-w-4xl mx-auto mt-8 p-8 bg-nhs-light-grey rounded-lg">
-                <h3 class="text-2xl font-semibold nhs-text-dark-blue mb-4">What is Shared Governance?</h3>
-                <p class="text-gray-700 leading-relaxed">Shared Governance is a model of empowerment that gives staff a direct voice in the decisions that affect their working lives and the quality of patient care. It moves away from traditional top-down management, creating a partnership between frontline staff and leadership.</p>
-                <p class="text-gray-700 leading-relaxed mt-4">Through councils like ours, team members can take ownership of clinical practice, shape policies, and drive improvements from the ground up. We are proud to be the first non-patient-facing, Pathology-specific Shared Governance Council in the UK, pioneering this approach to enhance our services and empower our dedicated scientific and support staff.</p>
-            </div>
-            <h3 class="text-3xl font-bold nhs-text-dark-blue mb-12 text-center mt-16">Meet the Council Members</h3>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="text-center p-6 bg-gray-50 rounded-lg shadow-md">
-                    <i data-feather="user" class="h-16 w-16 mx-auto mb-4 text-white bg-nhs-blue p-4 rounded-full"></i>
-                    <h3 class="text-xl font-bold nhs-text-dark-blue">Michael Ellingham</h3>
-                    <p class="text-gray-600">Haematology & Blood Transfusion</p>
-                    <a href="mailto:Michael.ellingham@nhs.net" class="inline-flex items-center space-x-2 text-sm nhs-text-blue hover:underline mt-2"><i data-feather="mail" class="w-4 h-4"></i><span>Michael.ellingham@nhs.net</span></a>
+        </section>
+
+        <div class="container mx-auto px-4 py-12">
+
+            <section class="mb-12 bg-white p-8 rounded-lg shadow-md">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4 text-center">Our Mission</h2>
+                <p class="text-lg text-gray-700 max-w-3xl mx-auto text-center">Our Shared Governance Council is a staff-led body that aims to empower all members of the Clinical Pathology department. We work collaboratively to identify opportunities for improvement, launch innovative projects, and foster a positive, engaging, and supportive work environment. We are the bridge between staff and management, ensuring every voice is heard.</p>
+            </section>
+            
+            <section>
+                <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">Meet the Council</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
+                    
+                    <div class="member-card bg-white rounded-lg shadow-lg overflow-hidden text-center">
+                        <img src="member-mike.jpg" alt="Portrait of Michael Ellingham" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800">Michael Ellingham</h3>
+                            <p class="font-semibold text-blue-600">Chair & Haematology BMS</p>
+                            <p class="text-gray-600 mt-2 text-sm">Mike is passionate about staff engagement and ensuring that the voices of all laboratory staff are heard.</p>
+                        </div>
+                    </div>
+
+                    <div class="member-card bg-white rounded-lg shadow-lg overflow-hidden text-center">
+                        <img src="member-natalia.jpg" alt="Portrait of Natalia Jurkowska" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800">Natalia Jurkowska</h3>
+                            <p class="font-semibold text-blue-600">Vice-Chair & Haematology BMS</p>
+                            <p class="text-gray-600 mt-2 text-sm">Natalia is dedicated to improving the work environment and fostering a positive culture within the department.</p>
+                        </div>
+                    </div>
+
+                    <div class="member-card bg-white rounded-lg shadow-lg overflow-hidden text-center">
+                        <img src="member-chloe.jpg" alt="Portrait of Chloe Wilkes" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800">Chloe Wilkes</h3>
+                            <p class="font-semibold text-blue-600">Secretary & Antenatal BMS</p>
+                            <p class="text-gray-600 mt-2 text-sm">Chloe focuses on clear communication and ensuring the council's activities are well-documented and accessible to all.</p>
+                        </div>
+                    </div>
+
+                    <div class="member-card bg-white rounded-lg shadow-lg overflow-hidden text-center">
+                        <img src="member-oana.jpg" alt="Portrait of Oana Taut" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800">Oana Taut</h3>
+                            <p class="font-semibold text-blue-600">Social Media Lead & Chemistry AP</p>
+                            <p class="text-gray-600 mt-2 text-sm">Oana manages the council's social media, creating engaging content to showcase the vital work of the lab.</p>
+                        </div>
+                    </div>
+
+                    <div class="member-card bg-white rounded-lg shadow-lg overflow-hidden text-center">
+                        <img src="member-kim.jpg" alt="Portrait of Kimberley Bramley" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800">Kimberley Bramley</h3>
+                            <p class="font-semibold text-blue-600">Immunology MLA</p>
+                            <p class="text-gray-600 mt-2 text-sm">Kim brings an essential MLA perspective to the council, advocating for support staff and wellbeing initiatives.</p>
+                        </div>
+                    </div>
+
                 </div>
-                <div class="text-center p-6 bg-gray-50 rounded-lg shadow-md">
-                    <i data-feather="user" class="h-16 w-16 mx-auto mb-4 text-white bg-nhs-blue p-4 rounded-full"></i>
-                    <h3 class="text-xl font-bold nhs-text-dark-blue">Katarzyna Fijalkowska</h3>
-                    <p class="text-gray-600">Haematology & Blood Transfusion</p>
-                    <a href="mailto:katarzyna.fijalkowska@nhs.net" class="inline-flex items-center space-x-2 text-sm nhs-text-blue hover:underline mt-2"><i data-feather="mail" class="w-4 h-4"></i><span>katarzyna.fijalkowska@nhs.net</span></a>
-                </div>
-                <div class="text-center p-6 bg-gray-50 rounded-lg shadow-md">
-                    <i data-feather="user" class="h-16 w-16 mx-auto mb-4 text-white bg-nhs-blue p-4 rounded-full"></i>
-                    <h3 class="text-xl font-bold nhs-text-dark-blue">Akwasi Boakye</h3>
-                    <p class="text-gray-600">Immunology</p>
-                    <a href="mailto:akwasi.boakye1@nhs.net" class="inline-flex items-center space-x-2 text-sm nhs-text-blue hover:underline mt-2"><i data-feather="mail" class="w-4 h-4"></i><span>akwasi.boakye1@nhs.net</span></a>
-                </div>
-                <div class="text-center p-6 bg-gray-50 rounded-lg shadow-md">
-                    <i data-feather="user" class="h-16 w-16 mx-auto mb-4 text-white bg-nhs-blue p-4 rounded-full"></i>
-                    <h3 class="text-xl font-bold nhs-text-dark-blue">Yasmin Dixon</h3>
-                    <p class="text-gray-600">Chemistry</p>
-                    <a href="mailto:yasmin.dixon1@nhs.net" class="inline-flex items-center space-x-2 text-sm nhs-text-blue hover:underline mt-2"><i data-feather="mail" class="w-4 h-4"></i><span>yasmin.dixon1@nhs.net</span></a>
-                </div>
-                <div class="text-center p-6 bg-gray-50 rounded-lg shadow-md">
-                    <i data-feather="user" class="h-16 w-16 mx-auto mb-4 text-white bg-nhs-blue p-4 rounded-full"></i>
-                    <h3 class="text-xl font-bold nhs-text-dark-blue">Matthew Rodgers</h3>
-                    <p class="text-gray-600">Chemistry</p>
-                     <a href="mailto:matthew.rodgers6@nhs.net" class="inline-flex items-center space-x-2 text-sm nhs-text-blue hover:underline mt-2"><i data-feather="mail" class="w-4 h-4"></i><span>matthew.rodgers6@nhs.net</span></a>
-                </div>
-            </div>
+            </section>
+            
+            <section class="text-center mt-12">
+                <a href="Index.html" class="bg-gray-800 text-white font-bold py-3 px-8 rounded-full hover:bg-gray-700 transition duration-300">
+                    <i class="fas fa-arrow-left mr-2"></i>Back to Home
+                </a>
+            </section>
+
         </div>
     </main>
 
     <div id="footer-placeholder"></div>
 
-      <script src="js/component-loader.js"></script>
+    <script src="js/component-loader.js"></script>
     
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            feather.replace();
-        });
-   </script>
 </body>
 </html>
