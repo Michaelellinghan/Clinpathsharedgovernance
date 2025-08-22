@@ -11,8 +11,9 @@
         body { font-family: 'Inter', sans-serif; }
         .hero-bg { background-image: url('https://images.unsplash.com/photo-1628334882270-038a3ba3be5b?q=80&w=2070&auto=format&fit=crop&ixlib-rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; background-position: center; }
         .text-shadow-lg { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
-        .card-hover-effect { transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; }
-        .card-hover-effect:hover { transform: translateY(-10px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+        .card-hover-effect:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+        .cell-card { cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; }
+        .cell-card:hover { transform: scale(1.05); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
@@ -29,46 +30,110 @@
         </section>
 
         <section class="bg-white p-8 rounded-lg shadow-md mb-8">
-            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Routine Haematology</h2>
-            <div class="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
-                <a href="fbc_page.html" class="block bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300">
-                    <div class="flex items-center">
-                        <div class="text-4xl text-red-500 mr-4"><i class="fas fa-file-medical-alt"></i></div>
-                        <div>
-                            <h3 class="text-2xl font-semibold mb-2">The Full Blood Count (FBC)</h3>
-                            <p>Explore the details of our most common test and what each parameter tells us about your health.</p>
-                        </div>
-                    </div>
-                </a>
-                 <a href="blood_film_morphology_page.html" class="block bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300">
-                    <div class="flex items-center">
-                        <div class="text-4xl text-blue-500 mr-4"><i class="fas fa-microscope"></i></div>
-                        <div>
-                            <h3 class="text-2xl font-semibold mb-2">Blood Film Morphology</h3>
-                            <p>Discover the art of looking at blood cells under the microscope to find crucial diagnostic clues.</p>
-                        </div>
-                    </div>
-                </a>
-                <a href="coagulation_page.html" class="block bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300">
-                    <div class="flex items-center">
-                        <div class="text-4xl text-teal-500 mr-4"><i class="fas fa-hourglass-half"></i></div>
-                        <div>
-                            <h3 class="text-2xl font-semibold mb-2">Routine Coagulation</h3>
-                            <p>Learn how we perform routine tests on your blood's ability to clot, such as the INR and APTT.</p>
-                        </div>
-                    </div>
-                </a>
-                <a href="further_haematology_tests_page.html" class="block bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300">
-                    <div class="flex items-center">
-                         <div class="text-4xl text-indigo-500 mr-4"><i class="fas fa-vial"></i></div>
-                         <div>
-                             <h3 class="text-2xl font-semibold mb-2">Further Haematology Tests</h3>
-                             <p>Learn about other key tests like Malaria screens, ESR, and Infectious Mononucleosis testing.</p>
-                         </div>
-                     </div>
-                 </a>
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">The Journey of an FBC Sample</h2>
+            <ol class="relative border-l-4 border-blue-500 ml-4">                  
+                <li class="mb-10 ml-8">            
+                    <span class="absolute flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full -left-5 ring-8 ring-white">
+                        <i class="fas fa-truck text-blue-600"></i>
+                    </span>
+                    <h3 class="flex items-center mb-1 text-xl font-semibold text-gray-900">Step 1: Arrival & Automated Sorting</h3>
+                    <p class="text-base font-normal text-gray-600">The journey begins when a blood sample arrives. It's booked into our system and placed on an automated track which sorts it for analysis.</p>
+                </li>
+                <li class="mb-10 ml-8">
+                    <span class="absolute flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full -left-5 ring-8 ring-white">
+                        <i class="fas fa-robot text-blue-600"></i>
+                    </span>
+                    <h3 class="mb-1 text-xl font-semibold text-gray-900">Step 2: The Full Blood Count (FBC)</h3>
+                    <p class="text-base font-normal text-gray-600">The sample's first stop is a high-tech analyser for a Full Blood Count. This machine counts and measures all the different blood cells, giving a vital snapshot of the patient's health.</p>
+                </li>
+                 <li class="mb-10 ml-8">
+                    <span class="absolute flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full -left-5 ring-8 ring-white">
+                        <i class="fas fa-user-md text-blue-600"></i>
+                    </span>
+                    <h3 class="mb-1 text-xl font-semibold text-gray-900">Step 3: Scientific Validation</h3>
+                    <p class="text-base font-normal text-gray-600">The results from the analyser are reviewed by a skilled Biomedical Scientist, checking for any flags or abnormalities that may require a closer look.</p>
+                </li>
+                <li class="ml-8">
+                    <span class="absolute flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full -left-5 ring-8 ring-white">
+                        <i class="fas fa-microscope text-blue-600"></i>
+                    </span>
+                    <h3 class="mb-1 text-xl font-semibold text-gray-900">Step 4: The Blood Film Review</h3>
+                    <p class="text-base font-normal text-gray-600">If the FBC is abnormal, a thin film of blood is made and stained. A scientist then examines the cells under a microscope, looking for visual clues that the machines can't see. This is the only test that is a direct follow-up from the FBC.</p>
+                </li>
+            </ol>
+            <p class="text-center mt-6 text-gray-700 italic">Other tests like Coagulation screens or Malaria checks are separate pathways, requested specifically by clinicians based on the patient's condition.</p>
+        </section>
+
+        <section class="bg-white p-8 rounded-lg shadow-md mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-2 text-center">Meet the Cells!</h2>
+            <p class="text-center text-gray-600 mb-6">Click on a cell to find out its job.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <div class="cell-card p-6" onclick="showInfo('rbc')">
+                    <img src="https://placehold.co/150x150/ef4444/FFFFFF?text=RBC" alt="Red Blood Cell" class="mx-auto rounded-full mb-4">
+                    <h3 class="text-xl font-bold">Red Blood Cell</h3>
+                </div>
+                <div class="cell-card p-6" onclick="showInfo('wbc')">
+                     <img src="https://placehold.co/150x150/8b5cf6/FFFFFF?text=WBC" alt="White Blood Cell" class="mx-auto rounded-full mb-4">
+                    <h3 class="text-xl font-bold">White Blood Cell</h3>
+                </div>
+                <div class="cell-card p-6" onclick="showInfo('plt')">
+                     <img src="https://placehold.co/150x150/f59e0b/FFFFFF?text=PLT" alt="Platelet" class="mx-auto rounded-full mb-4">
+                    <h3 class="text-xl font-bold">Platelet</h3>
+                </div>
+            </div>
+            <div id="info-box" class="mt-6 p-4 bg-blue-100 border-l-4 border-blue-500 text-blue-800 rounded-r-lg min-h-[50px] flex items-center justify-center text-lg">
+                <p>Click a cell above!</p>
             </div>
         </section>
+
+        <section class="bg-gray-50 p-8 rounded-lg shadow-inner">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Explore Our Processes in Detail</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <a href="fbc_page.html" class="block bg-white p-6 rounded-lg shadow-md text-center card-hover-effect">
+                    <div class="text-5xl text-red-500 mb-4"><i class="fas fa-file-medical-alt"></i></div>
+                    <h3 class="text-xl font-semibold mb-2">The Full Blood Count (FBC)</h3>
+                </a>
+                <a href="blood_film_morphology_page.html" class="block bg-white p-6 rounded-lg shadow-md text-center card-hover-effect">
+                    <div class="text-5xl text-blue-500 mb-4"><i class="fas fa-microscope"></i></div>
+                    <h3 class="text-xl font-semibold mb-2">Blood Film Morphology</h3>
+                </a>
+                <a href="coagulation_page.html" class="block bg-white p-6 rounded-lg shadow-md text-center card-hover-effect">
+                    <div class="text-5xl text-teal-500 mb-4"><i class="fas fa-hourglass-half"></i></div>
+                    <h3 class="text-xl font-semibold mb-2">Coagulation</h3>
+                </a>
+                <a href="red_cell_investigations_page.html" class="block bg-white p-6 rounded-lg shadow-md text-center card-hover-effect">
+                    <div class="text-5xl text-red-500 mb-4"><i class="fas fa-dna"></i></div>
+                    <h3 class="text-xl font-semibold mb-2">Red Cell Investigations</h3>
+                </a>
+                <a href="haemostasis_thrombophilia_page.html" class="block bg-white p-6 rounded-lg shadow-md text-center card-hover-effect">
+                    <div class="text-5xl text-purple-500 mb-4"><i class="fas fa-search-plus"></i></div>
+                    <h3 class="text-xl font-semibold mb-2">Haemostasis & Thrombophilia</h3>
+                </a>
+                <a href="further_haematology_tests_page.html" class="block bg-white p-6 rounded-lg shadow-md text-center card-hover-effect">
+                    <div class="text-5xl text-indigo-500 mb-4"><i class="fas fa-vial"></i></div>
+                    <h3 class="text-xl font-semibold mb-2">Further Haematology Tests</h3>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="footer-placeholder"></div>
+    <script src="js/component-loader.js"></script>
+    <script>
+        const cellInfo = {
+            rbc: "<strong>My Job:</strong> I'm an oxygen carrier! I pick up oxygen in the lungs and deliver it all around the body.",
+            wbc: "<strong>My Job:</strong> I'm a defender! As part of the immune system, I fight off nasty infections from bacteria and viruses.",
+            plt: "<strong>My Job:</strong> I'm a first responder! When you get a cut, I rush to the scene to form a plug and stop the bleeding."
+        };
+
+        function showInfo(cellType) {
+            const infoBox = document.getElementById('info-box');
+            infoBox.innerHTML = `<p>${cellInfo[cellType]}</p>`;
+        }
+    </script>
+</body>
+</html>        </section>
 
         <section class="bg-white p-8 rounded-lg shadow-md mb-8">
             <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Specialist Haematology Areas</h2>
