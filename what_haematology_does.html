@@ -30,55 +30,26 @@
         </section>
 
         <section class="bg-white p-8 rounded-lg shadow-md mb-8">
-            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">The Journey of an FBC Sample</h2>
-            <ol class="relative border-l-4 border-blue-500 ml-4">                  
-                <li class="mb-10 ml-8">            
-                    <span class="absolute flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full -left-5 ring-8 ring-white">
-                        <i class="fas fa-truck text-blue-600"></i>
-                    </span>
-                    <h3 class="flex items-center mb-1 text-xl font-semibold text-gray-900">Step 1: Arrival & Automated Sorting</h3>
-                    <p class="text-base font-normal text-gray-600">The journey begins when a blood sample arrives. It's booked into our system and placed on an automated track which sorts it for analysis.</p>
-                </li>
-                <li class="mb-10 ml-8">
-                    <span class="absolute flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full -left-5 ring-8 ring-white">
-                        <i class="fas fa-robot text-blue-600"></i>
-                    </span>
-                    <h3 class="mb-1 text-xl font-semibold text-gray-900">Step 2: The Full Blood Count (FBC)</h3>
-                    <p class="text-base font-normal text-gray-600">The sample's first stop is a high-tech analyser for a Full Blood Count. This machine counts and measures all the different blood cells, giving a vital snapshot of the patient's health.</p>
-                </li>
-                 <li class="mb-10 ml-8">
-                    <span class="absolute flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full -left-5 ring-8 ring-white">
-                        <i class="fas fa-user-md text-blue-600"></i>
-                    </span>
-                    <h3 class="mb-1 text-xl font-semibold text-gray-900">Step 3: Scientific Validation</h3>
-                    <p class="text-base font-normal text-gray-600">The results from the analyser are reviewed by a skilled Biomedical Scientist, checking for any flags or abnormalities that may require a closer look.</p>
-                </li>
-                <li class="ml-8">
-                    <span class="absolute flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full -left-5 ring-8 ring-white">
-                        <i class="fas fa-microscope text-blue-600"></i>
-                    </span>
-                    <h3 class="mb-1 text-xl font-semibold text-gray-900">Step 4: The Blood Film Review</h3>
-                    <p class="text-base font-normal text-gray-600">If the FBC is abnormal, a thin film of blood is made and stained. A scientist then examines the cells under a microscope, looking for visual clues that the machines can't see. This is the only test that is a direct follow-up from the FBC.</p>
-                </li>
-            </ol>
-            <p class="text-center mt-6 text-gray-700 italic">Other tests like Coagulation screens or Malaria checks are separate pathways, requested specifically by clinicians based on the patient's condition.</p>
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">What is Haematology? The Science of Blood</h2>
+            <p class="text-lg text-gray-700 mb-4">Haematology is the comprehensive study of blood, the tissues that create it (like bone marrow), and the wide range of diseases and disorders that affect it. Think of us as the body's 'blood detectives'. From the moment a purple-top tube arrives in our lab, we begin a detailed investigation to analyse its contents. Our work is a crucial part of healthcare, providing vital information for diagnosing conditions ranging from simple anaemia to complex disorders like leukaemia and haemophilia.</p>
+            <p class="text-lg text-gray-700">The field is vast, covering everything from the automated counting of billions of cells to the intricate manual art of identifying abnormal cells under a microscope, and the complex pathways that govern how our blood clots. This page will give you an overview of the key areas within this fascinating discipline.</p>
         </section>
 
         <section class="bg-white p-8 rounded-lg shadow-md mb-8">
             <h2 class="text-3xl font-bold text-gray-900 mb-2 text-center">Meet the Cells!</h2>
-            <p class="text-center text-gray-600 mb-6">Click on a cell to find out its job.</p>
+            <p class="text-center text-gray-600 mb-6">Blood is a living tissue, teeming with specialised cells. Click on a cell to learn about its vital role.</p>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
                 <div class="cell-card p-6" onclick="showInfo('rbc')">
                     <img src="https://placehold.co/150x150/ef4444/FFFFFF?text=RBC" alt="Red Blood Cell" class="mx-auto rounded-full mb-4">
-                    <h3 class="text-xl font-bold">Red Blood Cell</h3>
+                    <h3 class="text-xl font-bold">Red Blood Cells</h3>
                 </div>
                 <div class="cell-card p-6" onclick="showInfo('wbc')">
                      <img src="https://placehold.co/150x150/8b5cf6/FFFFFF?text=WBC" alt="White Blood Cell" class="mx-auto rounded-full mb-4">
-                    <h3 class="text-xl font-bold">White Blood Cell</h3>
+                    <h3 class="text-xl font-bold">White Blood Cells</h3>
                 </div>
                 <div class="cell-card p-6" onclick="showInfo('plt')">
                      <img src="https://placehold.co/150x150/f59e0b/FFFFFF?text=PLT" alt="Platelet" class="mx-auto rounded-full mb-4">
-                    <h3 class="text-xl font-bold">Platelet</h3>
+                    <h3 class="text-xl font-bold">Platelets</h3>
                 </div>
             </div>
             <div id="info-box" class="mt-6 p-4 bg-blue-100 border-l-4 border-blue-500 text-blue-800 rounded-r-lg min-h-[50px] flex items-center justify-center text-lg">
@@ -87,43 +58,56 @@
         </section>
         
         <section class="bg-white p-8 rounded-lg shadow-md mb-8">
-            <h2 class="text-3xl font-bold text-gray-900 mb-4">The Full Blood Count in Detail</h2>
-            <p class="text-lg text-gray-700 mb-6">The full blood count gives insight into the cellular components of blood including white blood cells, red blood cells, and platelets, providing numerical values relating to these cells (e.g. amount of them, size, contents). These results provide vital clues to the presence of underlying pathology. The long list of acronyms and numbers can seem daunting at first, however, by following a structured approach you can make sense of them all!</p>
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">A Deeper Dive into Haematology</h2>
             
-            <div class="space-y-8">
+            <div class="space-y-12">
                 <div>
-                    <h3 class="text-2xl font-bold text-red-600 mb-4 border-b-2 border-red-200 pb-2"><i class="fas fa-tint mr-2"></i>Red Cell Parameters</h3>
-                    <p class="mb-4">Red cell tests quantify the amount of haemoglobin and red cells present. An abnormally low number is known as <strong>anaemia</strong>, while an abnormally high number is known as <strong>polycythaemia</strong>. These tests also provide crucial insights into the underlying causes by looking at the average size of the cells and how much haemoglobin is contained within them.</p>
-                    <ul class="list-disc list-inside space-y-3 pl-4 text-gray-700">
-                        <li><strong>Haemoglobin (Hb):</strong> The amount of oxygen-carrying protein in whole blood. This is the key value for diagnosing anaemia or polycythaemia.</li>
-                        <li><strong>Mean Corpuscular Volume (MCV):</strong> The average size of the red cells. A low MCV (microcytic) can suggest iron deficiency, while a high MCV (macrocytic) can suggest B12 or folate deficiency.</li>
-                        <li><strong>Haematocrit (Hct):</strong> The percentage of the blood sample that is made up of red cells. A high Hct can increase blood viscosity.</li>
-                        <li><strong>Red Cell Count (RCC):</strong> The total number of red cells present per unit volume of blood.</li>
-                        <li><strong>Red Cell Distribution Width (RDW):</strong> A measure of the variation in red cell size. A high RDW means there is a large variation in cell sizes (anisocytosis), which can be seen in conditions like iron deficiency or mixed-cause anaemias.</li>
-                        <li><strong>Reticulocyte Count:</strong> The number of immature red cells. A high count in an anaemic patient suggests the bone marrow is working hard to produce new cells, pointing to blood loss or destruction (haemolysis) in the periphery.</li>
-                    </ul>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4 border-b-4 border-blue-500 pb-2">Routine Haematology: The Full Blood Count (FBC)</h3>
+                    <p class="text-lg text-gray-700 mb-4">The cornerstone of any haematology lab is the <strong>Full Blood Count (FBC)</strong>. This is one of the most frequently requested tests in medicine, providing a rapid and comprehensive snapshot of a patient's health. The long list of acronyms and numbers can seem daunting, but by following a structured approach, we can make sense of them all!</p>
+                    <p class="text-lg text-gray-700 mb-6">Our high-tech analysers, like the Sysmex XN-9100, use laser technology and electrical impedance to count and measure the three main cellular components of blood: red cells, white cells, and platelets.</p>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="text-xl font-semibold text-red-600 mb-3">Red Cell Parameters</h4>
+                            <p class="mb-3">These tests quantify the amount of red cells and haemoglobin. An abnormally low level is known as <strong>anaemia</strong>, while an abnormally high level is <strong>polycythaemia</strong>.</p>
+                            <ul class="list-disc list-inside space-y-2 pl-4 text-gray-700">
+                                <li><strong>Haemoglobin (Hb):</strong> Measures the amount of oxygen-carrying protein. It's the primary indicator of anaemia.</li>
+                                <li><strong>Mean Corpuscular Volume (MCV):</strong> The average size of red cells. This is crucial for classifying anaemia: low MCV (microcytic) can suggest iron deficiency, while high MCV (macrocytic) points towards vitamin B12 or folate deficiency.</li>
+                                <li><strong>Haematocrit (Hct):</strong> The percentage of blood volume occupied by red cells.</li>
+                                <li><strong>Red Cell Count (RCC):</strong> The total number of red cells.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-semibold text-blue-600 mb-3">White Cell Parameters</h4>
+                            <p class="mb-3">A high white cell count (<strong>leukocytosis</strong>) often indicates infection or inflammation, while a low count (<strong>leukopenia</strong>) can be caused by various conditions, including viral infections or certain medications.</p>
+                             <ul class="list-disc list-inside space-y-2 pl-4 text-gray-700">
+                                <li><strong>White Blood Cell Count (WCC):</strong> The total number of all white cells.</li>
+                                <li><strong>Differential:</strong> This is the breakdown of the WCC into its different types:
+                                    <ul class="list-disc list-inside ml-6">
+                                        <li><strong>Neutrophils:</strong> The body's first line of defence against bacterial infection.</li>
+                                        <li><strong>Lymphocytes:</strong> Key fighters of viral infections.</li>
+                                        <li><strong>Monocytes, Eosinophils, Basophils:</strong> Specialised cells involved in cleaning up debris, fighting parasites, and allergic reactions.</li>
+                                    </ul>
+                                </li>
+                                 <li><strong>Blasts:</strong> The presence of these immature cells in circulating blood is highly abnormal and requires urgent review for conditions like acute leukaemia.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-semibold text-yellow-600 mb-3">Platelet Parameters</h4>
+                            <p class="mb-3">Platelets are tiny cell fragments vital for clotting. A low count is <strong>thrombocytopenia</strong> (risk of bleeding), and a high count is <strong>thrombocytosis</strong>.</p>
+                             <ul class="list-disc list-inside space-y-2 pl-4 text-gray-700">
+                                <li><strong>Platelet Count:</strong> The total number of platelets. A low count can cause spontaneous bruising and bleeding.</li>
+                                <li><strong>Mean Platelet Volume (MPV):</strong> The average size of platelets. A high MPV can indicate the bone marrow is rapidly producing new, larger platelets.</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
 
                 <div>
-                    <h3 class="text-2xl font-bold text-blue-600 mb-4 border-b-2 border-blue-200 pb-2"><i class="fas fa-shield-alt mr-2"></i>White Cell Parameters</h3>
-                    <p class="mb-4">A high total white cell count is known as <strong>leukocytosis</strong>, while a low count is <strong>leukopenia</strong>. The differential, which breaks down the count into different cell types, is crucial for diagnosis.</p>
-                     <ul class="list-disc list-inside space-y-3 pl-4 text-gray-700">
-                        <li><strong>White Blood Cell Count (WCC):</strong> The total number of all white blood cells. Often raised in infection and inflammation.</li>
-                        <li><strong>Neutrophils:</strong> These make up the majority of white cells and are the first responders to bacterial infections. A high count is called neutrophilia.</li>
-                        <li><strong>Lymphocytes:</strong> Key players in the immune system, fighting viral infections. A high count (lymphocytosis) is common in viral illnesses like glandular fever.</li>
-                        <li><strong>Monocytes, Eosinophils & Basophils:</strong> These are less common white cells. Monocytes are the "clean-up crew," eosinophils are involved in allergic reactions and fighting parasites, and basophils play a role in allergic responses.</li>
-                        <li><strong>Blasts:</strong> These are immature cells normally found only in the bone marrow. Their presence in circulating blood is a serious finding that requires urgent investigation for conditions like acute leukaemia.</li>
-                    </ul>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4 border-b-4 border-teal-500 pb-2">Coagulation: The Science of Clotting</h3>
+                    <p class="text-lg text-gray-700">Haematology also covers **Haemostasis**—the complex process by which the body stops bleeding. We perform a range of tests to investigate the clotting cascade. These are crucial for monitoring patients on blood-thinning medication (like Warfarin), preparing patients for surgery, and investigating unexplained bleeding or bruising. The specialist area of investigating inherited or acquired bleeding and clotting disorders is known as Haemostasis & Thrombophilia.</p>
                 </div>
-
-                <div>
-                    <h3 class="text-2xl font-bold text-yellow-600 mb-4 border-b-2 border-yellow-200 pb-2"><i class="fas fa-band-aid mr-2"></i>Platelet Parameters</h3>
-                    <p class="mb-4">Platelets are small cell fragments that are essential for blood clotting. A low platelet count is <strong>thrombocytopenia</strong> (increased bleeding risk), while a high count is <strong>thrombocytosis</strong>.</p>
-                     <ul class="list-disc list-inside space-y-3 pl-4 text-gray-700">
-                        <li><strong>Platelet Count:</strong> The number of platelets in the blood. A low count can cause bruising and spontaneous bleeding, while a very high count can increase the risk of unwanted clotting.</li>
-                        <li><strong>Mean Platelet Volume (MPV):</strong> The average size of platelets. A high MPV can indicate that the bone marrow is producing larger, younger platelets in response to platelet destruction in the circulation.</li>
-                    </ul>
-                </div>
+                
             </div>
         </section>
 
