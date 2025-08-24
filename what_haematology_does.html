@@ -9,33 +9,11 @@
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <style>
         body { font-family: 'Inter', sans-serif; }
-        .lab-bench {
-            background-image: url('https://images.unsplash.com/photo-1581092916346-61a2ff2f7c02?q=80&w=2070&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
-            height: 600px;
-        }
-        .interactive-item {
-            cursor: pointer;
-            transition: transform 0.3s ease, filter 0.3s ease;
-            position: absolute;
-            text-align: center;
-            color: white;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
-        }
-        .interactive-item:hover {
-            transform: scale(1.1);
-        }
-        .interactive-item.highlight {
-            animation: pulse 1.5s infinite;
-        }
-        @keyframes pulse {
-            0% { transform: scale(1.0); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1.0); }
-        }
-        .modal { display: none; }
-        .modal.active { display: flex; }
+        .hero-bg { background-image: url('https://images.unsplash.com/photo-1628334882270-038a3ba3be5b?q=80&w=2070&auto=format&fit=crop&ixlib-rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; background-position: center; }
+        .text-shadow-lg { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
+        .card-hover-effect:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+        .cell-card { cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; }
+        .cell-card:hover { transform: scale(1.05); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
@@ -44,138 +22,162 @@
 
     <main class="container mx-auto px-4 py-8 flex-grow">
         
-        <section class="text-center mb-8">
-            <h1 class="text-4xl md:text-5xl font-bold mb-2">Welcome to the Haematology Lab</h1>
-            <p class="text-lg text-gray-600">Click the pulsing items on the lab bench below to follow the journey of a blood sample!</p>
+        <section class="hero-bg text-white rounded-lg p-16 mb-8 text-center shadow-lg">
+            <div>
+                <h1 class="text-4xl md:text-6xl font-bold mb-4 text-shadow-lg">Understanding Haematology</h1>
+                <p class="text-lg md:text-2xl max-w-3xl mx-auto text-shadow-lg">We're the blood detectives, solving medical mysteries one cell at a time.</p>
+            </div>
         </section>
 
-        <section class="relative lab-bench rounded-lg shadow-2xl">
-            <div id="item-sample" class="interactive-item highlight" style="top: 60%; left: 10%;">
-                <i class="fas fa-vial text-6xl"></i>
-                <p class="font-bold">1. The Sample</p>
+        <section class="bg-white p-8 rounded-lg shadow-md mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">The Journey of an FBC Sample</h2>
+            <ol class="relative border-l-4 border-blue-500 ml-4">                  
+                <li class="mb-10 ml-8">            
+                    <span class="absolute flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full -left-5 ring-8 ring-white">
+                        <i class="fas fa-truck text-blue-600"></i>
+                    </span>
+                    <h3 class="flex items-center mb-1 text-xl font-semibold text-gray-900">Step 1: Arrival & Automated Sorting</h3>
+                    <p class="text-base font-normal text-gray-600">The journey begins when a blood sample arrives. It's booked into our system and placed on an automated track which sorts it for analysis.</p>
+                </li>
+                <li class="mb-10 ml-8">
+                    <span class="absolute flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full -left-5 ring-8 ring-white">
+                        <i class="fas fa-robot text-blue-600"></i>
+                    </span>
+                    <h3 class="mb-1 text-xl font-semibold text-gray-900">Step 2: The Full Blood Count (FBC)</h3>
+                    <p class="text-base font-normal text-gray-600">The sample's first stop is a high-tech analyser for a Full Blood Count. This machine counts and measures all the different blood cells, giving a vital snapshot of the patient's health.</p>
+                </li>
+                 <li class="mb-10 ml-8">
+                    <span class="absolute flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full -left-5 ring-8 ring-white">
+                        <i class="fas fa-user-md text-blue-600"></i>
+                    </span>
+                    <h3 class="mb-1 text-xl font-semibold text-gray-900">Step 3: Scientific Validation</h3>
+                    <p class="text-base font-normal text-gray-600">The results from the analyser are reviewed by a skilled Biomedical Scientist, checking for any flags or abnormalities that may require a closer look.</p>
+                </li>
+                <li class="ml-8">
+                    <span class="absolute flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full -left-5 ring-8 ring-white">
+                        <i class="fas fa-microscope text-blue-600"></i>
+                    </span>
+                    <h3 class="mb-1 text-xl font-semibold text-gray-900">Step 4: The Blood Film Review</h3>
+                    <p class="text-base font-normal text-gray-600">If the FBC is abnormal, a thin film of blood is made and stained. A scientist then examines the cells under a microscope, looking for visual clues that the machines can't see. This is the only test that is a direct follow-up from the FBC.</p>
+                </li>
+            </ol>
+            <p class="text-center mt-6 text-gray-700 italic">Other tests like Coagulation screens or Malaria checks are separate pathways, requested specifically by clinicians based on the patient's condition.</p>
+        </section>
+
+        <section class="bg-white p-8 rounded-lg shadow-md mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-2 text-center">Meet the Cells!</h2>
+            <p class="text-center text-gray-600 mb-6">Click on a cell to find out its job.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <div class="cell-card p-6" onclick="showInfo('rbc')">
+                    <img src="https://placehold.co/150x150/ef4444/FFFFFF?text=RBC" alt="Red Blood Cell" class="mx-auto rounded-full mb-4">
+                    <h3 class="text-xl font-bold">Red Blood Cell</h3>
+                </div>
+                <div class="cell-card p-6" onclick="showInfo('wbc')">
+                     <img src="https://placehold.co/150x150/8b5cf6/FFFFFF?text=WBC" alt="White Blood Cell" class="mx-auto rounded-full mb-4">
+                    <h3 class="text-xl font-bold">White Blood Cell</h3>
+                </div>
+                <div class="cell-card p-6" onclick="showInfo('plt')">
+                     <img src="https://placehold.co/150x150/f59e0b/FFFFFF?text=PLT" alt="Platelet" class="mx-auto rounded-full mb-4">
+                    <h3 class="text-xl font-bold">Platelet</h3>
+                </div>
             </div>
-            <div id="item-analyser" class="interactive-item" style="top: 40%; left: 35%;">
-                <i class="fas fa-robot text-8xl"></i>
-                <p class="font-bold">2. The Analyser</p>
-            </div>
-            <div id="item-microscope" class="interactive-item" style="top: 70%; left: 60%;">
-                <i class="fas fa-microscope text-7xl"></i>
-                <p class="font-bold">3. The Microscope</p>
-            </div>
-            <div id="item-links" class="interactive-item" style="top: 10%; right: 10%;">
-                <i class="fas fa-folder-open text-6xl"></i>
-                <p class="font-bold">Explore More</p>
+            <div id="info-box" class="mt-6 p-4 bg-blue-100 border-l-4 border-blue-500 text-blue-800 rounded-r-lg min-h-[50px] flex items-center justify-center text-lg">
+                <p>Click a cell above!</p>
             </div>
         </section>
         
-        <div id="info-modal" class="modal fixed inset-0 bg-black bg-opacity-50 items-center justify-center p-4 z-50">
-            <div class="bg-white rounded-lg shadow-xl p-8 max-w-lg w-full">
-                <h2 id="modal-title" class="text-2xl font-bold mb-4"></h2>
-                <div id="modal-content" class="text-gray-700 space-y-4"></div>
-                <button id="close-modal" class="mt-6 bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 float-right">Got it!</button>
+        <section class="bg-white p-8 rounded-lg shadow-md mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">The Full Blood Count in Detail</h2>
+            <p class="text-lg text-gray-700 mb-6">The full blood count gives insight into the cellular components of blood including white blood cells, red blood cells, and platelets, providing numerical values relating to these cells (e.g. amount of them, size, contents). These results provide vital clues to the presence of underlying pathology. The long list of acronyms and numbers can seem daunting at first, however, by following a structured approach you can make sense of them all!</p>
+            
+            <div class="space-y-8">
+                <div>
+                    <h3 class="text-2xl font-bold text-red-600 mb-4 border-b-2 border-red-200 pb-2"><i class="fas fa-tint mr-2"></i>Red Cell Parameters</h3>
+                    <p class="mb-4">Red cell tests quantify the amount of haemoglobin and red cells present. An abnormally low number is known as <strong>anaemia</strong>, while an abnormally high number is known as <strong>polycythaemia</strong>. These tests also provide crucial insights into the underlying causes by looking at the average size of the cells and how much haemoglobin is contained within them.</p>
+                    <ul class="list-disc list-inside space-y-3 pl-4 text-gray-700">
+                        <li><strong>Haemoglobin (Hb):</strong> The amount of oxygen-carrying protein in whole blood. This is the key value for diagnosing anaemia or polycythaemia.</li>
+                        <li><strong>Mean Corpuscular Volume (MCV):</strong> The average size of the red cells. A low MCV (microcytic) can suggest iron deficiency, while a high MCV (macrocytic) can suggest B12 or folate deficiency.</li>
+                        <li><strong>Haematocrit (Hct):</strong> The percentage of the blood sample that is made up of red cells. A high Hct can increase blood viscosity.</li>
+                        <li><strong>Red Cell Count (RCC):</strong> The total number of red cells present per unit volume of blood.</li>
+                        <li><strong>Red Cell Distribution Width (RDW):</strong> A measure of the variation in red cell size. A high RDW means there is a large variation in cell sizes (anisocytosis), which can be seen in conditions like iron deficiency or mixed-cause anaemias.</li>
+                        <li><strong>Reticulocyte Count:</strong> The number of immature red cells. A high count in an anaemic patient suggests the bone marrow is working hard to produce new cells, pointing to blood loss or destruction (haemolysis) in the periphery.</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-2xl font-bold text-blue-600 mb-4 border-b-2 border-blue-200 pb-2"><i class="fas fa-shield-alt mr-2"></i>White Cell Parameters</h3>
+                    <p class="mb-4">A high total white cell count is known as <strong>leukocytosis</strong>, while a low count is <strong>leukopenia</strong>. The differential, which breaks down the count into different cell types, is crucial for diagnosis.</p>
+                     <ul class="list-disc list-inside space-y-3 pl-4 text-gray-700">
+                        <li><strong>White Blood Cell Count (WCC):</strong> The total number of all white blood cells. Often raised in infection and inflammation.</li>
+                        <li><strong>Neutrophils:</strong> These make up the majority of white cells and are the first responders to bacterial infections. A high count is called neutrophilia.</li>
+                        <li><strong>Lymphocytes:</strong> Key players in the immune system, fighting viral infections. A high count (lymphocytosis) is common in viral illnesses like glandular fever.</li>
+                        <li><strong>Monocytes, Eosinophils & Basophils:</strong> These are less common white cells. Monocytes are the "clean-up crew," eosinophils are involved in allergic reactions and fighting parasites, and basophils play a role in allergic responses.</li>
+                        <li><strong>Blasts:</strong> These are immature cells normally found only in the bone marrow. Their presence in circulating blood is a serious finding that requires urgent investigation for conditions like acute leukaemia.</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-2xl font-bold text-yellow-600 mb-4 border-b-2 border-yellow-200 pb-2"><i class="fas fa-band-aid mr-2"></i>Platelet Parameters</h3>
+                    <p class="mb-4">Platelets are small cell fragments that are essential for blood clotting. A low platelet count is <strong>thrombocytopenia</strong> (increased bleeding risk), while a high count is <strong>thrombocytosis</strong>.</p>
+                     <ul class="list-disc list-inside space-y-3 pl-4 text-gray-700">
+                        <li><strong>Platelet Count:</strong> The number of platelets in the blood. A low count can cause bruising and spontaneous bleeding, while a very high count can increase the risk of unwanted clotting.</li>
+                        <li><strong>Mean Platelet Volume (MPV):</strong> The average size of platelets. A high MPV can indicate that the bone marrow is producing larger, younger platelets in response to platelet destruction in the circulation.</li>
+                    </ul>
+                </div>
             </div>
-        </div>
+        </section>
+
+        <section class="bg-gray-50 p-8 rounded-lg shadow-inner">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Explore Our Processes in Detail</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <a href="fbc_page.html" class="block bg-white p-6 rounded-lg shadow-md text-center card-hover-effect">
+                    <div class="text-5xl text-red-500 mb-4"><i class="fas fa-file-medical-alt"></i></div>
+                    <h3 class="text-xl font-semibold mb-2">The Full Blood Count (FBC)</h3>
+                </a>
+                <a href="blood_film_morphology_page.html" class="block bg-white p-6 rounded-lg shadow-md text-center card-hover-effect">
+                    <div class="text-5xl text-blue-500 mb-4"><i class="fas fa-microscope"></i></div>
+                    <h3 class="text-xl font-semibold mb-2">Blood Film Morphology</h3>
+                </a>
+                <a href="coagulation_page.html" class="block bg-white p-6 rounded-lg shadow-md text-center card-hover-effect">
+                    <div class="text-5xl text-teal-500 mb-4"><i class="fas fa-hourglass-half"></i></div>
+                    <h3 class="text-xl font-semibold mb-2">Coagulation</h3>
+                </a>
+                <a href="red_cell_investigations_page.html" class="block bg-white p-6 rounded-lg shadow-md text-center card-hover-effect">
+                    <div class="text-5xl text-red-500 mb-4"><i class="fas fa-dna"></i></div>
+                    <h3 class="text-xl font-semibold mb-2">Red Cell Investigations</h3>
+                </a>
+                <a href="haemostasis_thrombophilia_page.html" class="block bg-white p-6 rounded-lg shadow-md text-center card-hover-effect">
+                    <div class="text-5xl text-purple-500 mb-4"><i class="fas fa-search-plus"></i></div>
+                    <h3 class="text-xl font-semibold mb-2">Haemostasis & Thrombophilia</h3>
+                </a>
+                <a href="further_haematology_tests_page.html" class="block bg-white p-6 rounded-lg shadow-md text-center card-hover-effect">
+                    <div class="text-5xl text-indigo-500 mb-4"><i class="fas fa-vial"></i></div>
+                    <h3 class="text-xl font-semibold mb-2">Further Haematology Tests</h3>
+                </a>
+            </div>
+        </section>
+
+         <section class="text-center mt-12">
+            <a href="video_tours.html" class="bg-gray-800 text-white font-bold py-3 px-8 rounded-full hover:bg-gray-700 transition duration-300">
+                <i class="fas fa-arrow-left mr-2"></i>Back to Laboratory Tours
+            </a>
+        </section>
 
     </main>
 
     <div id="footer-placeholder"></div>
-
     <script src="js/component-loader.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const items = {
-                sample: document.getElementById('item-sample'),
-                analyser: document.getElementById('item-analyser'),
-                microscope: document.getElementById('item-microscope'),
-                links: document.getElementById('item-links')
-            };
+        const cellInfo = {
+            rbc: "<strong>My Job:</strong> I'm an oxygen carrier! I pick up oxygen in the lungs and deliver it all around the body.",
+            wbc: "<strong>My Job:</strong> I'm a defender! As part of the immune system, I fight off nasty infections from bacteria and viruses.",
+            plt: "<strong>My Job:</strong> I'm a first responder! When you get a cut, I rush to the scene to form a plug and stop the bleeding."
+        };
 
-            const modal = document.getElementById('info-modal');
-            const modalTitle = document.getElementById('modal-title');
-            const modalContent = document.getElementById('modal-content');
-            const closeModalButton = document.getElementById('close-modal');
-            
-            let currentStep = 'sample';
-
-            const content = {
-                sample: {
-                    title: "Step 1: The Sample Arrives",
-                    html: `
-                        <p>The journey begins with a <strong>purple-top (EDTA) blood tube</strong>.</p>
-                        <p>Once it arrives in the lab, it's booked in and placed on an automated track which sorts it and prepares it for analysis. This is the first critical step!</p>
-                        <p class="mt-4 font-semibold">Now, let's see what happens at the analyser.</p>
-                    `
-                },
-                analyser: {
-                    title: "Step 2: The Full Blood Count (FBC)",
-                    html: `
-                        <p>The sample's first stop is a high-tech analyser like the <strong>Sysmex XN-9100</strong>.</p>
-                        <p>Using lasers and electrical impedance, it performs a <strong>Full Blood Count (FBC)</strong>, which counts and measures all the different blood cells. A skilled Biomedical Scientist then validates these results.</p>
-                        <p class="mt-4 font-semibold">The analyser has flagged this result as abnormal. It's time for a closer look under the microscope!</p>
-                        <a href="fbc_page.html" class="inline-block mt-2 font-bold text-blue-600 hover:underline">Learn more about the FBC &rarr;</a>
-                    `
-                },
-                microscope: {
-                    title: "Step 3: Blood Film Morphology",
-                    html: `
-                        <p>When an FBC is abnormal, a thin film of blood is made on a glass slide and stained.</p>
-                        <p>A scientist then becomes a 'blood detective', examining the cells under the microscope for visual clues the machine couldn't see, like oddly shaped cells or signs of infection.</p>
-                        <p class="mt-4 font-semibold">This completes the main FBC pathway!</p>
-                        <a href="blood_film_morphology_page.html" class="inline-block mt-2 font-bold text-blue-600 hover:underline">Learn more about Morphology &rarr;</a>
-                    `
-                },
-                links: {
-                    title: "Explore Our Other Processes",
-                    html: `
-                        <p>While the FBC is our most common test, many other important investigations happen in Haematology. These are requested specifically by doctors based on the patient's condition.</p>
-                        <ul class="list-disc list-inside mt-4 space-y-2">
-                           <li><a href="coagulation_page.html" class="font-semibold text-blue-600 hover:underline">Coagulation</a>: Investigating how blood clots.</li>
-                           <li><a href="red_cell_investigations_page.html" class="font-semibold text-blue-600 hover:underline">Red Cell Investigations</a>: Screening for inherited conditions like Sickle Cell.</li>
-                           <li><a href="further_haematology_tests_page.html" class="font-semibold text-blue-600 hover:underline">Further Haematology Tests</a>: Including screens for Malaria and inflammatory markers.</li>
-                        </ul>
-                    `
-                }
-            };
-            
-            function showModal(type) {
-                modalTitle.textContent = content[type].title;
-                modalContent.innerHTML = content[type].html;
-                modal.classList.add('active');
-            }
-
-            closeModalButton.addEventListener('click', () => modal.classList.remove('active'));
-
-            items.sample.addEventListener('click', () => {
-                if (currentStep === 'sample') {
-                    showModal('sample');
-                    items.sample.classList.remove('highlight');
-                    items.analyser.classList.add('highlight');
-                    currentStep = 'analyser';
-                }
-            });
-
-            items.analyser.addEventListener('click', () => {
-                if (currentStep === 'analyser') {
-                    showModal('analyser');
-                    items.analyser.classList.remove('highlight');
-                    items.microscope.classList.add('highlight');
-                    currentStep = 'microscope';
-                }
-            });
-            
-             items.microscope.addEventListener('click', () => {
-                if (currentStep === 'microscope') {
-                    showModal('microscope');
-                    items.microscope.classList.remove('highlight');
-                    currentStep = 'done';
-                }
-            });
-            
-            items.links.addEventListener('click', () => {
-                showModal('links');
-            });
-
-        });
+        function showInfo(cellType) {
+            const infoBox = document.getElementById('info-box');
+            infoBox.innerHTML = `<p>${cellInfo[cellType]}</p>`;
+        }
     </script>
 </body>
 </html>
