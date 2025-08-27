@@ -76,21 +76,49 @@
     </main>
     
     <div id="tutorial-modal" class="modal fixed inset-0 bg-black bg-opacity-50 items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-lg shadow-xl p-6 max-w-lg w-full">
+            <h3 class="text-2xl font-bold mb-4">How to Investigate</h3>
+            <ul class="list-disc list-inside space-y-2 text-left">
+                <li>Check the screen cell results to see which cells are positive.</li>
+                <li>Look at the main panel and find cells with matching positive and negative reactions.</li>
+                <li>Click the antigen names at the top of the table to "cross out" antigens that don't fit the pattern.</li>
+                <li>Use the enzyme panel to confirm or eliminate possibilities (e.g., Duffy & MNS antigens are destroyed by enzymes).</li>
+                <li>Once you've identified the antibody, select it from the dropdown list and submit your report!</li>
+            </ul>
+            <button id="close-tutorial" class="mt-6 bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded-lg hover:bg-gray-300">Close</button>
         </div>
+    </div>
     <div id="screen-modal" class="modal fixed inset-0 bg-black bg-opacity-50 items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-lg shadow-xl p-6 max-w-md w-full text-center">
+            <h3 class="text-2xl font-bold mb-4">Screening Cell Results</h3>
+            <table class="w-full text-center">
+                <thead>
+                    <tr><th class="p-2 border">Screen Cell I</th><th class="p-2 border">Screen Cell II</th><th class="p-2 border">Screen Cell III</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="p-2 border font-bold text-2xl" id="screen-I"></td>
+                        <td class="p-2 border font-bold text-2xl" id="screen-II"></td>
+                        <td class="p-2 border font-bold text-2xl" id="screen-III"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button id="close-screen" class="mt-6 bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded-lg hover:bg-gray-300">Close</button>
         </div>
-
+    </div>
     <div id="footer-placeholder"></div>
     <script src="js/component-loader.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
+            // --- DATA ---
             const panelAntigens = {
                 'Rh-hr': ['D', 'C', 'E', 'c', 'e'], 'Kell': ['K', 'k'], 'Duffy': ['Fya', 'Fyb'],
                 'Kidd': ['Jka', 'Jkb'], 'MNS': ['M', 'N', 'S', 's'], 'P': ['P1'], 'Lewis': ['Lea', 'Leb']
             };
             const panelAntigensList = [].concat(...Object.values(panelAntigens));
             const panelCells = [
+                //       D  C  E  c  e   K  k   Fya Fyb  Jka Jkb  M  N  S  s   P1  Lea Leb
                 { donor: 'R1R1', profile: ['+', '+', '0', '0', '+',  '0', '+',  '+', '0',  '+', '0',  '+', '0', '+', '0',  '+', '0', '+'] },
                 { donor: 'R2R2', profile: ['+', '0', '+', '+', '0',  '0', '+',  '0', '+',  '0', '+',  '0', '+', '0', '+',  '+', '+', '0'] },
                 { donor: 'rr',   profile: ['0', '0', '0', '+', '+',  '0', '+',  '+', '+',  '+', '+',  '+', '+', '+', '+',  '+', '0', '+'] },
@@ -198,7 +226,7 @@
             }
 
             function populateAnswerOptions() {
-                const allAntibodies = ['Anti-D', 'Anti-C', 'Anti-E', 'Anti-c', 'Anti-e', 'Anti-K', 'Anti-k', 'Anti-Fya', 'Anti-Fyb', 'Anti-Jka', 'Anti-Jkb', 'Anti-M', 'Anti-N', 'Anti-S', 'Anti-s', 'Anti-P1', 'Anti-Lea', 'Anti-Leb', 'Autoantibody', 'Anti-E and Anti-Fya'];
+                const allAntibodies = ['Anti-D', 'Anti-C', 'Anti-E', 'Anti-c', 'Anti-e', 'Anti-K', 'Anti-k', 'Anti-Fya', 'Anti-Fyb', 'Anti-Jka', 'Anti-Jkb', 'Anti-M', 'Anti-N', 'Anti-S', 'Anti-s', 'Anti-P1', 'Anti-Lea', 'Anti-Leb', 'Autoantibody', 'Anti-E and Anti-Fya', 'Anti-c and Anti-K'];
                 elements.answerSelect.innerHTML = '<option value="">Select Antibody...</option>';
                 allAntibodies.forEach(ab => {
                     const option = document.createElement('option');
