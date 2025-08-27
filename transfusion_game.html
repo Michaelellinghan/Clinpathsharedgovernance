@@ -27,6 +27,11 @@
         .reaction-cell { font-weight: bold; }
         .modal { display: none; }
         .modal.active { display: flex; }
+        .answer-checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 0.5rem;
+        }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
@@ -60,11 +65,23 @@
                 <table id="panel-table" class="panel-table w-full text-sm"></table>
             </div>
 
-            <div class="mt-6 flex flex-col md:flex-row items-center justify-center gap-4">
-                <label for="answer-select" class="font-bold text-lg">Final Identification:</label>
-                <select id="answer-select" class="p-2 border border-gray-300 rounded-lg"></select>
+            <div class="mt-6">
+                <label class="font-bold text-lg">Final Identification:</label>
+                <div id="answer-checkboxes" class="answer-checkbox-grid mt-2">
+                    </div>
+                <div class="mt-4 flex items-center">
+                    <input type="checkbox" id="cw-checkbox" class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                    <label for="cw-checkbox" class="ml-2 font-semibold text-gray-700">Cannot exclude Cʷ</label>
+                </div>
+            </div>
+
+            <div class="mt-6 flex items-center justify-center gap-4">
                 <button id="submit-answer" class="bg-green-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-green-600 transition-colors">Submit Report</button>
-                 <button id="next-case" class="bg-blue-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-600 transition-colors hidden">Next Case</button>
+                <button id="next-case" class="bg-blue-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-600 transition-colors hidden">Next Case</button>
+            </div>
+             <div id="notes-container" class="mt-6 hidden">
+                <h3 class="font-bold text-lg">Case Notes:</h3>
+                <p id="case-notes" class="p-3 bg-gray-100 rounded-md"></p>
             </div>
         </div>
         
@@ -83,29 +100,36 @@
                 <li>Look at the main panel and find cells with matching positive and negative reactions.</li>
                 <li>Click the antigen names at the top of the table to "cross out" antigens that don't fit the pattern.</li>
                 <li>Use the enzyme panel to confirm or eliminate possibilities (e.g., Duffy & MNS antigens are destroyed by enzymes).</li>
-                <li>Once you've identified the antibody, select it from the dropdown list and submit your report!</li>
+                <li>Select all antibodies you believe are present using the checkboxes.</li>
+                <li>If Cʷ is a possibility you cannot rule out, tick the Cʷ checkbox.</li>
+                <li>Submit your report to see the answer and notes.</li>
             </ul>
             <button id="close-tutorial" class="mt-6 bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded-lg hover:bg-gray-300">Close</button>
         </div>
     </div>
     <div id="screen-modal" class="modal fixed inset-0 bg-black bg-opacity-50 items-center justify-center p-4 z-50">
-        <div class="bg-white rounded-lg shadow-xl p-6 max-w-md w-full text-center">
-            <h3 class="text-2xl font-bold mb-4">Screening Cell Results</h3>
-            <table class="w-full text-center">
+        <div class="bg-white rounded-lg shadow-xl p-6 max-w-4xl w-full text-center overflow-x-auto">
+            <h3 class="text-2xl font-bold mb-4">Screening Cell Results & Antigram</h3>
+            <table class="w-full text-center panel-table text-sm">
                 <thead>
-                    <tr><th class="p-2 border">Screen Cell I</th><th class="p-2 border">Screen Cell II</th><th class="p-2 border">Screen Cell III</th></tr>
+                    <tr><th class="p-2 border"></th><th class="p-2 border">Screen Cell I</th><th class="p-2 border">Screen Cell II</th><th class="p-2 border">Screen Cell III</th></tr>
                 </thead>
                 <tbody>
                     <tr>
+                        <td class="p-2 border font-bold text-left">Reaction Strength</td>
                         <td class="p-2 border font-bold text-2xl" id="screen-I"></td>
                         <td class="p-2 border font-bold text-2xl" id="screen-II"></td>
                         <td class="p-2 border font-bold text-2xl" id="screen-III"></td>
                     </tr>
+                    <tr class="bg-gray-100"><td colspan="4" class="p-2 border font-bold text-left">Antigen Profile</td></tr>
                 </tbody>
+                <tbody id="screen-antigram">
+                    </tbody>
             </table>
             <button id="close-screen" class="mt-6 bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded-lg hover:bg-gray-300">Close</button>
         </div>
     </div>
+
     <div id="footer-placeholder"></div>
     <script src="js/component-loader.js"></script>
     <script>
@@ -113,47 +137,61 @@
 
             // --- DATA ---
             const panelAntigens = {
-                'Rh-hr': ['D', 'C', 'E', 'c', 'e'], 'Kell': ['K', 'k'], 'Duffy': ['Fya', 'Fyb'],
-                'Kidd': ['Jka', 'Jkb'], 'MNS': ['M', 'N', 'S', 's'], 'P': ['P1'], 'Lewis': ['Lea', 'Leb']
+                'Rh': ['D', 'C', 'E', 'c', 'e', 'Cʷ'],
+                'Kell': ['K', 'k', 'Kpᵃ', 'Kpᵇ', 'Jsᵃ', 'Jsᵇ'],
+                'Duffy': ['Fyᵃ', 'Fyᵇ'],
+                'Kidd': ['Jkᵃ', 'Jkᵇ'],
+                'Lewis': ['Leᵃ', 'Leᵇ'],
+                'P': ['P1'],
+                'MNS': ['M', 'N', 'S', 's'],
+                'Lutheran': ['Luᵃ', 'Luᵇ']
             };
             const panelAntigensList = [].concat(...Object.values(panelAntigens));
+            // Data transcribed from the provided image
             const panelCells = [
-                //       D  C  E  c  e   K  k   Fya Fyb  Jka Jkb  M  N  S  s   P1  Lea Leb
-                { donor: 'R1R1', profile: ['+', '+', '0', '0', '+',  '0', '+',  '+', '0',  '+', '0',  '+', '0', '+', '0',  '+', '0', '+'] },
-                { donor: 'R2R2', profile: ['+', '0', '+', '+', '0',  '0', '+',  '0', '+',  '0', '+',  '0', '+', '0', '+',  '+', '+', '0'] },
-                { donor: 'rr',   profile: ['0', '0', '0', '+', '+',  '0', '+',  '+', '+',  '+', '+',  '+', '+', '+', '+',  '+', '0', '+'] },
-                { donor: 'rr',   profile: ['0', '0', '0', '+', '+',  '+', '+',  '0', '+',  '0', '+',  '+', '0', '0', '+',  '0', '+', '0'] },
-                { donor: 'R1r',  profile: ['+', '+', '0', '+', '+',  '0', '+',  '+', '+',  '+', '0',  '0', '+', '0', '+',  '0', '0', '+'] },
-                { donor: 'R2r',  profile: ['+', '0', '+', '+', '+',  '0', '+',  '0', '+',  '+', '+',  '+', '0', '+', '+',  '0', '+', '0'] },
-                { donor: 'r\'r',  profile: ['0', '+', '0', '+', '+',  '0', '+',  '+', '0',  '+', '0',  '0', '+', '+', '0',  '+', '+', '0'] },
-                { donor: 'r"r',  profile: ['0', '0', '+', '+', '+',  '0', '+',  '0', '+',  '0', '+',  '+', '0', '0', '+',  '0', '+', '+'] },
+                //       D  C  E  c  e  Cʷ   K  k  Kpᵃ Kpᵇ Jsᵃ Jsᵇ   Fyᵃ Fyᵇ   Jkᵃ Jkᵇ   Leᵃ Leᵇ   P1   M  N  S  s   Luᵃ Luᵇ
+                { donor: 'R₁R₁', profile: ['+', '+', '0', '0', '+', '0', '0', '+', '0', '+', '0', '+', '+', '0', '+', '0', '0', '+', '+', '+', '0', '0', '+', '0', '+'] }, // Cell 1
+                { donor: 'R₂R₂', profile: ['+', '0', '+', '+', '0', '0', '0', '+', '0', '+', '0', '+', '0', '+', '0', '+', '+', '0', '+', '0', '+', '0', '+', '0', '+'] }, // Cell 2
+                { donor: 'R₂R₂', profile: ['+', '0', '+', '+', '0', '0', '0', '+', '0', '+', '0', '+', '+', '+', '+', '+', '0', '+', '+', '+', '+', '+', '+', '0', '+'] }, // Cell 3
+                { donor: 'r\'r',  profile: ['0', '+', '0', '+', '+', '0', '0', '+', '0', '+', '0', '+', '+', '0', '+', '+', 'nt', 'nt', '+', 'nt', 'nt', '+', '+', 'nt', 'nt'] }, // Cell 4
+                { donor: 'r"r',  profile: ['0', '0', '+', '+', '+', '0', '0', '+', 'nt', 'nt', 'nt', 'nt', '+', '+', '0', '+', '+', '0', '+', 'nt', 'nt', '0', '+', 'nt', 'nt'] }, // Cell 5
+                { donor: 'rr',   profile: ['0', '0', '0', '+', '+', '0', '0', '+', '0', '+', '0', '+', '0', '0', '+', '+', '0', '0', '0', '+', '+', '0', '+', '0', '+'] }, // Cell 6
+                { donor: 'rr',   profile: ['0', '0', '0', '+', '+', '+', '0', '+', 'nt', 'nt', 'nt', 'nt', '+', '+', 'nt', 'nt', '0', '+', '0', 'nt', 'nt', '0', '0', 'nt', 'nt'] }, // Cell 7
+                { donor: 'R₀r',  profile: ['+', '0', '0', '+', '+', '0', '0', '+', '0', '+', '0', '+', '0', '+', '+', '0', '+', '+', '+', '+', '0', '+', '+', '0', '+'] }, // Cell 8
+                { donor: 'rr',   profile: ['0', '0', '0', '+', '+', '0', '0', '+', '0', '+', '0', '+', '+', '0', '0', '0', '0', '0', '+', '+', '+', '+', '0', '0', '+'] }, // Cell 9
+                { donor: 'rr',   profile: ['0', '0', '0', '+', '+', '0', '+', '+', '0', '+', '0', '+', '0', '0', '+', '0', '+', '+', '+', '0', '+', '0', '+', 'nt', 'nt'] }, // Cell 10
+                { donor: 'rr',   profile: ['0', '0', '0', '+', '+', '0', '0', '+', '0', '+', '0', '+', '0', '+', '0', '0', '0', '0', '0', '0', '0', '+', '+', '0', '+'] }  // Cell 11
             ];
             
             const gameCases = [
-                { name: 'Easy Case 1', screen: { I: '2+', II: '0', III: '2+' }, iat: ['0', '0', '0', '2+', '0', '0', '0', '0'], enzyme: ['0', '0', '0', '2+', '0', '0', '0', '0'], auto: '0', solution: 'Anti-K' },
-                { name: 'Easy Case 2', screen: { I: '0', II: '3+', III: '3+' }, iat: ['0', '3+', '3+', '0', '0', '3+', '0', '3+'], enzyme: ['0', '4+', '4+', '0', '0', '4+', '0', '4+'], auto: '0', solution: 'Anti-E' },
-                { name: 'Medium Case 1', screen: { I: '3+', II: '3+', III: '0' }, iat: ['3+', '0', '0', '0', '3+', '0', '3+', '0'], enzyme: ['4+', '0', '0', '0', '4+', '0', '4+', '0'], auto: '0', solution: 'Anti-C' },
-                { name: 'Medium Case 2', screen: { I: '2+', II: '0', III: '2+' }, iat: ['2+', '0', '2+', '2+', '2+', '2+', '2+', '2+'], enzyme: ['0', '0', '0', '2+', '0', '2+', '0', '0'], auto: '0', solution: 'Anti-M' },
-                { name: 'Hard Case 1 (Multiple Abs)', screen: { I: '3+', II: '3+', III: '3+' }, iat: ['3+', '3+', '3+', '2+', '3+', '3+', '3+', '3+'], enzyme: ['3+', '3+', '3+', '0', '3+', '3+', '3+', '3+'], auto: '0', solution: 'Anti-E and Anti-Fya' },
-                { name: 'Hard Case 2 (Autoantibody)', screen: { I: '1+', II: '1+', III: '1+' }, iat: ['1+', '1+', '1+', '1+', '1+', '1+', '1+', '1+'], enzyme: ['2+', '2+', '2+', '2+', '2+', '2+', '2+', '2+'], auto: '1+', solution: 'Autoantibody' },
-                { name: 'Hard Case 3 (Multiple Abs)', screen: { I: '3+', II: '3+', III: '3+' }, iat: ['3+', '3+', '0', '2+', '3+', '3+', '2+', '0'], enzyme: ['4+', '4+', '0', '3+', '4+', '4+', '3+', '0'], auto: '0', solution: 'Anti-c and Anti-K' },
+                { name: 'Case 1', screen: { I: '2+', II: '0', III: '0' }, auto: '0', iat: ['2+', '0', '0', '0', '0', '0', '0', '0', '0', '2+', '0'], enzyme: ['2+', '0', '0', '0', '0', '0', '0', '0', '0', '2+', '0'], solution: ['Anti-K'], notes: 'A straightforward Anti-K. The reaction pattern perfectly matches the K antigen column (cells 10 only). Cell 4 is K-positive but was not used in this panel.' },
+                { name: 'Case 2', screen: { I: '3+', II: '3+', III: '0' }, auto: '0', iat: ['3+', '0', '0', '3+', '0', '0', '3+', '0', '0', '0', '0'], enzyme: ['4+', '0', '0', '4+', '0', '0', '4+', '0', '0', '0', '0'], solution: ['Anti-C'], notes: 'A classic Anti-C pattern. The reactions match all C positive cells (1, 4, 7).' },
+                { name: 'Case 3', screen: { I: '2+', II: '0', III: '2+' }, auto: '0', iat: ['2+', '0', '2+', '2+', '2+', '0', '2+', '2+', '2+', '0', '0'], enzyme: ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'], solution: ['Anti-Fyᵃ'], notes: 'The reactions match all Fyᵃ positive cells. The enzyme panel confirms the identification, as Fyᵃ antigens are destroyed by enzymes, resulting in all negative reactions.' },
+                { name: 'Case 4', screen: { I: '3+', II: '3+', III: '3+' }, auto: '0', iat: ['3+', '3+', '3+', '3+', '3+', '0', '3+', '3+', '0', '0', '0'], enzyme: ['4+', '4+', '4+', '4+', '4+', '0', '4+', '4+', '0', '0', '0'], solution: ['Anti-e'], notes: 'This antibody reacts with all cells except for 6, 9 and 11, which are the only e-negative cells in the panel. The reactions are enhanced by enzyme treatment, which is typical for Rh system antibodies.' },
+                { name: 'Case 5', screen: { I: '2+', II: '2+', III: '2+' }, auto: '0', iat: ['2+', '2+', '2+', '0', '2+', '2+', '0', '2+', '2+', '2+', '2+'], enzyme: ['0', '0', '2+', '0', '2+', '2+', '0', '2+', '0', '2+', '2+'], solution: ['Anti-S', 'Anti-Fyᵇ'], notes: 'A complex case with two antibodies. The enzyme panel is key: it destroys the Fyᵇ antigen, eliminating reactions with cells 2 and 5. The remaining reactions with cells 1, 3, 8 and 10 now clearly show an Anti-S pattern.' },
+                { name: 'Case 6', screen: { I: '1+', II: '1+', III: '1+' }, auto: '1+', iat: ['1+', '1+', '1+', '1+', '1+', '1+', '1+', '1+', '1+', '1+', '1+'], enzyme: ['2+', '2+', '2+', '2+', '2+', '2+', '2+', '2+', '2+', '2+', '2+'], solution: ['Autoantibody'], notes: 'All panel cells and the auto-control are positive with roughly equal strength. This pan-reactivity, along with the positive auto-control, indicates an autoantibody. Reactions are enhanced by enzyme.' },
+                { name: 'Case 7', screen: { I: '3+', II: '0', III: '0' }, auto: '0', iat: ['0', '0', '0', '0', '0', '0', '3+', '0', '0', '0', '0'], enzyme: ['0', '0', '0', '0', '0', '0', '4+', '0', '0', '0', '0'], solution: ['Anti-Cʷ'], notes: 'This antibody only reacts with cell 7, which is the only Cʷ positive cell on the panel. The reaction is enhanced by enzyme, which is common for Rh system antibodies.' }
             ];
 
             // --- ELEMENTS & STATE ---
             const elements = {
                 table: document.getElementById('panel-table'),
-                answerSelect: document.getElementById('answer-select'),
+                answerCheckboxes: document.getElementById('answer-checkboxes'),
+                cwCheckbox: document.getElementById('cw-checkbox'),
                 submitButton: document.getElementById('submit-answer'),
                 nextCaseButton: document.getElementById('next-case'),
                 feedbackEl: document.getElementById('feedback'),
                 scoreEl: document.getElementById('score'),
                 caseNameEl: document.getElementById('case-name'),
+                notesContainer: document.getElementById('notes-container'),
+                caseNotesEl: document.getElementById('case-notes'),
                 tutorialButton: document.getElementById('tutorial-button'),
                 closeTutorialButton: document.getElementById('close-tutorial'),
                 tutorialModal: document.getElementById('tutorial-modal'),
                 screenButton: document.getElementById('screen-button'),
                 closeScreenButton: document.getElementById('close-screen'),
                 screenModal: document.getElementById('screen-modal'),
+                screenAntigram: document.getElementById('screen-antigram'),
                 enzymeButton: document.getElementById('enzyme-button'),
             };
             
@@ -165,20 +203,18 @@
                 const thead = document.createElement('thead');
                 const tbody = document.createElement('tbody');
                 
-                // Top Header Row (Blood Systems)
                 const topHeaderRow = document.createElement('tr');
-                topHeaderRow.innerHTML = '<th>Donor</th>'; // Placeholder for Donor column
+                topHeaderRow.innerHTML = '<th>Cell</th>';
                 for (const system in panelAntigens) {
                     topHeaderRow.innerHTML += `<th colspan="${panelAntigens[system].length}">${system}</th>`;
                 }
                 topHeaderRow.innerHTML += '<th colspan="2">Reactions</th>';
                 thead.appendChild(topHeaderRow);
 
-                // Bottom Header Row (Antigens)
                 const bottomHeaderRow = document.createElement('tr');
-                bottomHeaderRow.innerHTML = '<th></th>'; // Placeholder for Donor column
+                bottomHeaderRow.innerHTML = '<th>#</th>';
                 panelAntigensList.forEach(ag => {
-                    bottomHeaderRow.innerHTML += `<th class="antigen-header" data-antigen-index="${panelAntigensList.indexOf(ag)}">${ag.replace('a','<sup>a</sup>').replace('b','<sup>b</sup>')}</th>`;
+                    bottomHeaderRow.innerHTML += `<th class="antigen-header" data-antigen-index="${panelAntigensList.indexOf(ag)}">${ag.replace('a','ᵃ').replace('b','ᵇ')}</th>`;
                 });
                 bottomHeaderRow.innerHTML += '<th>IAT</th><th id="enzyme-header" class="hidden">Enzyme</th>';
                 thead.appendChild(bottomHeaderRow);
@@ -194,7 +230,7 @@
 
                 panelCells.forEach((cell, index) => {
                     const row = document.createElement('tr');
-                    let rowHtml = `<td>${cell.donor}</td>`;
+                    let rowHtml = `<td class="font-bold">${index + 1}</td>`;
                     cell.profile.forEach((antigenResult, antigenIndex) => {
                         rowHtml += `<td data-col-index="${antigenIndex}">${antigenResult}</td>`;
                     });
@@ -208,51 +244,85 @@
                 autoRow.innerHTML = `<td class="font-bold">Auto</td><td colspan="${panelAntigensList.length}"></td><td class="reaction-cell">${caseData.auto}</td><td class="reaction-cell hidden" data-enzyme-result="true">${caseData.auto}</td>`;
                 tbody.appendChild(autoRow);
 
-                // Update UI
                 elements.caseNameEl.textContent = caseData.name;
                 document.getElementById('screen-I').textContent = caseData.screen.I;
                 document.getElementById('screen-II').textContent = caseData.screen.II;
                 document.getElementById('screen-III').textContent = caseData.screen.III;
+
+                populateScreenAntigram();
+
                 elements.feedbackEl.textContent = 'A new case is ready for investigation.';
                 elements.feedbackEl.className = 'mt-1 h-6 text-lg font-semibold text-gray-500';
                 elements.submitButton.classList.remove('hidden');
                 elements.nextCaseButton.classList.add('hidden');
-                elements.answerSelect.disabled = false;
+                elements.notesContainer.classList.add('hidden');
+                
+                document.querySelectorAll('.answer-checkbox, #cw-checkbox').forEach(cb => {
+                    cb.checked = false;
+                    cb.disabled = false;
+                });
+                
                 elements.enzymeButton.disabled = caseData.enzyme.length === 0;
                 
                 document.querySelectorAll('.antigen-header, td[data-col-index]').forEach(el => el.classList.remove('line-through'));
                 document.getElementById('enzyme-header').classList.add('hidden');
                 document.querySelectorAll('[data-enzyme-result]').forEach(el => el.classList.add('hidden'));
             }
+            
+            function populateScreenAntigram() {
+                elements.screenAntigram.innerHTML = '';
+                panelAntigensList.forEach((antigen, index) => {
+                    const row = document.createElement('tr');
+                    let rowHTML = `<td class="p-2 border font-bold text-left">${antigen.replace('a','ᵃ').replace('b','ᵇ')}</td>`;
+                    rowHTML += `<td class="p-2 border">${panelCells[0].profile[index]}</td>`;
+                    rowHTML += `<td class="p-2 border">${panelCells[1].profile[index]}</td>`;
+                    rowHTML += `<td class="p-2 border">${panelCells[2].profile[index]}</td>`;
+                    row.innerHTML = rowHTML;
+                    elements.screenAntigram.appendChild(row);
+                });
+            }
 
             function populateAnswerOptions() {
-                const allAntibodies = ['Anti-D', 'Anti-C', 'Anti-E', 'Anti-c', 'Anti-e', 'Anti-K', 'Anti-k', 'Anti-Fya', 'Anti-Fyb', 'Anti-Jka', 'Anti-Jkb', 'Anti-M', 'Anti-N', 'Anti-S', 'Anti-s', 'Anti-P1', 'Anti-Lea', 'Anti-Leb', 'Autoantibody', 'Anti-E and Anti-Fya', 'Anti-c and Anti-K'];
-                elements.answerSelect.innerHTML = '<option value="">Select Antibody...</option>';
+                const allAntibodies = ['Anti-D', 'Anti-C', 'Anti-E', 'Anti-c', 'Anti-e', 'Anti-Cʷ', 'Anti-K', 'Anti-k', 'Anti-Fyᵃ', 'Anti-Fyᵇ', 'Anti-Jkᵃ', 'Anti-Jkᵇ', 'Anti-S', 'Anti-s', 'Anti-M', 'Anti-N', 'Autoantibody'];
+                elements.answerCheckboxes.innerHTML = '';
                 allAntibodies.forEach(ab => {
-                    const option = document.createElement('option');
-                    option.value = ab;
-                    option.textContent = ab.replace('a', 'a').replace('b', 'b');
-                    elements.answerSelect.appendChild(option);
+                    const label = document.createElement('label');
+                    label.className = "flex items-center space-x-2";
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.value = ab;
+                    checkbox.className = "answer-checkbox h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500";
+                    label.appendChild(checkbox);
+                    const span = document.createElement('span');
+                    span.innerHTML = ab.replace('a','ᵃ').replace('b','ᵇ').replace('w','ʷ');
+                    label.appendChild(span);
+                    elements.answerCheckboxes.appendChild(label);
                 });
             }
 
             function checkAnswer() {
-                const selectedAnswer = elements.answerSelect.value;
-                const correctAnswer = gameCases[state.currentCaseIndex].solution;
+                const selectedAnswers = Array.from(document.querySelectorAll('.answer-checkbox:checked')).map(cb => cb.value);
+                const correctAnswers = gameCases[state.currentCaseIndex].solution;
+                const cwExcluded = elements.cwCheckbox.checked;
 
-                if (selectedAnswer === correctAnswer) {
+                // Sort arrays to compare them regardless of order
+                const isCorrect = selectedAnswers.length === correctAnswers.length && selectedAnswers.sort().every((value, index) => value === correctAnswers.sort()[index]);
+
+                if (isCorrect) {
                     elements.feedbackEl.textContent = 'Correct! Excellent work.';
                     elements.feedbackEl.className = 'mt-1 h-6 text-lg font-semibold text-green-600';
                     state.score += 10;
                     elements.scoreEl.textContent = state.score;
                 } else {
-                    elements.feedbackEl.textContent = `Not quite. The correct answer is ${correctAnswer}.`;
+                    elements.feedbackEl.textContent = `Not quite. The correct answer is ${correctAnswers.join(' and ')}.`;
                     elements.feedbackEl.className = 'mt-1 h-6 text-lg font-semibold text-red-600';
                 }
                 
+                elements.caseNotesEl.textContent = gameCases[state.currentCaseIndex].notes;
+                elements.notesContainer.classList.remove('hidden');
                 elements.submitButton.classList.add('hidden');
                 elements.nextCaseButton.classList.remove('hidden');
-                elements.answerSelect.disabled = true;
+                document.querySelectorAll('.answer-checkbox, #cw-checkbox').forEach(cb => cb.disabled = true);
             }
             
             function toggleExclusion(columnIndex) {
