@@ -3,165 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>What Haematology Does - Clinical Pathology</title>
+    <title>What Haematology Does - Clinpath</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        .hero-bg { background-image: url('https://images.unsplash.com/photo-1628334882270-038a3ba3be5b?q=80&w=2070&auto=format&fit=crop&ixlib-rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; background-position: center; }
-        .text-shadow-lg { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
-        .card-hover-effect:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
-        .cell-card { cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; }
-        .cell-card:hover { transform: scale(1.05); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        /* Animation for elements fading in on scroll */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Styling for the game cards */
+        .game-card {
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .game-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 30px -10px rgba(0,0,0,0.2);
+        }
     </style>
 </head>
-<body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
+<body class="bg-gray-50 text-gray-800">
 
-    <div id="header-placeholder"></div>
+    <!-- Header component will be loaded here -->
+    <div id="header"></div>
 
-    <main class="container mx-auto px-4 py-8 flex-grow">
-        
-        <section class="hero-bg text-white rounded-lg p-16 mb-8 text-center shadow-lg">
-            <div>
-                <h1 class="text-4xl md:text-6xl font-bold mb-4 text-shadow-lg">Understanding Haematology</h1>
-                <p class="text-lg md:text-2xl max-w-3xl mx-auto text-shadow-lg">We're the blood detectives, solving medical mysteries one cell at a time.</p>
+    <main>
+        <!-- Hero Section - Themed -->
+        <section class="bg-blue-800 text-center py-24 md:py-32 px-4">
+            <div class="container mx-auto">
+                <h1 class="text-5xl md:text-7xl font-extrabold mb-4 text-white">
+                    Haematology: It's In Your Blood
+                </h1>
+                <p class="text-lg md:text-xl max-w-3xl mx-auto text-blue-100">
+                    Welcome to the incredible world flowing through your veins. We're the detectives of the blood, uncovering clues that keep you healthy. Scroll down to see what we do.
+                </p>
+                <a href="#core-areas" class="mt-8 inline-block bg-white text-blue-800 font-bold py-3 px-8 rounded-full text-lg hover:bg-gray-200 transition-transform transform hover:scale-105">
+                    Explore Our Work
+                </a>
             </div>
         </section>
 
-        <section class="bg-white p-8 rounded-lg shadow-md mb-8">
-            <h2 class="text-3xl font-bold text-gray-900 mb-4">What is Haematology? The Science of Blood</h2>
-            <p class="text-lg text-gray-700 mb-4">Haematology is the comprehensive study of blood, the tissues that create it (like bone marrow), and the wide range of diseases and disorders that affect it. Think of us as the body's 'blood detectives'. From the moment a purple-top tube arrives in our lab, we begin a detailed investigation to analyse its contents. Our work is a crucial part of healthcare, providing vital information for diagnosing conditions ranging from simple anaemia to complex disorders like leukaemia and haemophilia.</p>
-            <p class="text-lg text-gray-700">The field is vast, covering everything from the automated counting of billions of cells to the intricate manual art of identifying abnormal cells under a microscope, and the complex pathways that govern how our blood clots. This page will give you an overview of the key areas within this fascinating discipline.</p>
-        </section>
-
-        <section class="bg-white p-8 rounded-lg shadow-md mb-8">
-            <h2 class="text-3xl font-bold text-gray-900 mb-2 text-center">Meet the Cells!</h2>
-            <p class="text-center text-gray-600 mb-6">Blood is a living tissue, teeming with specialised cells. Click on a cell to learn about its vital role.</p>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                <div class="cell-card p-6" onclick="showInfo('rbc')">
-                    <img src="https://placehold.co/150x150/ef4444/FFFFFF?text=RBC" alt="Red Blood Cell" class="mx-auto rounded-full mb-4">
-                    <h3 class="text-xl font-bold">Red Blood Cells</h3>
-                </div>
-                <div class="cell-card p-6" onclick="showInfo('wbc')">
-                     <img src="https://placehold.co/150x150/8b5cf6/FFFFFF?text=WBC" alt="White Blood Cell" class="mx-auto rounded-full mb-4">
-                    <h3 class="text-xl font-bold">White Blood Cells</h3>
-                </div>
-                <div class="cell-card p-6" onclick="showInfo('plt')">
-                     <img src="https://placehold.co/150x150/f59e0b/FFFFFF?text=PLT" alt="Platelet" class="mx-auto rounded-full mb-4">
-                    <h3 class="text-xl font-bold">Platelets</h3>
-                </div>
-            </div>
-            <div id="info-box" class="mt-6 p-4 bg-blue-100 border-l-4 border-blue-500 text-blue-800 rounded-r-lg min-h-[50px] flex items-center justify-center text-lg">
-                <p>Click a cell above!</p>
-            </div>
-        </section>
-        
-        <section class="bg-white p-8 rounded-lg shadow-md mb-8">
-            <h2 class="text-3xl font-bold text-gray-900 mb-6">A Deeper Dive into Haematology</h2>
-            
-            <div class="space-y-12">
-                <div>
-                    <h3 class="text-2xl font-bold text-gray-800 mb-4 border-b-4 border-blue-500 pb-2">Routine Haematology: The Full Blood Count (FBC)</h3>
-                    <p class="text-lg text-gray-700 mb-4">The cornerstone of any haematology lab is the <strong>Full Blood Count (FBC)</strong>. This is one of the most frequently requested tests in medicine, providing a rapid and comprehensive snapshot of a patient's health. The long list of acronyms and numbers can seem daunting, but by following a structured approach, we can make sense of them all!</p>
-                    <p class="text-lg text-gray-700 mb-6">Our high-tech analysers, like the Sysmex XN-9100, use laser technology and electrical impedance to count and measure the three main cellular components of blood: red cells, white cells, and platelets.</p>
+        <!-- Main Content Section -->
+        <section id="core-areas" class="py-20 px-4">
+            <div class="container mx-auto">
+                <h2 class="text-4xl font-bold text-center mb-16 reveal">The Core of Haematology</h2>
+                
+                <div class="space-y-20">
                     
-                    <div class="space-y-6">
-                        <div>
-                            <h4 class="text-xl font-semibold text-red-600 mb-3">Red Cell Parameters</h4>
-                            <p class="mb-3">These tests quantify the amount of red cells and haemoglobin. An abnormally low level is known as <strong>anaemia</strong>, while an abnormally high level is <strong>polycythaemia</strong>.</p>
-                            <ul class="list-disc list-inside space-y-2 pl-4 text-gray-700">
-                                <li><strong>Haemoglobin (Hb):</strong> Measures the amount of oxygen-carrying protein. It's the primary indicator of anaemia.</li>
-                                <li><strong>Mean Corpuscular Volume (MCV):</strong> The average size of red cells. This is crucial for classifying anaemia: low MCV (microcytic) can suggest iron deficiency, while high MCV (macrocytic) points towards vitamin B12 or folate deficiency.</li>
-                                <li><strong>Haematocrit (Hct):</strong> The percentage of blood volume occupied by red cells.</li>
-                                <li><strong>Red Cell Count (RCC):</strong> The total number of red cells.</li>
-                            </ul>
+                    <!-- Section 1: Full Blood Count -->
+                    <div class="reveal flex flex-col md:flex-row items-center gap-10">
+                        <div class="md:w-1/2">
+                            <h3 class="text-3xl font-bold mb-4 text-blue-600">The Full Blood Count (FBC)</h3>
+                            <p class="text-gray-600 text-lg leading-relaxed">This is our number one test! Think of it as a census of your blood, counting every red cell, white cell, and platelet. It gives us a vital snapshot of your health, helping to spot everything from simple anaemia to serious diseases like leukaemia.</p>
+                            <a href="fbc_page.html" class="mt-6 inline-block font-semibold text-blue-600 hover:text-blue-800">See what the FBC tells us &rarr;</a>
                         </div>
-                        <div>
-                            <h4 class="text-xl font-semibold text-blue-600 mb-3">White Cell Parameters</h4>
-                            <p class="mb-3">A high white cell count (<strong>leukocytosis</strong>) often indicates infection or inflammation, while a low count (<strong>leukopenia</strong>) can be caused by various conditions, including viral infections or certain medications.</p>
-                             <ul class="list-disc list-inside space-y-2 pl-4 text-gray-700">
-                                <li><strong>White Blood Cell Count (WCC):</strong> The total number of all white cells.</li>
-                                <li><strong>Differential:</strong> This is the breakdown of the WCC into its different types:
-                                    <ul class="list-disc list-inside ml-6">
-                                        <li><strong>Neutrophils:</strong> The body's first line of defence against bacterial infection.</li>
-                                        <li><strong>Lymphocytes:</strong> Key fighters of viral infections.</li>
-                                        <li><strong>Monocytes, Eosinophils, Basophils:</strong> Specialised cells involved in cleaning up debris, fighting parasites, and allergic reactions.</li>
-                                    </ul>
-                                </li>
-                                 <li><strong>Blasts:</strong> The presence of these immature cells in circulating blood is highly abnormal and requires urgent review for conditions like acute leukaemia.</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h4 class="text-xl font-semibold text-yellow-600 mb-3">Platelet Parameters</h4>
-                            <p class="mb-3">Platelets are tiny cell fragments vital for clotting. A low count is <strong>thrombocytopenia</strong> (risk of bleeding), and a high count is <strong>thrombocytosis</strong>.</p>
-                             <ul class="list-disc list-inside space-y-2 pl-4 text-gray-700">
-                                <li><strong>Platelet Count:</strong> The total number of platelets. A low count can cause spontaneous bruising and bleeding.</li>
-                                <li><strong>Mean Platelet Volume (MPV):</strong> The average size of platelets. A high MPV can indicate the bone marrow is rapidly producing new, larger platelets.</li>
-                            </ul>
+                        <div class="md:w-1/2">
+                            <img src="Spinning blood samples.jpg" alt="Centrifuge spinning blood samples" class="rounded-xl shadow-xl w-full h-auto object-cover">
                         </div>
                     </div>
-                </div>
 
-                <div>
-                    <h3 class="text-2xl font-bold text-gray-800 mb-4 border-b-4 border-teal-500 pb-2">Coagulation: The Science of Clotting</h3>
-                    <p class="text-lg text-gray-700">Haematology also covers **Haemostasis**—the complex process by which the body stops bleeding. We perform a range of tests to investigate the clotting cascade. These are crucial for monitoring patients on blood-thinning medication (like Warfarin), preparing patients for surgery, and investigating unexplained bleeding or bruising. The specialist area of investigating inherited or acquired bleeding and clotting disorders is known as Haemostasis & Thrombophilia.</p>
+                    <!-- Section 2: Coagulation -->
+                    <div class="reveal flex flex-col md:flex-row-reverse items-center gap-10">
+                        <div class="md:w-1/2">
+                            <h3 class="text-3xl font-bold mb-4 text-purple-600">Coagulation: The Clotting Experts</h3>
+                            <p class="text-gray-600 text-lg leading-relaxed">Ever wonder how a papercut stops bleeding? That's coagulation! We investigate the complex system of proteins that form clots. We help diagnose bleeding problems and ensure patients on blood thinners like warfarin are on the perfect dose.</p>
+                            <a href="coagulation_page.html" class="mt-6 inline-block font-semibold text-purple-600 hover:text-purple-800">Unravel the clotting cascade &rarr;</a>
+                        </div>
+                        <div class="md:w-1/2">
+                           <img src="lab.jpg" alt="Laboratory equipment for coagulation testing" class="rounded-xl shadow-xl w-full h-auto object-cover">
+                        </div>
+                    </div>
+
+                    <!-- Section 3: Blood Film Morphology -->
+                    <div class="reveal flex flex-col md:flex-row items-center gap-10">
+                        <div class="md:w-1/2">
+                            <h3 class="text-3xl font-bold mb-4 text-pink-600">Blood Films: Under the Microscope</h3>
+                            <p class="text-gray-600 text-lg leading-relaxed">Sometimes, you need the human eye. Our scientists are experts at looking at blood on a glass slide. We can spot oddly shaped cells, signs of infection, and even parasites like malaria that our analysers can't see. It's a critical skill that saves lives.</p>
+                            <a href="blood_film_morphology_page.html" class="mt-6 inline-block font-semibold text-pink-600 hover:text-pink-800">See what we see &rarr;</a>
+                        </div>
+                        <div class="md:w-1/2">
+                            <img src="morphology/2403BF1/red cells.JPG" alt="Microscopic view of red blood cells" class="rounded-xl shadow-xl w-full h-auto object-cover">
+                        </div>
+                    </div>
+
                 </div>
+            </div>
+        </section>
+
+        <!-- Games Section -->
+        <section class="py-20 px-4 bg-gray-100">
+            <div class="container mx-auto text-center">
+                <h2 class="text-4xl font-bold mb-4 reveal">Ready for a Challenge?</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto mb-12 reveal">Put your knowledge to the test with our interactive games. Can you become a Haematology hero?</p>
                 
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <a href="fbc_challenge.html" class="reveal game-card h-80 rounded-xl p-8 flex flex-col justify-end items-start text-left text-white" style="background-image: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0)), url('https://placehold.co/600x400/3b82f6/white?text=FBC');">
+                        <h3 class="text-2xl font-bold">FBC Challenge</h3>
+                        <p>Identify the different blood cells against the clock.</p>
+                    </a>
+                    <a href="coagulation_game.html" class="reveal game-card h-80 rounded-xl p-8 flex flex-col justify-end items-start text-left text-white" style="background-image: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0)), url('https://placehold.co/600x400/a855f7/white?text=Coag');">
+                        <h3 class="text-2xl font-bold">Coagulation Cascade</h3>
+                        <p>Can you piece together the puzzle of how blood clots?</p>
+                    </a>
+                    <a href="haem_game.html" class="reveal game-card h-80 rounded-xl p-8 flex flex-col justify-end items-start text-left text-white" style="background-image: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0)), url('https://placehold.co/600x400/ec4899/white?text=Haem');">
+                        <h3 class="text-2xl font-bold">Haem Word Game</h3>
+                        <p>Test your vocabulary with our fun word puzzles.</p>
+                    </a>
+                </div>
             </div>
-        </section>
-
-        <section class="bg-gray-50 p-8 rounded-lg shadow-inner">
-            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Explore Our Processes in Detail</h2>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <a href="fbc_page.html" class="block bg-white p-6 rounded-lg shadow-md text-center card-hover-effect">
-                    <div class="text-5xl text-red-500 mb-4"><i class="fas fa-file-medical-alt"></i></div>
-                    <h3 class="text-xl font-semibold mb-2">The Full Blood Count (FBC)</h3>
-                </a>
-                <a href="blood_film_morphology_page.html" class="block bg-white p-6 rounded-lg shadow-md text-center card-hover-effect">
-                    <div class="text-5xl text-blue-500 mb-4"><i class="fas fa-microscope"></i></div>
-                    <h3 class="text-xl font-semibold mb-2">Blood Film Morphology</h3>
-                </a>
-                <a href="coagulation_page.html" class="block bg-white p-6 rounded-lg shadow-md text-center card-hover-effect">
-                    <div class="text-5xl text-teal-500 mb-4"><i class="fas fa-hourglass-half"></i></div>
-                    <h3 class="text-xl font-semibold mb-2">Coagulation</h3>
-                </a>
-                <a href="red_cell_investigations_page.html" class="block bg-white p-6 rounded-lg shadow-md text-center card-hover-effect">
-                    <div class="text-5xl text-red-500 mb-4"><i class="fas fa-dna"></i></div>
-                    <h3 class="text-xl font-semibold mb-2">Red Cell Investigations</h3>
-                </a>
-                <a href="haemostasis_thrombophilia_page.html" class="block bg-white p-6 rounded-lg shadow-md text-center card-hover-effect">
-                    <div class="text-5xl text-purple-500 mb-4"><i class="fas fa-search-plus"></i></div>
-                    <h3 class="text-xl font-semibold mb-2">Haemostasis & Thrombophilia</h3>
-                </a>
-                <a href="further_haematology_tests_page.html" class="block bg-white p-6 rounded-lg shadow-md text-center card-hover-effect">
-                    <div class="text-5xl text-indigo-500 mb-4"><i class="fas fa-vial"></i></div>
-                    <h3 class="text-xl font-semibold mb-2">Further Haematology Tests</h3>
-                </a>
-            </div>
-        </section>
-
-         <section class="text-center mt-12">
-            <a href="video_tours.html" class="bg-gray-800 text-white font-bold py-3 px-8 rounded-full hover:bg-gray-700 transition duration-300">
-                <i class="fas fa-arrow-left mr-2"></i>Back to Laboratory Tours
-            </a>
         </section>
 
     </main>
 
-    <div id="footer-placeholder"></div>
-    <script src="js/component-loader.js"></script>
-    <script>
-        const cellInfo = {
-            rbc: "<strong>My Job:</strong> I'm an oxygen carrier! I pick up oxygen in the lungs and deliver it all around the body.",
-            wbc: "<strong>My Job:</strong> I'm a defender! As part of the immune system, I fight off nasty infections from bacteria and viruses.",
-            plt: "<strong>My Job:</strong> I'm a first responder! When you get a cut, I rush to the scene to form a plug and stop the bleeding."
-        };
+    <!-- Footer component will be loaded here -->
+    <div id="footer"></div>
 
-        function showInfo(cellType) {
-            const infoBox = document.getElementById('info-box');
-            infoBox.innerHTML = `<p>${cellInfo[cellType]}</p>`;
-        }
+    <!-- Script to load header and footer -->
+    <script src="js/component-loader.js"></script>
+
+    <!-- Script for scroll animations -->
+    <script>
+        const revealElements = document.querySelectorAll('.reveal');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        revealElements.forEach(el => {
+            observer.observe(el);
+        });
     </script>
+
 </body>
 </html>
