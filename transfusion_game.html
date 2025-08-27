@@ -6,7 +6,6 @@
     <title>Antibody Identification Challenge - Clinical Pathology</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <style>
         body { font-family: 'Inter', sans-serif; }
         .panel-table { border-collapse: collapse; white-space: nowrap; }
@@ -44,10 +43,22 @@
             <p class="text-lg text-gray-600">Use your skills and tools to solve the antibody puzzle.</p>
         </section>
 
+        <!-- Case Selection Controls -->
+        <div class="bg-white p-4 rounded-lg shadow-md max-w-full mx-auto mb-6">
+            <div class="flex flex-wrap items-center justify-center gap-4">
+                <label for="case-select" class="font-bold text-lg">Select a Case:</label>
+                <select id="case-select" class="p-2 border border-gray-300 rounded-lg"></select>
+                <button id="random-case-button" class="bg-purple-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-purple-600 transition-colors">
+                    <i class="fas fa-random mr-2"></i>Random Case
+                </button>
+            </div>
+        </div>
+
         <div class="bg-white p-6 rounded-lg shadow-md max-w-full mx-auto">
             <div class="flex flex-wrap justify-between items-center mb-4 gap-4">
                 <div>
-                    <h2 class="text-2xl font-bold">Case File: <span id="case-name"></span></h2>
+                    <h2 class="text-2xl font-bold">Case File: <span id="case-number"></span></h2>
+                    <p id="clinical-details" class="text-md text-gray-600 font-medium"></p>
                     <p id="feedback" class="mt-1 h-6 text-lg font-semibold text-gray-500">A new case is ready for investigation.</p>
                 </div>
                 <div class="flex items-center gap-2 md:gap-4">
@@ -67,8 +78,7 @@
 
             <div class="mt-6">
                 <label class="font-bold text-lg">Final Identification:</label>
-                <div id="answer-checkboxes" class="answer-checkbox-grid mt-2">
-                    </div>
+                <div id="answer-checkboxes" class="answer-checkbox-grid mt-2"></div>
                 <div class="mt-4 flex items-center">
                     <input type="checkbox" id="cw-checkbox" class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
                     <label for="cw-checkbox" class="ml-2 font-semibold text-gray-700">Cannot exclude Cʷ</label>
@@ -123,8 +133,7 @@
                     </tr>
                     <tr class="bg-gray-100"><td colspan="4" class="p-2 border font-bold text-left">Antigen Profile</td></tr>
                 </tbody>
-                <tbody id="screen-antigram">
-                    </tbody>
+                <tbody id="screen-antigram"></tbody>
             </table>
             <button id="close-screen" class="mt-6 bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded-lg hover:bg-gray-300">Close</button>
         </div>
@@ -135,7 +144,6 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
-            // --- DATA ---
             const panelAntigens = {
                 'Rh': ['D', 'C', 'E', 'c', 'e', 'Cʷ'],
                 'Kell': ['K', 'k', 'Kpᵃ', 'Kpᵇ', 'Jsᵃ', 'Jsᵇ'],
@@ -147,572 +155,58 @@
                 'Lutheran': ['Luᵃ', 'Luᵇ']
             };
             const panelAntigensList = [].concat(...Object.values(panelAntigens));
-const panelCells = [
-    //       D  C  E  c  e  Cʷ   K  k  Kpᵃ Kpᵇ Jsᵃ Jsᵇ   Fyᵃ Fyᵇ   Jkᵃ Jkᵇ   Leᵃ Leᵇ   P1   M  N  S  s   Luᵃ Luᵇ
-    { donor: 'R1WR1', profile: ['+', '+', '0', '0', '+', '+', '0', '+', '0', '+', 'nt', 'nt', '+', '0', '+', '0', '0', '+', '+', '+', '0', '0', '+', '0', '+'] }, // Cell 1
-    { donor: 'R1R1',  profile: ['+', '+', '0', '0', '+', '0', '+', '+', '0', '+', 'nt', 'nt', '0', '+', '+', '+', '+', '0', '0', '+', '+', '+', '0', '0', '+'] }, // Cell 2
-    { donor: 'R2R2',  profile: ['+', '0', '+', '+', '0', '0', '0', '+', '0', '+', 'nt', 'nt', '0', '+', '0', '+', '0', '0', '+', '+', '+', '0', '+', '0', '+'] }, // Cell 3
-    { donor: 'r\'r',   profile: ['0', '+', '0', '+', '+', '0', '0', '+', '0', '+', 'nt', 'nt', '0', '0', '+', '0', '0', '+', '0', '0', '+', '0', '+', '0', '+'] }, // Cell 4
-    { donor: 'r\"r',  profile: ['0', '0', '+', '+', '+', '0', '0', '+', '0', '+', 'nt', 'nt', '+', '0', '+', '0', '+', '0', '+', '0', '+', '+', '+', '+', '+'] }, // Cell 5
-    { donor: 'rr',    profile: ['0', '0', '0', '+', '+', '0', '+', '+', '0', '+', 'nt', 'nt', '+', '+', '0', '+', '+', '0', '+', '+', '0', '+', '0', '0', '+'] }, // Cell 6
-    { donor: 'rr',    profile: ['0', '0', '0', '+', '+', '0', '0', '+', '+', '+', 'nt', 'nt', '0', '+', '0', '+', '0', '+', '0', '+', '+', '0', '+', '0', '+'] }, // Cell 7
-    { donor: 'r0R',   profile: ['+', '0', '0', '+', '+', '0', '0', '+', '0', '+', 'nt', 'nt', '0', '+', '+', '+', '0', '+', '+', '+', '+', '+', '0', '0', '+'] }, // Cell 8
-    { donor: 'rr',    profile: ['0', '0', '0', '+', '+', '0', '0', '+', '0', '+', 'nt', 'nt', '+', '+', '0', '+', '+', '0', '+', '0', '+', '0', '0', '0', '+'] }, // Cell 9
-    { donor: 'rr',    profile: ['0', '0', '0', '+', '+', '0', '0', '+', '0', '+', 'nt', 'nt', '+', '0', '+', '0', '0', '+', '+', '+', '0', '0', '+', '0', '+'] }, // Cell 10
-    { donor: 'rr',    profile: ['0', '0', '0', '+', '+', '0', '0', '+', '0', '+', 'nt', 'nt', '0', '0', '+', '0', '0', '0', '+', '0', '+', '0', '+', '+', '+'] }  // Cell 11
-];
+            
+            const panelCells = [
+                // Data meticulously transcribed from the final user-provided image and text
+                //       D  C  E  c  e  Cʷ   K  k  Kpᵃ Kpᵇ Jsᵃ Jsᵇ   Fyᵃ Fyᵇ   Jkᵃ Jkᵇ   Leᵃ Leᵇ   P1   M  N  S  s   Luᵃ Luᵇ
+                { donor: 'R1WR1', profile: ['+', '+', '0', '0', '+', '+', '0', '+', '0', '+', 'nt', 'nt', '+', '0', '+', '0', '0', '+', '+', '+', '0', '0', '+', '0', '+'] }, // Cell 1
+                { donor: 'R1R1',  profile: ['+', '+', '0', '0', '+', '0', '+', '+', '0', '+', 'nt', 'nt', '0', '+', '+', '+', '+', '0', '0', '+', '+', '+', '0', '0', '+'] }, // Cell 2
+                { donor: 'R2R2',  profile: ['+', '0', '+', '+', '0', '0', '0', '+', '0', '+', 'nt', 'nt', '0', '+', '0', '+', '0', '0', '+', '+', '+', '0', '+', '0', '+'] }, // Cell 3
+                { donor: 'r\'r',   profile: ['0', '+', '0', '+', '+', '0', '0', '+', '0', '+', 'nt', 'nt', '0', '0', '+', '0', '0', '+', '0', '0', '+', '0', '+', '0', '+'] }, // Cell 4
+                { donor: 'r\"r',  profile: ['0', '0', '+', '+', '+', '0', '0', '+', '0', '+', 'nt', 'nt', '+', '0', '+', '0', '+', '0', '+', '0', '+', '+', '+', '+', '+'] }, // Cell 5
+                { donor: 'rr',    profile: ['0', '0', '0', '+', '+', '0', '+', '+', '0', '+', 'nt', 'nt', '+', '+', '0', '+', '+', '0', '+', '+', '0', '+', '0', '0', '+'] }, // Cell 6
+                { donor: 'rr',    profile: ['0', '0', '0', '+', '+', '0', '0', '+', '+', '+', 'nt', 'nt', '0', '+', '0', '+', '0', '+', '0', '+', '+', '0', '+', '0', '+'] }, // Cell 7
+                { donor: 'r0R',   profile: ['+', '0', '0', '+', '+', '0', '0', '+', '0', '+', 'nt', 'nt', '0', '+', '+', '+', '0', '+', '+', '+', '+', '+', '0', '0', '+'] }, // Cell 8
+                { donor: 'rr',    profile: ['0', '0', '0', '+', '+', '0', '0', '+', '0', '+', 'nt', 'nt', '+', '+', '0', '+', '+', '0', '+', '0', '+', '0', '0', '0', '+'] }, // Cell 9
+                { donor: 'rr',    profile: ['0', '0', '0', '+', '+', '0', '0', '+', '0', '+', 'nt', 'nt', '+', '0', '+', '0', '0', '+', '+', '+', '0', '0', '+', '0', '+'] }, // Cell 10
+                { donor: 'rr',    profile: ['0', '0', '0', '+', '+', '0', '0', '+', '0', '+', 'nt', 'nt', '0', '0', '+', '0', '0', '0', '+', '0', '+', '0', '+', '+', '+'] }  // Cell 11
+            ];
 
-const gameCases = [
-    // --- Single, Common Antibodies ---
-    {
-        name: 'Case 1: Anti-E',
-        screen: { I: '0', II: '3+', III: '0' },
-        auto: '0',
-        iat: ['0', '0', '3+', '0', '3+', '0', '0', '0', '0', '0', '0'],
-        enzyme: ['0', '0', '4+', '0', '4+', '0', '0', '0', '0', '0', '0'],
-        solution: ['Anti-E'],
-        notes: 'A straightforward Anti-E. The reaction pattern perfectly matches the E-positive cells (3 and 5). Reactions are enhanced by enzyme treatment, characteristic of the Rh system.'
-    },
-    {
-        name: 'Case 2: Anti-K',
-        screen: { I: '0', II: '2+', III: '0' },
-        auto: '0',
-        iat: ['0', '2+', '0', '0', '0', '2+', '0', '0', '0', '0', '0'],
-        enzyme: ['0', '2+', '0', '0', '0', '2+', '0', '0', '0', '0', '0'],
-        solution: ['Anti-K'],
-        notes: 'A classic Anti-K. The reactions are positive only with the K-positive cells (2 and 6). Kell system antigens are not affected by ficin enzyme treatment.'
-    },
-    {
-        name: 'Case 3: Anti-Cʷ',
-        screen: { I: '2+', II: '0', III: '0' },
-        auto: '0',
-        iat: ['2+', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
-        enzyme: ['3+', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
-        solution: ['Anti-Cʷ'],
-        notes: 'A clear Anti-Cʷ, reacting only with the Cʷ positive cell (1). As part of the Rh system, reactions are enhanced by enzyme treatment.'
-    },
-    {
-        name: 'Case 4: Anti-Fyᵃ',
-        screen: { I: '2+', II: '0', III: '2+' },
-        auto: '0',
-        iat: ['2+', '0', '0', '0', '2+', '2+', '0', '0', '2+', '2+', '0'],
-        enzyme: ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
-        solution: ['Anti-Fyᵃ'],
-        notes: 'The reaction pattern matches all Fyᵃ-positive cells (1, 5, 6, 9, 10). The identification is confirmed by the enzyme panel, where all reactions become negative because the Fyᵃ antigen is destroyed by enzymes.'
-    },
-    {
-        name: 'Case 5: Anti-C',
-        screen: { I: '3+', II: '3+', III: '0' },
-        auto: '0',
-        iat: ['3+', '3+', '0', '3+', '0', '0', '0', '0', '0', '0', '0'],
-        enzyme: ['4+', '4+', '0', '4+', '0', '0', '0', '0', '0', '0', '0'],
-        solution: ['Anti-C'],
-        notes: 'A classic Anti-C pattern, reacting with all C-positive cells (1, 2, 4). Reactions are enhanced by enzyme treatment.'
-    },
-    {
-        name: 'Case 6: Anti-Jkᵇ',
-        screen: { I: '0', II: '2+', III: '2+' },
-        auto: '0',
-        iat: ['0', '2+', '2+', '0', '0', '2+', '2+', '2+', '2+', '0', '0'],
-        enzyme: ['0', '3+', '3+', '0', '0', '3+', '3+', '3+', '3+', '0', '0'],
-        solution: ['Anti-Jkᵇ'],
-        notes: 'This pattern matches all Jkᵇ-positive cells. Kidd system antibodies are enhanced by enzyme treatment, as seen here.'
-    },
-    {
-        name: 'Case 7: Anti-s',
-        screen: { I: '3+', II: '3+', III: '3+' },
-        auto: '0',
-        iat: ['3+', '0', '3+', '3+', '3+', '0', '3+', '3+', '0', '3+', '3+'],
-        enzyme: ['3+', '0', '3+', '3+', '3+', '0', '3+', '3+', '0', '3+', '3+'],
-        solution: ['Anti-s'],
-        notes: 'This antibody reacts with all cells except for cells 2, 6, and 9, which are the only s-negative cells on the panel. The reactivity of S/s antigens with enzymes can be variable.'
-    },
-    {
-        name: 'Case 8: Anti-P1',
-        screen: { I: '1+', II: '1+', III: '1+' },
-        auto: '0',
-        iat: ['1+', '0', '1+', '0', '1+', '1+', '1+', '1+', '0', '1+', '1+'],
-        enzyme: ['2+', '0', '2+', '0', '2+', '2+', '2+', '2+', '0', '2+', '2+'],
-        solution: ['Anti-P1'],
-        notes: 'Reacts with all P1-positive cells. Anti-P1 is a common, naturally occurring IgM antibody that is not considered clinically significant. It is enhanced by enzyme treatment.'
-    },
-    {
-        name: 'Case 9: Anti-M',
-        screen: { I: '2+', II: '2+', III: '2+' },
-        auto: '0',
-        iat: ['2+', '2+', '2+', '0', '0', '0', '2+', '2+', '0', '2+', '0'],
-        enzyme: ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
-        solution: ['Anti-M'],
-        notes: 'This antibody reacts with all M-positive cells. MNS system antigens are typically destroyed by enzyme treatment, which is a key identifying feature.'
-    },
-    {
-        name: 'Case 10: Anti-D',
-        screen: { I: '3+', II: '3+', III: '3+' },
-        auto: '0',
-        iat: ['3+', '3+', '3+', '0', '0', '0', '0', '3+', '0', '0', '0'],
-        enzyme: ['4+', '4+', '4+', '0', '0', '0', '0', '4+', '0', '0', '0'],
-        solution: ['Anti-D'],
-        notes: 'A clear Anti-D, reacting with all D-positive cells (1, 2, 3, 8). Enhanced by enzyme.'
-    },
-
-    // --- Cases with Multiple Antibodies ---
-    {
-        name: 'Case 11 (Multiple)',
-        screen: { I: '3+', II: '3+', III: '3+' },
-        auto: '0',
-        iat: ['3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '0', '0'],
-        enzyme: ['4+', '4+', '4+', '4+', '4+', '4+', '4+', '4+', '4+', '0', '0'],
-        solution: ['Anti-c', 'Anti-Jkᵃ'],
-        notes: 'A complex case. The pattern doesn\'t fit a single antibody. The negative reactions with cells 10 and 11 are the key. The reactions match all cells that are c-positive OR Jkᵃ-positive. Both antibodies can be enhanced by enzyme.'
-    },
-    {
-        name: 'Case 12 (Multiple)',
-        screen: { I: '3+', II: '2+', III: '0' },
-        auto: '0',
-        iat: ['3+', '2+', '0', '0', '2+', '2+', '0', '0', '2+', '2+', '0'],
-        enzyme: ['0', '2+', '0', '0', '0', '2+', '0', '0', '0', '0', '0'],
-        solution: ['Anti-Fyᵃ', 'Anti-K'],
-        notes: 'The enzyme panel is critical here. After enzyme treatment, the Fyᵃ reactions are destroyed, leaving behind reactions that perfectly match the K-positive cells (2 and 6). The remaining reactions in the IAT can then be attributed to Anti-Fyᵃ.'
-    },
-    {
-        name: 'Case 13 (Multiple)',
-        screen: { I: '3+', II: '3+', III: '3+' },
-        auto: '0',
-        iat: ['3+', '3+', '3+', '3+', '3+', '0', '0', '3+', '0', '0', '0'],
-        enzyme: ['4+', '4+', '4+', '4+', '4+', '0', '0', '4+', '0', '0', '0'],
-        solution: ['Anti-D', 'Anti-c'],
-        notes: 'This pattern is consistent with Anti-D and Anti-c. All D-positive or c-positive cells are reacting. The only negative cells (6, 9) are D-negative and c-negative. Both are Rh antibodies and are enhanced by enzyme.'
-    },
-    {
-        name: 'Case 14 (Multiple)',
-        screen: { I: '3+', II: '3+', III: '3+' },
-        auto: '0',
-        iat: ['3+', '0', '3+', '0', '3+', '2+', '0', '0', '2+', '2+', '0'],
-        enzyme: ['0', '0', '4+', '0', '4+', '0', '0', '0', '0', '0', '0'],
-        solution: ['Anti-Fyᵃ', 'Anti-E'],
-        notes: 'Another case solved by the enzyme panel. The IAT is complex. After enzyme treatment, the Fyᵃ reactions disappear, leaving a clear Anti-E pattern against cells 3 and 5. The remaining IAT reactions fit Anti-Fyᵃ.'
-    },
-    {
-        name: 'Case 15 (Multiple)',
-        screen: { I: '3+', II: '3+', III: '3+' },
-        auto: '0',
-        iat: ['3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+'],
-        enzyme: ['4+', '4+', '4+', '4+', '4+', '4+', '4+', '4+', '4+', '4+', '4+'],
-        solution: ['Anti-e', 'Anti-Jkᵃ'],
-        notes: 'This combination results in pan-reactivity because every cell in the panel is positive for either e or Jkᵃ. Both antibodies are enhanced by enzyme. This would require a challenging workup with selected cells to identify.'
-    },
-
-    // --- Special Cases (Autoantibodies, Dosage, etc.) ---
-    {
-        name: 'Case 16 (Autoantibody)',
-        screen: { I: '1+', II: '1+', III: '1+' },
-        auto: '1+',
-        iat: ['1+', '1+', '1+', '1+', '1+', '1+', '1+', '1+', '1+', '1+', '1+'],
-        enzyme: ['2+', '2+', '2+', '2+', '2+', '2+', '2+', '2+', '2+', '2+', '2+'],
-        solution: ['Autoantibody'],
-        notes: 'All panel cells and the auto-control are positive with roughly equal strength. This pan-reactivity with a positive auto-control indicates a warm autoantibody. Adsorption techniques would be needed to check for underlying alloantibodies.'
-    },
-    {
-        name: 'Case 17 (Dosage)',
-        screen: { I: '3+', II: '1+', III: '0' },
-        auto: '0',
-        iat: ['3+', '1+', '0', '1+', '0', '0', '0', '0', '0', '0', '0'],
-        enzyme: ['4+', '2+', '0', '2+', '0', '0', '0', '0', '0', '0', '0'],
-        solution: ['Anti-C'],
-        notes: 'This is a classic Anti-C showing dosage. The reactions are stronger with cells from donors presumed homozygous (C+c-), like cell 1 (3+), compared to cells from heterozygous donors (C+c+), like cells 2 and 4 (1+).'
-    },
-    {
-        name: 'Case 18 (Low Frequency)',
-        screen: { I: '2+', II: '0', III: '0' },
-        auto: '0',
-        iat: ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
-        enzyme: ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
-        solution: [],
-        notes: 'The screen is positive but the panel is negative. This suggests the patient has an antibody to a low-frequency antigen that was present on screening cell I but is not present on any of the 11 panel cells.'
-    },
-    {
-        name: 'Case 19 (High Frequency)',
-        screen: { I: '2+', II: '2+', III: '2+' },
-        auto: '0',
-        iat: ['2+', '2+', '2+', '2+', '2+', '2+', '2+', '2+', '2+', '2+', '2+'],
-        enzyme: ['2+', '2+', '2+', '2+', '2+', '2+', '2+', '2+', '2+', '2+', '2+'],
-        solution: [],
-        notes: 'The panel is pan-reactive, but the auto-control is negative. This strongly suggests an antibody to a high-frequency antigen (an antigen present on almost all red cells). This would require referral for testing against a panel of rare antigen-negative cells to identify.'
-    },
-    {
-        name: 'Case 20 (Cold Antibody)',
-        screen: { I: '1+', II: '1+', III: '1+' },
-        auto: '1+',
-        iat: ['w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w'],
-        enzyme: ['1+', '1+', '1+', '1+', '1+', '1+', '1+', '1+', '1+', '1+', '1+'],
-        solution: ['Autoantibody'],
-        notes: 'Weak, fuzzy reactions in the IAT with a positive auto-control, which become stronger with enzymes, can be indicative of a cold autoantibody breaking through and reacting at 37°C. Pre-warming techniques would be required to rule out underlying alloantibodies.'
-    },
-    {
-        name: 'Case 21: Anti-S',
-        screen: { I: '0', II: '0', III: '3+' },
-        auto: '0',
-        iat: ['0', '0', '3+', '0', '3+', '0', '0', '3+', '0', '0', '0'],
-        enzyme: ['0', '0', 'w', '0', 'w', '0', '0', 'w', '0', '0', '0'],
-        solution: ['Anti-S'],
-        notes: 'This antibody reacts with all S-positive cells (3, 5, 8). The S antigen is known to have variable sensitivity to enzymes, often showing weakened (w) reactions but not always being completely destroyed.'
-    },
-    {
-        name: 'Case 22: Anti-Jkᵃ',
-        screen: { I: '2+', II: '2+', III: '0' },
-        auto: '0',
-        iat: ['2+', '2+', '0', '2+', '2+', '0', '0', '2+', '0', '2+', '2+'],
-        enzyme: ['3+', '3+', '0', '3+', '3+', '0', '0', '3+', '0', '3+', '3+'],
-        solution: ['Anti-Jkᵃ'],
-        notes: 'This pattern matches all Jkᵃ-positive cells. Kidd antibodies are notoriously difficult as they can show dosage and may decline in strength in vivo, making them a common cause of delayed transfusion reactions.'
-    },
-    {
-        name: 'Case 23: Anti-N',
-        screen: { I: '0', II: '2+', III: '0' },
-        auto: '0',
-        iat: ['0', '2+', '0', '2+', '0', '0', '2+', '0', '0', '0', '0'],
-        enzyme: ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
-        solution: ['Anti-N'],
-        notes: 'Reacts with N-positive cells (2, 4, 7). Like Anti-M, Anti-N is an enzyme-labile antibody, a key feature for identification. It is generally not considered clinically significant.'
-    },
-    {
-        name: 'Case 24 (Multiple)',
-        screen: { I: '3+', II: '3+', III: '3+' },
-        auto: '0',
-        iat: ['3+', '3+', '3+', '3+', '3+', '0', '0', '3+', '0', '0', '0'],
-        enzyme: ['4+', '4+', '4+', '4+', '4+', '0', '0', '4+', '0', '0', '0'],
-        solution: ['Anti-c', 'Anti-D'],
-        notes: 'This combination reacts with all cells except 6 and 9, which are the only cells negative for both D and c. Both are Rh antibodies and are enhanced by enzyme treatment.'
-    },
-    {
-        name: 'Case 25 (Multiple)',
-        screen: { I: '3+', II: '3+', III: '3+' },
-        auto: '0',
-        iat: ['3+', '3+', '3+', '2+', '0', '2+', '2+', '3+', '2+', '3+', '0'],
-        enzyme: ['0', '3+', '3+', '3+', '0', '3+', '3+', '3+', '3+', '0', '0'],
-        solution: ['Anti-M', 'Anti-Jkᵇ'],
-        notes: 'A tricky combination. The enzyme panel destroys the M antigen, revealing an underlying Anti-Jkᵇ pattern. The remaining reactions in the IAT can then be attributed to Anti-M.'
-    },
-    {
-        name: 'Case 26: Anti-e',
-        screen: { I: '2+', II: '2+', III: '0' },
-        auto: '0',
-        iat: ['2+', '2+', '0', '2+', '2+', '2+', '2+', '2+', '2+', '2+', '2+'],
-        enzyme: ['3+', '3+', '0', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+'],
-        solution: ['Anti-e'],
-        notes: 'Reacts with all e-positive cells. Cell 3 is the only e-negative cell on this panel. The reactions are enhanced by enzyme treatment.'
-    },
-    {
-        name: 'Case 27 (Multiple)',
-        screen: { I: '3+', II: '3+', III: '3+' },
-        auto: '0',
-        iat: ['3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '0', '3+'],
-        enzyme: ['4+', '4+', '4+', '4+', '4+', '4+', '4+', '4+', '4+', '0', '4+'],
-        solution: ['Anti-C', 'Anti-e'],
-        notes: 'This combination reacts with every cell on the panel except for cell 10. This is because cell 10 is the only one that is C-negative AND e-negative. Both are Rh antibodies and enhanced by enzyme.'
-    },
-    {
-        name: 'Case 28 (Multiple)',
-        screen: { I: '3+', II: '3+', III: '3+' },
-        auto: '0',
-        iat: ['3+', '3+', '3+', '0', '0', '2+', '0', '3+', '0', '0', '0'],
-        enzyme: ['4+', '4+', '4+', '0', '0', '2+', '0', '4+', '0', '0', '0'],
-        solution: ['Anti-D', 'Anti-K'],
-        notes: 'The pattern fits Anti-D, but there is also a reaction with K-positive cell 6. Cell 2 is also K-positive but is already covered by Anti-D. This indicates a second antibody, Anti-K.'
-    },
-    {
-        name: 'Case 29: Anti-Leᵃ',
-        screen: { I: '0', II: '2+', III: '0' },
-        auto: '0',
-        iat: ['0', '2+', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
-        enzyme: ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
-        solution: ['Anti-Leᵃ'],
-        notes: 'Reacts only with the Le(a)-positive cell (2). Lewis antibodies are often naturally occurring IgM and are not generally considered clinically significant. The antigens are destroyed by enzyme treatment.'
-    },
-    {
-        name: 'Case 30 (Dosage)',
-        screen: 'N/A',
-        auto: '0',
-        iat: ['3+', '0', '0', '0', '1+', '1+', '0', '0', '1+', '1+', '0'],
-        enzyme: ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
-        solution: ['Anti-Fyᵃ'],
-        notes: 'This Anti-Fyᵃ is showing dosage. The reaction is stronger with the homozygous cell (Fy(a+b-)), cell 1 (3+), than with the heterozygous cells (Fy(a+b+)), cells 5, 6, 9, 10 (1+).'
-    },
-    {
-        name: 'Case 31 (Multiple)',
-        screen: { I: '3+', II: '3+', III: '3+' },
-        auto: '0',
-        iat: ['3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '0', '0'],
-        enzyme: ['4+', '4+', '4+', '4+', '4+', '4+', '4+', '4+', '4+', '0', '0'],
-        solution: ['Anti-c', 'Anti-Jkᵃ'],
-        notes: 'The reactions match all cells that are c-positive OR Jkᵃ-positive. The negative reactions with cells 10 and 11, which are negative for both antigens, are the key to solving this.'
-    },
-    {
-        name: 'Case 32: Anti-Leᵇ',
-        screen: { I: '0', II: '0', III: '2+' },
-        auto: '0',
-        iat: ['0', '0', '2+', '2+', '0', '2+', '2+', '2+', '2+', '0', '0'],
-        enzyme: ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
-        solution: ['Anti-Leᵇ'],
-        notes: 'This pattern matches Le(b) positive cells. Lewis system antigens are destroyed by enzyme treatment.'
-    },
-    {
-        name: 'Case 33 (Multiple)',
-        screen: { I: '3+', II: '3+', III: '3+' },
-        auto: '0',
-        iat: ['3+', '3+', '3+', '3+', '3+', '3+', '2+', '3+', '3+', '0', '0'],
-        enzyme: ['4+', '4+', '4+', '3+', '4+', '4+', '2+', '4+', '4+', '0', '0'],
-        solution: ['Anti-c', 'Anti-D'],
-        notes: 'A classic combination. The reactions match all cells positive for D or c. The only negative cells (10, 11) are D-negative and c-negative.'
-    },
-    {
-        name: 'Case 34 (Multiple)',
-        screen: { I: '3+', II: '3+', III: '3+' },
-        auto: '0',
-        iat: ['3+', '3+', '3+', '0', '3+', '3+', '0', '3+', '3+', '3+', '0'],
-        enzyme: ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
-        solution: ['Anti-M', 'Anti-Fyᵃ'],
-        notes: 'The reactions match cells positive for M or Fyᵃ. Both antigens are destroyed by enzyme, resulting in a completely negative enzyme panel, which confirms the specificities.'
-    },
-    {
-        name: 'Case 35: Anti-Kpᵃ',
-        screen: { I: '0', II: '0', III: '0' },
-        auto: '0',
-        iat: ['0', '0', '0', '0', '0', '0', '2+', '0', '0', '0', '0'],
-        enzyme: ['0', '0', '0', '0', '0', '0', '2+', '0', '0', '0', '0'],
-        solution: ['Anti-Kpᵃ'],
-        notes: 'Anti-Kpᵃ is an antibody to a low-frequency antigen in the Kell system. It reacts only with cell 7, the only Kp(a+) cell on the panel. It is not affected by enzyme.'
-    },
-    {
-        name: 'Case 36 (Warm Auto + Allo)',
-        screen: { I: '2+', II: '2+', III: '3+' },
-        auto: '2+',
-        iat: ['2+', '3+', '2+', '2+', '2+', '3+', '2+', '2+', '2+', '2+', '2+'],
-        enzyme: ['3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+'],
-        solution: ['Autoantibody', 'Anti-K'],
-        notes: 'There is a warm autoantibody present, causing background reactivity. However, the reactions with the K-positive cells (2 and 6) are significantly stronger, suggesting an underlying Anti-K.'
-    },
-    {
-        name: 'Case 37',
-        screen: { I: '0', II: '0', III: '0' },
-        auto: '0',
-        iat: ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
-        enzyme: ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
-        solution: [],
-        notes: 'A completely negative screen and panel. No antibodies detected.'
-    },
-    {
-        name: 'Case 38 (Multiple)',
-        screen: { I: '3+', II: '3+', III: '3+' },
-        auto: '0',
-        iat: ['3+', '3+', '3+', '3+', '3+', '3+', '2+', '3+', '3+', '0', '0'],
-        enzyme: ['4+', '4+', '4+', '4+', '4+', '4+', '3+', '4+', '4+', '0', '0'],
-        solution: ['Anti-D', 'Anti-c'],
-        notes: 'The reactions are consistent with Anti-D and Anti-c. All cells positive for either antigen are reacting. The negative cells (10, 11) are negative for both.'
-    },
-    {
-        name: 'Case 39: Anti-Luᵃ',
-        screen: { I: '0', II: '0', III: '0' },
-        auto: '0',
-        iat: ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
-        enzyme: ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
-        solution: ['Anti-Luᵃ'],
-        notes: 'Anti-Luᵃ is an antibody to a low-frequency antigen. No cells on this panel are Lu(a+), so the panel is negative. This is a trick case where the antibody would have been missed if not for a positive screen cell.'
-    },
-    {
-        name: 'Case 40 (Multiple)',
-        screen: { I: '3+', II: '3+', III: '3+' },
-        auto: '0',
-        iat: ['3+', '3+', '3+', '0', '3+', '3+', '0', '3+', '3+', '3+', '0'],
-        enzyme: ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
-        solution: ['Anti-M', 'Anti-Fyᵃ'],
-        notes: 'The reaction pattern fits cells positive for M or Fyᵃ. Both antigens are destroyed by enzyme treatment, resulting in a negative enzyme panel, which helps confirm the specificities.'
-    },
-    {
-        name: 'Case 41 (Dosage)',
-        screen: { I: '3+', II: '3+', III: '1+' },
-        auto: '0',
-        iat: ['3+', '3+', '1+', '0', '3+', '0', '0', '3+', '0', '0', '0'],
-        enzyme: ['w', 'w', 'w', '0', 'w', '0', '0', 'w', '0', '0', '0'],
-        solution: ['Anti-S'],
-        notes: 'This Anti-S is showing dosage. The reaction is stronger with homozygous cells (S+s-) like cell 2, compared to heterozygous cells (S+s+). The enzyme reactions are variably weakened.'
-    },
-    {
-        name: 'Case 42 (Multiple)',
-        screen: { I: '3+', II: '3+', III: '3+' },
-        auto: '0',
-        iat: ['3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '0', '3+'],
-        enzyme: ['4+', '4+', '4+', '4+', '4+', '4+', '4+', '4+', '4+', '0', '4+'],
-        solution: ['Anti-C', 'Anti-e'],
-        notes: 'This combination is pan-reactive on this panel except for cell 10, which is the only cell that is both C-negative and e-negative. Both antibodies are enhanced by enzyme.'
-    },
-    {
-        name: 'Case 43 (Multiple)',
-        screen: { I: '3+', II: '3+', III: '3+' },
-        auto: '0',
-        iat: ['3+', '3+', '3+', '2+', '3+', '2+', '2+', '3+', '2+', '0', '2+'],
-        enzyme: ['4+', '4+', '4+', '3+', '4+', '3+', '2+', '4+', '3+', '0', '3+'],
-        solution: ['Anti-C', 'Anti-Jkᵇ'],
-        notes: 'The reaction pattern fits cells that are C-positive OR Jkᵇ-positive. The negative reaction with cell 10 (C- Jkb-) is the key to solving it.'
-    },
-    {
-        name: 'Case 44 (HTR)',
-        screen: { I: 'mf', II: 'mf', III: '0' },
-        auto: 'mf',
-        iat: ['mf', 'mf', '0', 'mf', '0', 'mf', '0', 'mf', 'mf', 'mf', '0'],
-        enzyme: ['mf', 'mf', '0', 'mf', '0', 'mf', '0', 'mf', 'mf', 'mf', '0'],
-        solution: ['Autoantibody', 'Anti-Jkᵃ'],
-        notes: 'The mixed-field (mf) reactions and positive auto-control are classic signs of a delayed haemolytic transfusion reaction (HTR). The pattern of reactivity suggests an underlying Anti-Jkᵃ, a common culprit in HTRs.'
-    },
-    {
-        name: 'Case 45',
-        screen: { I: '2+', II: '2+', III: '2+' },
-        auto: '0',
-        iat: ['2+', '2+', '2+', '2+', '2+', '2+', '2+', '2+', '2+', '2+', '0'],
-        enzyme: ['3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '0'],
-        solution: ['Anti-c'],
-        notes: 'This pattern matches all c-positive cells, with the exception of cell 11 which is c-negative. The reactions are enhanced by enzyme.'
-    },
-    {
-        name: 'Case 46 (Multiple)',
-        screen: { I: '3+', II: '3+', III: '3+' },
-        auto: '0',
-        iat: ['3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '0', '3+'],
-        enzyme: ['4+', '4+', '4+', '4+', '4+', '4+', '4+', '4+', '4+', '0', '4+'],
-        solution: ['Anti-e', 'Anti-C'],
-        notes: 'This combination is pan-reactive on this panel except for cell 10, which is the only cell that is both C-negative and e-negative. Both antibodies are enhanced by enzyme.'
-    },
-    {
-        name: 'Case 47 (Multiple)',
-        screen: { I: '3+', II: '3+', III: '3+' },
-        auto: '0',
-        iat: ['3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+'],
-        enzyme: ['0', '0', '0', '3+', '0', '0', '3+', '3+', '0', '0', '0'],
-        solution: ['Anti-Fyᵃ', 'Anti-K', 'Anti-Cʷ'],
-        notes: 'A very complex IAT. The enzyme panel destroys Fyᵃ, leaving reactions that match K-positive (4, 7) and Cʷ-positive (1, 8) cells. This reveals the underlying antibodies.'
-    },
-    {
-        name: 'Case 48',
-        screen: { I: '2+', II: '2+', III: '2+' },
-        auto: '0',
-        iat: ['0', '2+', '0', '2+', '2+', '0', '0', '0', '0', '0', '0'],
-        enzyme: ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
-        solution: ['Anti-N'],
-        notes: 'Another example of Anti-N, reacting with N-positive cells (2, 4, 5). The antigen is destroyed by enzyme treatment.'
-    },
-    {
-        name: 'Case 49 (Multiple)',
-        screen: { I: '3+', II: '3+', III: '3+' },
-        auto: '0',
-        iat: ['3+', '3+', '3+', '0', '3+', '3+', '2+', '3+', '3+', '2+', '0'],
-        enzyme: ['4+', '4+', '4+', '0', '4+', '4+', '2+', '4+', '4+', '2+', '0'],
-        solution: ['Anti-D', 'Anti-K'],
-        notes: 'The pattern is consistent with Anti-D, with additional reactions against the K-positive cells (2, 6). Both antibodies are stable with enzyme treatment.'
-    },
-    {
-        name: 'Case 50',
-        screen: { I: '2+', II: '2+', III: '0' },
-        auto: '0',
-        iat: ['2+', '2+', '0', '2+', '0', '0', '0', '0', '0', '0', '0'],
-        enzyme: ['3+', '3+', '0', '3+', '0', '0', '0', '0', '0', '0', '0'],
-        solution: ['Anti-C'],
-        notes: 'A clear Anti-C pattern, reacting with cells 1, 2, and 4.'
-    },
-    {
-        name: 'Case 51 (Multiple)',
-        screen: { I: '3+', II: '3+', III: '3+' },
-        auto: '0',
-        iat: ['3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+'],
-        enzyme: ['4+', '4+', '4+', '4+', '4+', '4+', '4+', '4+', '4+', '4+', '4+'],
-        solution: ['Anti-D', 'Anti-e'],
-        notes: 'This combination is pan-reactive on this panel as all cells are either D-positive or e-positive. Both are Rh antibodies and are enhanced by enzyme.'
-    },
-    {
-        name: 'Case 52',
-        screen: { I: '2+', II: '2+', III: '2+' },
-        auto: '0',
-        iat: ['2+', '2+', '2+', '2+', '2+', '2+', '2+', '2+', '2+', '0', '2+'],
-        enzyme: ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
-        solution: ['Anti-Fyᵇ'],
-        notes: 'This antibody reacts with all Fyᵇ-positive cells. Cell 10 is the only Fyᵇ-negative cell. The enzyme panel confirms the specificity as the antigen is destroyed.'
-    },
-    {
-        name: 'Case 53 (Multiple)',
-        screen: { I: '3+', II: '3+', III: '3+' },
-        auto: '0',
-        iat: ['3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+'],
-        enzyme: ['0', '0', '4+', '0', '4+', '0', '0', '0', '0', '0', '0'],
-        solution: ['Anti-Fyᵃ', 'Anti-E'],
-        notes: 'The IAT is pan-reactive. The enzyme panel destroys the Fyᵃ antigen, leaving a clear Anti-E pattern against cells 3 and 5. This confirms the presence of both antibodies.'
-    },
-    {
-        name: 'Case 54',
-        screen: { I: '2+', II: '2+', III: '2+' },
-        auto: '0',
-        iat: ['2+', '2+', '2+', '0', '2+', '2+', '0', '2+', '2+', '2+', '2+'],
-        enzyme: ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
-        solution: ['Anti-M'],
-        notes: 'Another example of Anti-M, reacting with all M-positive cells. The specificity is confirmed by the complete destruction of reactivity by the enzyme panel.'
-    },
-    {
-        name: 'Case 55 (Multiple)',
-        screen: { I: '3+', II: '3+', III: '3+' },
-        auto: '0',
-        iat: ['3+', '3+', '3+', '0', '0', '2+', '0', '3+', '0', '0', '0'],
-        enzyme: ['4+', '4+', '4+', '0', '0', '2+', '0', '4+', '0', '0', '0'],
-        solution: ['Anti-D', 'Anti-K'],
-        notes: 'The pattern fits Anti-D, with an additional reaction against K-positive cell 6. Cell 2 is also K-positive but is already covered by Anti-D. This indicates a second antibody, Anti-K.'
-    },
-    {
-        name: 'Case 56 (Multiple)',
-        screen: { I: '3+', II: '3+', III: '3+' },
-        auto: '0',
-        iat: ['3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+'],
-        enzyme: ['4+', '4+', '4+', '4+', '4+', '4+', '4+', '4+', '4+', '4+', '4+'],
-        solution: ['Anti-c', 'Anti-C'],
-        notes: 'This is a trick case. A patient with Anti-C and Anti-c would react with all cells on this panel, as every cell is positive for either C or c. This is a rare combination but demonstrates pan-reactivity.'
-    },
-    {
-        name: 'Case 57',
-        screen: { I: '2+', II: '0', III: '0' },
-        auto: '0',
-        iat: ['2+', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
-        enzyme: ['3+', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'],
-        solution: ['Anti-Cʷ'],
-        notes: 'A clear Anti-Cʷ pattern, reacting with cell 1. Enhanced by enzyme.'
-    },
-    {
-        name: 'Case 58 (Warm Auto + Allo)',
-        screen: { I: '2+', II: '3+', III: '2+' },
-        auto: '2+',
-        iat: ['2+', '3+', '2+', '2+', '2+', '3+', '2+', '2+', '2+', '2+', '2+'],
-        enzyme: ['3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+'],
-        solution: ['Autoantibody', 'Anti-K'],
-        notes: 'A warm autoantibody is present, causing baseline reactivity. However, the reactions with the K-positive cells (2 and 6) are significantly stronger, suggesting an underlying Anti-K.'
-    },
-    {
-        name: 'Case 59 (Multiple)',
-        screen: { I: '3+', II: '3+', III: '3+' },
-        auto: '0',
-        iat: ['3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '0', '3+'],
-        enzyme: ['4+', '4+', '4+', '4+', '4+', '4+', '4+', '4+', '4+', '0', '4+'],
-        solution: ['Anti-e', 'Anti-C'],
-        notes: 'This combination is pan-reactive on this panel except for cell 10, which is the only cell that is both C-negative and e-negative. Both antibodies are enhanced by enzyme.'
-    },
-    {
-        name: 'Case 60 (Multiple)',
-        screen: { I: '3+', II: '3+', III: '3+' },
-        auto: '0',
-        iat: ['3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+'],
-        enzyme: ['0', '0', '4+', '0', '4+', '0', '0', '0', '0', '0', '0'],
-        solution: ['Anti-Fyᵃ', 'Anti-E'],
-        notes: 'The IAT is pan-reactive. The enzyme panel destroys the Fyᵃ antigen, leaving a clear Anti-E pattern against cells 3 and 5. This confirms the presence of both antibodies.'
-    }
-];
-
-
-
+            const gameCases = [
+                { clinicalDetails: '34 y/o female, pre-operative assessment for hysterectomy.', screen: { I: '0', II: '3+', III: '0' }, auto: '0', iat: ['0', '0', '3+', '0', '3+', '0', '0', '0', '0', '0', '0'], enzyme: ['0', '0', '4+', '0', '4+', '0', '0', '0', '0', '0', '0'], solution: ['Anti-E'], notes: 'A straightforward Anti-E. The reaction pattern perfectly matches the E-positive cells (3 and 5). Reactions are enhanced by enzyme treatment, characteristic of the Rh system.' },
+                { clinicalDetails: '68 y/o male, history of multiple transfusions, now needing 2 units for anaemia.', screen: { I: '0', II: '2+', III: '0' }, auto: '0', iat: ['0', '2+', '0', '0', '0', '2+', '0', '0', '0', '0', '0'], enzyme: ['0', '2+', '0', '0', '0', '2+', '0', '0', '0', '0', '0'], solution: ['Anti-K'], notes: 'A classic Anti-K. The reactions are positive only with the K-positive cells (2 and 6). Kell system antigens are not affected by ficin enzyme treatment.' },
+                { clinicalDetails: '28 y/o female, antenatal booking sample.', screen: { I: '2+', II: '0', III: '0' }, auto: '0', iat: ['2+', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'], enzyme: ['3+', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'], solution: ['Anti-Cʷ'], notes: 'A clear Anti-Cʷ, reacting only with the Cʷ positive cell (1). As part of the Rh system, reactions are enhanced by enzyme treatment.' },
+                { clinicalDetails: '45 y/o male, pre-operative assessment for knee replacement.', screen: { I: '2+', II: '0', III: '2+' }, auto: '0', iat: ['2+', '0', '0', '0', '2+', '2+', '0', '0', '2+', '2+', '0'], enzyme: ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'], solution: ['Anti-Fyᵃ'], notes: 'The reaction pattern matches all Fyᵃ-positive cells (1, 5, 6, 9, 10). The identification is confirmed by the enzyme panel, where all reactions become negative because the Fyᵃ antigen is destroyed by enzymes.' },
+                { clinicalDetails: '72 y/o female, requires transfusion for GI bleed.', screen: { I: '3+', II: '3+', III: '0' }, auto: '0', iat: ['3+', '3+', '0', '3+', '0', '0', '0', '0', '0', '0', '0'], enzyme: ['4+', '4+', '0', '4+', '0', '0', '0', '0', '0', '0', '0'], solution: ['Anti-C'], notes: 'A classic Anti-C pattern, reacting with all C-positive cells (1, 2, 4). Reactions are enhanced by enzyme treatment.' },
+                { clinicalDetails: '55 y/o male with sickle cell disease, routine group and screen.', screen: { I: '0', II: '2+', III: '2+' }, auto: '0', iat: ['0', '2+', '2+', '0', '0', '2+', '2+', '2+', '2+', '0', '0'], enzyme: ['0', '3+', '3+', '0', '0', '3+', '3+', '3+', '3+', '0', '0'], solution: ['Anti-Jkᵇ'], notes: 'This pattern matches all Jkᵇ-positive cells. Kidd system antibodies are enhanced by enzyme treatment, as seen here.' },
+                { clinicalDetails: '61 y/o female, previous transfusion 1 year ago, now needs blood for surgery.', screen: { I: '3+', II: '3+', III: '3+' }, auto: '0', iat: ['3+', '0', '3+', '3+', '3+', '0', '3+', '3+', '0', '3+', '3+'], enzyme: ['3+', '0', '3+', '3+', '3+', '0', '3+', '3+', '0', '3+', '3+'], solution: ['Anti-s'], notes: 'This antibody reacts with all cells except for cells 2, 6, and 9, which are the only s-negative cells on the panel. The reactivity of S/s antigens with enzymes can be variable.' },
+                { clinicalDetails: '82 y/o male, routine pre-admission testing.', screen: { I: '1+', II: '1+', III: '1+' }, auto: '0', iat: ['1+', '0', '1+', '0', '1+', '1+', '1+', '1+', '0', '1+', '1+'], enzyme: ['2+', '0', '2+', '0', '2+', '2+', '2+', '2+', '0', '2+', '2+'], solution: ['Anti-P1'], notes: 'Reacts with all P1-positive cells. Anti-P1 is a common, naturally occurring IgM antibody that is not considered clinically significant. It is enhanced by enzyme treatment.' },
+                { clinicalDetails: '22 y/o female, first pregnancy, 28-week sample.', screen: { I: '2+', II: '2+', III: '2+' }, auto: '0', iat: ['2+', '2+', '2+', '0', '0', '0', '2+', '2+', '0', '2+', '0'], enzyme: ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'], solution: ['Anti-M'], notes: 'This antibody reacts with all M-positive cells. MNS system antigens are typically destroyed by enzyme treatment, which is a key identifying feature.' },
+                { clinicalDetails: '40 y/o male, trauma patient, major haemorrhage protocol activated.', screen: { I: '3+', II: '3+', III: '3+' }, auto: '0', iat: ['3+', '3+', '3+', '0', '0', '0', '0', '3+', '0', '0', '0'], enzyme: ['4+', '4+', '4+', '0', '0', '0', '0', '4+', '0', '0', '0'], solution: ['Anti-D'], notes: 'A clear Anti-D, reacting with all D-positive cells (1, 2, 3, 8). Enhanced by enzyme.' },
+                { clinicalDetails: '76 y/o female, multiple antibodies in history, pre-op for hip surgery.', screen: { I: '3+', II: '3+', III: '3+' }, auto: '0', iat: ['3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '0', '0'], enzyme: ['4+', '4+', '4+', '4+', '4+', '4+', '4+', '4+', '4+', '0', '0'], solution: ['Anti-c', 'Anti-Jkᵃ'], notes: 'A complex case. The pattern doesn\'t fit a single antibody. The negative reactions with cells 10 and 11 are the key. The reactions match all cells that are c-positive OR Jkᵃ-positive. Both antibodies can be enhanced by enzyme.' },
+                { clinicalDetails: '31 y/o female, post-partum haemorrhage.', screen: { I: '3+', II: '2+', III: '0' }, auto: '0', iat: ['3+', '2+', '0', '0', '2+', '2+', '0', '0', '2+', '2+', '0'], enzyme: ['0', '2+', '0', '0', '0', '2+', '0', '0', '0', '0', '0'], solution: ['Anti-Fyᵃ', 'Anti-K'], notes: 'The enzyme panel is critical here. After enzyme treatment, the Fyᵃ reactions are destroyed, leaving behind reactions that perfectly match the K-positive cells (2 and 6). The remaining reactions in the IAT can then be attributed to Anti-Fyᵃ.' },
+                { clinicalDetails: '67 y/o male, known haematology patient with pancytopenia.', screen: { I: '3+', II: '3+', III: '3+' }, auto: '0', iat: ['3+', '3+', '3+', '3+', '3+', '0', '0', '3+', '0', '0', '0'], enzyme: ['4+', '4+', '4+', '4+', '4+', '0', '0', '4+', '0', '0', '0'], solution: ['Anti-D', 'Anti-c'], notes: 'This pattern is consistent with Anti-D and Anti-c. All D-positive or c-positive cells are reacting. The only negative cells (6, 9) are D-negative and c-negative. Both are Rh antibodies and are enhanced by enzyme.' },
+                { clinicalDetails: '29 y/o female, 2nd pregnancy, history of Anti-Fyᵃ.', screen: { I: '3+', II: '3+', III: '3+' }, auto: '0', iat: ['3+', '0', '3+', '0', '3+', '2+', '0', '0', '2+', '2+', '0'], enzyme: ['0', '0', '4+', '0', '4+', '0', '0', '0', '0', '0', '0'], solution: ['Anti-Fyᵃ', 'Anti-E'], notes: 'Another case solved by the enzyme panel. The IAT is complex. After enzyme treatment, the Fyᵃ reactions disappear, leaving a clear Anti-E pattern against cells 3 and 5. The remaining IAT reactions fit Anti-Fyᵃ.' },
+                { clinicalDetails: '78 y/o male, history of multiple myeloma.', screen: { I: '3+', II: '3+', III: '3+' }, auto: '0', iat: ['3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+'], enzyme: ['4+', '4+', '4+', '4+', '4+', '4+', '4+', '4+', '4+', '4+', '4+'], solution: ['Anti-e', 'Anti-Jkᵃ'], notes: 'This combination results in pan-reactivity because every cell in the panel is positive for either e or Jkᵃ. Both antibodies are enhanced by enzyme. This would require a challenging workup with selected cells to identify.' },
+                { clinicalDetails: '71 y/o female with autoimmune haemolytic anaemia.', screen: { I: '1+', II: '1+', III: '1+' }, auto: '1+', iat: ['1+', '1+', '1+', '1+', '1+', '1+', '1+', '1+', '1+', '1+', '1+'], enzyme: ['2+', '2+', '2+', '2+', '2+', '2+', '2+', '2+', '2+', '2+', '2+'], solution: ['Autoantibody'], notes: 'All panel cells and the auto-control are positive with roughly equal strength. This pan-reactivity with a positive auto-control indicates a warm autoantibody. Adsorption techniques would be needed to check for underlying alloantibodies.' },
+                { clinicalDetails: '33 y/o female, antenatal sample, previous Anti-C.', screen: { I: '3+', II: '1+', III: '0' }, auto: '0', iat: ['3+', '1+', '0', '1+', '0', '0', '0', '0', '0', '0', '0'], enzyme: ['4+', '2+', '0', '2+', '0', '0', '0', '0', '0', '0', '0'], solution: ['Anti-C'], notes: 'This is a classic Anti-C showing dosage. The reactions are stronger with cells from donors presumed homozygous (C+c-), like cell 1 (3+), compared to cells from heterozygous donors (C+c+), like cells 2 and 4 (1+).' },
+                { clinicalDetails: '25 y/o male, request from A&E.', screen: { I: '2+', II: '0', III: '0' }, auto: '0', iat: ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'], enzyme: ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'], solution: [], notes: 'The screen is positive but the panel is negative. This suggests the patient has an antibody to a low-frequency antigen that was present on screening cell I but is not present on any of the 11 panel cells.' },
+                { clinicalDetails: '88 y/o female, long-term hospital inpatient.', screen: { I: '2+', II: '2+', III: '2+' }, auto: '0', iat: ['2+', '2+', '2+', '2+', '2+', '2+', '2+', '2+', '2+', '2+', '2+'], enzyme: ['2+', '2+', '2+', '2+', '2+', '2+', '2+', '2+', '2+', '2+', '2+'], solution: [], notes: 'The panel is pan-reactive, but the auto-control is negative. This strongly suggests an antibody to a high-frequency antigen (an antigen present on almost all red cells). This would require referral for testing against a panel of rare antigen-negative cells to identify.' },
+                { clinicalDetails: '79 y/o male with a cold and cough.', screen: { I: '1+', II: '1+', III: '1+' }, auto: '1+', iat: ['w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w'], enzyme: ['1+', '1+', '1+', '1+', '1+', '1+', '1+', '1+', '1+', '1+', '1+'], solution: ['Autoantibody'], notes: 'Weak, fuzzy reactions in the IAT with a positive auto-control, which become stronger with enzymes, can be indicative of a cold autoantibody breaking through and reacting at 37°C. Pre-warming techniques would be required to rule out underlying alloantibodies.' },
+                { clinicalDetails: '38 y/o female, pre-op for cholecystectomy.', screen: { I: '0', II: '0', III: '3+' }, auto: '0', iat: ['0', '0', '3+', '0', '3+', '0', '0', '3+', '0', '0', '0'], enzyme: ['0', '0', 'w', '0', 'w', '0', '0', 'w', '0', '0', '0'], solution: ['Anti-S'], notes: 'This antibody reacts with all S-positive cells (3, 5, 8). The S antigen is known to have variable sensitivity to enzymes, often showing weakened (w) reactions but not always being completely destroyed.' },
+                { clinicalDetails: '48 y/o male, transfusion required for anaemia.', screen: { I: '2+', II: '2+', III: '0' }, auto: '0', iat: ['2+', '2+', '0', '2+', '2+', '0', '0', '2+', '0', '2+', '2+'], enzyme: ['3+', '3+', '0', '3+', '3+', '0', '0', '3+', '0', '3+', '3+'], solution: ['Anti-Jkᵃ'], notes: 'This pattern matches all Jkᵃ-positive cells. Kidd antibodies are notoriously difficult as they can show dosage and may decline in strength in vivo, making them a common cause of delayed transfusion reactions.' },
+                { clinicalDetails: '26 y/o female, antenatal booking.', screen: { I: '0', II: '2+', III: '0' }, auto: '0', iat: ['0', '2+', '0', '2+', '0', '0', '2+', '0', '0', '0', '0'], enzyme: ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'], solution: ['Anti-N'], notes: 'Reacts with N-positive cells (2, 4, 7). Like Anti-M, Anti-N is an enzyme-labile antibody, a key feature for identification. It is generally not considered clinically significant.' },
+                { clinicalDetails: '69 y/o male, oncology patient.', screen: { I: '3+', II: '3+', III: '3+' }, auto: '0', iat: ['3+', '3+', '3+', '3+', '3+', '0', '0', '3+', '0', '0', '0'], enzyme: ['4+', '4+', '4+', '4+', '4+', '0', '0', '4+', '0', '0', '0'], solution: ['Anti-c', 'Anti-D'], notes: 'This combination reacts with all cells except 6 and 9, which are the only cells negative for both D and c. Both are Rh antibodies and are enhanced by enzyme treatment.' },
+                { clinicalDetails: '30 y/o female, 32 weeks pregnant.', screen: { I: '3+', II: '3+', III: '3+' }, auto: '0', iat: ['3+', '3+', '3+', '2+', '0', '2+', '2+', '3+', '2+', '3+', '0'], enzyme: ['0', '3+', '3+', '3+', '0', '3+', '3+', '3+', '3+', '0', '0'], solution: ['Anti-M', 'Anti-Jkᵇ'], notes: 'A tricky combination. The enzyme panel destroys the M antigen, revealing an underlying Anti-Jkᵇ pattern. The remaining reactions in the IAT can then be attributed to Anti-M.' },
+                { clinicalDetails: '81 y/o female, pre-op for hip fracture.', screen: { I: '2+', II: '2+', III: '0' }, auto: '0', iat: ['2+', '2+', '0', '2+', '2+', '2+', '2+', '2+', '2+', '2+', '2+'], enzyme: ['3+', '3+', '0', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+'], solution: ['Anti-e'], notes: 'Reacts with all e-positive cells. Cell 3 is the only e-negative cell on this panel. The reactions are enhanced by enzyme treatment.' },
+                { clinicalDetails: '58 y/o male, liver transplant list.', screen: { I: '3+', II: '3+', III: '3+' }, auto: '0', iat: ['3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '3+', '0', '3+'], enzyme: ['4+', '4+', '4+', '4+', '4+', '4+', '4+', '4+', '4+', '0', '4+'], solution: ['Anti-C', 'Anti-e'], notes: 'This combination reacts with every cell on the panel except for cell 10. This is because cell 10 is the only one that is C-negative AND e-negative. Both are Rh antibodies and enhanced by enzyme.' },
+                { clinicalDetails: '42 y/o female, unexpected antibody found during routine screen.', screen: { I: '3+', II: '3+', III: '3+' }, auto: '0', iat: ['3+', '3+', '3+', '0', '0', '2+', '0', '3+', '0', '0', '0'], enzyme: ['4+', '4+', '4+', '0', '0', '2+', '0', '4+', '0', '0', '0'], solution: ['Anti-D', 'Anti-K'], notes: 'The pattern fits Anti-D, but there is also a reaction with K-positive cell 6. Cell 2 is also K-positive but is already covered by Anti-D. This indicates a second antibody, Anti-K.' },
+                { clinicalDetails: '21 y/o male, student, no medical history.', screen: { I: '0', II: '2+', III: '0' }, auto: '0', iat: ['0', '2+', '0', '0', '0', '0', '0', '0', '0', '0', '0'], enzyme: ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'], solution: ['Anti-Leᵃ'], notes: 'Reacts only with the Le(a)-positive cell (2). Lewis antibodies are often naturally occurring IgM and are not generally considered clinically significant. The antigens are destroyed by enzyme treatment.' },
+                { clinicalDetails: '35 y/o female, antenatal, showing variable reaction strengths.', screen: 'N/A', auto: '0', iat: ['3+', '0', '0', '0', '1+', '1+', '0', '0', '1+', '1+', '0'], enzyme: ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'], solution: ['Anti-Fyᵃ'], notes: 'This Anti-Fyᵃ is showing dosage. The reaction is stronger with the homozygous cell (Fy(a+b-)), cell 1 (3+), than with the heterozygous cells (Fy(a+b+)), cells 5, 6, 9, 10 (1+).' }
+            ];
+            
             // --- ELEMENTS & STATE ---
+            let currentCaseIndex = 0;
             const elements = {
                 table: document.getElementById('panel-table'),
                 answerCheckboxes: document.getElementById('answer-checkboxes'),
@@ -721,7 +215,8 @@ const gameCases = [
                 nextCaseButton: document.getElementById('next-case'),
                 feedbackEl: document.getElementById('feedback'),
                 scoreEl: document.getElementById('score'),
-                caseNameEl: document.getElementById('case-name'),
+                caseNumberEl: document.getElementById('case-number'),
+                clinicalDetailsEl: document.getElementById('clinical-details'),
                 notesContainer: document.getElementById('notes-container'),
                 caseNotesEl: document.getElementById('case-notes'),
                 tutorialButton: document.getElementById('tutorial-button'),
@@ -732,11 +227,30 @@ const gameCases = [
                 screenModal: document.getElementById('screen-modal'),
                 screenAntigram: document.getElementById('screen-antigram'),
                 enzymeButton: document.getElementById('enzyme-button'),
+                caseSelect: document.getElementById('case-select'),
+                randomCaseButton: document.getElementById('random-case-button'),
             };
             
-            let state = { currentCaseIndex: 0, score: 0 };
+            let state = { score: 0 };
 
             // --- FUNCTIONS ---
+            function shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+            }
+
+            function populateCaseSelector() {
+                elements.caseSelect.innerHTML = '';
+                gameCases.forEach((caseData, index) => {
+                    const option = document.createElement('option');
+                    option.value = index;
+                    option.textContent = `Case ${index + 1}`;
+                    elements.caseSelect.appendChild(option);
+                });
+            }
+
             function renderPanelStructure() {
                 elements.table.innerHTML = '';
                 const thead = document.createElement('thead');
@@ -753,7 +267,7 @@ const gameCases = [
                 const bottomHeaderRow = document.createElement('tr');
                 bottomHeaderRow.innerHTML = '<th>#</th>';
                 panelAntigensList.forEach(ag => {
-                    bottomHeaderRow.innerHTML += `<th class="antigen-header" data-antigen-index="${panelAntigensList.indexOf(ag)}">${ag.replace('a','ᵃ').replace('b','ᵇ')}</th>`;
+                    bottomHeaderRow.innerHTML += `<th class="antigen-header" data-antigen-index="${panelAntigensList.indexOf(ag)}">${ag.replace('a','ᵃ').replace('b','ᵇ').replace('w','ʷ')}</th>`;
                 });
                 bottomHeaderRow.innerHTML += '<th>IAT</th><th id="enzyme-header" class="hidden">Enzyme</th>';
                 thead.appendChild(bottomHeaderRow);
@@ -763,6 +277,7 @@ const gameCases = [
             }
 
             function loadCase(caseIndex) {
+                currentCaseIndex = caseIndex;
                 const caseData = gameCases[caseIndex];
                 const tbody = elements.table.querySelector('tbody');
                 tbody.innerHTML = '';
@@ -783,10 +298,15 @@ const gameCases = [
                 autoRow.innerHTML = `<td class="font-bold">Auto</td><td colspan="${panelAntigensList.length}"></td><td class="reaction-cell">${caseData.auto}</td><td class="reaction-cell hidden" data-enzyme-result="true">${caseData.auto}</td>`;
                 tbody.appendChild(autoRow);
 
-                elements.caseNameEl.textContent = caseData.name;
-                document.getElementById('screen-I').textContent = caseData.screen.I;
-                document.getElementById('screen-II').textContent = caseData.screen.II;
-                document.getElementById('screen-III').textContent = caseData.screen.III;
+                elements.caseNumberEl.textContent = `Case ${caseIndex + 1}`;
+                elements.clinicalDetailsEl.textContent = caseData.clinicalDetails;
+                elements.caseSelect.value = caseIndex;
+
+                if (caseData.screen) {
+                    document.getElementById('screen-I').textContent = caseData.screen.I;
+                    document.getElementById('screen-II').textContent = caseData.screen.II;
+                    document.getElementById('screen-III').textContent = caseData.screen.III;
+                }
 
                 populateScreenAntigram();
 
@@ -801,7 +321,7 @@ const gameCases = [
                     cb.disabled = false;
                 });
                 
-                elements.enzymeButton.disabled = caseData.enzyme.length === 0;
+                elements.enzymeButton.disabled = !caseData.enzyme;
                 
                 document.querySelectorAll('.antigen-header, td[data-col-index]').forEach(el => el.classList.remove('line-through'));
                 document.getElementById('enzyme-header').classList.add('hidden');
@@ -822,8 +342,7 @@ const gameCases = [
             }
 
             function populateAnswerOptions() {
-                const allAntibodies = ['Anti-D', 'Anti-C', 'Anti-E', 'Anti-c', 'Anti-e', 'Anti-Cʷ', 'Anti-K', 'Anti-k', 'Anti-Fyᵃ', 'Anti-Fyᵇ', 'Anti-Jkᵃ', 'Anti-Jkᵇ', 'Anti-S', 'Anti-s', 'Anti-M', 'Anti-N', 'Autoantibody'];
-                elements.answerCheckboxes.innerHTML = '';
+            const allAntibodies = ['Anti-D', 'Anti-C', 'Anti-E', 'Anti-c', 'Anti-e', 'Anti-Cʷ', 'Anti-K', 'Anti-k', 'Anti-Kpa', 'Anti-Kpb', 'Anti-Fyᵃ', 'Anti-Fyᵇ', 'Anti-Jkᵃ', 'Anti-Jkᵇ', 'Anti-Lea', 'Anti-Leb', 'Anti-P1', 'Anti-S', 'Anti-s', 'Anti-M', 'Anti-N', 'Anti-Lua', 'Anti-Lub' 'Autoantibody'];                elements.answerCheckboxes.innerHTML = '';
                 allAntibodies.forEach(ab => {
                     const label = document.createElement('label');
                     label.className = "flex items-center space-x-2";
@@ -841,11 +360,12 @@ const gameCases = [
 
             function checkAnswer() {
                 const selectedAnswers = Array.from(document.querySelectorAll('.answer-checkbox:checked')).map(cb => cb.value);
-                const correctAnswers = gameCases[state.currentCaseIndex].solution;
-                const cwExcluded = elements.cwCheckbox.checked;
+                const correctAnswers = gameCases[currentCaseIndex].solution;
+                
+                selectedAnswers.sort();
+                correctAnswers.sort();
 
-                // Sort arrays to compare them regardless of order
-                const isCorrect = selectedAnswers.length === correctAnswers.length && selectedAnswers.sort().every((value, index) => value === correctAnswers.sort()[index]);
+                const isCorrect = JSON.stringify(selectedAnswers) === JSON.stringify(correctAnswers);
 
                 if (isCorrect) {
                     elements.feedbackEl.textContent = 'Correct! Excellent work.';
@@ -857,7 +377,7 @@ const gameCases = [
                     elements.feedbackEl.className = 'mt-1 h-6 text-lg font-semibold text-red-600';
                 }
                 
-                elements.caseNotesEl.textContent = gameCases[state.currentCaseIndex].notes;
+                elements.caseNotesEl.textContent = gameCases[currentCaseIndex].notes;
                 elements.notesContainer.classList.remove('hidden');
                 elements.submitButton.classList.add('hidden');
                 elements.nextCaseButton.classList.remove('hidden');
@@ -873,17 +393,16 @@ const gameCases = [
 
             // --- EVENT LISTENERS ---
             elements.table.addEventListener('click', (e) => {
-                const header = e.target.closest('.antigen-header');
-                if (header) {
-                    toggleExclusion(header.dataset.antigenIndex);
+                if (e.target.closest('.antigen-header')) {
+                    toggleExclusion(e.target.closest('.antigen-header').dataset.antigenIndex);
                 }
             });
             
             elements.submitButton.addEventListener('click', checkAnswer);
             
             elements.nextCaseButton.addEventListener('click', () => {
-                state.currentCaseIndex = (state.currentCaseIndex + 1) % gameCases.length;
-                loadCase(state.currentCaseIndex);
+                const nextIndex = (currentCaseIndex + 1) % gameCases.length;
+                loadCase(nextIndex);
             });
             
             elements.enzymeButton.addEventListener('click', () => {
@@ -898,11 +417,20 @@ const gameCases = [
             elements.closeTutorialButton.addEventListener('click', () => elements.tutorialModal.classList.remove('active'));
             elements.screenButton.addEventListener('click', () => elements.screenModal.classList.add('active'));
             elements.closeScreenButton.addEventListener('click', () => elements.screenModal.classList.remove('active'));
+            elements.caseSelect.addEventListener('change', (e) => {
+                loadCase(parseInt(e.target.value, 10));
+            });
+            elements.randomCaseButton.addEventListener('click', () => {
+                const randomIndex = Math.floor(Math.random() * gameCases.length);
+                loadCase(randomIndex);
+            });
 
             // --- INITIALIZATION ---
+            shuffleArray(gameCases);
+            populateCaseSelector();
             renderPanelStructure();
             populateAnswerOptions();
-            loadCase(state.currentCaseIndex);
+            loadCase(0);
         });
     </script>
 </body>
