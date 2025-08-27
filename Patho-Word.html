@@ -74,17 +74,49 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const wordList = [
-                'CELL', 'GENE', 'VIAL', 'SLIDE', 'ASSAY', 'PULSE', 'VEIN', 'CLOT',
-                'ACID', 'BASE', 'GRAM', 'HBV', 'HCV',
-                'BLOOD', 'SERUM', 'PLASMA', 'AGENT', 'VIRUS', 'ORGAN', 'TISSUE',
-                'STAIN', 'SMEAR', 'COUNT', 'PLATE', 'PUMP', 'LYSE', 'NEON',
-                'GENOME', 'ENZYME', 'FUNGUS', 'BUFFER', 'SPLEEN', 'KIDNEY',
-                'THYMUS', 'MUTATE', 'BIOPSY', 'CULTURE', 'HEPARIN', 'CITRATE',
-                'PATHOGEN', 'LEUKAEMIA', 'ANAEMIA', 'ANTIBODY', 'ANTIGEN', 'DISEASE',
-                'MALARIA', 'MYELOMA', 'THROMBIN', 'FIBRIN', 'EOSIN', 'BASOPHIL',
-                'HAEMATOLOGY', 'CHEMISTRY', 'HISTOLOGY', 'CYTOLOGY', 'VIROLOGY', 'IMMUNOLOGY'
-            ];
+const wordList = [
+    'ABO', 'ACID', 'AGAR', 'ASSAY', 'AUER', 'BASE', 'BILE', 'BUNS',
+    'CELL', 'CLOT', 'COAG', 'CODE', 'CORE', 'CULT', 'CURVE', 'CYTE',
+    'DATA', 'DISK', 'DNA', 'DOHLE', 'DONOR', 'DRUG', 'DUFFY', 'DYE',
+    'EDTA', 'EOSIN', 'FBC', 'FETAL', 'FILM', 'FLOW', 'GENE', 'GRAM',
+    'HBV', 'HCV', 'HIV', 'IRON', 'KELL', 'KIDD', 'KIDNEY', 'LENS',
+    'LEWIS', 'LIPAEMIA', 'LIVER', 'LUNG', 'LYSE', 'MEAN', 'MCHC',
+    'NEON', 'PARA', 'PATH', 'PHAGE', 'PIPE', 'PLATE', 'PUMP', 'QC',
+    'RBC', 'RNA', 'SALT', 'SICKLE', 'SLIDE', 'SMEAR', 'SPIN', 'STAT',
+    'STEM', 'STIX', 'TEST', 'THIN', 'TUBE', 'TYPE', 'UREA', 'URIC',
+    'VEIN', 'VIAL', 'WBC',
+    'ACUTE', 'AGENT', 'ALBUMIN', 'ALKALI', 'ALLERGY', 'AMYLASE',
+    'ANALYSE', 'ANION', 'ARRAY', 'ARTERY', 'ATYPIA', 'BACILLUS',
+    'BENIGN', 'BIOPSY', 'BLAST', 'BLEED', 'BLOOD', 'BONE', 'BROTH',
+    'BUFFER', 'CALCIUM', 'CANCER', 'CAPILLARY', 'CARRIER', 'CATION',
+    'CHAIN', 'CHRONIC', 'CITRATE', 'CLONE', 'COCCUS', 'COUNT',
+    'CULTURE', 'CYCLE', 'CYTOLOGY', 'DISEASE', 'DILUTE', 'DONATE',
+    'ELECTRODE', 'ELISA', 'EMBOLISM', 'ENZYME', 'ERROR', 'FACTOR',
+    'FERRITIN', 'FEVER', 'FIBRIN', 'FIELD', 'FILTER', 'FIXATIVE',
+    'FLASK', 'FOLATE', 'FUNGUS', 'GAMMA', 'GAUGE', 'GLOBULIN',
+    'GLUCOSE', 'GRADE', 'GROUP', 'GROWTH', 'HAEM', 'HEART', 'HEATER',
+    'HEMOLYSIS', 'HEPARIN', 'HISTOLOGY', 'HORMONE', 'HOST', 'INDEX',
+    'INCUBATE', 'INHIBIT', 'ION', 'JAUNDICE', 'KAOLIN', 'KETONE',
+    'KIT', 'LABEL', 'LASER', 'LEUKAEMIA', 'LEVEL', 'LIGHT', 'LIPASE',
+    'LIPID', 'LUPUS', 'LYMPH', 'LYMPHOCYTE', 'MALARIA', 'MALIGNANT',
+    'MARKER', 'MATRIX', 'MEDIA', 'MICRON', 'MICROSCOPE', 'MIXER',
+    'MOLECULAR', 'MONOCYTE', 'MORPHOLOGY', 'MUTATE', 'MYELOMA',
+    'NEEDLE', 'NEUTROPHIL', 'NORMAL', 'NUCLEUS', 'ORGAN', 'OSMOLALITY',
+    'PANEL', 'PARASITE', 'PATHOGEN', 'PELGER', 'PHENOTYPE', 'PHLEBOTOMY',
+    'PLASMA', 'PLASMID', 'POOLED', 'POTASSIUM', 'PRECIPITATE', 'PROBE',
+    'PROTEIN', 'PULSE', 'QUALITY', 'RACK', 'RANGE', 'REAGENT',
+    'RECEPTOR', 'RECORD', 'RED', 'REFERENCE', 'REFRACTIVE', 'RESULT',
+    'RETICULOCYTE', 'RHESUS', 'RIBBON', 'RODS', 'ROTATE', 'ROULEAUX',
+    'SAMPLE', 'SARCOMA', 'SCAN', 'SCREEN', 'SECTION', 'SEDIMENT',
+    'SEQUENCE', 'SEROLOGY', 'SERUM', 'SHIFT', 'SODIUM', 'SOLUTION',
+    'SOLVENT', 'SPECIES', 'SPECIMEN', 'SPLEEN', 'SQUAMOUS', 'STAIN',
+    'STANDARD', 'STERILE', 'STREAK', 'SUBSTRATE', 'SYNDROME', 'SYRINGE',
+    'SYSTEM', 'TARGET', 'THALASSAEMIA', 'THROMBIN', 'THROMBOSIS',
+    'THYMUS', 'THYROID', 'TISSUE', 'TITRE', 'TOXIC', 'TRACE', 'TREND',
+    'TUMOUR', 'TURBIDITY', 'URINE', 'VACCINE', 'VACUUM', 'VALIDATE',
+    'VALUE', 'VARIANT', 'VIROLOGY', 'VIRUS', 'VITAMIN', 'VOLUME',
+    'WASTE', 'WAVELENGTH', 'WHITE', 'ZYMOGEN'
+];
 
             const gridContainer = document.getElementById('grid-container');
             const keyboardContainer = document.getElementById('keyboard-container');
