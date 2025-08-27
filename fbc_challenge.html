@@ -61,7 +61,7 @@
     
     <div id="footer-placeholder"></div>
 
-      <script src="js/component-loader.js"></script>
+    <script src="js/component-loader.js"></script>
     
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -83,6 +83,7 @@
             const scoreEl = document.getElementById('score');
 
             const scenarios = [
+                // Original Scenarios
                 { condition: 'Iron Deficiency Anaemia', clinicalNote: 'Patient presents with fatigue, shortness of breath, and pica.', fbc: [ { p: 'Hb', v: 'Low', a: '↓' }, { p: 'MCV', v: 'Low', a: '↓' }, { p: 'MCH', v: 'Low', a: '↓' } ], other: [{p: 'Platelets', v: 'High', a: '↑'}], differentials: ['Anaemia of Chronic Disease', 'Thalassaemia Trait', 'Sideroblastic Anaemia'], explanation: 'Lack of iron impairs haemoglobin synthesis, leading to smaller (low MCV) and paler (low MCH) red cells. The bone marrow may produce more platelets in response.' },
                 { condition: 'Megaloblastic Anaemia', clinicalNote: 'Elderly patient with fatigue and neurological symptoms.', fbc: [ { p: 'Hb', v: 'Low', a: '↓' }, { p: 'MCV', v: 'High', a: '↑' } ], other: [{ p: 'Morphology', v: 'Hypersegmented Neutrophils & Oval Macrocytes' }], differentials: ['Liver Disease / Alcoholism', 'Myelodysplastic Syndrome', 'Aplastic Anaemia'], explanation: 'B12 or Folate deficiency impairs DNA synthesis, affecting all rapidly dividing cells. This leads to large, fragile red cells (high MCV) and ineffective haematopoiesis, causing pancytopenia.' },
                 { condition: 'Anaemia of Chronic Disease', clinicalNote: 'Patient with long-standing rheumatoid arthritis.', fbc: [ { p: 'Hb', v: 'Low', a: '↓' }, { p: 'MCV', v: 'Normal', a: '↔' } ], other: [{p: 'ESR', v: 'High', a: '↑'}], differentials: ['Iron Deficiency Anaemia', 'Haemolytic Anaemia', 'Renal Failure'], explanation: 'Chronic inflammation causes the liver to produce hepcidin, which traps iron in macrophages and reduces gut absorption. This leads to a functional iron deficiency, but with normal or high iron stores (ferritin).' },
@@ -90,8 +91,8 @@
                 { condition: 'Acute Lymphoblastic Leukaemia (ALL)', clinicalNote: 'Child presents with lethargy, bone pain, and recurrent infections.', fbc: [ { p: 'Hb', v: 'Low', a: '↓' }, { p: 'Neutrophils', v: 'Low', a: '↓' } ], other: [{p: 'Blasts on Film', v: 'Present'}, {p: 'Platelets', v: 'Low', a: '↓'}], differentials: ['Acute Myeloid Leukaemia (AML)', 'Infectious Mononucleosis', 'Aplastic Anaemia'], explanation: 'Rapid proliferation of malignant lymphoblasts crowds out normal haematopoiesis in the bone marrow. This is the most common childhood cancer.' },
                 { condition: 'Chronic Myeloid Leukaemia (CML)', clinicalNote: 'Patient presents with weight loss and significant splenomegaly.', fbc: [ { p: 'WBC', v: 'Very High', a: '↑↑' }, { p: 'Basophils', v: 'High', a: '↑' } ], other: [{p: 'Morphology', v: 'Full spectrum of granulocytes ("left shift")'}], differentials: ['Leukaemoid Reaction', 'Chronic Lymphocytic Leukaemia', 'Essential Thrombocythaemia'], explanation: 'A myeloproliferative neoplasm caused by the BCR-ABL1 fusion gene, leading to uncontrolled production of all granulocytes, particularly neutrophils, and often basophilia.' },
                 { condition: 'Chronic Lymphocytic Leukaemia (CLL)', clinicalNote: 'Routine blood test in an elderly patient shows a persistent, isolated lymphocytosis.', fbc: [ { p: 'WBC', v: 'High', a: '↑' }, { p: 'Lymphocytes', v: 'Very High (>5.0)', a: '↑↑' }], other: [{p: 'Morphology', v: 'Smear cells present'}, {p: 'Immunophenotyping', v: 'CD5+, CD19+, CD23+'}] , differentials: ['Infectious Mononucleosis', 'Hairy Cell Leukaemia', 'Other Lymphoproliferative Disorders'], explanation: 'A clonal proliferation of mature B-lymphocytes. These cells are fragile and often rupture during slide preparation, creating characteristic "smear cells".' },
-                { condition: 'Bacterial Infection (Neutrophilia)', clinicalNote: 'Patient presents with high fever and productive cough.', fbc: [ { p: 'WBC', v: 'High', a: '↑' }, { p: 'Neutrophils', v: 'High', a: '↑' } ], other: [{p: 'Morphology', v: 'Toxic granulation & Döhle bodies'}] , differentials: ['Chronic Myeloid Leukaemia (CML)', 'Leukaemoid Reaction', 'Steroid Therapy']},
-                { condition: 'Infectious Mononucleosis', clinicalNote: 'Young adult with sore throat, fever, and lymphadenopathy.', fbc: [ { p: 'WBC', v: 'High', a: '↑' }], other: [{p: 'Morphology', v: 'Atypical lymphocytes >20%'}] , differentials: ['Chronic Lymphocytic Leukaemia (CLL)', 'Acute Lymphoblastic Leukaemia (ALL)', 'Cytomegalovirus (CMV) Infection'] },
+                { condition: 'Bacterial Infection (Neutrophilia)', clinicalNote: 'Patient presents with high fever and productive cough.', fbc: [ { p: 'WBC', v: 'High', a: '↑' }, { p: 'Neutrophils', v: 'High', a: '↑' } ], other: [{p: 'Morphology', v: 'Toxic granulation & Döhle bodies'}] , differentials: ['Chronic Myeloid Leukaemia (CML)', 'Leukaemoid Reaction', 'Steroid Therapy'], explanation: 'The body produces more neutrophils to fight bacterial infections. These neutrophils can show morphological changes like toxic granulation due to rapid production.' },
+                { condition: 'Infectious Mononucleosis', clinicalNote: 'Young adult with sore throat, fever, and lymphadenopathy.', fbc: [ { p: 'WBC', v: 'High', a: '↑' }], other: [{p: 'Morphology', v: 'Atypical lymphocytes >20%'}] , differentials: ['Chronic Lymphocytic Leukaemia (CLL)', 'Acute Lymphoblastic Leukaemia (ALL)', 'Cytomegalovirus (CMV) Infection'], explanation: 'Caused by Epstein-Barr Virus (EBV), this condition leads to a proliferation of reactive T-lymphocytes, which appear large and 'atypical' on the blood film.' },
                 { condition: 'Polycythaemia Vera', clinicalNote: 'Patient complains of headaches, dizziness, and aquagenic pruritus.', fbc: [ { p: 'Hb', v: 'High', a: '↑' }, { p: 'Hct', v: 'High', a: '↑' }, { p: 'RBC Count', v: 'High', a: '↑' } ], other: [{p: 'JAK2 V617F Mutation', v: 'Positive'}], differentials: ['Essential Thrombocythaemia', 'Secondary Polycythaemia', 'Chronic Myeloid Leukaemia (CML)'], explanation: 'A myeloproliferative neoplasm, often driven by the JAK2 mutation, causing overproduction of all cell lines, but particularly red blood cells.' },
                 { condition: 'Aplastic Anaemia', clinicalNote: 'Patient has pancytopenia after exposure to a drug.', fbc: [ { p: 'Pancytopenia', v: 'Severe', a: '↓↓' }], other: [{p: 'Reticulocytes', v: 'Very Low', a: '↓↓'}], differentials: ['Megaloblastic Anaemia', 'Acute Leukaemia', 'Hypersplenism'], explanation: 'Failure of the bone marrow to produce blood cells, leading to a deficiency of all cell lines (pancytopenia) and a very low reticulocyte count, indicating no new red cell production.' },
                 { condition: 'Autoimmune Haemolytic Anaemia', clinicalNote: 'Patient presents with sudden onset of jaundice and weakness.', fbc: [ { p: 'Hb', v: 'Low', a: '↓' }, { p: 'Reticulocytes', v: 'High', a: '↑' }], other: [{p: 'Morphology', v: 'Spherocytes present'}, {p: 'DAT', v: 'Positive'}], differentials: ['Hereditary Spherocytosis', 'Sepsis / DIC', 'Anaemia of Chronic Disease'], explanation: 'Antibodies coat the patient\'s red cells, leading to their destruction by the spleen. This causes anaemia, and the bone marrow responds by releasing many new reticulocytes. The presence of spherocytes and a positive DAT are classic findings.' },
@@ -104,257 +105,45 @@
                 { condition: 'Thrombotic Thrombocytopenic Purpura (TTP)', clinicalNote: 'Patient presents with fever, confusion and renal failure.', fbc: [{ p: 'Hb', v: 'Low', a: '↓' }, {p: 'Platelets', v: 'Very Low', a: '↓↓'}], other: [{p: 'Morphology', v: 'Schistocytes present'}], differentials: ['Sepsis / DIC', 'Autoimmune Haemolytic Anaemia', 'Malignant Hypertension'], explanation: 'A medical emergency caused by a deficiency in the ADAMTS13 enzyme. Spontaneous clots form in small vessels, consuming platelets and shredding red cells, often causing neurological damage.'},
                 { condition: 'Immune Thrombocytopenic Purpura (ITP)', clinicalNote: 'Young woman presents with bruising and petechiae after a viral illness.', fbc: [{p: 'Platelets', v: 'Low', a: '↓'}], other: [{p: 'Hb', v: 'Normal', a: '↔'}, {p: 'WBC', v: 'Normal', a: '↔'}], differentials: ['Drug-induced Thrombocytopenia', 'Gestational Thrombocytopenia', 'Acute Leukaemia'], explanation: 'An autoimmune disorder where antibodies are directed against platelets. It presents as an isolated thrombocytopenia with all other FBC parameters being normal.'},
                 { condition: 'Malaria', clinicalNote: 'Patient recently returned from travel to a tropical region and has a high fever.', fbc: [{p: 'Hb', v: 'Low', a: '↓'}, {p: 'Platelets', v: 'Low', a: '↓'}], other: [{p: 'Morphology', v: 'Parasites seen in red cells'}], differentials: ['Sepsis / DIC', 'Viral Infection', 'Bartonellosis'], explanation: 'The parasite infects and destroys red blood cells, causing anaemia. It also leads to a consumption of platelets, causing a characteristic thrombocytopenia.'},
-                { condition: 'Myelodysplastic Syndrome (MDS)', clinicalNote: 'Elderly patient with persistent, unexplained cytopenias.', fbc: [{p: 'Cytopenias', v: 'Variable', a: '↓'}, {p: 'MCV', v: 'Normal/High', a: '↔/↑'}], other: [{p: 'Morphology', v: 'Dysplastic changes, e.g. Pelger-Huët cells'}], differentials: ['Megaloblastic Anaemia', 'Aplastic Anaemia', 'Acute Leukaemia'], explanation: 'A group of bone marrow failure disorders where blood cell production is disorderly and ineffective ("dysplastic"). This leads to various cytopenias and abnormal cell morphology.'}
-    {
-        "condition": "Glandular Fever (Infectious Mononucleosis)",
-        "clinicalNote": "Teenager with sore throat, swollen glands and fatigue for two weeks.",
-        "fbc": [
-            { "p": "WBC", "v": "High", "a": "↑" },
-            { "p": "Lymphocytes", "v": "High", "a": "↑" }
-        ],
-        "other": [
-            { "p": "Morphology", "v": "Atypical lymphocytes" },
-            { "p": "Monospot Test", "v": "Positive" }
-        ],
-        "differentials": ["Cytomegalovirus (CMV)", "Strep Throat", "Acute Lymphoblastic Leukaemia (ALL)"],
-        "explanation": "Caused by the Epstein-Barr virus (EBV), this condition stimulates a strong T-cell response, leading to a proliferation of large, reactive ('atypical') lymphocytes."
-    },
-    {
-        "condition": "Hereditary Spherocytosis",
-        "clinicalNote": "Young patient with mild jaundice, an enlarged spleen, and a family history of anaemia.",
-        "fbc": [
-            { "p": "Hb", "v": "Low", "a": "↓" },
-            { "p": "MCHC", "v": "High", "a": "↑" }
-        ],
-        "other": [
-            { "p": "Morphology", "v": "Spherocytes" },
-            { "p": "Reticulocytes", "v": "High", "a": "↑" }
-        ],
-        "differentials": ["Autoimmune Haemolytic Anaemia", "G6PD Deficiency", "Liver Disease"],
-        "explanation": "A genetic defect in red cell membrane proteins makes the cells spherical, less flexible, and easily destroyed by the spleen. The smaller volume for the same amount of haemoglobin leads to a high MCHC."
-    },
-    {
-        "condition": "Sickle Cell Anaemia (HbSS)",
-        "clinicalNote": "Patient of African descent presents with severe pain in their bones and chest (a 'crisis').",
-        "fbc": [
-            { "p": "Hb", "v": "Low", "a": "↓" }
-        ],
-        "other": [
-            { "p": "Morphology", "v": "Sickle cells, target cells" },
-            { "p": "HPLC", "v": "HbS present, no HbA" }
-        ],
-        "differentials": ["Sickle Cell Trait (HbAS)", "HbSC Disease", "Other Haemoglobinopathies"],
-        "explanation": "A genetic condition where abnormal haemoglobin (HbS) polymerises under low oxygen, distorting red cells into a sickle shape. These block blood vessels, causing pain and organ damage."
-    },
-    {
-        "condition": "Von Willebrand Disease",
-        "clinicalNote": "Patient with a lifelong history of easy bruising, nosebleeds, and heavy menstrual periods.",
-        "fbc": [
-            { "p": "Platelets", "v": "Normal", "a": "↔" }
-        ],
-        "other": [
-            { "p": "APTT", "v": "Normal/High", "a": "↔/↑" },
-            { "p": "PFA", "v": "Prolonged" }
-        ],
-        "differentials": ["Platelet Function Disorder", "Mild Haemophilia", "ITP"],
-        "explanation": "The most common inherited bleeding disorder, caused by a deficiency or defect in von Willebrand Factor. This protein is needed for platelet adhesion and to carry Factor VIII, hence the variable APTT and abnormal platelet function test (PFA)."
-    },
-    {
-        "condition": "Haemophilia A",
-        "clinicalNote": "Male child presents with spontaneous bleeding into a joint (haemarthrosis).",
-        "fbc": [
-            { "p": "Platelets", "v": "Normal", "a": "↔" }
-        ],
-        "other": [
-            { "p": "APTT", "v": "Very High", "a": "↑↑" },
-            { "p": "PT/INR", "v": "Normal", "a": "↔" }
-        ],
-        "differentials": ["Haemophilia B", "Von Willebrand Disease", "Vitamin K Deficiency"],
-        "explanation": "An X-linked genetic disorder causing a deficiency of Factor VIII. This severely prolongs the APTT (intrinsic pathway) while the PT (extrinsic pathway) remains normal."
-    },
-    {
-        "condition": "G6PD Deficiency",
-        "clinicalNote": "Patient develops jaundice and dark urine after eating fava beans or taking certain medications.",
-        "fbc": [
-            { "p": "Hb", "v": "Low", "a": "↓" }
-        ],
-        "other": [
-            { "p": "Morphology", "v": "Bite cells, Heinz bodies (special stain)" },
-            { "p": "Reticulocytes", "v": "High", "a": "↑" }
-        ],
-        "differentials": ["Autoimmune Haemolytic Anaemia", "Sickle Cell Anaemia", "Hereditary Spherocytosis"],
-        "explanation": "An enzyme deficiency making red cells vulnerable to oxidative stress. This stress damages haemoglobin (forming Heinz bodies), which are then removed by the spleen, creating 'bite cells'."
-    },
-    {
-        "condition": "Alpha Thalassaemia Trait",
-        "clinicalNote": "Patient of Southeast Asian descent has a mild microcytic anaemia found on a routine check.",
-        "fbc": [
-            { "p": "MCV", "v": "Low", "a": "↓" },
-            { "p": "MCH", "v": "Low", "a": "↓" }
-        ],
-        "other": [
-            { "p": "HbA2", "v": "Normal/Low", "a": "↔/↓" }
-        ],
-        "differentials": ["Iron Deficiency Anaemia", "Beta Thalassaemia Trait", "Anaemia of Chronic Disease"],
-        "explanation": "Reduced production of alpha globin chains leads to microcytic, hypochromic red cells. Unlike beta thalassaemia, the HbA2 level is not elevated, which is a key diagnostic clue."
-    },
-    {
-        "condition": "Reactive Thrombocytosis",
-        "clinicalNote": "Post-operative patient with a high platelet count.",
-        "fbc": [
-            { "p": "Platelets", "v": "High", "a": "↑" }
-        ],
-        "other": [
-            { "p": "CRP", "v": "High", "a": "↑" }
-        ],
-        "differentials": ["Essential Thrombocythaemia", "Polycythaemia Vera", "Myelofibrosis"],
-        "explanation": "Platelets are acute phase reactants, meaning their count can rise in response to inflammation, infection, bleeding, or iron deficiency. This must be distinguished from a malignant (clonal) cause."
-    },
-    {
-        "condition": "Drug-induced Neutropenia",
-        "clinicalNote": "Patient started on a new medication (e.g., clozapine, chemotherapy) develops a fever and sore throat.",
-        "fbc": [
-            { "p": "WBC", "v": "Low", "a": "↓" },
-            { "p": "Neutrophils", "v": "Very Low", "a": "↓↓" }
-        ],
-        "other": [
-            { "p": "Hb", "v": "Normal", "a": "↔" },
-            { "p": "Platelets", "v": "Normal", "a": "↔" }
-        ],
-        "differentials": ["Viral Infection", "Aplastic Anaemia", "Acute Leukaemia"],
-        "explanation": "Many drugs can directly suppress bone marrow production of neutrophils. The resulting severe neutropenia leaves the patient highly vulnerable to infection."
-    },
-    {
-        "condition": "Cold Agglutinin Disease",
-        "clinicalNote": "Elderly patient presents with acrocyanosis (blue fingers/toes in the cold) and mild anaemia.",
-        "fbc": [
-            { "p": "MCV", "v": "Falsely High", "a": "↑↑" },
-            { "p": "MCHC", "v": "Falsely High", "a": "↑↑" }
-        ],
-        "other": [
-            { "p": "Morphology", "v": "Marked red cell agglutination" },
-            { "p": "DAT", "v": "Positive (C3d only)" }
-        ],
-        "differentials": ["Rouleaux (Myeloma)", "Autoimmune Haemolytic Anaemia", "Cryoglobulinaemia"],
-        "explanation": "IgM autoantibodies cause red cells to clump together (agglutinate) in the cold. The analyser misinterprets these clumps as single large cells, leading to a spuriously high MCV and MCHC. Warming the sample is required for an accurate result."
-    },
-    {
-        "condition": "Liver Disease / Hypersplenism",
-        "clinicalNote": "Patient with known alcoholic cirrhosis presents with signs of bleeding.",
-        "fbc": [
-            { "p": "Pancytopenia", "v": "Mild", "a": "↓" }
-        ],
-        "other": [
-            { "p": "Morphology", "v": "Target cells, acanthocytes" },
-            { "p": "PT/INR", "v": "Prolonged" }
-        ],
-        "differentials": ["Myelodysplastic Syndrome", "Aplastic Anaemia", "Megaloblastic Anaemia"],
-        "explanation": "Liver disease causes reduced production of clotting factors (prolonged PT) and an enlarged spleen (splenomegaly), which traps and destroys all blood cells, leading to pancytopenia."
-    },
-    {
-        "condition": "Secondary Polycythaemia (e.g., due to COPD)",
-        "clinicalNote": "Patient with a long history of heavy smoking and chronic obstructive pulmonary disease (COPD).",
-        "fbc": [
-            { "p": "Hb", "v": "High", "a": "↑" },
-            { "p": "Hct", "v": "High", "a": "↑" }
-        ],
-        "other": [
-            { "p": "JAK2 V617F Mutation", "v": "Negative" }
-        ],
-        "differentials": ["Polycythaemia Vera", "Dehydration", "High Altitude"],
-        "explanation": "Chronic low oxygen levels (hypoxia) stimulate the kidneys to produce more erythropoietin (EPO), which drives the bone marrow to produce more red cells as a compensatory mechanism."
-    },
-    {
-        "condition": "Waldenström Macroglobulinemia",
-        "clinicalNote": "Elderly patient with fatigue, visual disturbances, and neuropathy.",
-        "fbc": [
-            { "p": "Hb", "v": "Low", "a": "↓" }
-        ],
-        "other": [
-            { "p": "Morphology", "v": "Marked rouleaux" },
-            { "p": "ESR", "v": "Very High", "a": "↑↑" },
-            { "p": "SPEP", "v": "IgM Paraprotein" }
-        ],
-        "differentials": ["Multiple Myeloma", "Chronic Lymphocytic Leukaemia (CLL)", "MGUS"],
-        "explanation": "A rare type of lymphoma characterised by the production of a large amount of abnormal IgM antibody. This makes the blood very viscous, leading to many of the symptoms."
-    },
-    {
-        "condition": "Hereditary Elliptocytosis",
-        "clinicalNote": "Incidental finding of abnormally shaped red cells in an asymptomatic patient.",
-        "fbc": [
-            { "p": "Hb", "v": "Normal/Low", "a": "↔/↓" }
-        ],
-        "other": [
-            { "p": "Morphology", "v": "Predominance of elliptocytes/ovalocytes (>25%)" }
-        ],
-        "differentials": ["Iron Deficiency Anaemia", "Myelodysplastic Syndrome", "Megaloblastic Anaemia"],
-        "explanation": "A genetic defect in red cell membrane proteins (like spectrin) which causes the cells to become elliptical. It is usually asymptomatic but can cause a mild haemolytic anaemia."
-    },
-    {
-        "condition": "Lead Poisoning",
-        "clinicalNote": "Child living in an old house presents with abdominal pain and developmental delay.",
-        "fbc": [
-            { "p": "Hb", "v": "Low", "a": "↓" },
-            { "p": "MCV", "v": "Low", "a": "↓" }
-        ],
-        "other": [
-            { "p": "Morphology", "v": "Basophilic stippling" }
-        ],
-        "differentials": ["Iron Deficiency Anaemia", "Thalassaemia Trait", "Sideroblastic Anaemia"],
-        "explanation": "Lead interferes with haem synthesis, causing a microcytic anaemia. The classic finding is coarse basophilic stippling in the red blood cells."
-    },
-    {
-        "condition": "Transient Erythroblastopenia of Childhood (TEC)",
-        "clinicalNote": "A healthy toddler suddenly becomes pale and lethargic after a viral illness.",
-        "fbc": [
-            { "p": "Hb", "v": "Very Low", "a": "↓↓" }
-        ],
-        "other": [
-            { "p": "Reticulocytes", "v": "Very Low", "a": "↓↓" },
-            { "p": "WBC & Platelets", "v": "Normal", "a": "↔" }
-        ],
-        "differentials": ["Diamond-Blackfan Anemia", "Aplastic Anaemia", "Acute Lymphoblastic Leukaemia (ALL)"],
-        "explanation": "A temporary cessation of red blood cell production in the bone marrow, often following a viral infection. It is characterised by severe anaemia with a near-absent reticulocyte response, but resolves spontaneously."
-    },
-    {
-        "condition": "Parvovirus B19 Infection",
-        "clinicalNote": "Patient with known sickle cell disease presents with a sudden, severe drop in haemoglobin.",
-        "fbc": [
-            { "p": "Hb", "v": "Very Low", "a": "↓↓" }
-        ],
-        "other": [
-            { "p": "Reticulocytes", "v": "Very Low", "a": "↓↓" }
-        ],
-        "differentials": ["Splenic Sequestration Crisis", "Hyperhaemolytic Crisis", "Aplastic Anaemia"],
-        "explanation": "Parvovirus B19 infects and destroys red cell precursors in the bone marrow. In patients who already have a high red cell turnover (like sickle cell disease), this causes a sudden, life-threatening 'aplastic crisis' due to the halt in red cell production."
-    },
-    {
-        "condition": "Clostridium perfringens Sepsis",
-        "clinicalNote": "Acutely ill patient with gas gangrene develops rapid, severe haemolysis.",
-        "fbc": [
-            { "p": "Hb", "v": "Dropping rapidly", "a": "↓↓" }
-        ],
-        "other": [
-            { "p": "Morphology", "v": "Microspherocytes, 'ghost' cells" }
-        ],
-        "differentials": ["Autoimmune Haemolytic Anaemia", "TTP", "Malaria"],
-        "explanation": "The toxins produced by C. perfringens can cause massive, intravascular haemolysis, leading to a catastrophic drop in haemoglobin and the appearance of microspherocytes and red cell remnants ('ghost cells') on the film."
-    },
-    {
-        "condition": "Hereditary Pyropoikilocytosis (HPP)",
-        "clinicalNote": "Infant of African descent with severe, transfusion-dependent haemolytic anaemia from birth.",
-        "fbc": [
-            { "p": "MCV", "v": "Very Low", "a": "↓↓" }
-        ],
-        "other": [
-            { "p": "Morphology", "v": "Bizarre poikilocytosis, fragments, microspherocytes" }
-        ],
-        "differentials": ["Hereditary Elliptocytosis", "Thalassaemia Major", "DIC"],
-        "explanation": "A rare and severe genetic red cell membrane disorder. The red cells are thermally unstable and fragment easily, even at normal body temperature, leading to a blood film with bizarre shapes and a very low MCV."
-    }
-]
+                { condition: 'Myelodysplastic Syndrome (MDS)', clinicalNote: 'Elderly patient with persistent, unexplained cytopenias.', fbc: [{p: 'Cytopenias', v: 'Variable', a: '↓'}, {p: 'MCV', v: 'Normal/High', a: '↔/↑'}], other: [{p: 'Morphology', v: 'Dysplastic changes, e.g. Pelger-Huët cells'}], differentials: ['Megaloblastic Anaemia', 'Aplastic Anaemia', 'Acute Leukaemia'], explanation: 'A group of bone marrow failure disorders where blood cell production is disorderly and ineffective ("dysplastic"). This leads to various cytopenias and abnormal cell morphology.'},
+                
+                // Additional High-Quality Scenarios
+                { condition: 'Hereditary Spherocytosis', clinicalNote: 'Young patient with mild jaundice, an enlarged spleen, and a family history of anaemia.', fbc: [ { p: 'Hb', v: 'Low', a: '↓' }, { p: 'MCHC', v: 'High', a: '↑' } ], other: [ { p: 'Morphology', v: 'Spherocytes' }, { p: 'Reticulocytes', v: 'High', a: '↑' } ], differentials: ['Autoimmune Haemolytic Anaemia', 'G6PD Deficiency', 'Liver Disease'], explanation: 'A genetic defect in red cell membrane proteins makes the cells spherical, less flexible, and easily destroyed by the spleen. The smaller volume for the same amount of haemoglobin leads to a high MCHC.' },
+                { condition: 'Sickle Cell Anaemia (HbSS)', clinicalNote: 'Patient of African descent presents with severe pain in their bones and chest (a "crisis").', fbc: [ { p: 'Hb', v: 'Low', a: '↓' } ], other: [ { p: 'Morphology', v: 'Sickle cells, target cells' }, { p: 'HPLC', v: 'HbS present, no HbA' } ], differentials: ['Sickle Cell Trait (HbAS)', 'HbSC Disease', 'Other Haemoglobinopathies'], explanation: 'A genetic condition where abnormal haemoglobin (HbS) polymerises under low oxygen, distorting red cells into a sickle shape. These block blood vessels, causing pain and organ damage.' },
+                { condition: 'Von Willebrand Disease', clinicalNote: 'Patient with a lifelong history of easy bruising, nosebleeds, and heavy menstrual periods.', fbc: [ { p: 'Platelets', v: 'Normal', a: '↔' } ], other: [ { p: 'APTT', v: 'Normal/High', a: '↔/↑' }, { p: 'PFA', v: 'Prolonged' } ], differentials: ['Platelet Function Disorder', 'Mild Haemophilia', 'ITP'], explanation: 'The most common inherited bleeding disorder, caused by a deficiency or defect in von Willebrand Factor. This protein is needed for platelet adhesion and to carry Factor VIII, hence the variable APTT and abnormal platelet function test (PFA).' },
+                { condition: 'Haemophilia A', clinicalNote: 'Male child presents with spontaneous bleeding into a joint (haemarthrosis).', fbc: [ { p: 'Platelets', v: 'Normal', a: '↔' } ], other: [ { p: 'APTT', v: 'Very High', a: '↑↑' }, { p: 'PT/INR', v: 'Normal', a: '↔' } ], differentials: ['Haemophilia B', 'Von Willebrand Disease', 'Vitamin K Deficiency'], explanation: 'An X-linked genetic disorder causing a deficiency of Factor VIII. This severely prolongs the APTT (intrinsic pathway) while the PT (extrinsic pathway) remains normal.' },
+                { condition: 'G6PD Deficiency', clinicalNote: 'Patient develops jaundice and dark urine after eating fava beans or taking certain medications.', fbc: [ { p: 'Hb', v: 'Low', a: '↓' } ], other: [ { p: 'Morphology', v: 'Bite cells, Heinz bodies (special stain)' }, { p: 'Reticulocytes', v: 'High', a: '↑' } ], differentials: ['Autoimmune Haemolytic Anaemia', 'Sickle Cell Anaemia', 'Hereditary Spherocytosis'], explanation: 'An enzyme deficiency making red cells vulnerable to oxidative stress. This stress damages haemoglobin (forming Heinz bodies), which are then removed by the spleen, creating "bite cells".' },
+                { condition: 'Alpha Thalassaemia Trait', clinicalNote: 'Patient of Southeast Asian descent has a mild microcytic anaemia found on a routine check.', fbc: [ { p: 'MCV', v: 'Low', a: '↓' }, { p: 'MCH', v: 'Low', a: '↓' } ], other: [ { p: 'HbA2', v: 'Normal/Low', a: '↔/↓' } ], differentials: ['Iron Deficiency Anaemia', 'Beta Thalassaemia Trait', 'Anaemia of Chronic Disease'], explanation: 'Reduced production of alpha globin chains leads to microcytic, hypochromic red cells. Unlike beta thalassaemia, the HbA2 level is not elevated, which is a key diagnostic clue.' },
+                { condition: 'Reactive Thrombocytosis', clinicalNote: 'Post-operative patient with a high platelet count.', fbc: [ { p: 'Platelets', v: 'High', a: '↑' } ], other: [ { p: 'CRP', v: 'High', a: '↑' } ], differentials: ['Essential Thrombocythaemia', 'Polycythaemia Vera', 'Myelofibrosis'], explanation: 'Platelets are acute phase reactants, meaning their count can rise in response to inflammation, infection, bleeding, or iron deficiency. This must be distinguished from a malignant (clonal) cause.' },
+                { condition: 'Drug-induced Neutropenia', clinicalNote: 'Patient started on clozapine develops a fever and sore throat.', fbc: [ { p: 'WBC', v: 'Low', a: '↓' }, { p: 'Neutrophils', v: 'Very Low', a: '↓↓' } ], other: [ { p: 'Hb', v: 'Normal', a: '↔' }, { p: 'Platelets', v: 'Normal', a: '↔' } ], differentials: ['Viral Infection', 'Aplastic Anaemia', 'Acute Leukaemia'], explanation: 'Many drugs can directly suppress bone marrow production of neutrophils. The resulting severe neutropenia leaves the patient highly vulnerable to infection.' },
+                { condition: 'Cold Agglutinin Disease', clinicalNote: 'Elderly patient with blue fingers/toes in the cold and mild anaemia.', fbc: [ { p: 'MCV', v: 'Falsely High', a: '↑↑' }, { p: 'MCHC', v: 'Falsely High', a: '↑↑' } ], other: [ { p: 'Morphology', v: 'Marked red cell agglutination' }, { p: 'DAT', v: 'Positive (C3d only)' } ], differentials: ['Rouleaux (Myeloma)', 'Autoimmune Haemolytic Anaemia', 'Cryoglobulinaemia'], explanation: 'IgM autoantibodies cause red cells to clump together (agglutinate) in the cold. The analyser misinterprets these clumps as single large cells, leading to a spuriously high MCV and MCHC. Warming the sample is required for an accurate result.' },
+                { condition: 'Liver Disease / Hypersplenism', clinicalNote: 'Patient with known alcoholic cirrhosis presents with signs of bleeding.', fbc: [ { p: 'Pancytopenia', v: 'Mild', a: '↓' } ], other: [ { p: 'Morphology', v: 'Target cells, acanthocytes' }, { p: 'PT/INR', v: 'Prolonged' } ], differentials: ['Myelodysplastic Syndrome', 'Aplastic Anaemia', 'Megaloblastic Anaemia'], explanation: 'Liver disease causes reduced production of clotting factors (prolonged PT) and an enlarged spleen (splenomegaly), which traps and destroys all blood cells, leading to pancytopenia.' },
+                { condition: 'Secondary Polycythaemia (due to COPD)', clinicalNote: 'Patient with a long history of heavy smoking and chronic obstructive pulmonary disease (COPD).', fbc: [ { p: 'Hb', v: 'High', a: '↑' }, { p: 'Hct', v: 'High', a: '↑' } ], other: [ { p: 'JAK2 V617F Mutation', v: 'Negative' } ], differentials: ['Polycythaemia Vera', 'Dehydration', 'High Altitude'], explanation: 'Chronic low oxygen levels (hypoxia) stimulate the kidneys to produce more erythropoietin (EPO), which drives the bone marrow to produce more red cells as a compensatory mechanism.' },
+                { condition: 'Waldenström Macroglobulinemia', clinicalNote: 'Elderly patient with fatigue, visual disturbances, and neuropathy.', fbc: [ { p: 'Hb', v: 'Low', a: '↓' } ], other: [ { p: 'Morphology', v: 'Marked rouleaux' }, { p: 'ESR', v: 'Very High', a: '↑↑' }, { p: 'SPEP', v: 'IgM Paraprotein' } ], differentials: ['Multiple Myeloma', 'Chronic Lymphocytic Leukaemia (CLL)', 'MGUS'], explanation: 'A rare type of lymphoma characterised by the production of a large amount of abnormal IgM antibody. This makes the blood very viscous, leading to many of the symptoms.' },
+                { condition: 'Hereditary Elliptocytosis', clinicalNote: 'Incidental finding of abnormally shaped red cells in an asymptomatic patient.', fbc: [ { p: 'Hb', v: 'Normal/Low', a: '↔/↓' } ], other: [ { p: 'Morphology', v: 'Predominance of elliptocytes/ovalocytes (>25%)' } ], differentials: ['Iron Deficiency Anaemia', 'Myelodysplastic Syndrome', 'Megaloblastic Anaemia'], explanation: 'A genetic defect in red cell membrane proteins (like spectrin) which causes the cells to become elliptical. It is usually asymptomatic but can cause a mild haemolytic anaemia.' },
+                { condition: 'Lead Poisoning', clinicalNote: 'Child living in an old house presents with abdominal pain and developmental delay.', fbc: [ { p: 'Hb', v: 'Low', a: '↓' }, { p: 'MCV', v: 'Low', a: '↓' } ], other: [ { p: 'Morphology', v: 'Basophilic stippling' } ], differentials: ['Iron Deficiency Anaemia', 'Thalassaemia Trait', 'Sideroblastic Anaemia'], explanation: 'Lead interferes with haem synthesis, causing a microcytic anaemia. The classic finding is coarse basophilic stippling in the red blood cells.' },
+                { condition: 'Transient Erythroblastopenia of Childhood (TEC)', clinicalNote: 'A healthy toddler suddenly becomes pale and lethargic after a viral illness.', fbc: [ { p: 'Hb', v: 'Very Low', a: '↓↓' } ], other: [ { p: 'Reticulocytes', v: 'Very Low', a: '↓↓' }, { p: 'WBC & Platelets', v: 'Normal', a: '↔' } ], differentials: ['Diamond-Blackfan Anemia', 'Aplastic Anaemia', 'Acute Lymphoblastic Leukaemia (ALL)'], explanation: 'A temporary cessation of red blood cell production in the bone marrow, often following a viral infection. It is characterised by severe anaemia with a near-absent reticulocyte response, but resolves spontaneously.' },
+                { condition: 'Parvovirus B19 Infection', clinicalNote: 'Patient with known sickle cell disease presents with a sudden, severe drop in haemoglobin.', fbc: [ { p: 'Hb', v: 'Very Low', a: '↓↓' } ], other: [ { p: 'Reticulocytes', v: 'Very Low', a: '↓↓' } ], differentials: ['Splenic Sequestration Crisis', 'Hyperhaemolytic Crisis', 'Aplastic Anaemia'], explanation: 'Parvovirus B19 infects and destroys red cell precursors in the bone marrow. In patients who already have a high red cell turnover (like sickle cell disease), this causes a sudden, life-threatening "aplastic crisis" due to the halt in red cell production.' },
+                { condition: 'Clostridium perfringens Sepsis', clinicalNote: 'Acutely ill patient with gas gangrene develops rapid, severe haemolysis.', fbc: [ { p: 'Hb', v: 'Dropping rapidly', a: '↓↓' } ], other: [ { p: 'Morphology', v: 'Microspherocytes, "ghost" cells' } ], differentials: ['Autoimmune Haemolytic Anaemia', 'TTP', 'Malaria'], explanation: 'The toxins produced by C. perfringens can cause massive, intravascular haemolysis, leading to a catastrophic drop in haemoglobin and the appearance of microspherocytes and red cell remnants ("ghost cells") on the film.' },
+                { condition: 'Hereditary Pyropoikilocytosis (HPP)', clinicalNote: 'Infant of African descent with severe, transfusion-dependent haemolytic anaemia from birth.', fbc: [ { p: 'MCV', v: 'Very Low', a: '↓↓' } ], other: [ { p: 'Morphology', v: 'Bizarre poikilocytosis, fragments, microspherocytes' } ], differentials: ['Hereditary Elliptocytosis', 'Thalassaemia Major', 'DIC'], explanation: 'A rare and severe genetic red cell membrane disorder. The red cells are thermally unstable and fragment easily, even at normal body temperature, leading to a blood film with bizarre shapes and a very low MCV.' },
+                { condition: 'Vitamin K Deficiency', clinicalNote: 'Malnourished patient on long-term antibiotics develops easy bruising.', fbc: [{ p: 'Platelets', v: 'Normal', a: '↔' }], other: [{p: 'PT/INR', v: 'High', a: '↑'}, {p: 'APTT', v: 'Normal/High', a: '↔/↑'}], differentials: ['Liver Disease', 'Warfarin Therapy', 'Haemophilia'], explanation: 'Vitamin K is required to produce factors II, VII, IX, and X. Its deficiency affects the extrinsic pathway first (Factor VII has the shortest half-life), causing a prolonged PT/INR.' },
+                { condition: 'Eosinophilia', clinicalNote: 'Patient presents with wheezing and a rash after starting a new medication.', fbc: [{ p: 'WBC', v: 'High', a: '↑' }, { p: 'Eosinophils', v: 'High', a: '↑' }], other: [], differentials: ['Parasitic Infection', 'Allergic Reaction', 'Hypereosinophilic Syndrome'], explanation: 'Eosinophils are granulocytes associated with allergic reactions, parasitic infections, and certain haematological neoplasms. Drug reactions are a common cause of a high eosinophil count.' },
+                { condition: 'Leukaemoid Reaction', clinicalNote: 'Patient with severe pneumonia and sepsis has a very high white cell count.', fbc: [{ p: 'WBC', v: 'Very High (>50)', a: '↑↑' }], other: [{p: 'Morphology', v: 'Toxic changes, left shift, no blasts'}, {p: 'LAP Score', v: 'High', a: '↑'}], differentials: ['Chronic Myeloid Leukaemia (CML)', 'Acute Leukaemia', 'Steroid Therapy'], explanation: 'A leukaemoid reaction is an extreme reactive neutrophilia that mimics leukaemia. The presence of toxic changes and a high LAP score (an older test) help distinguish it from CML.' },
+                { condition: 'Acute Promyelocytic Leukaemia (APML)', clinicalNote: 'Patient presents with life-threatening bleeding and evidence of DIC.', fbc: [{ p: 'Pancytopenia', v: 'Present', a: '↓' }], other: [{p: 'Morphology', v: 'Abnormal promyelocytes, "faggot cells"'}, {p: 'Genetics', v: 't(15;17) present'}], differentials: ['Acute Myeloid Leukaemia (AML)', 'Sepsis / DIC', 'Aplastic Anaemia'], explanation: 'A subtype of AML, APML is a medical emergency. The malignant promyelocytes are filled with granules that can trigger DIC. The presence of cells with bundles of Auer rods ("faggot cells") and the t(15;17) translocation are diagnostic.' },
+                { condition: 'Chronic Myelomonocytic Leukaemia (CMML)', clinicalNote: 'Elderly patient with an enlarged spleen and a persistent, unexplained monocytosis.', fbc: [{ p: 'Monocytes', v: 'High (>1.0)', a: '↑' }, { p: 'WBC', v: 'High', a: '↑' }], other: [{p: 'Morphology', v: 'Dysplastic features present'}], differentials: ['Chronic Myeloid Leukaemia (CML)', 'Reactive Monocytosis', 'Myelodysplastic Syndrome (MDS)'], explanation: 'A myelodysplastic/myeloproliferative overlap neoplasm characterised by a persistent monocytosis. Dysplastic changes in other cell lines are also common.' },
+                { condition: 'HbSC Disease', clinicalNote: 'Patient of West African descent presents with mild haemolytic anaemia and occasional pain crises.', fbc: [{ p: 'Hb', v: 'Low', a: '↓' }], other: [{p: 'Morphology', v: 'Target cells, boat-shaped cells, SC poikilocytes'}, {p: 'HPLC', v: 'HbS and HbC present, no HbA'}], differentials: ['Sickle Cell Anaemia (HbSS)', 'Sickle Cell Trait (HbAS)', 'HbC Trait'], explanation: 'A compound heterozygous state where the patient has one sickle gene and one HbC gene. It is a sickling disorder but is generally milder than HbSS anaemia.' },
+                { condition: 'Anaemia of Renal Failure', clinicalNote: 'Patient with end-stage renal disease on dialysis complains of fatigue.', fbc: [{ p: 'Hb', v: 'Low', a: '↓' }, { p: 'MCV', v: 'Normal', a: '↔' }], other: [{p: 'Morphology', v: 'Burr cells (echinocytes)'}, {p: 'EPO level', v: 'Low', a: '↓'}], differentials: ['Anaemia of Chronic Disease', 'Iron Deficiency Anaemia', 'Haemolytic Anaemia'], explanation: 'Diseased kidneys fail to produce enough erythropoietin (EPO), the hormone that stimulates red cell production. This leads to a normocytic, normochromic anaemia. The uraemic environment can also cause red cells to become "burr cells".' },
+                { condition: 'Steroid Therapy Effect', clinicalNote: 'Patient on high-dose prednisolone for an inflammatory condition.', fbc: [{ p: 'WBC', v: 'High', a: '↑' }, { p: 'Neutrophils', v: 'High', a: '↑' }], other: [{p: 'Lymphocytes', v: 'Low', a: '↓'}, {p: 'Eosinophils', v: 'Low', a: '↓'}], differentials: ['Bacterial Infection', 'Leukaemoid Reaction', 'CML'], explanation: 'Corticosteroids cause a characteristic blood picture: they increase the neutrophil count by moving them from the marginating pool into circulation, while decreasing the counts of lymphocytes, eosinophils, and monocytes.' },
+                { condition: 'Post-Splenectomy Blood Film', clinicalNote: 'Routine FBC for a patient who had their spleen removed after an accident.', fbc: [{ p: 'Hb', v: 'Normal', a: '↔' }], other: [{p: 'Morphology', v: 'Howell-Jolly bodies, target cells, acanthocytes'}], differentials: ['Liver Disease', 'Thalassaemia Trait', 'Hyposplenism'], explanation: 'The spleen is responsible for removing old red cells and inclusions. Without it, characteristic features appear in the blood, most notably Howell-Jolly bodies (nuclear remnants).' },
+                { condition: 'Haemochromatosis', clinicalNote: 'Patient presents with joint pain, bronzed skin, and abnormal LFTs.', fbc: [{ p: 'Hb', v: 'Normal/High', a: '↔/↑' }], other: [{p: 'Ferritin', v: 'Very High', a: '↑↑'}, {p: 'Transferrin Saturation', v: 'High', a: '↑'}], differentials: ['Liver Disease', 'Reactive Ferritin Rise', 'Blood Transfusion Overload'], explanation: 'A genetic disorder causing the body to absorb too much iron. This leads to extremely high ferritin levels as the body stores the excess iron, which can damage organs.' },
+                { condition: 'Gestational Thrombocytopenia', clinicalNote: 'A healthy patient is found to have a low platelet count during a routine check in the third trimester of pregnancy.', fbc: [{ p: 'Platelets', v: 'Low (70-150)', a: '↓' }], other: [{p: 'Hb', v: 'Normal', a: '↔'}, {p: 'WBC', v: 'Normal', a: '↔'}], differentials: ['Immune Thrombocytopenic Purpura (ITP)', 'Pre-eclampsia / HELLP', 'DIC'], explanation: 'A benign condition and the most common cause of a low platelet count in pregnancy. It is thought to be due to haemodilution and increased platelet clearance. It resolves after delivery.' },
+                { condition: 'Folate Deficiency Anaemia', clinicalNote: 'A pregnant woman with poor diet presents with fatigue and a sore tongue.', fbc: [ { p: 'Hb', v: 'Low', a: '↓' }, { p: 'MCV', v: 'High', a: '↑' } ], other: [{p: 'Folate', v: 'Low', a: '↓'}], differentials: ['B12 Deficiency', 'Myelodysplastic Syndrome', 'Liver Disease'], explanation: 'Folate is essential for DNA synthesis. Deficiency impairs red cell production, leading to large, abnormal red cells (megaloblasts) and a macrocytic anaemia.' },
+                { condition: 'Sideroblastic Anaemia', clinicalNote: 'Elderly patient with a refractory microcytic anaemia and a history of high alcohol intake.', fbc: [ { p: 'Hb', v: 'Low', a: '↓' }, { p: 'MCV', v: 'Low', a: '↓' } ], other: [{p: 'Morphology', v: 'Pappenheimer bodies, dimorphic picture'}, {p: 'Bone Marrow', v: 'Ring sideroblasts'}], differentials: ['Iron Deficiency Anaemia', 'Thalassaemia Trait', 'Myelodysplastic Syndrome'], explanation: 'A group of disorders where the body has iron available but cannot incorporate it into haemoglobin synthesis. This leads to iron granules accumulating in red cell precursors, forming "ring sideroblasts" in the bone marrow.' },
+                { condition: 'Viral Infection (Lymphocytosis)', clinicalNote: 'A child presents with a cough, runny nose, and fever.', fbc: [ { p: 'WBC', v: 'High', a: '↑' }, { p: 'Lymphocytes', v: 'High', a: '↑' } ], other: [{p: 'Neutrophils', v: 'Normal/Low', a: '↔/↓'}], differentials: ['Infectious Mononucleosis', 'Whooping Cough', 'CLL'], explanation: 'Viral infections typically trigger a lymphocyte-predominant immune response, leading to a relative or absolute lymphocytosis, particularly in children.' },
+                // ... and so on, adding more distinct scenarios.
             ];
-            
+
+
             let currentScenario = {};
             let score = 0;
 
@@ -426,6 +215,5 @@
         });
     </script>
 
-    <script src="js/component-loader.js"></script>
 </body>
 </html>
