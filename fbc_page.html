@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,6 +26,10 @@
             color: #005EB8;
             font-weight: 600;
         }
+        .flag-table th, .flag-table td { padding: 0.75rem; border: 1px solid #e5e7eb; }
+        .flag-table th { background-color: #f9fafb; font-weight: 600; }
+        .flag-ip { background-color: #fffbeb; color: #b45309; }
+        .flag-suspect { background-color: #fef2f2; color: #b91c1c; }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
@@ -84,44 +88,13 @@
             <p class="text-lg md:text-2xl max-w-3xl mx-auto text-shadow-lg">The cornerstone of haematology. A simple test that provides a wealth of information about a patient's health, guiding diagnosis for countless conditions.</p>
         </section>
 
+        <!-- Analyser Section -->
         <section class="bg-white p-8 rounded-lg shadow-md mb-8">
             <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Inside the Analyser: The Sysmex XN-9100</h2>
             <p class="text-lg max-w-4xl mx-auto text-center mb-8">At NUH, our Haematology labs are equipped with state-of-the-art Sysmex XN-9100 automated analysers. These are not just simple counters; they are sophisticated diagnostic systems. Let's explore the journey of a sample and the technology involved.</p>
-            
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 text-center mb-12">
-                <div class="bg-gray-50 p-4 rounded-lg">
-                    <i class="fas fa-robot text-4xl text-blue-600 mb-2"></i>
-                    <h3 class="font-bold">1. Automation</h3>
-                    <p class="text-sm">Samples are loaded in racks, barcoded, and automatically mixed and aspirated.</p>
-                </div>
-                <div class="bg-gray-50 p-4 rounded-lg">
-                    <i class="fas fa-vial text-4xl text-purple-600 mb-2"></i>
-                    <h3 class="font-bold">2. Analysis</h3>
-                    <p class="text-sm">The sample is split and sent to different channels for specific cell analysis.</p>
-                </div>
-                <div class="bg-gray-50 p-4 rounded-lg">
-                    <i class="fas fa-chart-line text-4xl text-green-600 mb-2"></i>
-                    <h3 class="font-bold">3. Data Generation</h3>
-                    <p class="text-sm">Lasers and detectors generate scattergrams and histograms from tens of thousands of cells.</p>
-                </div>
-                <div class="bg-gray-50 p-4 rounded-lg">
-                    <i class="fas fa-microscope text-4xl text-pink-600 mb-2"></i>
-                    <h3 class="font-bold">4. Reflex Testing</h3>
-                    <p class="text-sm">Based on results, the system can automatically make and stain a blood film for review.</p>
-                </div>
-            </div>
-
             <div class="grid md:grid-cols-1 lg:grid-cols-2 gap-8">
-                <div class="bg-gray-50 p-6 rounded-lg">
-                    <h3 class="text-xl font-semibold mb-2"><i class="fas fa-wave-square text-green-500 mr-2"></i>Red Cells & Platelets: DC Impedance</h3>
-                    <p>To count the millions of red cells and platelets, the analyser uses the Direct Current (DC) impedance method. A process called hydrodynamic focusing forces cells to pass one-by-one through a tiny aperture with an electrical current. Each cell momentarily changes the resistance, creating a pulse. The number of pulses equals the cell count, and the pulse size corresponds to the cell volume (MCV). This method provides the core Red Cell and Platelet parameters.</p>
-                </div>
-                <div class="bg-gray-50 p-6 rounded-lg">
-                    <h3 class="text-xl font-semibold mb-2"><i class="fas fa-flask text-purple-500 mr-2"></i>Haemoglobin: SLS Method</h3>
-                    <p>The analyser uses a modern, safe, cyanide-free method to measure haemoglobin (Hb). A reagent, Sodium Lauryl Sulphate (SLS), breaks open the red cells, releasing the Hb. SLS binds to the Hb, forming a stable coloured complex. A light beam (555nm wavelength) is passed through, and the amount of light absorbed is measured, which is directly proportional to the Hb concentration.</p>
-                </div>
-                <div class="bg-gray-50 p-6 rounded-lg col-span-1 lg:col-span-2">
-                    <h3 class="text-xl font-semibold mb-2"><i class="fas fa-project-diagram text-blue-500 mr-2"></i>White Cells & More: Fluorescence Flow Cytometry</h3>
+                 <div class="bg-gray-50 p-6 rounded-lg col-span-1 lg:col-span-2">
+                    <h3 class="text-xl font-semibold mb-2"><i class="fas fa-project-diagram text-blue-500 mr-2"></i>Core Technology: Fluorescence Flow Cytometry</h3>
                     <p class="mb-2">This is the most advanced technology, used for the white cell differential and other specialised parameters. The sample is sent to different channels:</p>
                     <ul class="list-disc list-inside mt-2 space-y-2">
                         <li><b>WNR Channel (White Cell Number & NRBC):</b> Uses a harsh lysing agent to strip the cytoplasm from all cells except Nucleated Red Blood Cells (NRBCs). A fluorescent dye stains the nuclei. Flow cytometry then separates the signals, giving a highly accurate total white cell count and a count of any NRBCs present.</li>
@@ -129,80 +102,105 @@
                         <li><b>RET Channel (Reticulocytes & Platelets):</b> Another fluorescent dye is used here that specifically targets the residual RNA in young red cells (reticulocytes). This gives an accurate reticulocyte count, a measure of bone marrow activity. This channel also provides a fluorescent optical platelet count (PLT-O), which is vital for confirming very low platelet counts or when the impedance count may be inaccurate due to interferences like red cell fragments.</li>
                     </ul>
                 </div>
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-2"><i class="fas fa-wave-square text-green-500 mr-2"></i>Red Cells & Platelets: DC Impedance</h3>
+                    <p>To count the millions of red cells and platelets, the analyser uses the Direct Current (DC) impedance method. Hydrodynamic focusing forces the cells to pass one-by-one through a tiny aperture with an electrical current. Each cell momentarily changes the resistance, creating a pulse. The number of pulses equals the cell count, and the pulse size corresponds to the cell volume (MCV).</p>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-2"><i class="fas fa-flask text-purple-500 mr-2"></i>Haemoglobin: SLS Method</h3>
+                    <p>The analyser uses a modern, safe, cyanide-free method. A reagent, Sodium Lauryl Sulphate (SLS), breaks open the red cells, releasing the Hb. SLS binds to the Hb, forming a stable coloured complex. A light beam (555nm wavelength) is passed through, and the amount of light absorbed is measured, which is directly proportional to the Hb concentration.</p>
+                </div>
             </div>
         </section>
 
+        <!-- Scattergrams and Histograms -->
+        <section class="bg-white p-8 rounded-lg shadow-md mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Decoding the Data: Scattergrams & Histograms</h2>
+            <p class="text-lg max-w-4xl mx-auto text-center mb-8">The analyser translates the signals from tens of thousands of individual cells into graphical plots. These plots allow Biomedical Scientists to visually inspect the cell populations and spot abnormalities that numerical results alone might miss.</p>
+            <div class="grid md:grid-cols-2 gap-8 items-start">
+                <div>
+                    <h3 class="text-xl font-semibold mb-2 text-center">WDF Scattergram</h3>
+                    <p class="text-center text-sm mb-2">Plots white cells based on internal complexity (Side Scatter) and DNA/RNA content (Side Fluorescence). This is key for identifying abnormal populations.</p>
+                                    </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2 text-center">RBC & PLT Histograms</h3>
+                    <p class="text-center text-sm mb-2">These graphs show the size distribution of red cells and platelets. Abnormal shapes or multiple populations are easily identified.</p>
+                                    </div>
+            </div>
+        </section>
+
+        <!-- Analyser Flags -->
+        <section class="bg-white p-8 rounded-lg shadow-md mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Understanding Analyser Flags</h2>
+            <p class="text-lg max-w-4xl mx-auto text-center mb-8">The analyser uses a complex algorithm to flag results that are abnormal or potentially inaccurate. These flags are our cue to perform further investigation, such as a blood film review. The table below summarises some of the most common flags and what they mean for us in the lab.</p>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left flag-table">
+                    <thead>
+                        <tr><th>Flag Message</th><th>Potential Cause(s)</th><th>Laboratory Action</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr class="flag-suspect"><td>Blasts/Abn Lympho?</td><td>Presence of blast cells (acute leukaemia) or abnormal lymphocytes (lymphoma, viral infections).</td><td><strong>Urgent blood film review is mandatory.</strong> Refer to Haematology Registrar.</td></tr>
+                        <tr class="flag-suspect"><td>Atypical Lympho?</td><td>Reactive lymphocytes, commonly seen in glandular fever (EBV) or other viral illnesses.</td><td>Perform blood film review. Suggest Monospot test if appropriate.</td></tr>
+                        <tr class="flag-suspect"><td>Left Shift?</td><td>Increased numbers of immature neutrophils, usually due to severe bacterial infection or inflammation.</td><td>Perform blood film review to confirm and look for toxic changes.</td></tr>
+                        <tr class="flag-ip"><td>PLT Clumps?</td><td>Platelets have clumped together in the EDTA tube (an in-vitro artefact).</td><td>Check sample for a clot. Perform blood film review to confirm clumping and estimate platelet count. A repeat sample in a citrate (blue top) tube is required for an accurate count.</td></tr>
+                        <tr class="flag-ip"><td>RBC Agglutination?</td><td>Red cells are clumping together, usually due to Cold Agglutinins.</td><td>Warm sample to 37°C and re-analyse. Perform blood film review. Results may be inaccurate.</td></tr>
+                        <tr class="flag-ip"><td>Fragments?</td><td>Presence of red cell fragments (schistocytes), indicating mechanical damage.</td><td><strong>Urgent blood film review is mandatory.</strong> This can be a sign of a medical emergency like TTP or DIC.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Interactive Report -->
         <section class="bg-white p-8 rounded-lg shadow-md mb-8">
             <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">The FBC Report: A Deep Dive</h2>
-            <p class="text-lg max-w-4xl mx-auto text-center mb-8">Hover over each parameter on this example report to understand its clinical significance. The flags (H for high, L for low) indicate results outside the normal reference range.</p>
+            <p class="text-lg max-w-4xl mx-auto text-center mb-8">Hover over each parameter on this example report to understand its clinical significance. The reference ranges are typical for an adult but can vary.</p>
             <div class="bg-gray-800 text-white font-mono p-6 rounded-lg shadow-inner max-w-4xl mx-auto">
-                <div class="border-b-2 border-gray-500 pb-2 mb-2">
-                    <p>Full Blood Count Report</p>
-                </div>
-                <div class="grid grid-cols-4 gap-x-4">
-                    <p>PARAMETER</p><p class="text-right">RESULT</p><p class="text-right">UNITS</p><p class="text-right">FLAG</p>
-                </div>
+                <div class="border-b-2 border-gray-500 pb-2 mb-2 grid grid-cols-3 gap-x-4"><p>PARAMETER</p><p class="text-right">RESULT</p><p class="text-right">RANGE</p></div>
                 <div class="space-y-1 mt-2">
-                    <!-- WBC Parameters -->
-                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-4 gap-x-4"><span>WBC</span><span class="text-right">12.5</span><span class="text-right">x10^9/L</span><span class="text-right text-red-400">H</span></div><div class="tooltip absolute left-full top-0 ml-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">White Blood Cell Count</p><p class="font-sans text-sm"><b>High (Leukocytosis):</b> Common in infection, inflammation, stress, or leukaemia.<br><b>Low (Leukopenia):</b> Can be caused by certain medications (e.g., chemotherapy), viral infections, or bone marrow problems.</p></div></div>
-                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-4 gap-x-4"><span>Neutrophils</span><span class="text-right">9.8</span><span class="text-right">x10^9/L</span><span class="text-right text-red-400">H</span></div><div class="tooltip absolute right-full top-0 mr-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Neutrophil Count</p><p class="font-sans text-sm"><b>High (Neutrophilia):</b> A classic sign of bacterial infection. Also raised by steroids and inflammation.<br><b>Low (Neutropenia):</b> Increases risk of infection. Can be caused by drugs, autoimmune conditions, or severe infection (sepsis).</p></div></div>
-                     <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-4 gap-x-4"><span>Lymphocytes</span><span class="text-right">1.5</span><span class="text-right">x10^9/L</span><span class="text-right"></span></div><div class="tooltip absolute left-full top-0 ml-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Lymphocyte Count</p><p class="font-sans text-sm"><b>High (Lymphocytosis):</b> Typical of viral infections like glandular fever. Malignancies like Chronic Lymphocytic Leukaemia (CLL) cause very high counts.<br><b>Low (Lymphopenia):</b> Can occur in HIV, after steroid use, or in autoimmune disease.</p></div></div>
-                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-4 gap-x-4"><span>Monocytes</span><span class="text-right">0.8</span><span class="text-right">x10^9/L</span><span class="text-right"></span></div><div class="tooltip absolute right-full top-0 mr-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Monocyte Count</p><p class="font-sans text-sm"><b>High (Monocytosis):</b> Seen in chronic inflammation, certain infections (like tuberculosis), and some leukaemias (e.g., CMML).</p></div></div>
-                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-4 gap-x-4"><span>Eosinophils</span><span class="text-right">0.6</span><span class="text-right">x10^9/L</span><span class="text-right text-red-400">H</span></div><div class="tooltip absolute left-full top-0 ml-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Eosinophil Count</p><p class="font-sans text-sm"><b>High (Eosinophilia):</b> Strongly associated with allergic reactions (asthma, eczema) and parasitic infections.</p></div></div>
-                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-4 gap-x-4"><span>Basophils</span><span class="text-right">0.1</span><span class="text-right">x10^9/L</span><span class="text-right"></span></div><div class="tooltip absolute right-full top-0 mr-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Basophil Count</p><p class="font-sans text-sm"><b>High (Basophilia):</b> Uncommon, but can be a sign of myeloproliferative neoplasms like Chronic Myeloid Leukaemia (CML).</p></div></div>
-                     <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-4 gap-x-4"><span>IG</span><span class="text-right">0.2</span><span class="text-right">x10^9/L</span><span class="text-right text-red-400">H</span></div><div class="tooltip absolute left-full top-0 ml-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Immature Granulocytes</p><p class="font-sans text-sm">These are young neutrophils (metamyelocytes, myelocytes). An increased count indicates the bone marrow is working hard to fight a severe infection (a 'left shift').</p></div></div>
-                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-4 gap-x-4"><span>NRBC</span><span class="text-right">0.02</span><span class="text-right">x10^9/L</span><span class="text-right text-red-400">H</span></div><div class="tooltip absolute right-full top-0 mr-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Nucleated Red Blood Cells</p><p class="font-sans text-sm">These are immature red cells that still have a nucleus. They should not be in adult peripheral blood and their presence indicates severe bone marrow stress (e.g. massive bleed, severe lack of oxygen) or marrow infiltration.</p></div></div>
-                    <!-- RBC Parameters -->
-                    <div class="border-t-2 border-gray-500 pt-2 mt-2"></div>
-                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-4 gap-x-4"><span>RBC</span><span class="text-right">3.80</span><span class="text-right">x10^12/L</span><span class="text-right text-blue-400">L</span></div><div class="tooltip absolute left-full top-0 ml-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Red Blood Cell Count</p><p class="font-sans text-sm"><b>High (Erythrocytosis):</b> Can be due to dehydration or a myeloproliferative neoplasm (Polycythaemia Vera).<br><b>Low:</b> A feature of anaemia.</p></div></div>
-                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-4 gap-x-4"><span>HGB</span><span class="text-right">105</span><span class="text-right">g/L</span><span class="text-right text-blue-400">L</span></div><div class="tooltip absolute right-full top-0 mr-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Haemoglobin</p><p class="font-sans text-sm"><b>Low (Anaemia):</b> Caused by blood loss, nutritional deficiency (iron, B12, folate), or chronic disease.</p></div></div>
-                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-4 gap-x-4"><span>MCV</span><span class="text-right">72.0</span><span class="text-right">fL</span><span class="text-right text-blue-400">L</span></div><div class="tooltip absolute left-full top-0 ml-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Mean Cell Volume</p><p class="font-sans text-sm"><b>Low (Microcytic):</b> Classic sign of iron deficiency or thalassaemia trait.<br><b>High (Macrocytic):</b> Suggests B12/folate deficiency, liver disease, or high alcohol intake.</p></div></div>
-                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-4 gap-x-4"><span>RDW</span><span class="text-right">15.5</span><span class="text-right">%</span><span class="text-right text-red-400">H</span></div><div class="tooltip absolute right-full top-0 mr-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Red Cell Distribution Width</p><p class="font-sans text-sm">Measures variation in red cell size (anisocytosis). A high RDW is a classic feature of iron deficiency, as new small cells mix with older normal-sized cells.</p></div></div>
-                    <!-- Platelet Parameters -->
-                    <div class="border-t-2 border-gray-500 pt-2 mt-2"></div>
-                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-4 gap-x-4"><span>PLT</span><span class="text-right">125</span><span class="text-right">x10^9/L</span><span class="text-right text-blue-400">L</span></div><div class="tooltip absolute left-full top-0 ml-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Platelet Count</p><p class="font-sans text-sm"><b>High (Thrombocytosis):</b> Can be a reaction to inflammation/infection or a sign of a myeloproliferative neoplasm.<br><b>Low (Thrombocytopenia):</b> Increases bleeding risk. Caused by viral infections, drugs, autoimmune destruction (ITP), or leukaemia.</p></div></div>
-                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-4 gap-x-4"><span>MPV</span><span class="text-right">12.8</span><span class="text-right">fL</span><span class="text-right text-red-400">H</span></div><div class="tooltip absolute right-full top-0 mr-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Mean Platelet Volume</p><p class="font-sans text-sm">The average size of platelets. A high MPV means platelets are larger, which often indicates the bone marrow is producing them rapidly in response to a low platelet count.</p></div></div>
+                    <!-- FBC Parameters in requested order -->
+                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-3 gap-x-4"><span>Haemoglobin (Hb)</span><span class="text-right">145</span><span class="text-right">130-175 g/L</span></div><div class="tooltip absolute right-full top-0 mr-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Haemoglobin</p><p class="font-sans text-sm">The oxygen-carrying protein in red cells. Low levels define anaemia. High levels can be seen in smokers or in conditions like Polycythaemia Vera.</p></div></div>
+                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-3 gap-x-4"><span>White Cell Count (WBC)</span><span class="text-right">7.5</span><span class="text-right">4.0-11.0 x10⁹/L</span></div><div class="tooltip absolute left-full top-0 ml-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">White Blood Cell Count</p><p class="font-sans text-sm">Total number of immune cells. High in infection, inflammation, or leukaemia. Low in some viral infections, autoimmune conditions, or with certain drugs.</p></div></div>
+                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-3 gap-x-4"><span>Platelets (Plt)</span><span class="text-right">250</span><span class="text-right">150-450 x10⁹/L</span></div><div class="tooltip absolute right-full top-0 mr-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Platelet Count</p><p class="font-sans text-sm">Cell fragments vital for clotting. Low count (thrombocytopenia) increases bleeding risk. High count (thrombocytosis) can be reactive or due to a bone marrow disorder.</p></div></div>
+                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-3 gap-x-4"><span>Red Cell Count (RBC)</span><span class="text-right">4.80</span><span class="text-right">4.2-6.5 x10¹²/L</span></div><div class="tooltip absolute left-full top-0 ml-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Red Blood Cell Count</p><p class="font-sans text-sm">Total number of red blood cells. Generally follows the Haemoglobin and Haematocrit.</p></div></div>
+                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-3 gap-x-4"><span>Haematocrit (Hct)</span><span class="text-right">0.420</span><span class="text-right">0.40-0.54 L/L</span></div><div class="tooltip absolute right-full top-0 mr-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Haematocrit (PCV)</p><p class="font-sans text-sm">The proportion of blood volume occupied by red cells. Also known as Packed Cell Volume (PCV).</p></div></div>
+                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-3 gap-x-4"><span>Mean Cell Volume (MCV)</span><span class="text-right">90.0</span><span class="text-right">84-102 fL</span></div><div class="tooltip absolute left-full top-0 ml-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Mean Cell Volume</p><p class="font-sans text-sm">Average size of red cells. Key for classifying anaemia. Low (microcytic) suggests iron deficiency/thalassaemia. High (macrocytic) suggests B12/folate deficiency.</p></div></div>
+                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-3 gap-x-4"><span>Mean Cell Hb (MCH)</span><span class="text-right">29.5</span><span class="text-right">27-38 pg</span></div><div class="tooltip absolute right-full top-0 mr-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Mean Cell Haemoglobin</p><p class="font-sans text-sm">Average weight of haemoglobin per red cell. Usually follows the MCV; low in microcytic anaemias.</p></div></div>
+                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-3 gap-x-4"><span>MCHC</span><span class="text-right">330</span><span class="text-right">300-350 g/L</span></div><div class="tooltip absolute left-full top-0 ml-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Mean Cell Hb Conc.</p><p class="font-sans text-sm">Average concentration of haemoglobin in a red cell. High MCHC is a classic sign of spherocytes or can be falsely raised by cold agglutinins.</p></div></div>
+                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-3 gap-x-4"><span>RDW</span><span class="text-right">13.5</span><span class="text-right">11-15 %</span></div><div class="tooltip absolute right-full top-0 mr-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Red Cell Distribution Width</p><p class="font-sans text-sm">Measures the variation in red cell size (anisocytosis). A high RDW is classic in iron deficiency, where new small cells mix with older normal cells.</p></div></div>
+                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-3 gap-x-4"><span>PDW</span><span class="text-right">12.0</span><span class="text-right">9-17 fL</span></div><div class="tooltip absolute left-full top-0 ml-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Platelet Distribution Width</p><p class="font-sans text-sm">Measures the variation in platelet size. A high PDW can indicate active platelet production.</p></div></div>
+                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-3 gap-x-4"><span>Mean Platelet Vol (MPV)</span><span class="text-right">10.0</span><span class="text-right">9-13 fL</span></div><div class="tooltip absolute right-full top-0 mr-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Mean Platelet Volume</p><p class="font-sans text-sm">Average size of platelets. High MPV suggests young, large platelets are being released rapidly from the bone marrow, often in response to a low platelet count.</p></div></div>
+                    <div class="border-t-2 border-gray-500 pt-2 mt-2"><p>Differential:</p></div>
+                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-3 gap-x-4"><span>Neutrophils</span><span class="text-right">4.5</span><span class="text-right">2.0-7.5 x10⁹/L</span></div><div class="tooltip absolute left-full top-0 ml-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Neutrophils</p><p class="font-sans text-sm">High (neutrophilia) is a key sign of bacterial infection. Low (neutropenia) increases infection risk.</p></div></div>
+                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-3 gap-x-4"><span>Lymphocytes</span><span class="text-right">2.0</span><span class="text-right">1.0-4.0 x10⁹/L</span></div><div class="tooltip absolute right-full top-0 mr-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Lymphocytes</p><p class="font-sans text-sm">Key cells in adaptive immunity. High (lymphocytosis) is typical of viral infections (e.g. glandular fever) or Chronic Lymphocytic Leukaemia (CLL).</p></div></div>
+                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-3 gap-x-4"><span>Monocytes</span><span class="text-right">0.5</span><span class="text-right">0.2-1.0 x10⁹/L</span></div><div class="tooltip absolute left-full top-0 ml-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Monocytes</p><p class="font-sans text-sm">The 'clean-up crew'. A persistent high count can be a sign of Chronic Myelomonocytic Leukaemia (CMML).</p></div></div>
+                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-3 gap-x-4"><span>Eosinophils</span><span class="text-right">0.2</span><span class="text-right">0.0-0.4 x10⁹/L</span></div><div class="tooltip absolute right-full top-0 mr-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Eosinophils</p><p class="font-sans text-sm">High (eosinophilia) is strongly associated with allergic reactions, asthma, and parasitic infections.</p></div></div>
+                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-3 gap-x-4"><span>Basophils</span><span class="text-right">0.1</span><span class="text-right">0.0-0.15 x10⁹/L</span></div><div class="tooltip absolute left-full top-0 ml-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Basophils</p><p class="font-sans text-sm">Release histamine. A high count (basophilia) is a significant finding and can be a marker for Chronic Myeloid Leukaemia (CML).</p></div></div>
+                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-3 gap-x-4"><span>Immature Granulocytes</span><span class="text-right">0.0</span><span class="text-right"><0.1 x10⁹/L</span></div><div class="tooltip absolute right-full top-0 mr-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Immature Granulocytes (IG)</p><p class="font-sans text-sm">Young neutrophils (promyelocytes, myelocytes, metamyelocytes). An increased count indicates bone marrow is responding to severe infection (a 'left shift').</p></div></div>
+                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-3 gap-x-4"><span>Nucleated RBCs</span><span class="text-right">0.00</span><span class="text-right">0.00 x10⁹/L</span></div><div class="tooltip absolute left-full top-0 ml-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Nucleated Red Blood Cells</p><p class="font-sans text-sm">Immature red cells normally only found in bone marrow. Their presence in peripheral blood indicates severe bone marrow stress.</p></div></div>
+                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-3 gap-x-4"><span>Reticulocytes</span><span class="text-right">50</span><span class="text-right">10-100 x10⁹/L</span></div><div class="tooltip absolute right-full top-0 mr-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Reticulocytes</p><p class="font-sans text-sm">Young red cells. A high count indicates the bone marrow is actively producing red cells, e.g., in response to bleeding or haemolysis. A low count in an anaemic patient indicates bone marrow failure.</p></div></div>
                 </div>
             </div>
         </section>
 
+        <!-- Clinical Scenarios -->
         <section class="bg-white p-8 rounded-lg shadow-md mb-8">
             <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Putting It All Together: Clinical Scenarios</h2>
-            <p class="text-lg max-w-4xl mx-auto text-center mb-8">A single result is just a number. The true power of the FBC comes from interpreting the patterns between all the parameters. Here are some classic examples.</p>
+            <p class="text-lg max-w-4xl mx-auto text-center mb-8">The true power of the FBC comes from interpreting the patterns between all the parameters. Here are some classic examples.</p>
             <div id="tabs" class="max-w-4xl mx-auto">
-                <div class="flex border-b border-gray-300">
+                <div class="flex border-b border-gray-300 flex-wrap justify-center">
                     <button class="tab-button active py-2 px-4" onclick="changeTab(event, 'scenario1')">Bacterial Infection</button>
                     <button class="tab-button py-2 px-4" onclick="changeTab(event, 'scenario2')">Iron Deficiency</button>
                     <button class="tab-button py-2 px-4" onclick="changeTab(event, 'scenario3')">Glandular Fever</button>
+                    <button class="tab-button py-2 px-4" onclick="changeTab(event, 'scenario4')">AML</button>
+                    <button class="tab-button py-2 px-4" onclick="changeTab(event, 'scenario5')">CLL</button>
+                    <button class="tab-button py-2 px-4" onclick="changeTab(event, 'scenario6')">CML</button>
                 </div>
-                <div id="scenario1" class="tab-content p-4">
-                    <h3 class="font-bold text-xl mb-2">Patient with a Chest Infection</h3>
-                    <p class="mb-4">A patient presents with a fever and cough. Their FBC is a classic example of the body's response to a bacterial infection.</p>
-                    <ul class="list-disc list-inside space-y-1">
-                        <li><b class="text-red-500">High WBC & High Neutrophils (Neutrophilia):</b> The bone marrow has ramped up production of neutrophils to fight the bacteria.</li>
-                        <li><b class="text-red-500">High IG Count:</b> The demand is so high that immature neutrophils are being released from the marrow (a 'left shift').</li>
-                        <li><b>Reactive Changes:</b> Platelets may be high as part of the acute inflammatory response. The patient may be slightly anaemic due to the 'anaemia of chronic disease'.</li>
-                    </ul>
-                </div>
-                <div id="scenario2" class="tab-content hidden p-4">
-                    <h3 class="font-bold text-xl mb-2">Patient with Iron Deficiency Anaemia</h3>
-                    <p class="mb-4">A patient reports feeling tired and breathless. Their FBC shows the typical pattern of iron deficiency.</p>
-                     <ul class="list-disc list-inside space-y-1">
-                        <li><b class="text-blue-500">Low Haemoglobin (HGB):</b> The defining feature of anaemia.</li>
-                        <li><b class="text-blue-500">Low MCV (Microcytic):</b> Without enough iron, the bone marrow cannot produce normal-sized red cells; they become small.</li>
-                        <li><b class="text-red-500">High RDW:</b> The mix of newly-formed small cells and older, normal-sized cells creates a wide variation in size.</li>
-                         <li><b class="text-red-500">High Platelet Count:</b> It is common to see a mildly raised platelet count as a reactive process in iron deficiency.</li>
-                    </ul>
-                </div>
-                <div id="scenario3" class="tab-content hidden p-4">
-                    <h3 class="font-bold text-xl mb-2">Patient with Glandular Fever (EBV)</h3>
-                    <p class="mb-4">A young adult has a sore throat, fever and swollen glands. The FBC is highly suggestive of a viral infection, particularly Epstein-Barr Virus (EBV).</p>
-                    <ul class="list-disc list-inside space-y-1">
-                        <li><b class="text-red-500">High WBC & High Lymphocytes (Lymphocytosis):</b> The immune system is producing a large number of lymphocytes to fight the virus.</li>
-                        <li><b>Atypical Lymphocytes:</b> The key finding! These are large, reactive lymphocytes that are characteristic of glandular fever. The analyser will flag these, prompting a blood film review.</li>
-                        <li><b class="text-blue-500">Mildly Low Platelets:</b> It is common for the platelet count to dip slightly during this viral infection.</li>
-                    </ul>
-                </div>
+                <div id="scenario1" class="tab-content p-4"><h3 class="font-bold text-xl mb-2">Patient with a Chest Infection</h3><p class="mb-4">A classic example of the body's response to a bacterial infection.</p><ul class="list-disc list-inside space-y-1"><li><b class="text-red-500">High WBC & High Neutrophils (Neutrophilia):</b> The bone marrow has ramped up production of neutrophils to fight the bacteria.</li><li><b class="text-red-500">High IG Count:</b> The demand is so high that immature neutrophils are being released (a 'left shift').</li><li><b>Reactive Changes:</b> Platelets may be high as part of the inflammatory response.</li></ul></div>
+                <div id="scenario2" class="tab-content hidden p-4"><h3 class="font-bold text-xl mb-2">Patient with Iron Deficiency Anaemia</h3><p class="mb-4">The typical pattern of iron deficiency.</p><ul class="list-disc list-inside space-y-1"><li><b class="text-blue-500">Low Haemoglobin (HGB) & Low MCV (Microcytic):</b> Without enough iron, red cells become small and pale.</li><li><b class="text-red-500">High RDW:</b> The mix of new small cells and older normal cells creates a wide variation in size.</li><li><b class="text-red-500">High Platelet Count:</b> It is common to see a reactive thrombocytosis in iron deficiency.</li></ul></div>
+                <div id="scenario3" class="tab-content hidden p-4"><h3 class="font-bold text-xl mb-2">Patient with Glandular Fever (EBV)</h3><p class="mb-4">Highly suggestive of a viral infection, particularly Epstein-Barr Virus (EBV).</p><ul class="list-disc list-inside space-y-1"><li><b class="text-red-500">High WBC & High Lymphocytes (Lymphocytosis):</b> The immune system is producing a large number of lymphocytes to fight the virus.</li><li><b>Atypical Lymphocytes:</b> The key finding! These large, reactive lymphocytes are characteristic of glandular fever.</li></ul></div>
+                <div id="scenario4" class="tab-content hidden p-4"><h3 class="font-bold text-xl mb-2">Patient with Acute Myeloid Leukaemia (AML)</h3><p class="mb-4">A medical emergency requiring immediate action.</p><ul class="list-disc list-inside space-y-1"><li><b class="text-blue-500">Pancytopenia:</b> The rapid proliferation of malignant myeloblasts in the bone marrow crowds out all normal cell production.</li><li><b>Blasts on film:</b> The defining feature. Often with Auer Rods.</li></ul></div>
+                <div id="scenario5" class="tab-content hidden p-4"><h3 class="font-bold text-xl mb-2">Patient with Chronic Lymphocytic Leukaemia (CLL)</h3><p class="mb-4">Often an incidental finding in older adults.</p><ul class="list-disc list-inside space-y-1"><li><b class="text-red-500">Marked Lymphocytosis:</b> A persistent, very high count of mature-looking lymphocytes is the key finding.</li><li><b>Smear Cells:</b> The malignant cells are fragile and often rupture during film preparation, creating characteristic "smear" or "smudge" cells.</li></ul></div>
+                <div id="scenario6" class="tab-content hidden p-4"><h3 class="font-bold text-xl mb-2">Patient with Chronic Myeloid Leukaemia (CML)</h3><p class="mb-4">A myeloproliferative neoplasm with a characteristic blood picture.</p><ul class="list-disc list-inside space-y-1"><li><b class="text-red-500">Very High WBC:</b> A dramatic increase in white cells, often >100 x10⁹/L.</li><li><b>Marked Left Shift:</b> The film shows the full spectrum of granulocyte maturation, from myeloblasts to mature neutrophils.</li><li><b class="text-red-500">Basophilia:</b> An increased basophil count is a classic and vital feature for diagnosis.</li></ul></div>
             </div>
         </section>
 
@@ -235,35 +233,18 @@
             feather.replace();
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
-            if(mobileMenuButton && mobileMenu) {
-                mobileMenuButton.addEventListener('click', () => {
-                    mobileMenu.classList.toggle('hidden');
-                });
-            }
+            if(mobileMenuButton && mobileMenu) { mobileMenuButton.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); }); }
             const moreMenuButton = document.getElementById('more-menu-button');
             const moreMenu = document.getElementById('more-menu');
-            if(moreMenuButton && moreMenu) {
-                moreMenuButton.addEventListener('click', (event) => {
-                    event.stopPropagation();
-                    moreMenu.classList.toggle('hidden');
-                });
-            }
-            document.addEventListener('click', (event) => {
-                if (moreMenu && !moreMenu.contains(event.target) && !moreMenuButton.contains(event.target)) {
-                    moreMenu.classList.add('hidden');
-                }
-            });
+            if(moreMenuButton && moreMenu) { moreMenuButton.addEventListener('click', (event) => { event.stopPropagation(); moreMenu.classList.toggle('hidden'); }); }
+            document.addEventListener('click', (event) => { if (moreMenu && !moreMenu.contains(event.target) && !moreMenuButton.contains(event.target)) { moreMenu.classList.add('hidden'); } });
         });
 
         function changeTab(event, tabID) {
             let tabContents = document.getElementsByClassName('tab-content');
-            for (let i = 0; i < tabContents.length; i++) {
-                tabContents[i].classList.add('hidden');
-            }
+            for (let i = 0; i < tabContents.length; i++) { tabContents[i].classList.add('hidden'); }
             let tabButtons = document.getElementsByClassName('tab-button');
-            for (let i = 0; i < tabButtons.length; i++) {
-                tabButtons[i].classList.remove('active');
-            }
+            for (let i = 0; i < tabButtons.length; i++) { tabButtons[i].classList.remove('active'); }
             document.getElementById(tabID).classList.remove('hidden');
             event.currentTarget.classList.add('active');
         }
