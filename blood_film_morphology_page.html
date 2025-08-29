@@ -1,66 +1,162 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blood Film Morphology - Clinical Pathology</title>
+    <title>Blood Film Morphology - A Comprehensive Guide</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
-        .hero-bg-morph { background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1579154293493-0cb8c3f2d590?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; background-position: center; }
+        .hero-bg-morphology { background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('morphology/2403BF1/red cells.JPG'); background-size: cover; background-position: center; }
+        .text-shadow-lg { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
+        .tab-button.active {
+            border-bottom-color: #4f46e5;
+            color: #4f46e5;
+            font-weight: 600;
+        }
+        .gallery-item { cursor: pointer; transition: transform 0.2s; }
+        .gallery-item:hover { transform: scale(1.05); }
+        #modal-backdrop { background-color: rgba(0,0,0,0.7); }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
 
-    <div id="header-placeholder"></div>
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-2 flex justify-between items-center">
+            <a href="index.html" class="cursor-pointer">
+                <img src="logo.jpg" alt="Clinical Pathology Shared Governance Council Logo" class="h-24 w-auto">
+            </a>
+            
+            <nav class="hidden lg:flex items-center space-x-8">
+                <a href="index.html" class="font-semibold text-gray-600 hover:text-blue-600 transition duration-300">Home</a>
+                <a href="projects.html" class="font-semibold text-gray-600 hover:text-blue-600 transition duration-300">Projects</a>
+                <a href="video_tours.html" class="font-semibold text-gray-600 hover:text-blue-600 transition duration-300">Lab Tours</a>
+                <a href="games.html" class="font-semibold text-gray-600 hover:text-blue-600 transition duration-300">Games</a>
+
+                <div class="relative">
+                    <button id="more-menu-button" class="font-semibold text-gray-600 hover:text-blue-600 transition duration-300 flex items-center">
+                        <span>More</span>
+                        <i data-feather="chevron-down" class="w-4 h-4 ml-1"></i>
+                    </button>
+                    <div id="more-menu" class="absolute hidden bg-white shadow-lg rounded-md mt-2 py-2 w-48 right-0">
+                        <a href="helpful_tools.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Helpful Tools</a>
+                        <a href="links.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Learning Links</a>
+                        <a href="newsletters.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Newsletters</a>
+                        <a href="about.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">About Us</a>
+                        <a href="social.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Social Media</a>
+                        <a href="contact.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Suggestions</a>
+                    </div>
+                </div>
+            </nav>
+            
+            <button id="mobile-menu-button" class="lg:hidden">
+                <i data-feather="menu" class="h-8 w-8 text-gray-600"></i>
+            </button>
+        </div>
+        
+        <div id="mobile-menu" class="hidden lg:hidden bg-white px-6 pb-4 border-t">
+            <a href="index.html" class="block py-2 text-gray-600 hover:text-blue-600">Home</a>
+            <a href="projects.html" class="block py-2 text-gray-600 hover:text-blue-600">Projects</a>
+            <a href="video_tours.html" class="block py-2 text-gray-600 hover:text-blue-600">Lab Tours</a>
+            <a href="games.html" class="block py-2 text-gray-600 hover:text-blue-600">Games</a>
+            <a href="helpful_tools.html" class="block py-2 text-gray-600 hover:text-blue-600">Helpful Tools</a>
+            <a href="links.html" class="block py-2 text-gray-600 hover:text-blue-600">Learning Links</a>
+            <a href="newsletters.html" class="block py-2 text-gray-600 hover:text-blue-600">Newsletters</a>
+            <a href="about.html" class="block py-2 text-gray-600 hover:text-blue-600">About Us</a>
+            <a href="social.html" class="block py-2 text-gray-600 hover:text-blue-600">Social Media</a>
+            <a href="contact.html" class="block py-2 text-gray-600 hover:text-blue-600">Suggestions</a>
+        </div>
+    </header>
 
     <main class="container mx-auto px-4 py-8 flex-grow">
-        <section class="hero-bg-morph text-white rounded-lg p-16 mb-8 text-center shadow-lg">
-            <h1 class="text-4xl md:text-6xl font-bold mb-4">Blood Film Morphology</h1>
-            <p class="text-lg md:text-2xl max-w-3xl mx-auto">The art of looking at blood.</p>
+
+        <section class="hero-bg-morphology text-white rounded-lg p-16 mb-8 text-center shadow-lg">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4 text-shadow-lg">The Art of Morphology</h1>
+            <p class="text-lg md:text-2xl max-w-3xl mx-auto text-shadow-lg">Beyond the numbers lies the blood film. It's here that the skilled eyes of a Biomedical Scientist can uncover the subtle clues that diagnose disease, from simple anaemias to life-threatening leukaemias.</p>
         </section>
 
+        <!-- The Why and How Section -->
         <section class="bg-white p-8 rounded-lg shadow-md mb-8">
-            <h2 class="text-3xl font-bold text-gray-900 mb-4">When Numbers Aren't Enough</h2>
-            <p class="text-lg">Our automated analysers provide a wealth of numerical data, but they can't see everything. When an FBC result is flagged as abnormal, or if a doctor has a specific clinical suspicion, we turn to the gold standard: the manual blood film examination.</p>
-            <p class="text-lg mt-2"><strong>Morphology</strong> is the study of the form and structure of cells. By looking at a stained blood film under a microscope, our highly trained Biomedical Scientists can spot abnormalities that a machine might miss, providing crucial clues for diagnosis.</p>
-        </section>
-
-        <section class="bg-white p-8 rounded-lg shadow-md mb-8">
-            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">What We Look For</h2>
-            <div class="grid md:grid-cols-1 lg:grid-cols-3 gap-8">
-                <div class="bg-red-50 p-6 rounded-lg">
-                    <h3 class="text-xl font-semibold mb-2 text-red-700">In Red Blood Cells...</h3>
-                    <ul class="list-disc list-inside space-y-2">
-                        <li><strong>Size & Shape:</strong> Are they too big, too small, or abnormally shaped (e.g., sickle-shaped, tear-drop shaped)?</li>
-                        <li><strong>Colour:</strong> Are they pale (hypochromic), suggesting low haemoglobin content?</li>
-                        <li><strong>Inclusions:</strong> Are there any unusual bodies inside the cells, like Howell-Jolly bodies or malaria parasites?</li>
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Why and How We Examine a Blood Film</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-xl font-semibold mb-2"><i class="fas fa-question-circle text-blue-600 mr-2"></i>Why We Do It: The Triggers</h3>
+                    <p class="mb-2">A blood film isn't performed on every sample. It's a specialist investigation triggered when the FBC analyser flags a potential issue, or a clinician has a specific query. Common reasons include:</p>
+                    <ul class="list-disc list-inside space-y-1 text-gray-700">
+                        <li><b>Critical FBC Results:</b> New, unexplained low counts (neutropenia, thrombocytopenia) or very high counts.</li>
+                        <li><b>Analyser Flags:</b> Suspect flags like "Blasts?", "Atypical Lympho?", or "Fragments?".</li>
+                        <li><b>Clinical Information:</b> Specific requests such as "?Malaria", "?Haemolysis", or "?Glandular Fever".</li>
+                        <li><b>Monitoring:</b> Known haematology patients undergoing chemotherapy or treatment for leukaemia.</li>
+                        <li><b>Unexplained Anaemia:</b> To look for clues to the cause, such as specific red cell shapes or features of bone marrow failure.</li>
                     </ul>
                 </div>
-                <div class="bg-blue-50 p-6 rounded-lg">
-                    <h3 class="text-xl font-semibold mb-2 text-blue-700">In White Blood Cells...</h3>
-                     <ul class="list-disc list-inside space-y-2">
-                        <li><strong>Maturity:</strong> Are there immature 'blast' cells present, which can be a sign of acute leukaemia?</li>
-                        <li><strong>Features:</strong> Do the cells look abnormal, with features like toxic granulation (in infection) or hypersegmented nuclei (in vitamin deficiency)?</li>
-                        <li><strong>Proportions:</strong> Does the differential count look correct, or is one cell line dramatically increased?</li>
-                    </ul>
-                </div>
-                <div class="bg-yellow-50 p-6 rounded-lg">
-                    <h3 class="text-xl font-semibold mb-2 text-yellow-700">In Platelets...</h3>
-                     <ul class="list-disc list-inside space-y-2">
-                        <li><strong>Size:</strong> Are they abnormally large or small?</li>
-                        <li><strong>Clumping:</strong> Are they clumping together on the slide? This can sometimes cause a falsely low platelet count from the analyser.</li>
-                    </ul>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2"><i class="fas fa-cogs text-purple-600 mr-2"></i>How We Do It: The Process</h3>
+                    <p class="mb-2">Creating a high-quality blood film is a fundamental lab skill:</p>
+                    <ol class="list-decimal list-inside space-y-1 text-gray-700">
+                        <li><b>Making the Smear:</b> A small drop of EDTA blood is placed on a glass slide. A second 'spreader' slide is used at a 30-45° angle to push the blood forward, creating a thin, even smear with a "feathered edge".</li>
+                        <li><b>Staining:</b> At NUH, we use automated Sysmex SP-50 slide maker-stainers. These use a classic <b>Romanowsky stain (May-Grünwald-Giemsa)</b>. This involves two key components:
+                            <ul class="list-disc list-inside ml-4">
+                                <li><b>Eosin:</b> An acidic, red/pink dye that stains basic cell components like haemoglobin and eosinophil granules.</li>
+                                <li><b>Azure B (a Methylene Blue derivative):</b> A basic, blue/purple dye that stains acidic components like DNA in nuclei and RNA in cytoplasm.</li>
+                            </ul>
+                        </li>
+                        <li><b>Microscopy:</b> The stained slide is now ready for systematic review under the microscope.</li>
+                    </ol>
                 </div>
             </div>
         </section>
 
-        <section class="bg-teal-600 text-white p-8 rounded-lg shadow-md text-center">
-            <h2 class="text-3xl font-bold mb-4">Test Your Skills!</h2>
-            <p class="text-lg mb-6 max-w-3xl mx-auto">Think you have what it takes to be a blood detective? We regularly post interesting cases for you to examine. Put your morphology skills to the test!</p>
-            <a href="morphology_cases.html" class="inline-block bg-white text-teal-700 font-bold py-3 px-8 rounded-full hover:bg-gray-200 transition duration-300">View Morphology Cases</a>
+        <!-- A Systematic Approach Section -->
+        <section class="bg-white p-8 rounded-lg shadow-md mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">A Systematic Approach to Film Examination</h2>
+            <p class="text-lg max-w-4xl mx-auto text-center mb-8">A film review is not a random scan. We follow a strict pattern to ensure nothing is missed, starting at low power and moving to high power oil immersion to examine each cell line in detail.</p>
+            <div id="morph-tabs" class="max-w-5xl mx-auto">
+                <div class="flex border-b border-gray-300 flex-wrap justify-center">
+                    <button class="tab-button active py-2 px-4" onclick="changeMorphTab(event, 'rbc')">Red Blood Cells</button>
+                    <button class="tab-button py-2 px-4" onclick="changeMorphTab(event, 'wbc')">White Blood Cells</button>
+                    <button class="tab-button py-2 px-4" onclick="changeMorphTab(event, 'plt')">Platelets</button>
+                </div>
+                
+                <!-- Red Blood Cell Morphology -->
+                <div id="rbc" class="morph-tab-content p-4">
+                    <h3 class="font-bold text-2xl mb-4 text-center text-red-700">Red Cell Morphology</h3>
+                    <p class="text-center mb-6">We assess red cells for size, shape, colour, and any inclusions. We look in the "ideal" area of the film where the cells are just touching but not overlapping.</p>
+                    <div id="rbc-gallery" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                        <!-- RBC Gallery Items will be injected here by JS -->
+                    </div>
+                </div>
+
+                <!-- White Blood Cell Morphology -->
+                <div id="wbc" class="morph-tab-content hidden p-4">
+                    <h3 class="font-bold text-2xl mb-4 text-center text-indigo-700">White Cell Morphology</h3>
+                    <p class="text-center mb-6">We perform a 100-cell differential count, categorising each white cell and carefully examining for any abnormalities, such as immaturity or toxic changes.</p>
+                    <div id="wbc-gallery" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                        <!-- WBC Gallery Items will be injected here by JS -->
+                    </div>
+                </div>
+
+                <!-- Platelet Morphology -->
+                <div id="plt" class="morph-tab-content hidden p-4">
+                    <h3 class="font-bold text-2xl mb-4 text-center text-gray-700">Platelet Examination</h3>
+                    <p class="text-center mb-6">We estimate the platelet count to confirm the analyser result and check for clumps (especially at the edges of the film). We also assess their size and granularity.</p>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="bg-gray-50 p-4 rounded-lg"><h4 class="font-bold text-lg mb-2">Platelet Clumps</h4><p>This is the most common platelet abnormality and is usually an in-vitro artefact due to EDTA. It causes a falsely low platelet count (pseudothrombocytopenia). A fresh sample in citrate is needed.</p></div>
+                        <div class="bg-gray-50 p-4 rounded-lg"><h4 class="font-bold text-lg mb-2">Giant Platelets</h4><p>These are platelets larger than a normal red blood cell. They are a sign of rapid platelet turnover, seen when the bone marrow is responding to a low platelet count (e.g., in ITP).</p></div>
+                        <div class="bg-gray-50 p-4 rounded-lg"><h4 class="font-bold text-lg mb-2">Hypogranular Platelets</h4><p>Platelets can appear pale with few granules. This can be a feature of myelodysplastic syndromes (MDS) or other bone marrow disorders.</p></div>
+                        <div class="bg-gray-50 p-4 rounded-lg"><h4 class="font-bold text-lg mb-2">Platelet Satellitism</h4><p>A rare EDTA-induced phenomenon where platelets surround neutrophils. It has no clinical significance but can cause pseudothrombocytopenia.</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-green-700 text-white p-8 rounded-lg shadow-md text-center">
+            <h2 class="text-3xl font-bold mb-4">Test Your Morphology Skills!</h2>
+            <p class="text-lg mb-6 max-w-3xl mx-auto">Think you can spot a sickle cell from a spherocyte? Head over to our morphology cases and test your knowledge on real-life examples.</p>
+            <a href="morphology_cases.html" class="inline-block bg-white text-green-800 font-bold py-3 px-8 rounded-full hover:bg-gray-200 transition duration-300">View Morphology Cases</a>
         </section>
 
         <section class="text-center mt-12">
@@ -70,9 +166,115 @@
         </section>
     </main>
 
-    <div id="footer-placeholder"></div>
+    <!-- Modal for Image Viewing -->
+    <div id="modal" class="fixed inset-0 z-50 hidden">
+        <div id="modal-backdrop" class="fixed inset-0"></div>
+        <div class="relative w-full h-full flex items-center justify-center p-4">
+            <div class="bg-white rounded-lg shadow-2xl max-w-4xl max-h-full overflow-auto p-4">
+                <div class="flex justify-between items-center border-b pb-2 mb-4">
+                     <h3 id="modal-title" class="text-2xl font-bold">Image</h3>
+                     <button id="modal-close" class="text-gray-500 hover:text-gray-800">&times;</button>
+                </div>
+                <img id="modal-image" src="" alt="Morphology Image" class="w-full h-auto rounded">
+                <p id="modal-description" class="mt-4 text-gray-700"></p>
+            </div>
+        </div>
+    </div>
 
-    <script src="js/component-loader.js"></script>
-    
+    <footer class="text-white py-8 mt-auto" style="background-color: #005EB8;">
+        <div class="container mx-auto px-6 text-center">
+            <div class="flex justify-center items-center space-x-8 my-4">
+                <img src="nhs-logo-880x4951.jpeg" alt="NHS Logo" class="h-10 bg-white p-1 rounded-md">
+                <img src="images.png" alt="Nottingham University Hospitals NHS Trust Logo" class="h-12 bg-white p-1 rounded-md">
+                <img src="SGC.png" alt="Shared Governance Council Logo" class="h-12 bg-white p-1 rounded-full">
+            </div>
+            <p>&copy; 2025 Clinical Pathology Shared Governance Council. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Data for image galleries
+        const rbcData = [
+            { id: 'microcytes', title: 'Microcytes & Hypochromasia', img: 'morphology/2403BF1/red cells.JPG', desc: 'Small red cells (microcytes) with increased central pallor (hypochromasia). This is the classic picture of iron deficiency anaemia.' },
+            { id: 'macrocytes', title: 'Macrocytes', img: 'path/to/macrocyte_image.jpg', desc: 'Large, often oval-shaped red cells (ovalomacrocytes). Typical of megaloblastic anaemias (B12/folate deficiency).' },
+            { id: 'spherocytes', title: 'Spherocytes', img: 'path/to/spherocyte_image.jpg', desc: 'Small, dense, spherical red cells lacking central pallor. Key feature of hereditary spherocytosis and autoimmune haemolytic anaemia.' },
+            { id: 'target_cells', title: 'Target Cells', img: 'morphology/2403BF1/SNE_338637.jpg', desc: 'Red cells with a central dot of haemoglobin, resembling a target. Seen in liver disease, thalassaemia, and after splenectomy.' },
+            { id: 'sickle_cells', title: 'Sickle Cells', img: 'path/to/sickle_cell_image.jpg', desc: 'Elongated, crescent-shaped red cells. The defining feature of sickle cell anaemia.' },
+            { id: 'schistocytes', title: 'Schistocytes', img: 'path/to/schistocyte_image.jpg', desc: 'Red cell fragments. A critical finding, indicating mechanical damage to red cells, seen in conditions like TTP, DIC, and HUS.' },
+            { id: 'teardrop_cells', title: 'Teardrop Cells', img: 'path/to/teardrop_cell_image.jpg', desc: 'Red cells shaped like a teardrop. Suggests bone marrow fibrosis (myelofibrosis) or other marrow infiltrative disorders.' },
+            { id: 'rouleaux', title: 'Rouleaux', img: 'path/to/rouleaux_image.jpg', desc: 'Red cells stacked like coins. Caused by high levels of plasma proteins, commonly seen in myeloma.' },
+            { id: 'howell_jolly', title: 'Howell-Jolly Bodies', img: 'path/to/hj_body_image.jpg', desc: 'Small, round, purple nuclear remnants within a red cell. Seen after splenectomy or in cases of splenic dysfunction.' },
+            { id: 'polychromasia', title: 'Polychromasia', img: 'path/to/polychromasia_image.jpg', desc: 'Large, bluish-grey red cells on the film. These are reticulocytes (young red cells) and indicate the bone marrow is actively producing cells, typically in response to bleeding or haemolysis.' }
+        ];
+
+        const wbcData = [
+            { id: 'neutrophil', title: 'Neutrophil', img: 'morphology/2403BF1/SNE_338798.jpg', desc: 'The most common granulocyte, with a multi-lobed nucleus and pale pink cytoplasm. Key role in fighting bacterial infections.' },
+            { id: 'lymphocyte', title: 'Lymphocyte', img: 'morphology/2403BF1/LY_338799.jpg', desc: 'Typically has a large, round nucleus with scant blue cytoplasm. Key cells of the adaptive immune system, fighting viruses.' },
+            { id: 'monocyte', title: 'Monocyte', img: 'morphology/2403BF1/MO_338803.jpg', desc: 'The largest white cell, with an indented or kidney-bean shaped nucleus and greyish, often vacuolated cytoplasm. The "clean-up crew".' },
+            { id: 'eosinophil', title: 'Eosinophil', img: 'path/to/eosinophil_image.jpg', desc: 'Characterised by a bi-lobed nucleus and large, bright pink/red granules. Involved in allergic reactions and parasitic defence.' },
+            { id: 'basophil', title: 'Basophil', img: 'path/to/basophil_image.jpg', desc: 'The rarest granulocyte, with a nucleus obscured by large, dark purple/black granules containing histamine.' },
+            { id: 'toxic_granulation', title: 'Toxic Granulation', img: 'path/to/toxic_gran_image.jpg', desc: 'Prominent, dark granules in neutrophils. A sign of infection, inflammation, or sepsis, indicating rapid neutrophil production.' },
+            { id: 'hypersegmented', title: 'Hypersegmented Neutrophil', img: 'path/to/hyperseg_image.jpg', desc: 'A neutrophil with six or more nuclear lobes. A classic feature of megaloblastic anaemia (B12/folate deficiency).' },
+            { id: 'atypical_lymph', title: 'Atypical Lymphocyte', img: 'path/to/atypical_lymph_image.jpg', desc: 'Large, reactive lymphocyte with an indented nucleus and abundant, often basophilic cytoplasm that can appear "scalloped" around red cells. The hallmark of glandular fever (EBV).' },
+            { id: 'blast_cell', title: 'Myeloblast', img: 'path/to/blast_image.jpg', desc: 'A large, immature cell with a high nuclear-to-cytoplasmic ratio, fine chromatin, and prominent nucleoli. The presence of blasts is the defining feature of acute leukaemia. Some may contain Auer rods (pink needles in cytoplasm), which are specific for AML.' },
+            { id: 'smear_cell', title: 'Smear/Smudge Cell', img: 'path/to/smear_cell_image.jpg', desc: 'The ruptured nucleus of a fragile lymphocyte. These are characteristic artefacts seen in Chronic Lymphocytic Leukaemia (CLL).' }
+        ];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            feather.replace();
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if(mobileMenuButton && mobileMenu) { mobileMenuButton.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); }); }
+            const moreMenuButton = document.getElementById('more-menu-button');
+            const moreMenu = document.getElementById('more-menu');
+            if(moreMenuButton && moreMenu) { moreMenuButton.addEventListener('click', (event) => { event.stopPropagation(); moreMenu.classList.toggle('hidden'); }); }
+            document.addEventListener('click', (event) => { if (moreMenu && !moreMenu.contains(event.target) && !moreMenuButton.contains(event.target)) { moreMenu.classList.add('hidden'); } });
+
+            // Populate galleries and set up modal
+            const rbcGallery = document.getElementById('rbc-gallery');
+            const wbcGallery = document.getElementById('wbc-gallery');
+            const modal = document.getElementById('modal');
+            const modalBackdrop = document.getElementById('modal-backdrop');
+            const modalClose = document.getElementById('modal-close');
+            const modalImage = document.getElementById('modal-image');
+            const modalTitle = document.getElementById('modal-title');
+            const modalDescription = document.getElementById('modal-description');
+
+            function populateGallery(galleryEl, data) {
+                data.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'gallery-item bg-gray-50 p-2 rounded-lg text-center shadow';
+                    div.innerHTML = `<img src="${item.img}" alt="${item.title}" class="rounded w-full h-32 object-cover"><p class="mt-2 font-semibold text-sm">${item.title}</p>`;
+                    div.addEventListener('click', () => {
+                        modalImage.src = item.img;
+                        modalTitle.textContent = item.title;
+                        modalDescription.textContent = item.desc;
+                        modal.classList.remove('hidden');
+                    });
+                    galleryEl.appendChild(div);
+                });
+            }
+
+            populateGallery(rbcGallery, rbcData);
+            populateGallery(wbcGallery, wbcData);
+
+            function closeModal() {
+                modal.classList.add('hidden');
+            }
+
+            modalClose.addEventListener('click', closeModal);
+            modalBackdrop.addEventListener('click', closeModal);
+        });
+
+        function changeMorphTab(event, tabID) {
+            let tabContents = document.getElementsByClassName('morph-tab-content');
+            for (let i = 0; i < tabContents.length; i++) { tabContents[i].classList.add('hidden'); }
+            let tabButtons = document.querySelectorAll('#morph-tabs .tab-button');
+            for (let i = 0; i < tabButtons.length; i++) { tabButtons[i].classList.remove('active'); }
+            document.getElementById(tabID).classList.remove('hidden');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
 </body>
 </html>
+
