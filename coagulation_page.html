@@ -1,70 +1,142 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coagulation - Clinical Pathology</title>
+    <title>Coagulation & Haemostasis - Overview</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
-        .hero-bg-coag { background-image: url('https://images.unsplash.com/photo-1581092916346-61a2ff2f7c02?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; background-position: center; }
+        .hero-bg-coag { background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('lab.jpg'); background-size: cover; background-position: center; }
         .text-shadow-lg { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
-        .card-hover-effect { transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; }
-        .card-hover-effect:hover { transform: translateY(-10px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+        .card-link { transition: transform 0.3s, box-shadow 0.3s; }
+        .card-link:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
 
-    <div id="header-placeholder"></div>
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-2 flex justify-between items-center">
+            <a href="index.html" class="cursor-pointer">
+                <img src="logo.jpg" alt="Clinical Pathology Shared Governance Council Logo" class="h-24 w-auto">
+            </a>
+            
+            <nav class="hidden lg:flex items-center space-x-8">
+                <a href="index.html" class="font-semibold text-gray-600 hover:text-blue-600 transition duration-300">Home</a>
+                <a href="projects.html" class="font-semibold text-gray-600 hover:text-blue-600 transition duration-300">Projects</a>
+                <a href="video_tours.html" class="font-semibold text-gray-600 hover:text-blue-600 transition duration-300">Lab Tours</a>
+                <a href="games.html" class="font-semibold text-gray-600 hover:text-blue-600 transition duration-300">Games</a>
+
+                <div class="relative">
+                    <button id="more-menu-button" class="font-semibold text-gray-600 hover:text-blue-600 transition duration-300 flex items-center">
+                        <span>More</span>
+                        <i data-feather="chevron-down" class="w-4 h-4 ml-1"></i>
+                    </button>
+                    <div id="more-menu" class="absolute hidden bg-white shadow-lg rounded-md mt-2 py-2 w-48 right-0">
+                        <a href="helpful_tools.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Helpful Tools</a>
+                        <a href="links.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Learning Links</a>
+                        <a href="newsletters.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Newsletters</a>
+                        <a href="about.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">About Us</a>
+                        <a href="social.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Social Media</a>
+                        <a href="contact.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Suggestions</a>
+                    </div>
+                </div>
+            </nav>
+            
+            <button id="mobile-menu-button" class="lg:hidden">
+                <i data-feather="menu" class="h-8 w-8 text-gray-600"></i>
+            </button>
+        </div>
+        
+        <div id="mobile-menu" class="hidden lg:hidden bg-white px-6 pb-4 border-t">
+            <a href="index.html" class="block py-2 text-gray-600 hover:text-blue-600">Home</a>
+            <a href="projects.html" class="block py-2 text-gray-600 hover:text-blue-600">Projects</a>
+            <a href="video_tours.html" class="block py-2 text-gray-600 hover:text-blue-600">Lab Tours</a>
+            <a href="games.html" class="block py-2 text-gray-600 hover:text-blue-600">Games</a>
+            <a href="helpful_tools.html" class="block py-2 text-gray-600 hover:text-blue-600">Helpful Tools</a>
+            <a href="links.html" class="block py-2 text-gray-600 hover:text-blue-600">Learning Links</a>
+            <a href="newsletters.html" class="block py-2 text-gray-600 hover:text-blue-600">Newsletters</a>
+            <a href="about.html" class="block py-2 text-gray-600 hover:text-blue-600">About Us</a>
+            <a href="social.html" class="block py-2 text-gray-600 hover:text-blue-600">Social Media</a>
+            <a href="contact.html" class="block py-2 text-gray-600 hover:text-blue-600">Suggestions</a>
+        </div>
+    </header>
 
     <main class="container mx-auto px-4 py-8 flex-grow">
-        
+
         <section class="hero-bg-coag text-white rounded-lg p-16 mb-8 text-center shadow-lg">
-            <h1 class="text-4xl md:text-6xl font-bold mb-4 text-shadow-lg">Coagulation</h1>
-            <p class="text-lg md:text-2xl max-w-3xl mx-auto text-shadow-lg">Investigating the delicate balance between bleeding and clotting.</p>
+            <h1 class="text-4xl md:text-6xl font-bold mb-4 text-shadow-lg">The Coagulation Cascade</h1>
+            <p class="text-lg md:text-2xl max-w-3xl mx-auto text-shadow-lg">Unravelling the complex and elegant system of haemostasis, from routine screening to specialist investigations of bleeding and clotting disorders.</p>
         </section>
 
+        <!-- The Basics of Haemostasis -->
         <section class="bg-white p-8 rounded-lg shadow-md mb-8">
-            <h2 class="text-3xl font-bold text-gray-900 mb-4">The Clotting Cascade</h2>
-            <p class="text-lg">Coagulation is your body's vital process for stopping bleeding. It involves a complex chain reaction of proteins called clotting factors. Our job is to test how well this system is working, which is crucial for surgery, monitoring blood-thinning medications, and investigating bleeding or clotting disorders. Explore our pages to learn about our routine and specialist tests.</p>
-        </section>
-
-        <section class="bg-gray-50 p-8 rounded-lg shadow-inner">
-            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Explore Coagulation Testing</h2>
-            <div class="grid md:grid-cols-2 gap-8">
-                <a href="routine_coagulation_tests_page.html" class="block bg-white p-6 rounded-lg shadow-md card-hover-effect">
-                    <div class="flex items-center">
-                        <div class="text-4xl text-blue-500 mr-4"><i class="fas fa-stopwatch"></i></div>
-                        <div>
-                            <h3 class="text-2xl font-semibold mb-2">Routine Coagulation Tests</h3>
-                            <p>Learn about our core screening tests like the PT/INR, APTT, and D-Dimer that provide a first look at clotting function.</p>
-                        </div>
-                    </div>
-                </a>
-                <a href="haemostasis_thrombophilia_page.html" class="block bg-white p-6 rounded-lg shadow-md card-hover-effect">
-                     <div class="flex items-center">
-                        <div class="text-4xl text-purple-500 mr-4"><i class="fas fa-search-plus"></i></div>
-                        <div>
-                            <h3 class="text-2xl font-semibold mb-2">Specialist Investigations</h3>
-                            <p>Dive deeper into our specialised tests for diagnosing inherited bleeding disorders and conditions that cause excessive clotting.</p>
-                        </div>
-                    </div>
-                </a>
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">The Science of Haemostasis</h2>
+            <p class="text-lg max-w-4xl mx-auto text-center mb-8">Haemostasis is the body's process for stopping bleeding. It's a delicate balance between pro-coagulant (clot-forming) and anti-coagulant/fibrinolytic (clot-busting) systems. Our job is to investigate when this balance goes wrong.</p>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+                <div class="bg-gray-50 p-4 rounded-lg"><i class="fas fa-compress-arrows-alt text-4xl text-red-600 mb-2"></i><h3 class="font-bold">1. Vascular Spasm</h3><p class="text-sm">The damaged blood vessel constricts to reduce blood flow.</p></div>
+                <div class="bg-gray-50 p-4 rounded-lg"><i class="fas fa-plug text-4xl text-yellow-500 mb-2"></i><h3 class="font-bold">2. Platelet Plug</h3><p class="text-sm">Platelets adhere to the injury site and activate, forming a temporary plug.</p></div>
+                <div class="bg-gray-50 p-4 rounded-lg"><i class="fas fa-project-diagram text-4xl text-blue-600 mb-2"></i><h3 class="font-bold">3. Coagulation</h3><p class="text-sm">The cascade of clotting factors is activated, leading to the formation of a stable fibrin clot.</p></div>
+                <div class="bg-gray-50 p-4 rounded-lg"><i class="fas fa-cut text-4xl text-green-600 mb-2"></i><h3 class="font-bold">4. Fibrinolysis</h3><p class="text-sm">Once the vessel has healed, the clot is broken down to restore normal blood flow.</p></div>
             </div>
         </section>
         
+        <!-- Explore Our Tests Section -->
+        <section class="bg-white p-8 rounded-lg shadow-md mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Explore Our Work in Coagulation</h2>
+            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <a href="routine_coagulation_tests_page.html" class="card-link block bg-gray-50 p-8 rounded-lg text-center">
+                    <i class="fas fa-vials text-5xl text-blue-600 mb-4"></i>
+                    <h3 class="text-2xl font-bold mb-2">Routine Coagulation Tests</h3>
+                    <p>Learn about the core tests we perform every day, from pre-op screens to monitoring anticoagulant therapy.</p>
+                </a>
+                <a href="haemostasis_thrombophilia_page.html" class="card-link block bg-gray-50 p-8 rounded-lg text-center">
+                    <i class="fas fa-dna text-5xl text-purple-600 mb-4"></i>
+                    <h3 class="text-2xl font-bold mb-2">Specialist Haemostasis & Thrombophilia</h3>
+                    <p>Delve into the complex investigations for inherited and acquired bleeding and clotting disorders.</p>
+                </a>
+            </div>
+        </section>
+
+        <section class="bg-indigo-600 text-white p-8 rounded-lg shadow-md text-center">
+            <h2 class="text-3xl font-bold mb-4">Ready for a Clotting Challenge?</h2>
+            <p class="text-lg mb-6 max-w-3xl mx-auto">You've seen the cascade and interpreted the results. Now it's time to put your knowledge to the test in our Coagulation Game!</p>
+            <a href="coagulation_game.html" class="inline-block bg-white text-indigo-700 font-bold py-3 px-8 rounded-full hover:bg-gray-200 transition duration-300">Play the Coagulation Game</a>
+        </section>
+
         <section class="text-center mt-12">
-            <a href="video_tours.html" class="bg-gray-800 text-white font-bold py-3 px-8 rounded-full hover:bg-gray-700 transition duration-300">
-                <i class="fas fa-arrow-left mr-2"></i>Back to Laboratory Tours
+            <a href="what_haematology_does.html" class="bg-gray-800 text-white font-bold py-3 px-8 rounded-full hover:bg-gray-700 transition duration-300">
+                <i class="fas fa-arrow-left mr-2"></i>Back to Haematology Overview
             </a>
         </section>
     </main>
 
-    <div id="footer-placeholder"></div>
+    <footer class="text-white py-8 mt-auto" style="background-color: #005EB8;">
+        <div class="container mx-auto px-6 text-center">
+            <div class="flex justify-center items-center space-x-8 my-4">
+                <img src="nhs-logo-880x4951.jpeg" alt="NHS Logo" class="h-10 bg-white p-1 rounded-md">
+                <img src="images.png" alt="Nottingham University Hospitals NHS Trust Logo" class="h-12 bg-white p-1 rounded-md">
+                <img src="SGC.png" alt="Shared Governance Council Logo" class="h-12 bg-white p-1 rounded-full">
+            </div>
+            <p>&copy; 2025 Clinical Pathology Shared Governance Council. All Rights Reserved.</p>
+        </div>
+    </footer>
 
-    <script src="js/component-loader.js"></script>
-
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            feather.replace();
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if(mobileMenuButton && mobileMenu) { mobileMenuButton.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); }); }
+            const moreMenuButton = document.getElementById('more-menu-button');
+            const moreMenu = document.getElementById('more-menu');
+            if(moreMenuButton && moreMenu) { moreMenuButton.addEventListener('click', (event) => { event.stopPropagation(); moreMenu.classList.toggle('hidden'); }); }
+            document.addEventListener('click', (event) => { if (moreMenu && !moreMenu.contains(event.target) && !moreMenuButton.contains(event.target)) { moreMenu.classList.add('hidden'); } });
+        });
+    </script>
 </body>
 </html>
+
