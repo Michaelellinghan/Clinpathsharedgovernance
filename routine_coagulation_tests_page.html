@@ -1,48 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Routine Coagulation Tests - Clinical Pathology</title>
+    <title>Routine Coagulation Tests - A Detailed Guide</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
-        .hero-bg-routine-coag { background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1618939303117-b236f38d391a?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; background-position: center; }
+        .hero-bg-coag { background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('lab.jpg'); background-size: cover; background-position: center; }
+        .text-shadow-lg { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
+        .interactive-result:hover .tooltip { opacity: 1; visibility: visible; transform: translateY(0); }
+        .tooltip { transition: opacity 0.3s, transform 0.3s; z-index: 10; }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
 
-    <div id="header-placeholder"></div>
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <!-- Standard Header Content Here -->
+    </header>
 
     <main class="container mx-auto px-4 py-8 flex-grow">
-
-        <section class="hero-bg-routine-coag text-white rounded-lg p-16 mb-8 text-center shadow-lg">
-            <h1 class="text-4xl md:text-6xl font-bold mb-4">Routine Coagulation Tests</h1>
-            <p class="text-lg md:text-2xl max-w-3xl mx-auto">The first step in assessing bleeding and clotting.</p>
+        <section class="hero-bg-coag text-white rounded-lg p-16 mb-8 text-center shadow-lg">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4 text-shadow-lg">Routine Coagulation Tests</h1>
+            <p class="text-lg md:text-2xl max-w-3xl mx-auto text-shadow-lg">Exploring the workhorse tests of the coagulation laboratory, what they measure, and how we interpret them.</p>
         </section>
 
         <section class="bg-white p-8 rounded-lg shadow-md mb-8">
-            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Our Core Clotting Tests</h2>
-            <p class="text-lg max-w-3xl mx-auto text-center mb-8">These tests are our first-line investigations into the clotting system. They provide a quick and effective overview, helping doctors to monitor medication, prepare patients for surgery, and decide if more specialist testing is needed.</p>
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Inside the Coagulation Lab</h2>
+            <p class="text-lg max-w-4xl mx-auto text-center mb-8">We use automated coagulation analysers (like the Sysmex CS-series) to perform our tests. These instruments use sophisticated methods to detect clot formation in patient plasma after the addition of specific activating reagents.</p>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-2"><i class="fas fa-lightbulb text-yellow-500 mr-2"></i>The Optical Detection Method</h3>
+                    <p>This is the primary method for most of our tests (PT, APTT, Fibrinogen). The analyser shines a light beam through the cuvette containing the patient's plasma and the test reagent. As a fibrin clot forms, the plasma becomes more cloudy or opaque. This causes the amount of light passing through the cuvette to decrease. The analyser measures this change in light transmission, and the time taken from the addition of the reagent to the formation of the clot is recorded as the clotting time in seconds.</p>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-2"><i class="fas fa-palette text-blue-500 mr-2"></i>Immuno-turbidimetric Methods</h3>
+                    <p>For D-Dimer, we use an immuno-turbidimetric assay. This uses latex particles coated with an antibody specific to the D-Dimer fragment. When D-Dimer is present in the plasma, it causes the particles to agglutinate (clump together). This clumping increases the turbidity of the sample, which is measured by a change in light transmission. The degree of change is proportional to the concentration of D-Dimer.</p>
+                </div>
+            </div>
+        </section>
 
-            <div class="space-y-8">
-                <div class="p-6 bg-gray-50 rounded-lg">
-                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-chart-line text-green-600 mr-2"></i>Prothrombin Time (PT) and INR</h3>
-                    <p>The PT measures how long it takes for a clot to form in a blood sample. It specifically assesses the 'extrinsic' and common pathways of the clotting cascade. Its most frequent use is to calculate the <strong>International Normalised Ratio (INR)</strong>, which is essential for monitoring patients on Warfarin therapy to ensure their blood is appropriately thinned.</p>
-                </div>
-                <div class="p-6 bg-gray-50 rounded-lg">
-                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-project-diagram text-blue-600 mr-2"></i>Activated Partial Thromboplastin Time (APTT)</h3>
-                    <p>The APTT measures the 'intrinsic' and common pathways of the cascade. It is commonly used as a pre-operative screen to check for underlying bleeding tendencies and for monitoring patients on Heparin therapy. An unexpectedly prolonged APTT would trigger further investigation into specific clotting factor deficiencies, like Haemophilia.</p>
-                </div>
-                <div class="p-6 bg-gray-50 rounded-lg">
-                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-cubes text-purple-600 mr-2"></i>Fibrinogen</h3>
-                    <p>Fibrinogen is a key protein (Factor I) that is converted into fibrin threads to form the structure of a blood clot. We measure the level of fibrinogen in the blood, which is particularly important in cases of major bleeding or a condition called Disseminated Intravascular Coagulation (DIC), where the clotting system becomes overactive and uses up all the fibrinogen.</p>
-                </div>
-                <div class="p-6 bg-gray-50 rounded-lg">
-                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-search-plus text-red-600 mr-2"></i>D-Dimer</h3>
-                    <p>When a blood clot is broken down by the body, tiny protein fragments called D-Dimers are released. A normal D-Dimer level is very useful for helping to <strong>rule out</strong> the presence of a dangerous clot, such as a Deep Vein Thrombosis (DVT) in the leg or a Pulmonary Embolus (PE) in the lungs. However, a high level can be caused by many other conditions, so it is less useful for confirming a clot.</p>
+        <section class="bg-white p-8 rounded-lg shadow-md mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">The Routine Test Menu</h2>
+             <div class="bg-gray-800 text-white font-mono p-6 rounded-lg shadow-inner max-w-4xl mx-auto">
+                <div class="border-b-2 border-gray-500 pb-2 mb-2 grid grid-cols-3 gap-x-4"><p>TEST</p><p class="text-right">RESULT</p><p class="text-right">UNITS</p></div>
+                <div class="space-y-1 mt-2">
+                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-3 gap-x-4"><span>Prothrombin Time (PT)</span><span class="text-right">13.5</span><span class="text-right">s</span></div><div class="tooltip absolute right-full top-0 mr-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Prothrombin Time</p><p class="font-sans text-sm">Measures the extrinsic and common pathways. Prolonged in liver disease, vitamin K deficiency, and DIC. The basis for the INR.</p></div></div>
+                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-3 gap-x-4"><span>INR</span><span class="text-right">1.0</span><span class="text-right"></span></div><div class="tooltip absolute left-full top-0 ml-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">International Normalised Ratio</p><p class="font-sans text-sm">A standardised calculation of the PT, used to monitor patients on Warfarin therapy. Therapeutic ranges are typically 2.0-3.0 or 3.0-4.0 depending on the clinical indication.</p></div></div>
+                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-3 gap-x-4"><span>APTT</span><span class="text-right">32</span><span class="text-right">s</span></div><div class="tooltip absolute right-full top-0 mr-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Activated Partial Thromboplastin Time</p><p class="font-sans text-sm">Measures the intrinsic and common pathways. Prolonged in haemophilia A and B, von Willebrand disease, and with heparin therapy.</p></div></div>
+                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-3 gap-x-4"><span>Fibrinogen</span><span class="text-right">3.5</span><span class="text-right">g/L</span></div><div class="tooltip absolute left-full top-0 ml-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Fibrinogen</p><p class="font-sans text-sm">The precursor to fibrin, the final component of a clot. It is an acute phase protein, so is raised in inflammation. Low levels are seen in DIC and severe liver disease.</p></div></div>
+                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-3 gap-x-4"><span>D-Dimer</span><span class="text-right">200</span><span class="text-right">ng/mL</span></div><div class="tooltip absolute right-full top-0 mr-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">D-Dimer</p><p class="font-sans text-sm">A specific breakdown product of a fibrin clot. A high level indicates that clotting and subsequent fibrinolysis has occurred. Used to help exclude VTE (DVT/PE). A negative result has a high negative predictive value.</p></div></div>
                 </div>
             </div>
         </section>
@@ -54,9 +64,12 @@
         </section>
     </main>
 
-    <div id="footer-placeholder"></div>
-
-    <script src="js/component-loader.js"></script>
-
+    <footer class="text-white py-8 mt-auto" style="background-color: #005EB8;">
+        <!-- Standard Footer Content Here -->
+    </footer>
+    
+    <script>
+        // JS for header/footer and tooltips
+    </script>
 </body>
 </html>
