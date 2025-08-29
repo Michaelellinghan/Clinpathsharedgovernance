@@ -24,48 +24,33 @@
             transform: translateY(0);
         }
 
-        /* Styling for the game cards */
-        .game-card {
+        .hero-bg-haematology { 
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1558502914-f745749b2c39?q=80&w=2070&auto=format&fit=crop&ixlib-rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
             background-size: cover;
             background-position: center;
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
         }
-
-        .game-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 20px 30px -10px rgba(0,0,0,0.2);
-        }
+        .text-shadow-lg { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
 
-    <!-- Header component will be loaded here -->
-    <div id="header"></div>
+    <div id="header-placeholder"></div>
 
     <main>
-        <!-- Hero Section - Themed -->
-        <section class="bg-blue-800 text-center py-24 md:py-32 px-4">
-            <div class="container mx-auto">
-                <h1 class="text-5xl md:text-7xl font-extrabold mb-4 text-white">
-                    Haematology: It's In Your Blood
-                </h1>
-                <p class="text-lg md:text-xl max-w-3xl mx-auto text-blue-100">
-                    Welcome to the incredible world flowing through your veins. We're the detectives of the blood, uncovering clues that keep you healthy. Scroll down to see what we do.
-                </p>
-                <a href="#core-areas" class="mt-8 inline-block bg-white text-blue-800 font-bold py-3 px-8 rounded-full text-lg hover:bg-gray-200 transition-transform transform hover:scale-105">
-                    Explore Our Work
-                </a>
-            </div>
+        <section class="hero-bg-haematology text-white rounded-lg p-16 mb-8 text-center shadow-lg">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4 text-shadow-lg">Haematology: It's In Your Blood</h1>
+            <p class="text-lg md:text-2xl max-w-3xl mx-auto text-shadow-lg">Welcome to the incredible world flowing through your veins. We're the detectives of the blood, uncovering clues that keep you healthy. Scroll down to see what we do.</p>
+            <a href="#core-areas" class="mt-8 inline-block bg-white text-blue-800 font-bold py-3 px-8 rounded-full text-lg hover:bg-gray-200 transition-transform transform hover:scale-105">
+                Explore Our Work
+            </a>
         </section>
 
-        <!-- Main Content Section -->
         <section id="core-areas" class="py-20 px-4">
             <div class="container mx-auto">
                 <h2 class="text-4xl font-bold text-center mb-16 reveal">The Core of Haematology</h2>
                 
                 <div class="space-y-20">
                     
-                    <!-- Section 1: Full Blood Count -->
                     <div class="reveal flex flex-col md:flex-row items-center gap-10">
                         <div class="md:w-1/2">
                             <h3 class="text-3xl font-bold mb-4 text-blue-600">The Full Blood Count (FBC)</h3>
@@ -73,11 +58,10 @@
                             <a href="fbc_page.html" class="mt-6 inline-block font-semibold text-blue-600 hover:text-blue-800">See what the FBC tells us &rarr;</a>
                         </div>
                         <div class="md:w-1/2">
-                            <img src="Spinning blood samples.jpg" alt="Centrifuge spinning blood samples" class="rounded-xl shadow-xl w-full h-auto object-cover">
+                            <img src="FBC result and tube.jpg" alt="A full blood count result printout with a purple top EDTA tube" class="rounded-xl shadow-xl w-full h-auto object-cover">
                         </div>
                     </div>
 
-                    <!-- Section 2: Coagulation -->
                     <div class="reveal flex flex-col md:flex-row-reverse items-center gap-10">
                         <div class="md:w-1/2">
                             <h3 class="text-3xl font-bold mb-4 text-purple-600">Coagulation: The Clotting Experts</h3>
@@ -89,7 +73,6 @@
                         </div>
                     </div>
 
-                    <!-- Section 3: Blood Film Morphology -->
                     <div class="reveal flex flex-col md:flex-row items-center gap-10">
                         <div class="md:w-1/2">
                             <h3 class="text-3xl font-bold mb-4 text-pink-600">Blood Films: Under the Microscope</h3>
@@ -105,24 +88,34 @@
             </div>
         </section>
 
-        <!-- Games Section -->
         <section class="py-20 px-4 bg-gray-100">
             <div class="container mx-auto text-center">
-                <h2 class="text-4xl font-bold mb-4 reveal">Ready for a Challenge?</h2>
-                <p class="text-lg text-gray-600 max-w-2xl mx-auto mb-12 reveal">Put your knowledge to the test with our interactive games. Can you become a Haematology hero?</p>
+                <h2 class="text-4xl font-bold mb-12 reveal">Explore Our Processes in Detail</h2>
                 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <a href="fbc_challenge.html" class="reveal game-card h-80 rounded-xl p-8 flex flex-col justify-end items-start text-left text-white" style="background-image: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0)), url('https://placehold.co/600x400/3b82f6/white?text=FBC');">
-                        <h3 class="text-2xl font-bold">FBC Challenge</h3>
-                        <p>Identify the different blood cells against the clock.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <a href="further_haematology_tests_page.html" class="reveal block bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow">
+                        <div class="text-center">
+                            <div class="text-5xl text-blue-500 mb-4"><i class="fas fa-vials"></i></div>
+                            <h3 class="text-xl font-semibold mb-2">Further Haematology Tests</h3>
+                        </div>
                     </a>
-                    <a href="coagulation_game.html" class="reveal game-card h-80 rounded-xl p-8 flex flex-col justify-end items-start text-left text-white" style="background-image: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0)), url('https://placehold.co/600x400/a855f7/white?text=Coag');">
-                        <h3 class="text-2xl font-bold">Coagulation Cascade</h3>
-                        <p>Can you piece together the puzzle of how blood clots?</p>
+                    <a href="haemostasis_thrombophilia_page.html" class="reveal block bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow">
+                        <div class="text-center">
+                            <div class="text-5xl text-purple-500 mb-4"><i class="fas fa-search-plus"></i></div>
+                            <h3 class="text-xl font-semibold mb-2">Haemostasis & Thrombophilia</h3>
+                        </div>
                     </a>
-                    <a href="haem_game.html" class="reveal game-card h-80 rounded-xl p-8 flex flex-col justify-end items-start text-left text-white" style="background-image: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0)), url('https://placehold.co/600x400/ec4899/white?text=Haem');">
-                        <h3 class="text-2xl font-bold">Haem Word Game</h3>
-                        <p>Test your vocabulary with our fun word puzzles.</p>
+                    <a href="malaria_screening_page.html" class="reveal block bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow">
+                        <div class="text-center">
+                            <div class="text-5xl text-red-500 mb-4"><i class="fas fa-mosquito"></i></div>
+                            <h3 class="text-xl font-semibold mb-2">Malaria Screening</h3>
+                        </div>
+                    </a>
+                    <a href="red_cell_investigations_page.html" class="reveal block bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow">
+                        <div class="text-center">
+                            <div class="text-5xl text-green-500 mb-4"><i class="fas fa-dna"></i></div>
+                            <h3 class="text-xl font-semibold mb-2">Red Cell Investigations</h3>
+                        </div>
                     </a>
                 </div>
             </div>
@@ -130,13 +123,10 @@
 
     </main>
 
-    <!-- Footer component will be loaded here -->
-    <div id="footer"></div>
+    <div id="footer-placeholder"></div>
 
-    <!-- Script to load header and footer -->
     <script src="js/component-loader.js"></script>
 
-    <!-- Script for scroll animations -->
     <script>
         const revealElements = document.querySelectorAll('.reveal');
 
