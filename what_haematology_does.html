@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>What Haematology Does - Clinpath</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         body {
@@ -34,9 +36,54 @@
 </head>
 <body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
 
-    <div id="header-placeholder"></div>
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-2 flex justify-between items-center">
+            <a href="index.html" class="cursor-pointer">
+                <img src="logo.jpg" alt="Clinical Pathology Shared Governance Council Logo" class="h-24 w-auto">
+            </a>
+            
+            <nav class="hidden lg:flex items-center space-x-8">
+                <a href="index.html" class="font-semibold text-gray-600 hover:text-blue-600 transition duration-300">Home</a>
+                <a href="projects.html" class="font-semibold text-gray-600 hover:text-blue-600 transition duration-300">Projects</a>
+                <a href="video_tours.html" class="font-semibold text-gray-600 hover:text-blue-600 transition duration-300">Lab Tours</a>
+                <a href="games.html" class="font-semibold text-gray-600 hover:text-blue-600 transition duration-300">Games</a>
 
-    <main>
+                <div class="relative">
+                    <button id="more-menu-button" class="font-semibold text-gray-600 hover:text-blue-600 transition duration-300 flex items-center">
+                        <span>More</span>
+                        <i data-feather="chevron-down" class="w-4 h-4 ml-1"></i>
+                    </button>
+                    <div id="more-menu" class="absolute hidden bg-white shadow-lg rounded-md mt-2 py-2 w-48 right-0">
+                        <a href="helpful_tools.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Helpful Tools</a>
+                        <a href="links.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Learning Links</a>
+                        <a href="newsletters.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Newsletters</a>
+                        <a href="about.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">About Us</a>
+                        <a href="social.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Social Media</a>
+                        <a href="contact.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Suggestions</a>
+                    </div>
+                </div>
+            </nav>
+            
+            <button id="mobile-menu-button" class="lg:hidden">
+                <i data-feather="menu" class="h-8 w-8 text-gray-600"></i>
+            </button>
+        </div>
+        
+        <div id="mobile-menu" class="hidden lg:hidden bg-white px-6 pb-4 border-t">
+            <a href="index.html" class="block py-2 text-gray-600 hover:text-blue-600">Home</a>
+            <a href="projects.html" class="block py-2 text-gray-600 hover:text-blue-600">Projects</a>
+            <a href="video_tours.html" class="block py-2 text-gray-600 hover:text-blue-600">Lab Tours</a>
+            <a href="games.html" class="block py-2 text-gray-600 hover:text-blue-600">Games</a>
+            <a href="helpful_tools.html" class="block py-2 text-gray-600 hover:text-blue-600">Helpful Tools</a>
+            <a href="links.html" class="block py-2 text-gray-600 hover:text-blue-600">Learning Links</a>
+            <a href="newsletters.html" class="block py-2 text-gray-600 hover:text-blue-600">Newsletters</a>
+            <a href="about.html" class="block py-2 text-gray-600 hover:text-blue-600">About Us</a>
+            <a href="social.html" class="block py-2 text-gray-600 hover:text-blue-600">Social Media</a>
+            <a href="contact.html" class="block py-2 text-gray-600 hover:text-blue-600">Suggestions</a>
+        </div>
+    </header>
+
+    <main class="flex-grow">
         <section class="hero-bg-haematology text-white rounded-lg p-16 mb-8 text-center shadow-lg">
             <h1 class="text-4xl md:text-6xl font-bold mb-4 text-shadow-lg">Haematology: It's In Your Blood</h1>
             <p class="text-lg md:text-2xl max-w-3xl mx-auto text-shadow-lg">Welcome to the incredible world flowing through your veins. We're the detectives of the blood, uncovering clues that keep you healthy. Scroll down to see what we do.</p>
@@ -87,7 +134,7 @@
                 </div>
             </div>
         </section>
-
+        
         <section class="py-20 px-4 bg-gray-100">
             <div class="container mx-auto text-center">
                 <h2 class="text-4xl font-bold mb-12 reveal">Explore Our Processes in Detail</h2>
@@ -122,28 +169,64 @@
         </section>
 
     </main>
-
-    <div id="footer-placeholder"></div>
-
-    <script src="js/component-loader.js"></script>
+    
+    <footer class="text-white py-8 mt-auto" style="background-color: #005EB8;">
+        <div class="container mx-auto px-6 text-center">
+            <div class="flex justify-center items-center space-x-8 my-4">
+                <img src="nhs-logo-880x4951.jpeg" alt="NHS Logo" class="h-10 bg-white p-1 rounded-md">
+                
+                <img src="images.png" alt="Nottingham University Hospitals NHS Trust Logo" class="h-12 bg-white p-1 rounded-md">
+                
+                <img src="SGC.png" alt="Shared Governance Council Logo" class="h-12 bg-white p-1 rounded-full">
+            </div>
+            <p>&copy; 2025 Clinical Pathology Shared Governance Council. All Rights Reserved.</p>
+        </div>
+    </footer>
 
     <script>
-        const revealElements = document.querySelectorAll('.reveal');
+        document.addEventListener('DOMContentLoaded', function() {
+            // Feather Icons
+            feather.replace();
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if(mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+
+            // Desktop "More" dropdown
+            const moreMenuButton = document.getElementById('more-menu-button');
+            const moreMenu = document.getElementById('more-menu');
+            if(moreMenuButton && moreMenu) {
+                moreMenuButton.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    moreMenu.classList.toggle('hidden');
+                });
+            }
+            document.addEventListener('click', (event) => {
+                if (moreMenu && !moreMenu.contains(event.target) && !moreMenuButton.contains(event.target)) {
+                    moreMenu.classList.add('hidden');
                 }
             });
-        }, {
-            threshold: 0.1
-        });
-
-        revealElements.forEach(el => {
-            observer.observe(el);
+            
+            // Scroll animations
+            const revealElements = document.querySelectorAll('.reveal');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            revealElements.forEach(el => {
+                observer.observe(el);
+            });
         });
     </script>
-
 </body>
 </html>
