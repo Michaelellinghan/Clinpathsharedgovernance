@@ -1,128 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Haemostasis and Thrombophilia - Clinical Pathology</title>
+    <title>Specialist Haemostasis & Thrombophilia - A Detailed Guide</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
-        .hero-bg-haemostasis { background-image: url('https://images.unsplash.com/photo-1618939303117-b236f38d391a?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; background-position: center; }
+        .hero-bg-coag { background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('lab.jpg'); background-size: cover; background-position: center; }
         .text-shadow-lg { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
-        .card-hover-effect { transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; }
-        .card-hover-effect:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
-        .tab-button { padding: 0.75rem 1.5rem; cursor: pointer; border-bottom: 4px solid transparent; transition: all 0.3s ease; }
-        .tab-button.active { border-bottom-color: #0d9488; /* teal-600 */ color: #0d9488; font-weight: 600; }
+        .interactive-result:hover .tooltip { opacity: 1; visibility: visible; transform: translateY(0); }
+        .tooltip { transition: opacity 0.3s, transform 0.3s; z-index: 10; }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
 
-    <div id="header-placeholder"></div>
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <!-- Standard Header Content Here -->
+    </header>
 
     <main class="container mx-auto px-4 py-8 flex-grow">
-        
-        <section class="hero-bg-haemostasis text-white rounded-lg p-16 mb-8 text-center shadow-lg">
-            <div>
-                <h1 class="text-4xl md:text-6xl font-bold mb-4 text-shadow-lg">Haemostasis & Thrombophilia</h1>
-                <p class="text-lg md:text-2xl max-w-3xl mx-auto text-shadow-lg">A deeper look into bleeding and clotting disorders.</p>
+        <section class="hero-bg-coag text-white rounded-lg p-16 mb-8 text-center shadow-lg">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4 text-shadow-lg">Specialist Haemostasis & Thrombophilia</h1>
+            <p class="text-lg md:text-2xl max-w-3xl mx-auto text-shadow-lg">Investigating the complex world of inherited and acquired bleeding and clotting disorders.</p>
+        </section>
+
+        <section class="bg-white p-8 rounded-lg shadow-md mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Investigating a Bleeding Tendency</h2>
+            <p class="text-lg max-w-4xl mx-auto text-center mb-8">When a patient has an unexplained prolonged clotting time (usually APTT), we perform mixing studies to determine if it's due to a factor deficiency or an inhibitor.</p>
+            <div class="bg-gray-50 p-6 rounded-lg">
+                <h3 class="text-xl font-semibold mb-2">Mixing Studies</h3>
+                <p>We mix the patient's plasma 1:1 with normal plasma (which contains 100% of all factors) and repeat the prolonged test. <br> - If the result <b>corrects</b> into the normal range, it suggests the patient is deficient in a clotting factor. <br> - If the result <b>fails to correct</b>, it suggests the patient's plasma contains an inhibitor (like a lupus anticoagulant or a specific factor inhibitor) that is acting on the normal plasma too.</p>
             </div>
         </section>
 
         <section class="bg-white p-8 rounded-lg shadow-md mb-8">
-            <h2 class="text-3xl font-bold text-gray-900 mb-4">Getting the Balance Right</h2>
-            <p class="text-lg"><strong>Haemostasis</strong> is the scientific term for stopping bleeding. <strong>Thrombophilia</strong> describes a condition where the blood has an increased tendency to form clots. These specialised tests investigate both sides of this delicate balance and are requested by a Consultant Haematologist when a routine screen is abnormal or there's a strong clinical suspicion of an underlying disorder.</p>
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Investigating a Clotting Tendency (Thrombophilia)</h2>
+            <p class="text-lg max-w-4xl mx-auto text-center mb-8">Thrombophilia is a predisposition to thrombosis (blood clots). We perform a panel of tests to look for common inherited and acquired causes.</p>
+             <div class="bg-gray-800 text-white font-mono p-6 rounded-lg shadow-inner max-w-4xl mx-auto">
+                <div class="border-b-2 border-gray-500 pb-2 mb-2 grid grid-cols-2 gap-x-4"><p>TEST</p><p class="text-right">RESULT</p></div>
+                <div class="space-y-1 mt-2">
+                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-2 gap-x-4"><span>Lupus Anticoagulant</span><span class="text-right">Negative</span></div><div class="tooltip absolute right-full top-0 mr-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Lupus Anticoagulant</p><p class="font-sans text-sm">An antibody that paradoxically causes clotting in-vivo but prolongs the APTT in-vitro. A key investigation for thrombosis and recurrent miscarriage.</p></div></div>
+                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-2 gap-x-4"><span>Protein C & S</span><span class="text-right">Normal</span></div><div class="tooltip absolute left-full top-0 ml-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Protein C & Protein S</p><p class="font-sans text-sm">Natural anticoagulants. Deficiency is an inherited risk factor for thrombosis (a thrombophilia).</p></div></div>
+                     <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-2 gap-x-4"><span>Factor V Leiden</span><span class="text-right">Negative</span></div><div class="tooltip absolute right-full top-0 mr-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Factor V Leiden</p><p class="font-sans text-sm">The most common inherited thrombophilia. A genetic mutation that makes Factor V resistant to being switched off by Activated Protein C.</p></div></div>
+                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-2 gap-x-4"><span>Factor VIII Assay</span><span class="text-right">100 IU/dL</span></div><div class="tooltip absolute left-full top-0 ml-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Factor VIII Assay</p><p class="font-sans text-sm">Measures the activity of Factor VIII. Reduced or absent in Haemophilia A.</p></div></div>
+                </div>
+            </div>
         </section>
 
-        <div class="mb-8">
-            <div class="flex justify-center border-b border-gray-200 bg-white rounded-t-lg shadow-sm">
-                <button class="tab-button active" onclick="openTab(event, 'bleeding')">Investigating Bleeding</button>
-                <button class="tab-button" onclick="openTab(event, 'clotting')">Investigating Clotting</button>
-            </div>
-        </div>
-
-        <div id="bleeding" class="tab-content">
-            <section class="bg-white p-8 rounded-b-lg shadow-md mb-8">
-                <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Investigating a Bleeding Problem</h2>
-                <div class="space-y-8">
-                    <div class="flex flex-col md:flex-row gap-6 items-center card-hover-effect p-4 rounded-lg">
-                        <div class="text-5xl text-cyan-600 md:w-1/6 text-center"><i class="fas fa-clipboard-check"></i></div>
-                        <div class="md:w-5/6">
-                            <h3 class="text-2xl font-semibold mb-2">Platelet Function Analysis (PFA)</h3>
-                            <p>This is a screening test to see how well platelets are working. We aspirate a blood sample through a tiny hole coated with substances that activate platelets. The machine times how long it takes for the platelets to form a plug and stop the flow. A prolonged time suggests the platelets aren't sticking together properly.</p>
-                        </div>
-                    </div>
-                    <div class="flex flex-col md:flex-row gap-6 items-center card-hover-effect p-4 rounded-lg">
-                        <div class="text-5xl text-blue-600 md:w-1/6 text-center"><i class="fas fa-link"></i></div>
-                        <div class="md:w-5/6">
-                            <h3 class="text-2xl font-semibold mb-2">Von Willebrand Disease (VWD) Investigation</h3>
-                            <p>VWD is the most common inherited bleeding disorder, caused by a problem with Von Willebrand Factor (VWF), a 'glue-like' protein that helps platelets stick to an injury site. We perform tests to measure both the amount of VWF protein (Antigen test) and how well it's working (Activity test) to diagnose and classify the condition.</p>
-                        </div>
-                    </div>
-                    <div class="flex flex-col md:flex-row gap-6 items-center card-hover-effect p-4 rounded-lg">
-                        <div class="text-5xl text-green-600 md:w-1/6 text-center"><i class="fas fa-puzzle-piece"></i></div>
-                        <div class="md:w-5/6">
-                            <h3 class="text-2xl font-semibold mb-2">Specific Factor Assays & Inhibitor Screens</h3>
-                            <p>To diagnose conditions like Haemophilia, we mix a patient's plasma with plasma that is specifically missing one factor (e.g., Factor VIII deficient plasma). The amount of correction in the clotting time tells us how much of that factor the patient has. For an inhibitor screen, we mix patient plasma with normal plasma. If an inhibitor is present, it blocks the factors in the normal plasma too, and the clotting time won't correct as expected.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
-
-        <div id="clotting" class="tab-content hidden">
-            <section class="bg-white p-8 rounded-b-lg shadow-md mb-8">
-                <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Investigating a Clotting Problem (Thrombophilia)</h2>
-                 <div class="space-y-8">
-                    <div class="flex flex-col md:flex-row gap-6 items-center card-hover-effect p-4 rounded-lg">
-                        <div class="text-5xl text-purple-600 md:w-1/6 text-center"><i class="fas fa-search"></i></div>
-                        <div class="md:w-5/6">
-                            <h3 class="text-2xl font-semibold mb-2">Thrombophilia Screen</h3>
-                            <p>For patients with unexplained clots, we look for inherited deficiencies in the body's natural anticoagulants. <strong>Antithrombin</strong>, <strong>Protein C</strong>, and <strong>Protein S</strong> act as the 'brakes' on the clotting system. We measure if there's enough of these proteins and if they're working correctly. We also screen for common genetic mutations (like Factor V Leiden) that make clotting more likely.</p>
-                        </div>
-                    </div>
-                     <div class="flex flex-col md:flex-row gap-6 items-center card-hover-effect p-4 rounded-lg">
-                        <div class="text-5xl text-indigo-600 md:w-1/6 text-center"><i class="fas fa-shield-virus"></i></div>
-                        <div class="md:w-5/6">
-                            <h3 class="text-2xl font-semibold mb-2">Lupus Anticoagulant</h3>
-                            <p>Despite its name, this antibody actually *increases* the risk of clotting. It interferes with phospholipid-dependent clotting tests in the lab. We confirm its presence using a two-step process: first, a sensitive screening test (like a DRVVT), and then a confirmation test with extra phospholipid, which corrects the clotting time if a Lupus Anticoagulant is present.</p>
-                        </div>
-                    </div>
-                    <div class="flex flex-col md:flex-row gap-6 items-center card-hover-effect p-4 rounded-lg">
-                        <div class="text-5xl text-red-600 md:w-1/6 text-center"><i class="fas fa-syringe"></i></div>
-                        <div class="md:w-5/6">
-                            <h3 class="text-2xl font-semibold mb-2">Monitoring Anticoagulants (Anti-Xa Assay)</h3>
-                            <p>For patients on certain blood thinners (like LMWH, Apixaban, or Rivaroxaban), we can measure the drug's effect using an Anti-Xa assay. This test measures how much Factor Xa (a key clotting enzyme) is being blocked by the medication. This helps doctors ensure the dose is just right - effective enough to prevent clots, but not so high as to cause bleeding.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
-        
         <section class="text-center mt-12">
             <a href="coagulation_page.html" class="bg-gray-800 text-white font-bold py-3 px-8 rounded-full hover:bg-gray-700 transition duration-300">
                 <i class="fas fa-arrow-left mr-2"></i>Back to Coagulation Overview
             </a>
         </section>
-
     </main>
 
-    <div id="footer-placeholder"></div>
+    <footer class="text-white py-8 mt-auto" style="background-color: #005EB8;">
+        <!-- Standard Footer Content Here -->
+    </footer>
 
     <script>
-        function openTab(evt, tabName) {
-            var i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("tab-content");
-            for (i = 0; i < tabcontent.length; i++) { tabcontent[i].style.display = "none"; }
-            tablinks = document.getElementsByClassName("tab-button");
-            for (i = 0; i < tablinks.length; i++) { tablinks[i].className = tablinks[i].className.replace(" active", ""); }
-            document.getElementById(tabName).style.display = "block";
-            evt.currentTarget.className += " active";
-        }
+        // JS for header/footer and tooltips
     </script>
-
-    <script src="js/component-loader.js"></script>
-    
 </body>
 </html>
