@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
-        .hero-bg-coag { background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('lab.jpg'); background-size: cover; background-position: center; }
+        .hero-bg-routine-coag { background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('lab.jpg'); background-size: cover; background-position: center; }
         .text-shadow-lg { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
         .interactive-result:hover .tooltip { opacity: 1; visibility: visible; transform: translateY(0); }
         .tooltip { transition: opacity 0.3s, transform 0.3s; z-index: 10; }
@@ -19,40 +19,136 @@
 <body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
 
     <header class="bg-white shadow-md sticky top-0 z-50">
-        <!-- Standard Header Content Here -->
+        <div class="container mx-auto px-6 py-2 flex justify-between items-center">
+            <a href="index.html" class="cursor-pointer">
+                <img src="logo.jpg" alt="Clinical Pathology Shared Governance Council Logo" class="h-24 w-auto">
+            </a>
+            
+            <nav class="hidden lg:flex items-center space-x-8">
+                <a href="index.html" class="font-semibold text-gray-600 hover:text-blue-600 transition duration-300">Home</a>
+                <a href="projects.html" class="font-semibold text-gray-600 hover:text-blue-600 transition duration-300">Projects</a>
+                <a href="video_tours.html" class="font-semibold text-gray-600 hover:text-blue-600 transition duration-300">Lab Tours</a>
+                <a href="games.html" class="font-semibold text-gray-600 hover:text-blue-600 transition duration-300">Games</a>
+
+                <div class="relative">
+                    <button id="more-menu-button" class="font-semibold text-gray-600 hover:text-blue-600 transition duration-300 flex items-center">
+                        <span>More</span>
+                        <i data-feather="chevron-down" class="w-4 h-4 ml-1"></i>
+                    </button>
+                    <div id="more-menu" class="absolute hidden bg-white shadow-lg rounded-md mt-2 py-2 w-48 right-0">
+                        <a href="helpful_tools.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Helpful Tools</a>
+                        <a href="links.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Learning Links</a>
+                        <a href="newsletters.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Newsletters</a>
+                        <a href="about.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">About Us</a>
+                        <a href="social.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Social Media</a>
+                        <a href="contact.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Suggestions</a>
+                    </div>
+                </div>
+            </nav>
+            
+            <button id="mobile-menu-button" class="lg:hidden">
+                <i data-feather="menu" class="h-8 w-8 text-gray-600"></i>
+            </button>
+        </div>
+        
+        <div id="mobile-menu" class="hidden lg:hidden bg-white px-6 pb-4 border-t">
+            <a href="index.html" class="block py-2 text-gray-600 hover:text-blue-600">Home</a>
+            <a href="projects.html" class="block py-2 text-gray-600 hover:text-blue-600">Projects</a>
+            <a href="video_tours.html" class="block py-2 text-gray-600 hover:text-blue-600">Lab Tours</a>
+            <a href="games.html" class="block py-2 text-gray-600 hover:text-blue-600">Games</a>
+            <a href="helpful_tools.html" class="block px-4 py-2 text-gray-600 hover:text-blue-600">Helpful Tools</a>
+            <a href="links.html" class="block px-4 py-2 text-gray-600 hover:text-blue-600">Learning Links</a>
+            <a href="newsletters.html" class="block py-2 text-gray-600 hover:text-blue-600">Newsletters</a>
+            <a href="about.html" class="block py-2 text-gray-600 hover:text-blue-600">About Us</a>
+            <a href="social.html" class="block py-2 text-gray-600 hover:text-blue-600">Social Media</a>
+            <a href="contact.html" class="block px-4 py-2 text-gray-600 hover:text-blue-600">Suggestions</a>
+        </div>
     </header>
 
     <main class="container mx-auto px-4 py-8 flex-grow">
-        <section class="hero-bg-coag text-white rounded-lg p-16 mb-8 text-center shadow-lg">
+        <section class="hero-bg-routine-coag text-white rounded-lg p-16 mb-8 text-center shadow-lg">
             <h1 class="text-4xl md:text-6xl font-bold mb-4 text-shadow-lg">Routine Coagulation Tests</h1>
-            <p class="text-lg md:text-2xl max-w-3xl mx-auto text-shadow-lg">Exploring the workhorse tests of the coagulation laboratory, what they measure, and how we interpret them.</p>
+            <p class="text-lg md:text-2xl max-w-3xl mx-auto text-shadow-lg">Exploring the workhorse tests of the coagulation laboratory, what they measure, how they work, and how we interpret them to guide patient care.</p>
         </section>
 
         <section class="bg-white p-8 rounded-lg shadow-md mb-8">
-            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Inside the Coagulation Lab</h2>
-            <p class="text-lg max-w-4xl mx-auto text-center mb-8">We use automated coagulation analysers (like the Sysmex CS-series) to perform our tests. These instruments use sophisticated methods to detect clot formation in patient plasma after the addition of specific activating reagents.</p>
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Inside the Coagulation Lab: The Process</h2>
             <div class="grid md:grid-cols-2 gap-8">
                 <div class="bg-gray-50 p-6 rounded-lg">
-                    <h3 class="text-xl font-semibold mb-2"><i class="fas fa-lightbulb text-yellow-500 mr-2"></i>The Optical Detection Method</h3>
-                    <p>This is the primary method for most of our tests (PT, APTT, Fibrinogen). The analyser shines a light beam through the cuvette containing the patient's plasma and the test reagent. As a fibrin clot forms, the plasma becomes more cloudy or opaque. This causes the amount of light passing through the cuvette to decrease. The analyser measures this change in light transmission, and the time taken from the addition of the reagent to the formation of the clot is recorded as the clotting time in seconds.</p>
+                    <h3 class="text-xl font-semibold mb-2"><i class="fas fa-prescription-bottle text-blue-500 mr-2"></i>Pre-analytical: The Critical First Step</h3>
+                    <p>Accurate coagulation testing starts with a perfect sample. All tests are performed on a <strong>2.7mL light blue top tube</strong> containing 3.2% sodium citrate anticoagulant. It is absolutely vital that the tube is filled correctly to the frosted line. This ensures the precise 9:1 ratio of blood to anticoagulant. An underfilled tube will have too much anticoagulant, which will bind excess calcium and falsely prolong all clotting times, leading to incorrect results and potentially inappropriate clinical action.</p>
                 </div>
                 <div class="bg-gray-50 p-6 rounded-lg">
-                    <h3 class="text-xl font-semibold mb-2"><i class="fas fa-palette text-blue-500 mr-2"></i>Immuno-turbidimetric Methods</h3>
-                    <p>For D-Dimer, we use an immuno-turbidimetric assay. This uses latex particles coated with an antibody specific to the D-Dimer fragment. When D-Dimer is present in the plasma, it causes the particles to agglutinate (clump together). This clumping increases the turbidity of the sample, which is measured by a change in light transmission. The degree of change is proportional to the concentration of D-Dimer.</p>
+                    <h3 class="text-xl font-semibold mb-2"><i class="fas fa-cogs text-purple-500 mr-2"></i>Analytical Method: Optical Detection</h3>
+                    <p>At NUH, we use Sysmex CS-series analysers. The primary method for PT, APTT, and Fibrinogen is optical clot detection. The analyser mixes patient plasma with activating reagents in a cuvette and shines a light beam through it. As a fibrin clot forms, the plasma becomes more turbid, scattering the light. The analyser detects this change, and the time taken to reach a pre-defined level of turbidity is recorded as the clotting time. For D-Dimer, a similar but more complex immuno-turbidimetric method is used.</p>
                 </div>
             </div>
         </section>
 
         <section class="bg-white p-8 rounded-lg shadow-md mb-8">
-            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">The Routine Test Menu</h2>
-             <div class="bg-gray-800 text-white font-mono p-6 rounded-lg shadow-inner max-w-4xl mx-auto">
-                <div class="border-b-2 border-gray-500 pb-2 mb-2 grid grid-cols-3 gap-x-4"><p>TEST</p><p class="text-right">RESULT</p><p class="text-right">UNITS</p></div>
-                <div class="space-y-1 mt-2">
-                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-3 gap-x-4"><span>Prothrombin Time (PT)</span><span class="text-right">13.5</span><span class="text-right">s</span></div><div class="tooltip absolute right-full top-0 mr-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Prothrombin Time</p><p class="font-sans text-sm">Measures the extrinsic and common pathways. Prolonged in liver disease, vitamin K deficiency, and DIC. The basis for the INR.</p></div></div>
-                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-3 gap-x-4"><span>INR</span><span class="text-right">1.0</span><span class="text-right"></span></div><div class="tooltip absolute left-full top-0 ml-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">International Normalised Ratio</p><p class="font-sans text-sm">A standardised calculation of the PT, used to monitor patients on Warfarin therapy. Therapeutic ranges are typically 2.0-3.0 or 3.0-4.0 depending on the clinical indication.</p></div></div>
-                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-3 gap-x-4"><span>APTT</span><span class="text-right">32</span><span class="text-right">s</span></div><div class="tooltip absolute right-full top-0 mr-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Activated Partial Thromboplastin Time</p><p class="font-sans text-sm">Measures the intrinsic and common pathways. Prolonged in haemophilia A and B, von Willebrand disease, and with heparin therapy.</p></div></div>
-                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-3 gap-x-4"><span>Fibrinogen</span><span class="text-right">3.5</span><span class="text-right">g/L</span></div><div class="tooltip absolute left-full top-0 ml-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Fibrinogen</p><p class="font-sans text-sm">The precursor to fibrin, the final component of a clot. It is an acute phase protein, so is raised in inflammation. Low levels are seen in DIC and severe liver disease.</p></div></div>
-                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-3 gap-x-4"><span>D-Dimer</span><span class="text-right">200</span><span class="text-right">ng/mL</span></div><div class="tooltip absolute right-full top-0 mr-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">D-Dimer</p><p class="font-sans text-sm">A specific breakdown product of a fibrin clot. A high level indicates that clotting and subsequent fibrinolysis has occurred. Used to help exclude VTE (DVT/PE). A negative result has a high negative predictive value.</p></div></div>
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">The Routine Test Menu: A Detailed Guide</h2>
+             <div class="bg-gray-800 text-white font-mono p-6 rounded-lg shadow-inner max-w-4xl mx-auto space-y-4">
+                <!-- Prothrombin Time / INR -->
+                <div class="interactive-result relative cursor-pointer p-2 rounded hover:bg-gray-700">
+                    <div class="grid grid-cols-3 gap-x-4"><span class="font-bold text-lg text-green-300">Prothrombin Time (PT/INR)</span><span class="text-right">13.5 s / 1.0</span><span class="text-right text-sm">10-12.5 s</span></div>
+                    <div class="tooltip absolute right-full top-0 mr-4 w-80 bg-black text-white p-4 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Prothrombin Time (PT) & INR</p><p class="font-sans text-sm mt-2"><strong>Principle:</strong> Measures the extrinsic and common pathways by adding Tissue Factor (Innovin reagent) to patient plasma. <br><strong>Prolonged In:</strong> Warfarin therapy, liver disease, vitamin K deficiency, DIC, factor VII, X, V, II, I deficiency.</p></div>
+                </div>
+                 <!-- APTT -->
+                <div class="interactive-result relative cursor-pointer p-2 rounded hover:bg-gray-700">
+                    <div class="grid grid-cols-3 gap-x-4"><span class="font-bold text-lg text-green-300">APTT</span><span class="text-right">32 s</span><span class="text-right text-sm">21-29 s</span></div>
+                    <div class="tooltip absolute left-full top-0 ml-4 w-80 bg-black text-white p-4 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Activated Partial Thromboplastin Time</p><p class="font-sans text-sm mt-2"><strong>Principle:</strong> Measures the intrinsic and common pathways by adding a contact activator and phospholipid (Actin FS reagent) to patient plasma. <br><strong>Prolonged In:</strong> Heparin therapy, lupus anticoagulant, haemophilia (FVIII/FIX deficiency), von Willebrand disease, DIC.</p></div>
+                </div>
+                 <!-- APTT Mix -->
+                <div class="interactive-result relative cursor-pointer p-2 rounded hover:bg-gray-700">
+                    <div class="grid grid-cols-3 gap-x-4"><span class="font-bold text-lg text-green-300">APTT 50:50 Mix</span><span class="text-right">28 s</span><span class="text-right text-sm">21-29 s</span></div>
+                    <div class="tooltip absolute right-full top-0 mr-4 w-80 bg-black text-white p-4 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">APTT 50:50 Mix (Correction Study)</p><p class="font-sans text-sm mt-2"><strong>Principle:</strong> Performed when there is an unexplained prolonged APTT. Patient plasma is mixed 1:1 with normal plasma (which contains 100% of all factors) and the APTT is repeated. <br><strong>Interpretation:</strong> If the APTT 'corrects' into the normal range, it indicates the patient has a factor deficiency. If it fails to correct, it suggests the presence of an inhibitor (e.g., Lupus Anticoagulant).</p></div>
+                </div>
+                <!-- Fibrinogen -->
+                <div class="interactive-result relative cursor-pointer p-2 rounded hover:bg-gray-700">
+                    <div class="grid grid-cols-3 gap-x-4"><span class="font-bold text-lg text-green-300">Fibrinogen (Clauss)</span><span class="text-right">3.5 g/L</span><span class="text-right text-sm">1.8-4.0 g/L</span></div>
+                    <div class="tooltip absolute left-full top-0 ml-4 w-80 bg-black text-white p-4 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Fibrinogen</p><p class="font-sans text-sm mt-2"><strong>Principle:</strong> Measures functional fibrinogen by adding a high concentration of thrombin to diluted plasma. The clotting time is inversely proportional to the fibrinogen concentration. <br><strong>Low In:</strong> DIC, severe liver disease, massive transfusion. <br><strong>High In:</strong> Inflammation (it's an acute phase reactant), pregnancy.</p></div>
+                </div>
+                <!-- Thrombin Time -->
+                <div class="interactive-result relative cursor-pointer p-2 rounded hover:bg-gray-700">
+                    <div class="grid grid-cols-3 gap-x-4"><span class="font-bold text-lg text-green-300">Thrombin Time (TT)</span><span class="text-right">16 s</span><span class="text-right text-sm">14-19 s</span></div>
+                    <div class="tooltip absolute right-full top-0 mr-4 w-80 bg-black text-white p-4 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Thrombin Time</p><p class="font-sans text-sm mt-2"><strong>Principle:</strong> Measures the final step of coagulation - the conversion of fibrinogen to fibrin - by adding thrombin reagent to plasma. <br><strong>Prolonged In:</strong> Heparin therapy (very sensitive), low or abnormal fibrinogen (dysfibrinogenaemia), high levels of FDPs.</p></div>
+                </div>
+                <!-- TTPS -->
+                <div class="interactive-result relative cursor-pointer p-2 rounded hover:bg-gray-700">
+                    <div class="grid grid-cols-3 gap-x-4"><span class="font-bold text-lg text-green-300">TTPS</span><span class="text-right">17 s</span><span class="text-right text-sm">14-19 s</span></div>
+                    <div class="tooltip absolute left-full top-0 ml-4 w-80 bg-black text-white p-4 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Thrombin Time Protamine Sulphate (TTPS)</p><p class="font-sans text-sm mt-2"><strong>Principle:</strong> A Thrombin Time test with added protamine sulphate, which neutralises any unfractionated heparin in the sample. <br><strong>Interpretation:</strong> If the TT is prolonged but the TTPS is normal, it confirms heparin contamination as the cause of the prolonged result.</p></div>
+                </div>
+                <!-- D-Dimer -->
+                 <div class="interactive-result relative cursor-pointer p-2 rounded hover:bg-gray-700">
+                    <div class="grid grid-cols-3 gap-x-4"><span class="font-bold text-lg text-green-300">D-Dimer</span><span class="text-right">200 ng/mL</span><span class="text-right text-sm"><500 ng/mL</span></div>
+                    <div class="tooltip absolute right-full top-0 mr-4 w-80 bg-black text-white p-4 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">D-Dimer</p><p class="font-sans text-sm mt-2"><strong>Principle:</strong> An immunoturbidimetric assay that detects a specific degradation product of a cross-linked fibrin clot. <br><strong>High In:</strong> VTE (DVT/PE), DIC, surgery, trauma, infection, cancer, pregnancy. Its main use is its high negative predictive value to rule out VTE in low-risk patients.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Clinical Scenarios -->
+        <section class="bg-white p-8 rounded-lg shadow-md mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Clinical Interpretation in Practice</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-2">Warfarin Monitoring</h3>
+                    <p>A patient on Warfarin therapy for Atrial Fibrillation needs their dose adjusting. We analyse their PT and the analyser calculates the INR. If their target is 2.0-3.0, an INR of 1.5 is too low (risk of clotting) and an INR of 4.5 is too high (risk of bleeding). The result directly guides their medication dose.</p>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-2">Unexplained Bleeding</h3>
+                    <p>A patient has a prolonged APTT but a normal PT. This points to a problem in the intrinsic pathway. As per our algorithm, we would perform a 50:50 mixing study. If the APTT corrects, it suggests a factor deficiency (like Haemophilia). If it fails to correct, it suggests an inhibitor is present (like a Lupus Anticoagulant).</p>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-2">Suspected DIC</h3>
+                    <p>A patient with severe sepsis is bleeding from their line sites. We run a full screen. The classic pattern for Disseminated Intravascular Coagulation (DIC) is a prolonged PT and APTT, a low Fibrinogen, and a very high D-Dimer, reflecting a massive, uncontrolled activation of the entire clotting system.</p>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-2">Excluding a DVT</h3>
+                    <p>A patient presents to ED with a swollen calf. Their clinical risk score is low. We run a D-Dimer. A result of 250 ng/mL is below the 500 ng/mL cut-off. This has a very high negative predictive value, meaning it is extremely unlikely the patient has a DVT, and they can be safely discharged without needing a leg scan.</p>
+                </div>
+                 <div class="bg-gray-50 p-6 rounded-lg col-span-1 md:col-span-2">
+                    <h3 class="text-xl font-semibold mb-2">The TTP Conundrum</h3>
+                    <p>A patient presents with confusion and purpura. The FBC shows a critically low platelet count and the blood film shows red cell fragments. This is the classic picture of Thrombotic Thrombocytopenic Purpura (TTP), a medical emergency. However, the routine coagulation screen (PT, APTT, Fibrinogen) is usually completely normal. This is a key diagnostic feature that distinguishes TTP from DIC, where the clotting screen is deranged. The diagnosis relies on the FBC and film findings, not the clotting screen.</p>
                 </div>
             </div>
         </section>
@@ -69,7 +165,17 @@
     </footer>
     
     <script>
-        // JS for header/footer and tooltips
+        document.addEventListener('DOMContentLoaded', function() {
+            feather.replace();
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if(mobileMenuButton && mobileMenu) { mobileMenuButton.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); }); }
+            const moreMenuButton = document.getElementById('more-menu-button');
+            const moreMenu = document.getElementById('more-menu');
+            if(moreMenuButton && moreMenu) { moreMenuButton.addEventListener('click', (event) => { event.stopPropagation(); moreMenu.classList.toggle('hidden'); }); }
+            document.addEventListener('click', (event) => { if (moreMenu && !moreMenu.contains(event.target) && !moreMenuButton.contains(event.target)) { moreMenu.classList.add('hidden'); } });
+        });
     </script>
 </body>
 </html>
+
