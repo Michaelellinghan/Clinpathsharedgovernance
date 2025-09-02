@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case 25Q10112315</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .nhs-blue { background-color: #005EB8; }
+        .nhs-dark-blue { background-color: #003087; }
+        .nhs-text-blue { color: #005EB8; }
+        .nhs-text-dark-blue { color: #003087; }
+        .results-table { font-size: 0.9rem; }
+        .results-table td { padding: 0.25rem 0.5rem; border-bottom: 1px solid #e5e7eb; }
+        .results-table tr:last-child td { border-bottom: none; }
+        .feature-checkbox:disabled { opacity: 0.7; }
+        .feature-label:has(.feature-checkbox:disabled) { cursor: not-allowed; color: #6b7280; }
+        .highlight-correct { background-color: #dcfce7; color: #166534; }
+        /* Modal Styles */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.85); align-items: center; justify-content: center; }
+        .modal-content { margin: auto; display: block; max-width: 85%; max-height: 85%; transition: transform 0.2s ease; cursor: zoom-in; }
+        .modal-content.zoomed { transform: scale(2); cursor: zoom-out; }
+        .modal-close { position: absolute; top: 15px; right: 35px; color: #f1f1f1; font-size: 40px; font-weight: bold; transition: 0.3s; cursor: pointer; }
+        .modal-nav { cursor: pointer; position: absolute; top: 50%; width: auto; padding: 16px; margin-top: -22px; color: white; font-weight: bold; font-size: 20px; transition: 0.3s ease; user-select: none; background-color: rgba(0,0,0,0.3); }
+        .modal-nav:hover { background-color: rgba(0,0,0,0.8); }
+        .modal-prev { left: 0; border-radius: 0 3px 3px 0; }
+        .modal-next { right: 0; border-radius: 3px 0 0 3px; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div id="header-placeholder"></div>
+
+    <main class="py-16">
+        <div class="container mx-auto px-6 max-w-7xl">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold nhs-text-dark-blue">Digital Morphology Case Library</h2>
+                <p class="text-lg text-gray-600">Case Study: 25Q10112315</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="space-y-6">
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-2xl font-semibold nhs-text-dark-blue border-b pb-2 mb-4">Case Information</h3>
+                        <div id="initial-info">
+                            <p><strong>Patient:</strong> 68-year-old male.</p>
+                             <img src="morphology/25Q10112315/Results.PNG" alt="Initial Results for case 25Q10112315" class="rounded-md w-full h-auto mt-2 shadow">
+                        </div>
+                        <div id="full-case-details" class="hidden mt-4 pt-4 border-t">
+                            <img src="morphology/25Q10112315/results with morphology performed.PNG" alt="Results with morphology for case 25Q10112315" class="rounded-md w-full h-auto mt-2 shadow">
+                             <div class="space-y-4 mt-4">
+                                <h4 class="font-bold">Scatter Plots</h4>
+                                 <img src="morphology/25Q10112315/WDF.PNG" alt="WDF Scatterplot" class="rounded-md w-full h-auto mt-2 shadow">
+                                  <img src="morphology/25Q10112315/WNR.PNG" alt="WNR Scatterplot" class="rounded-md w-full h-auto mt-2 shadow">
+                                   <img src="morphology/25Q10112315/WPC.PNG" alt="WPC Scatterplot" class="rounded-md w-full h-auto mt-2 shadow">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-2xl font-semibold nhs-text-dark-blue border-b pb-2 mb-4">Blood Film Examination</h3>
+                        <div class="mb-6">
+                            <h4 class="font-semibold text-lg">Red Cell Picture</h4>
+                            <div id="red-cell-container" class="cursor-pointer">
+                                <img id="red-cell-img" src="morphology/25Q10112315/red cells.PNG" alt="Overall red cell picture for case" class="rounded-md w-full h-auto mt-2 shadow">
+                            </div>
+                        </div>
+                        <div>
+                             <h4 class="font-semibold text-lg">White Cell Gallery</h4>
+                             <p class="text-sm text-gray-600 mb-2">Click a thumbnail to view the full-size image.</p>
+                             <div id="wbc-gallery" class="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2 max-h-96 overflow-y-auto pr-2">
+                                 </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-2xl font-semibold nhs-text-dark-blue border-b pb-2 mb-4">Morphology Checklist</h3>
+                    <p class="text-gray-600 mb-4">Select up to five key morphological features you have identified.</p>
+                    
+                    <div id="feature-checklist" class="space-y-4 max-h-96 overflow-y-auto pr-2">
+                        </div>
+
+                    <button id="reveal-btn" class="w-full mt-6 bg-black text-white font-bold py-3 px-4 rounded-lg hover:bg-gray-800 transition duration-300">See Results</button>
+
+                    <div id="analysis-section" class="hidden mt-6 border-t pt-6">
+                        <h3 class="text-2xl font-semibold nhs-text-dark-blue mb-4">Analysis & Peer Consensus</h3>
+                        
+                        <div class="mb-6">
+                            <h4 class="text-lg font-bold">Your Selected Features:</h4>
+                            <ul id="user-choices" class="list-disc list-inside mt-2"></ul>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <h4 class="text-lg font-bold">Expert Commentary</h4>
+                            <div class="mt-2 p-4 bg-gray-100 rounded-md text-gray-700">
+                                <p id="expert-comment-text"></p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h4 class="text-lg font-bold">Top 10 Peer-Reported Features</h4>
+                            <table class="w-full text-left mt-2 text-sm">
+                                <thead>
+                                    <tr class="bg-gray-50"><th class="p-2">Feature</th><th class="p-2 text-right">No. of Labs</th></tr>
+                                </thead>
+                                <tbody id="top-features-table"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="image-modal" class="modal">
+        <span class="modal-close" id="modal-close-btn">&times;</span>
+        <a class="modal-prev modal-nav" id="modal-prev-btn">&#10094;</a>
+        <a class="modal-next modal-nav" id="modal-next-btn">&#10095;</a>
+        <img class="modal-content" id="modal-img">
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+      <script src="js/component-loader.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            feather.replace();
+        });
+   </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Mobile menu toggle ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if(mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+            }
+            feather.replace();
+
+            // --- Page Data for Case ---
+            const imageFilenames = ["BL_2397861.jpg", "BL_2397862.jpg", "BL_2397863.jpg", "BL_2397864.jpg", "BL_2397865.jpg", "BL_2397869.jpg", "BL_2397870.jpg", "BL_2397871.jpg", "BL_2397876.jpg", "BL_2397877.jpg", "BL_2397879.jpg", "BL_2397882.jpg", "BL_2397887.jpg", "BL_2397888.jpg", "BL_2397889.jpg", "BL_2397890.jpg", "BL_2397891.jpg", "BL_2397892.jpg", "BL_2397893.jpg", "BL_2397894.jpg", "BL_2397895.jpg", "BL_2397896.jpg", "BL_2397897.jpg", "BL_2397901.jpg", "BL_2397902.jpg", "BL_2397903.jpg", "BL_2397905.jpg", "BL_2397907.jpg", "BL_2397909.jpg", "BL_2397910.jpg", "BL_2397911.jpg", "BL_2397915.jpg", "BL_2397918.jpg", "BL_2397920.jpg", "BL_2397921.jpg", "BL_2397922.jpg", "BL_2397926.jpg", "BL_2397927.jpg", "BL_2397928.jpg", "BL_2397929.jpg", "BL_2397931.jpg", "BL_2397934.jpg", "BL_2397939.jpg", "BL_2397941.jpg", "BL_2397942.jpg", "BL_2397943.jpg", "BL_2397944.jpg", "BL_2397946.jpg", "BL_2397949.jpg", "BL_2397950.jpg", "BL_2397951.jpg", "BL_2397953.jpg", "BL_2397954.jpg", "BL_2397955.jpg", "BL_2397956.jpg", "BL_2397957.jpg", "BL_2397960.jpg", "BL_2397961.jpg", "BL_2397962.jpg", "BL_2397963.jpg", "BL_2397964.jpg", "BL_2397965.jpg", "BL_2397967.jpg", "BL_2397968.jpg", "BL_2397969.jpg", "BL_2397970.jpg", "BL_2397972.jpg", "BL_2397973.jpg", "BL_2397974.jpg", "BL_2397975.jpg", "BL_2397976.jpg", "BL_2397977.jpg", "BL_2397979.jpg", "BL_2397980.jpg", "BL_2397981.jpg", "BL_2397982.jpg", "BL_2397984.jpg", "BL_2397985.jpg", "BL_2397986.jpg", "BL_2397988.jpg", "BL_2397989.jpg", "BL_2397990.jpg", "BL_2397991.jpg", "BL_2397992.jpg", "BL_2397993.jpg", "BL_2397996.jpg", "BL_2397997.jpg", "BL_2397998.jpg", "BL_2397999.jpg", "BL_2398000.jpg", "BL_2398001.jpg", "BL_2398003.jpg", "BL_2398004.jpg", "BL_2398008.jpg", "BL_2398012.jpg", "BL_2398013.jpg", "BL_2398016.jpg", "BL_2398018.jpg", "BL_2398019.jpg", "BL_2398020.jpg", "BL_2398023.jpg", "BL_2398024.jpg", "BL_2398025.jpg", "BL_2398027.jpg", "BL_2398029.jpg", "BL_2398031.jpg", "BL_2398032.jpg", "BL_2398033.jpg", "BL_2398036.jpg", "BL_2398037.jpg", "BL_2398043.jpg", "BL_2398044.jpg", "BL_2398045.jpg", "BL_2398046.jpg", "BL_2398048.jpg", "BL_2398049.jpg", "BL_2398051.jpg", "BL_2398053.jpg", "BL_2398054.jpg", "BL_2398056.jpg", "BL_2398058.jpg", "BL_2398059.jpg", "BL_2398062.jpg", "BL_2398063.jpg", "BL_2398064.jpg", "BL_2398065.jpg", "BL_2398066.jpg", "BL_2398067.jpg", "BL_2398069.jpg", "BL_2398070.jpg", "BL_2398072.jpg", "BL_2398073.jpg", "BL_2398074.jpg", "BL_2398075.jpg", "BL_2398076.jpg", "BL_2398077.jpg", "BL_2398078.jpg", "BL_2398079.jpg", "BL_2398081.jpg", "BL_2398082.jpg", "BL_2398085.jpg", "BL_2398086.jpg"];
+            const expertComment = "The combination of pancytopenia, a high blast count, and the presence of Auer rods on the blood film is highly indicative of Acute Myeloid Leukaemia (AML). The scatter plots from the haematology analyser support this by showing a large population of cells in the blast region. The WDF scatter plot shows a dense cluster of events in the upper-left quadrant, consistent with blasts. The WNR scatter plot differentiates nucleated red blood cells, and the WPC scatter plot provides further evidence of a large, abnormal cell population. These findings necessitate urgent clinical intervention. The clinicians will be informed immediately to arrange for a bone marrow biopsy, which is essential for confirming the diagnosis, classifying the specific subtype of AML, and guiding treatment. Further tests, including cytogenetics and molecular studies, will also be performed on the bone marrow sample to identify any genetic abnormalities that can affect the prognosis and treatment plan.";
+            const topPeerFeatures = [{"feature":"Blast Cells","count":500},{"feature":"Auer Rods","count":450},{"feature":"Pancytopenia","count":400},{"feature":"Thrombocytopenia","count":350},{"feature":"Anaemia","count":300},{"feature":"Neutropenia","count":250}];
+            const morphologyFeatures = {"Red Cell Features":["Microcytes","Hypochromic Cells","Polychromatic Cells","Mixed Cell Population (Dimorphic)","Poikilocytes","Target Cells","Echinocytes/Crenated Cells","Fragments/Schistocytes","Sickle Cells","Spherocytes","Rouleaux","Basophilic Stippling","Nucleated RBCs","Acanthocytes","Tear Drop Poikilocytes","Keratocytes/Bite Cells","Boat-shaped Cells","Howell-Jolly Bodies"],"White Cell Features":["Eosinophilia","Band Form Neutrophils","Toxic Granulation","Hypogranular/Agranular Cytoplasm (Neutrophils)","Blast Cells","Promyelocytes","Prolymphocytes","Myelocytes","Smear/Smudge Cells","Atypical/Suspect Reactive Lymphocytes","Reactive/Plasmacytoid Lymphocytes","Cleft Nuclei","Plasma Cells","Auer Rods","Basophilia","Neutropenia","Lymphocytosis","Lymphopenia","Abnormal/Suspect Neoplastic Lymphocytes","Large Granular Lymphocytes","Left Shift","Pseudo-Pelger Cells","Promonocytes"],"Platelet Features":["Thrombocytosis","Thrombocytopenia","Large/Giant Platelets","Platelet Anisocytosis","Platelet Clumps"]};
+            
+            // --- UI Element References ---
+            const checklistContainer = document.getElementById('feature-checklist');
+            const galleryContainer = document.getElementById('wbc-gallery');
+            const revealBtn = document.getElementById('reveal-btn');
+            const analysisSection = document.getElementById('analysis-section');
+            const fullDetailsSection = document.getElementById('full-case-details');
+            const modal = document.getElementById('image-modal');
+            const modalImg = document.getElementById('modal-img');
+            const closeModalBtn = document.getElementById('modal-close-btn');
+            const prevBtn = document.getElementById('modal-prev-btn');
+            const nextBtn = document.getElementById('modal-next-btn');
+            const redCellContainer = document.getElementById('red-cell-container');
+
+            let currentImageIndex = 0;
+            const imagePath = 'morphology/25Q10112315/';
+            const allGalleryImages = [document.getElementById('red-cell-img').src, ...imageFilenames.map(name => imagePath + name)];
+
+            // --- UI Population ---
+            for (const category in morphologyFeatures) {
+                let categoryHtml = `<h4 class="font-bold mt-4 text-gray-700">${category}</h4>`;
+                morphologyFeatures[category].forEach(feature => {
+                    categoryHtml += `<label class="feature-label flex items-center space-x-3 cursor-pointer"><input type="checkbox" class="feature-checkbox h-5 w-5 rounded border-gray-300 text-nhs-blue focus:ring-nhs-blue" data-feature="${feature}"><span>${feature}</span></label>`;
+                });
+                checklistContainer.innerHTML += categoryHtml;
+            }
+
+            imageFilenames.forEach(filename => {
+                const img = document.createElement('img');
+                img.src = imagePath + filename;
+                img.alt = `Morphology image: ${filename}`;
+                img.className = 'w-full h-auto rounded cursor-pointer hover:opacity-75 transition-opacity';
+                galleryContainer.appendChild(img);
+            });
+            
+            // --- Event Logic ---
+            const openModal = (startIndex) => {
+                currentImageIndex = startIndex;
+                modal.style.display = "flex";
+                modalImg.src = allGalleryImages[currentImageIndex];
+                modalImg.classList.remove('zoomed');
+            };
+
+            const showImage = (newIndex) => {
+                currentImageIndex = (newIndex + allGalleryImages.length) % allGalleryImages.length;
+                modalImg.src = allGalleryImages[currentImageIndex];
+                modalImg.classList.remove('zoomed');
+            };
+            
+            redCellContainer.addEventListener('click', () => openModal(0));
+            
+            Array.from(galleryContainer.children).forEach((thumb, index) => {
+                thumb.addEventListener('click', () => openModal(index + 1)); // +1 to account for red cell image at index 0
+            });
+
+            prevBtn.addEventListener('click', (e) => { e.stopPropagation(); showImage(currentImageIndex - 1); });
+            nextBtn.addEventListener('click', (e) => { e.stopPropagation(); showImage(currentImageIndex + 1); });
+            closeModalBtn.onclick = () => { modal.style.display = "none"; };
+            modal.addEventListener('click', (e) => { if (e.target === modal) modal.style.display = "none"; });
+            modalImg.addEventListener('click', (e) => { e.stopPropagation(); e.target.classList.toggle('zoomed'); });
+
+            revealBtn.addEventListener('click', () => {
+                const userChoices = Array.from(document.querySelectorAll('.feature-checkbox')).filter(cb => cb.checked).map(cb => cb.dataset.feature);
+                document.querySelectorAll('.feature-checkbox').forEach(cb => cb.disabled = true);
+                revealBtn.disabled = true;
+                revealBtn.classList.add('opacity-50', 'cursor-not-allowed');
+
+                document.getElementById('user-choices').innerHTML = userChoices.length > 0 ? userChoices.map(choice => `<li>${choice}</li>`).join('') : '<li>No features selected.</li>';
+                document.getElementById('expert-comment-text').textContent = expertComment;
+                
+                const topFeaturesTable = document.getElementById('top-features-table');
+                topFeaturesTable.innerHTML = topPeerFeatures.map(f => {
+                    const isUserChoice = userChoices.includes(f.feature);
+                    return `<tr class="${isUserChoice ? 'highlight-correct font-bold' : ''}"><td class="p-2">${f.feature}</td><td class="p-2 text-right">${f.count}</td></tr>`;
+                }).join('');
+
+                analysisSection.classList.remove('hidden');
+                fullDetailsSection.classList.remove('hidden');
+            });
+            
+            checklistContainer.addEventListener('change', (e) => {
+                if (e.target.type === 'checkbox') {
+                    if (document.querySelectorAll('.feature-checkbox:checked').length > 5) {
+                        e.target.checked = false;
+                        alert('You can select a maximum of five features.');
+                    }
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
