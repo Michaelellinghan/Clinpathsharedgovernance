@@ -88,7 +88,6 @@
             <p class="text-lg md:text-2xl max-w-3xl mx-auto text-shadow-lg">The cornerstone of haematology. A simple test that provides a wealth of information about a patient's health, guiding diagnosis for countless conditions.</p>
         </section>
 
-        <!-- Analyser Section -->
         <section class="bg-white p-8 rounded-lg shadow-md mb-8">
             <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Inside the Analyser: The Sysmex XN-9100</h2>
             <p class="text-lg max-w-4xl mx-auto text-center mb-8">At NUH, our Haematology labs are equipped with state-of-the-art Sysmex XN-9100 automated tracks. These are not just simple counters; they are sophisticated diagnostic systems that automate everything from sample loading to blood film preparation. Let's explore the journey of a sample and the key analytical principles.</p>
@@ -115,9 +114,10 @@
             </div>
         </section>
 
-        <!-- Scattergrams and Histograms -->
         <section class="bg-white p-8 rounded-lg shadow-md mb-8">
-            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Decoding the Data: Scattergrams & Histograms</h2>
+            <a href="XN_Scatterplots.html" class="hover:text-blue-600 transition duration-300">
+                <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Decoding the Data: Scattergrams & Histograms</h2>
+            </a>
             <p class="text-lg max-w-4xl mx-auto text-center mb-8">The analyser translates signals from tens of thousands of cells into graphical plots. These allow Biomedical Scientists to visually inspect cell populations and spot abnormalities that numerical results alone might miss.</p>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 items-start">
                 <div class="bg-gray-50 p-4 rounded-lg"><h3 class="text-xl font-semibold mb-2 text-center">WDF Scattergram</h3><img src="WDF.jpg" alt="A WDF scattergram from a Sysmex analyser" class="rounded-lg shadow-md mx-auto"><p class="text-sm mt-2">This plot is key for the white cell differential. It separates cells into distinct clusters based on their size, complexity, and DNA/RNA content. Abnormal shapes or unexpected clusters will trigger analyser flags.</p></div>
@@ -130,7 +130,6 @@
             </div>
         </section>
 
-        <!-- Analyser Flags -->
         <section class="bg-white p-8 rounded-lg shadow-md mb-8">
             <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">The Role of the Biomedical Scientist: Validation & Interpretation</h2>
             <p class="text-lg max-w-4xl mx-auto text-center mb-8">The analyser is a powerful tool, but it doesn't make a diagnosis. Every result is checked by a Biomedical Scientist. We use analyser flags, clinical information, and previous results to decide if the FBC is correct and can be released. The table below summarises some common flags and our laboratory actions.</p>
@@ -151,21 +150,19 @@
             </div>
         </section>
 
-        <!-- Interactive Report -->
         <section class="bg-white p-8 rounded-lg shadow-md mb-8">
             <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">The FBC Report: A Deep Dive</h2>
             <p class="text-lg max-w-4xl mx-auto text-center mb-8">Hover over each parameter on this example report to understand its clinical significance. The reference ranges are typical for an adult but can vary with age and sex.</p>
             <div class="bg-gray-800 text-white font-mono p-6 rounded-lg shadow-inner max-w-4xl mx-auto">
                 <div class="border-b-2 border-gray-500 pb-2 mb-2 grid grid-cols-3 gap-x-4"><p>PARAMETER</p><p class="text-right">RESULT</p><p class="text-right">ADULT RANGE</p></div>
                 <div class="space-y-1 mt-2">
-                    <!-- FBC Parameters in requested order -->
                     <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-3 gap-x-4"><span>Haemoglobin (Hb)</span><span class="text-right">145</span><span class="text-right">130-175 g/L</span></div><div class="tooltip absolute right-full top-0 mr-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Haemoglobin</p><p class="font-sans text-sm">The oxygen-carrying protein in red cells. Low levels define anaemia. High levels can be seen in smokers, at high altitude, or in conditions like Polycythaemia Vera.</p></div></div>
                     <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-3 gap-x-4"><span>White Cell Count (WBC)</span><span class="text-right">7.5</span><span class="text-right">4.0-11.0 x10⁹/L</span></div><div class="tooltip absolute left-full top-0 ml-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">White Blood Cell Count</p><p class="font-sans text-sm">Total number of immune cells. High in infection, inflammation, or leukaemia. Low in some viral infections, autoimmune conditions, or with certain drugs like chemotherapy.</p></div></div>
                     <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-3 gap-x-4"><span>Platelets (Plt)</span><span class="text-right">250</span><span class="text-right">150-450 x10⁹/L</span></div><div class="tooltip absolute right-full top-0 mr-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Platelet Count</p><p class="font-sans text-sm">Cell fragments vital for clotting. Low count (thrombocytopenia) increases bleeding risk. High count (thrombocytosis) can be reactive to inflammation or due to a bone marrow disorder.</p></div></div>
                     <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-3 gap-x-4"><span>Red Cell Count (RBC)</span><span class="text-right">4.80</span><span class="text-right">4.2-6.5 x10¹²/L</span></div><div class="tooltip absolute left-full top-0 ml-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Red Blood Cell Count</p><p class="font-sans text-sm">Total number of red blood cells. Generally follows the Haemoglobin and Haematocrit. Used in calculations for red cell indices.</p></div></div>
                     <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-3 gap-x-4"><span>Haematocrit (Hct)</span><span class="text-right">0.420</span><span class="text-right">0.40-0.54 L/L</span></div><div class="tooltip absolute right-full top-0 mr-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Haematocrit (PCV)</p><p class="font-sans text-sm">The proportion of blood volume occupied by red cells. Also known as Packed Cell Volume (PCV). A key indicator of hydration status or anaemia/polycythaemia.</p></div></div>
                     <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-3 gap-x-4"><span>Mean Cell Volume (MCV)</span><span class="text-right">90.0</span><span class="text-right">84-102 fL</span></div><div class="tooltip absolute left-full top-0 ml-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Mean Cell Volume</p><p class="font-sans text-sm">Average size of red cells. Key for classifying anaemia. Low (microcytic) suggests iron deficiency/thalassaemia. High (macrocytic) suggests B12/folate deficiency.</p></div></div>
-                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-3 gap-x-4"><span>Mean Cell Hb (MCH)</span><span class="text-right">29.5</span><span class="text-right">27-38 pg</span></div><div class="tooltip absolute right-full top-0 mr-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Mean Cell Haemoglobin</p><p class="font-sans text-sm">Average weight of haemoglobin per red cell. Usually follows the MCV; low in microcytic anaemias (hypochromic).</p></div></div>
+                    <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-3 gap-x-4"><span>Mean Cell Hb (MCH)</span><span class="text-right">29.5</span><span class="text-right">27-38 pg</span></div><div class="tooltip absolute right-full top-0 mr-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Mean Cell Haemoglobin</p><p class="font-sans text-sm">Usually follows the MCV; low in microcytic anaemias (hypochromic).</p></div></div>
                     <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-3 gap-x-4"><span>MCHC</span><span class="text-right">330</span><span class="text-right">300-350 g/L</span></div><div class="tooltip absolute left-full top-0 ml-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Mean Cell Hb Conc.</p><p class="font-sans text-sm">Average concentration of haemoglobin in a red cell. High MCHC is a classic sign of spherocytes or can be falsely raised by cold agglutinins.</p></div></div>
                     <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-3 gap-x-4"><span>RDW</span><span class="text-right">13.5</span><span class="text-right">11-15 %</span></div><div class="tooltip absolute right-full top-0 mr-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Red Cell Distribution Width</p><p class="font-sans text-sm">Measures the variation in red cell size (anisocytosis). A high RDW is classic in iron deficiency, as new small cells mix with older normal cells.</p></div></div>
                     <div class="interactive-result relative cursor-pointer p-1 rounded hover:bg-gray-700"><div class="grid grid-cols-3 gap-x-4"><span>PDW</span><span class="text-right">12.0</span><span class="text-right">9-17 fL</span></div><div class="tooltip absolute left-full top-0 ml-4 w-72 bg-black text-white p-3 rounded-lg opacity-0 invisible transform -translate-y-2"><p class="font-sans font-bold">Platelet Distribution Width</p><p class="font-sans text-sm">Measures the variation in platelet size. A high PDW can indicate active platelet production and release of large, young platelets.</p></div></div>
@@ -183,7 +180,6 @@
             </div>
         </section>
 
-        <!-- Clinical Scenarios -->
         <section class="bg-white p-8 rounded-lg shadow-md mb-8">
             <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Putting It All Together: Clinical Scenarios</h2>
             <p class="text-lg max-w-4xl mx-auto text-center mb-8">The true power of the FBC comes from interpreting the patterns between all the parameters. Here are some classic examples.</p>
@@ -252,4 +248,3 @@
     </script>
 </body>
 </html>
-
