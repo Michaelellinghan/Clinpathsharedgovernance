@@ -49,6 +49,238 @@
                             <p><strong>Patient:</strong> 68-year-old male.</p>
                              <h4 class="font-bold mt-4">Initial Full Blood Count</h4>
                             <table class="w-full results-table mt-2">
+                                <tr><td>WBC</td><td class="font-mono text-right">57.95 x10⁹/L</td></tr>
+                                <tr><td>RBC</td><td class="font-mono text-right">2.46 x10¹²/L</td></tr>
+                                <tr><td>HGB</td><td class="font-mono text-right">75 g/L</td></tr>
+                                <tr><td>HCT</td><td class="font-mono text-right">0.231 L/L</td></tr>
+                                <tr><td>MCV</td><td class="font-mono text-right">93.9 fL</td></tr>
+                                <tr><td>MCH</td><td class="font-mono text-right">30.5 pg</td></tr>
+                                <tr><td>MCHC</td><td class="font-mono text-right">325 g/L</td></tr>
+                                <tr><td>PLT</td><td class="font-mono text-right">73 x10⁹/L</td></tr>
+                                <tr><td>RDW-CV</td><td class="font-mono text-right">19.9 %</td></tr>
+                                <tr><td>NRBC</td><td class="font-mono text-right">0.85 x10⁹/L</td></tr>
+                            </table>
+                            <p class="text-sm text-red-600 font-semibold mt-2">Automated Differential failed: Unable to differentiate cells.</p>
+                        </div>
+                        <div id="full-case-details" class="hidden mt-4 pt-4 border-t">
+                            <h4 class="font-bold">Manual Differential (Post-Morphology)</h4>
+                             <table class="w-full results-table mt-2">
+                                <tr><td>Neutrophils</td><td class="font-mono text-right">3.51%</td></tr>
+                                <tr><td>Lymphocytes</td><td class="font-mono text-right">9.65%</td></tr>
+                                <tr><td>Monocytes</td><td class="font-mono text-right">0.88%</td></tr>
+                                <tr><td>Eosinophils</td><td class="font-mono text-right">0.00%</td></tr>
+                                <tr><td>Basophils</td><td class="font-mono text-right">0.00%</td></tr>
+                                <tr><td class="font-bold">Blasts</td><td class="font-mono text-right font-bold">85.96%</td></tr>
+                            </table>
+                             <div class="space-y-4 mt-4">
+                                <h4 class="font-bold">Sysmex Scatterplot Analysis</h4>
+                                 <img src="morphology/25Q10112315/WDF.PNG" alt="WDF Scatterplot" class="rounded-md w-full h-auto mt-2 shadow">
+                                  <p class="text-sm mt-2"><b>WDF (White Cell Differential) Scatterplot:</b> This plot is overwhelmed by a massive, purple-coloured population in the upper-left quadrant, typical for blast cells due to their high fluorescence and low complexity. The normal areas for mature lymphocytes (blue), monocytes (green), and neutrophils (light blue) are almost empty, visually representing the failure of the automated differential due to the sheer number of abnormal cells.</p>
+                                  <img src="morphology/25Q10112315/WNR.PNG" alt="WNR Scatterplot" class="rounded-md w-full h-auto mt-2 shadow">
+                                    <p class="text-sm mt-2"><b>WNR (White Cell Nucleated Red Cell) Scatterplot:</b> This plot clearly shows two distinct populations. The dominant cluster is on the left, confirming the vast majority of nucleated cells are leucocytes. A smaller but significant secondary cluster is visible in the NRBC area on the right, confirming the numerical NRBC count of 0.85 x10⁹/L.</p>
+                                   <img src="morphology/25Q10112315/WPC.PNG" alt="WPC Scatterplot" class="rounded-md w-full h-auto mt-2 shadow">
+                                    <p class="text-sm mt-2"><b>WPC (White Precursor Cell) Scatterplot:</b> This plot gives a very clear and alarming signal. The events are almost exclusively located in a tight cluster in the upper 'blast' region. This provides a high-confidence flag that the sample contains a large, homogenous population of pathological precursor cells, strongly supporting a diagnosis of acute leukaemia.</p>
+                                    <img src="morphology/25Q10112315/WPC(SCC-FSC).PNG" alt="WPC(SCC-FSC) Scatterplot" class="rounded-md w-full h-auto mt-2 shadow">
+                                    <p class="text-sm mt-2"><b>WPC (SSC-FSC) Scatterplot:</b> This plot shows the blast population has low internal complexity (low SSC), typical for agranular blasts, and a relatively uniform size (tight FSC distribution). This homogeneity is another feature often seen in acute leukaemia where a single malignant clone has proliferated.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-2xl font-semibold nhs-text-dark-blue border-b pb-2 mb-4">Blood Film Examination</h3>
+                        <div class="mb-6">
+                            <h4 class="font-semibold text-lg">Red Cell Picture</h4>
+                            <div id="red-cell-container" class="cursor-pointer">
+                                <img id="red-cell-img" src="morphology/25Q10112315/red cells.PNG" alt="Overall red cell picture for case" class="rounded-md w-full h-auto mt-2 shadow">
+                            </div>
+                        </div>
+                        <div>
+                             <h4 class="font-semibold text-lg">White Cell Gallery</h4>
+                             <p class="text-sm text-gray-600 mb-2">Click a thumbnail to view the full-size image.</p>
+                             <div id="wbc-gallery" class="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2 max-h-96 overflow-y-auto pr-2">
+                                 </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-2xl font-semibold nhs-text-dark-blue border-b pb-2 mb-4">Morphology Checklist</h3>
+                    <p class="text-gray-600 mb-4">Select up to five key morphological features you have identified.</p>
+                    
+                    <div id="feature-checklist" class="space-y-4 max-h-96 overflow-y-auto pr-2">
+                        </div>
+
+                    <button id="reveal-btn" class="w-full mt-6 bg-black text-white font-bold py-3 px-4 rounded-lg hover:bg-gray-800 transition duration-300">See Results</button>
+
+                    <div id="analysis-section" class="hidden mt-6 border-t pt-6">
+                        <h3 class="text-2xl font-semibold nhs-text-dark-blue mb-4">Analysis & Peer Consensus</h3>
+                        
+                        <div class="mb-6">
+                            <h4 class="text-lg font-bold">Your Selected Features:</h4>
+                            <ul id="user-choices" class="list-disc list-inside mt-2"></ul>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <h4 class="text-lg font-bold">Expert Commentary</h4>
+                            <div class="mt-2 p-4 bg-gray-100 rounded-md text-gray-700">
+                                <p id="expert-comment-text"></p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h4 class="text-lg font-bold">Top 10 Peer-Reported Features</h4>
+                            <table class="w-full text-left mt-2 text-sm">
+                                <thead>
+                                    <tr class="bg-gray-50"><th class="p-2">Feature</th><th class="p-2 text-right">No. of Labs</th></tr>
+                                </thead>
+                                <tbody id="top-features-table"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="image-modal" class="modal">
+        <span class="modal-close" id="modal-close-btn">&times;</span>
+        <a class="modal-prev modal-nav" id="modal-prev-btn">&#10094;</a>
+        <a class="modal-next modal-nav" id="modal-next-btn">&#10095;</a>
+        <img class="modal-content" id="modal-img">
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+      <script src="js/component-loader.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            feather.replace();
+        });
+   </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Mobile menu toggle ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if(mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+            }
+            feather.replace();
+
+            // --- Page Data for Case ---
+            const imageFilenames = ["BL_2397861.jpg", "BL_2397862.jpg", "BL_2397863.jpg", "BL_2397864.jpg", "BL_2397865.jpg", "BL_2397869.jpg", "BL_2397870.jpg", "BL_2397871.jpg", "BL_2397876.jpg", "BL_2397877.jpg", "BL_2397879.jpg", "BL_2397882.jpg", "BL_2397887.jpg", "BL_2397888.jpg", "BL_2397889.jpg", "BL_2397890.jpg", "BL_2397891.jpg", "BL_2397892.jpg", "BL_2397893.jpg", "BL_2397894.jpg", "BL_2397895.jpg", "BL_2397896.jpg", "BL_2397897.jpg", "BL_2397901.jpg", "BL_2397902.jpg", "BL_2397903.jpg", "BL_2397905.jpg", "BL_2397907.jpg", "BL_2397909.jpg", "BL_2397910.jpg", "BL_2397911.jpg", "BL_2397915.jpg", "BL_2397918.jpg", "BL_2397920.jpg", "BL_2397921.jpg", "BL_2397922.jpg", "BL_2397926.jpg", "BL_2397927.jpg", "BL_2397928.jpg", "BL_2397929.jpg", "BL_2397931.jpg", "BL_2397934.jpg", "BL_2397939.jpg", "BL_2397941.jpg", "BL_2397942.jpg", "BL_2397943.jpg", "BL_2397944.jpg", "BL_2397946.jpg", "BL_2397949.jpg", "BL_2397950.jpg", "BL_2397951.jpg", "BL_2397953.jpg", "BL_2397954.jpg", "BL_2397955.jpg", "BL_2397956.jpg", "BL_2397957.jpg", "BL_2397960.jpg", "BL_2397961.jpg", "BL_2397962.jpg", "BL_2397963.jpg", "BL_2397964.jpg", "BL_2397965.jpg", "BL_2397967.jpg", "BL_2397968.jpg", "BL_2397969.jpg", "BL_2397970.jpg", "BL_2397972.jpg", "BL_2397973.jpg", "BL_2397974.jpg", "BL_2397975.jpg", "BL_2397976.jpg", "BL_2397977.jpg", "BL_2397979.jpg", "BL_2397980.jpg", "BL_2397981.jpg", "BL_2397982.jpg", "BL_2397984.jpg", "BL_2397985.jpg", "BL_2397986.jpg", "BL_2397988.jpg", "BL_2397989.jpg", "BL_2397990.jpg", "BL_2397991.jpg", "BL_2397992.jpg", "BL_2397993.jpg", "BL_2397996.jpg", "BL_2397997.jpg", "BL_2397998.jpg", "BL_2397999.jpg", "BL_2398000.jpg", "BL_2398001.jpg", "BL_2398003.jpg", "BL_2398004.jpg", "BL_2398008.jpg", "BL_2398012.jpg", "BL_2398013.jpg", "BL_2398016.jpg", "BL_2398018.jpg", "BL_2398019.jpg", "BL_2398020.jpg", "BL_2398023.jpg", "BL_2398024.jpg", "BL_2398025.jpg", "BL_2398027.jpg", "BL_2398029.jpg", "BL_2398031.jpg", "BL_2398032.jpg", "BL_2398033.jpg", "BL_2398036.jpg", "BL_2398037.jpg", "BL_2398043.jpg", "BL_2398044.jpg", "BL_2398045.jpg", "BL_2398046.jpg", "BL_2398048.jpg", "BL_2398049.jpg", "BL_2398051.jpg", "BL_2398053.jpg", "BL_2398054.jpg", "BL_2398056.jpg", "BL_2398058.jpg", "BL_2398059.jpg", "BL_2398062.jpg", "BL_2398063.jpg", "BL_2398064.jpg", "BL_2398065.jpg", "BL_2398066.jpg", "BL_2398067.jpg", "BL_2398069.jpg", "BL_2398070.jpg", "BL_2398072.jpg", "BL_2398073.jpg", "BL_2398074.jpg", "BL_2398075.jpg", "BL_2398076.jpg", "BL_2398077.jpg", "BL_2398078.jpg", "BL_2398079.jpg", "BL_2398081.jpg", "BL_2398082.jpg", "BL_2398085.jpg", "BL_2398086.jpg", "LY_2397868.jpg", "LY_2397872.jpg", "LY_2397873.jpg", "LY_2397875.jpg", "LY_2397899.jpg", "LY_2397906.jpg", "LY_2397913.jpg", "LY_2397914.jpg", "LY_2397916.jpg", "LY_2397917.jpg", "LY_2397919.jpg", "LY_2397923.jpg", "LY_2397925.jpg", "LY_2397930.jpg", "LY_2397932.jpg", "LY_2397933.jpg", "LY_2397935.jpg", "LY_2397938.jpg", "LY_2397947.jpg", "LY_2397952.jpg", "LY_2397958.jpg", "LY_2397959.jpg", "LY_2397971.jpg", "LY_2397978.jpg", "LY_2397983.jpg", "LY_2397987.jpg", "LY_2397995.jpg", "LY_2398002.jpg", "LY_2398005.jpg", "LY_2398010.jpg", "LY_2398011.jpg", "LY_2398014.jpg", "LY_2398015.jpg", "LY_2398017.jpg", "LY_2398021.jpg", "LY_2398026.jpg", "LY_2398028.jpg", "LY_2398030.jpg", "LY_2398034.jpg", "LY_2398052.jpg", "LY_2398057.jpg", "MO_2397881.jpg", "MO_2397912.jpg", "PC_2397878.jpg", "PC_2397884.jpg", "SNE_2397900.jpg", "SNE_2397908.jpg", "SNE_2398006.jpg", "SNE_2398061.jpg", "SNE_2398071.jpg", "SMU_2397867.jpg", "SMU_2397874.jpg", "SMU_2397880.jpg", "SMU_2397883.jpg", "SMU_2397885.jpg", "SMU_2397886.jpg", "SMU_2397898.jpg", "SMU_2397904.jpg", "SMU_2397936.jpg", "SMU_2397937.jpg", "SMU_2397948.jpg", "SMU_2398022.jpg", "SMU_2398035.jpg", "SMU_2398039.jpg", "SMU_2398040.jpg", "SMU_2398041.jpg", "SMU_2398042.jpg", "SMU_2398055.jpg", "UI_2397945.jpg", "UI_2398009.jpg", "UI_2398050.jpg", "UI_2398080.jpg", "ERB_2397966.jpg", "ERB_2397994.jpg", "ERB_2398007.jpg", "ERB_2398047.jpg", "ERB_2398060.jpg", "ERB_2398068.jpg", "EO_2398038.jpg", "EO_2398084.jpg", "BA_2397924.jpg", "BA_2398083.jpg"];
+            const expertComment = "The initial FBC shows a critically high white cell count of 57.95 x10⁹/L, accompanied by anaemia (Hb 75 g/L) and thrombocytopenia (PLT 73 x10⁹/L). The analyser was unable to perform an automated differential, which is a major red flag indicating an abnormal cell population that the machine cannot classify. \n\nManual review of the blood film confirms the reason: the film is dominated by a monotonous population of blast cells, which were counted at 86% of all white cells. The presence of Nucleated Red Blood Cells (NRBCs) points to a bone marrow under severe stress. The combination of a very high blast count, thrombocytopenia, and NRBCs is a definitive picture of acute leukaemia. \n\nGiven these critical findings, the appropriate and immediate action was taken by the Biomedical Scientist: the haematology registrar and the requesting clinician were contacted directly by phone. This verbal communication is vital to bypass any delay in the electronic reporting system. This allows the clinical team to act immediately, which will involve arranging for the patient's urgent admission to hospital for a bone marrow biopsy to confirm the exact subtype of leukaemia and to begin urgent supportive care and treatment planning.";
+            const topPeerFeatures = [{"feature":"Blast Cells","count":500},{"feature":"Pancytopenia","count":400},{"feature":"Thrombocytopenia","count":350},{"feature":"Anaemia","count":300},{"feature":"Neutropenia","count":250}];
+            const morphologyFeatures = {"Red Cell Features":["Microcytes","Hypochromic Cells","Polychromatic Cells","Mixed Cell Population (Dimorphic)","Poikilocytes","Target Cells","Echinocytes/Crenated Cells","Fragments/Schistocytes","Sickle Cells","Spherocytes","Rouleaux","Basophilic Stippling","Nucleated RBCs","Acanthocytes","Tear Drop Poikilocytes","Keratocytes/Bite Cells","Boat-shaped Cells","Howell-Jolly Bodies"],"White Cell Features":["Eosinophilia","Band Form Neutrophils","Toxic Granulation","Hypogranular/Agranular Cytoplasm (Neutrophils)","Blast Cells","Promyelocytes","Prolymphocytes","Myelocytes","Smear/Smudge Cells","Atypical/Suspect Reactive Lymphocytes","Reactive/Plasmacytoid Lymphocytes","Cleft Nuclei","Plasma Cells","Auer Rods","Basophilia","Neutropenia","Lymphocytosis","Lymphopenia","Abnormal/Suspect Neoplastic Lymphocytes","Large Granular Lymphocytes","Left Shift","Pseudo-Pelger Cells","Promonocytes"],"Platelet Features":["Thrombocytosis","Thrombocytopenia","Large/Giant Platelets","Platelet Anisocytosis","Platelet Clumps"]};
+            
+            // --- UI Element References ---
+            const checklistContainer = document.getElementById('feature-checklist');
+            const galleryContainer = document.getElementById('wbc-gallery');
+            const revealBtn = document.getElementById('reveal-btn');
+            const analysisSection = document.getElementById('analysis-section');
+            const fullDetailsSection = document.getElementById('full-case-details');
+            const modal = document.getElementById('image-modal');
+            const modalImg = document.getElementById('modal-img');
+            const closeModalBtn = document.getElementById('modal-close-btn');
+            const prevBtn = document.getElementById('modal-prev-btn');
+            const nextBtn = document.getElementById('modal-next-btn');
+            const redCellContainer = document.getElementById('red-cell-container');
+
+            let currentImageIndex = 0;
+            const imagePath = 'morphology/25Q10112315/';
+            const allGalleryImages = [document.getElementById('red-cell-img').src, ...imageFilenames.map(name => imagePath + name)];
+
+            // --- UI Population ---
+            for (const category in morphologyFeatures) {
+                let categoryHtml = `<h4 class="font-bold mt-4 text-gray-700">${category}</h4>`;
+                morphologyFeatures[category].forEach(feature => {
+                    categoryHtml += `<label class="feature-label flex items-center space-x-3 cursor-pointer"><input type="checkbox" class="feature-checkbox h-5 w-5 rounded border-gray-300 text-nhs-blue focus:ring-nhs-blue" data-feature="${feature}"><span>${feature}</span></label>`;
+                });
+                checklistContainer.innerHTML += categoryHtml;
+            }
+
+            imageFilenames.forEach(filename => {
+                const img = document.createElement('img');
+                img.src = imagePath + filename;
+                img.alt = `Morphology image: ${filename}`;
+                img.className = 'w-full h-auto rounded cursor-pointer hover:opacity-75 transition-opacity';
+                galleryContainer.appendChild(img);
+            });
+            
+            // --- Event Logic ---
+            const openModal = (startIndex) => {
+                currentImageIndex = startIndex;
+                modal.style.display = "flex";
+                modalImg.src = allGalleryImages[currentImageIndex];
+                modalImg.classList.remove('zoomed');
+            };
+
+            const showImage = (newIndex) => {
+                currentImageIndex = (newIndex + allGalleryImages.length) % allGalleryImages.length;
+                modalImg.src = allGalleryImages[currentImageIndex];
+                modalImg.classList.remove('zoomed');
+            };
+            
+            redCellContainer.addEventListener('click', () => openModal(0));
+            
+            Array.from(galleryContainer.children).forEach((thumb, index) => {
+                thumb.addEventListener('click', () => openModal(index + 1)); // +1 to account for red cell image at index 0
+            });
+
+            prevBtn.addEventListener('click', (e) => { e.stopPropagation(); showImage(currentImageIndex - 1); });
+            nextBtn.addEventListener('click', (e) => { e.stopPropagation(); showImage(currentImageIndex + 1); });
+            closeModalBtn.onclick = () => { modal.style.display = "none"; };
+            modal.addEventListener('click', (e) => { if (e.target === modal) modal.style.display = "none"; });
+            modalImg.addEventListener('click', (e) => { e.stopPropagation(); e.target.classList.toggle('zoomed'); });
+
+            revealBtn.addEventListener('click', () => {
+                const userChoices = Array.from(document.querySelectorAll('.feature-checkbox')).filter(cb => cb.checked).map(cb => cb.dataset.feature);
+                document.querySelectorAll('.feature-checkbox').forEach(cb => cb.disabled = true);
+                revealBtn.disabled = true;
+                revealBtn.classList.add('opacity-50', 'cursor-not-allowed');
+
+                document.getElementById('user-choices').innerHTML = userChoices.length > 0 ? userChoices.map(choice => `<li>${choice}</li>`).join('') : '<li>No features selected.</li>';
+                document.getElementById('expert-comment-text').textContent = expertComment;
+                
+                const topFeaturesTable = document.getElementById('top-features-table');
+                topFeaturesTable.innerHTML = topPeerFeatures.map(f => {
+                    const isUserChoice = userChoices.includes(f.feature);
+                    return `<tr class="${isUserChoice ? 'highlight-correct font-bold' : ''}"><td class="p-2">${f.feature}</td><td class="p-2 text-right">${f.count}</td></tr>`;
+                }).join('');
+
+                analysisSection.classList.remove('hidden');
+                fullDetailsSection.classList.remove('hidden');
+            });
+            
+            checklistContainer.addEventListener('change', (e) => {
+                if (e.target.type === 'checkbox') {
+                    if (document.querySelectorAll('.feature-checkbox:checked').length > 5) {
+                        e.target.checked = false;
+                        alert('You can select a maximum of five features.');
+                    }
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
+    <main class="py-16">
+        <div class="container mx-auto px-6 max-w-7xl">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold nhs-text-dark-blue">Digital Morphology Case Library</h2>
+                <p class="text-lg text-gray-600">Case Study: 25Q10112315</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="space-y-6">
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-2xl font-semibold nhs-text-dark-blue border-b pb-2 mb-4">Case Information</h3>
+                        <div id="initial-info">
+                            <p><strong>Patient:</strong> 68-year-old male.</p>
+                             <h4 class="font-bold mt-4">Initial Full Blood Count</h4>
+                            <table class="w-full results-table mt-2">
                                 <tr><td>WBC</td><td class="font-mono text-right">3.55 x10⁹/L</td></tr>
                                 <tr><td>RBC</td><td class="font-mono text-right">2.50 x10¹²/L</td></tr>
                                 <tr><td>HGB</td><td class="font-mono text-right">80 g/L</td></tr>
