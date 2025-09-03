@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Your Blood Results: The Scatterplots - SGC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .nhs-blue { background-color: #005EB8; }
+        .nhs-dark-blue { background-color: #003087; }
+        .nhs-text-blue { color: #005EB8; }
+        .nhs-text-dark-blue { color: #003087; }
+        .scientific-explanation {
+            display: none;
+            border-left: 4px solid #005EB8;
+            padding-left: 1rem;
+            margin-top: 1rem;
+            background-color: #f0f4f9;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div id="header-placeholder"></div>
+
+    <main class="py-16">
+        <div class="container mx-auto px-6 max-w-7xl">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold nhs-text-dark-blue">A Guide to Understanding Scatterplots</h2>
+                <p class="text-lg text-gray-600 mt-2">Our advanced analysers use lasers and special dyes to look at your blood cells one by one. The results are shown as patterns called scatterplots, where each dot is a single cell. These patterns help scientists quickly see if your blood cells are healthy.</p>
+            </div>
+
+            <div class="space-y-12">
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-2xl font-semibold nhs-text-dark-blue border-b pb-2 mb-4">The White Blood Cell Family Portrait (WDF)</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <img src="https://i.imgur.com/r6mYjLg.png" alt="Normal WDF Scatterplot" class="rounded-md shadow w-full">
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg">What We're Looking At</h4>
+                            <p class="mt-2 text-gray-700">Think of this as a family photo of your different white blood cells, which are your body's infection fighters. The machine sorts them into groups based on how complex they are inside and what they're made of. In a healthy person, we see clear clusters for each "family member":</p>
+                            <ul class="list-disc list-inside mt-2 text-gray-700">
+                                <li><span class="font-semibold text-blue-600">Lymphocytes (Blue):</span> The smart cells of your immune system.</li>
+                                <li><span class="font-semibold text-green-600">Monocytes (Green):</span> The 'clean-up crew' that eats up germs.</li>
+                                <li><span class="font-semibold text-pink-500">Neutrophils (Pink):</span> Your first-responders to infection.</li>
+                                <li><span class="font-semibold text-red-500">Eosinophils (Red):</span> Specialists that fight parasites and allergies.</li>
+                            </ul>
+                            <button onclick="toggleExplanation('wdf')" class="mt-4 bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded hover:bg-gray-300 transition">Show Scientific Explanation</button>
+                        </div>
+                    </div>
+                    <div id="wdf-scientific" class="scientific-explanation p-4 mt-4 rounded-md">
+                        <h4 class="font-bold text-lg nhs-text-dark-blue">WDF Channel: Detailed Interpretation</h4>
+                        [span_0](start_span)<p class="mt-2">The WDF scattergram plots Side-Scattered Light (SSC) on the Y-axis against Side-Fluorescence Light (SFL) on the X-axis[span_0](end_span).</p>
+                        <ul class="list-disc list-inside mt-2 space-y-2">
+                            [span_1](start_span)[span_2](start_span)<li><strong>Principle:</strong> A mild lysis reagent perforates the WBC membranes, and a fluorescent dye (Fluorocell WDF) then stains the intracellular nucleic acids (DNA and RNA)[span_1](end_span)[span_2](end_span). [span_3](start_span)[span_4](start_span)This process preserves the cell's internal structure, which is crucial for the SSC measurement[span_3](end_span)[span_4](end_span).</li>
+                            [span_5](start_span)<li><strong>Y-Axis (SSC):</strong> Measures internal complexity[span_5](end_span). [span_6](start_span)Granulocytes like neutrophils and eosinophils have complex nuclei and granules, so they scatter more light and appear higher on the plot[span_6](end_span). [span_7](start_span)Agranular lymphocytes plot lower[span_7](end_span).</li>
+                            [span_8](start_span)<li><strong>X-Axis (SFL):</strong> Measures the amount of stained nucleic acids[span_8](end_span). [span_9](start_span)Immature or active cells like monocytes contain more RNA, so they fluoresce more intensely and plot further to the right[span_9](end_span).</li>
+                            <li><strong>Population Mapping:</strong>
+                                <ul>
+                                    [span_10](start_span)<li>- <strong>Lymphocytes (Blue):</strong> Low SSC (simple structure) and low SFL (low RNA content) place them in the lower-left[span_10](end_span).</li>
+                                    [span_11](start_span)<li>- <strong>Monocytes (Green):</strong> Similar SSC to lymphocytes but significantly higher SFL due to more RNA-rich cytoplasm, placing them to the right of lymphocytes[span_11](end_span).</li>
+                                    [span_12](start_span)<li>- <strong>Neutrophils (Pink/Magenta):</strong> High SSC (multi-lobed nuclei and granules) and moderate SFL place them in the upper-middle region[span_12](end_span).</li>
+                                    [span_13](start_span)<li>- <strong>Eosinophils (Red):</strong> Highest SSC due to their large, dense granules, positioning them to the right of neutrophils[span_13](end_span).</li>
+                                </ul>
+                            </li>
+                             [span_14](start_span)[span_15](start_span)<li><strong>Immature Granulocytes (IG):</strong> If present, these appear above the mature neutrophil cluster because they contain more residual RNA, resulting in a higher SFL signal[span_14](end_span)[span_15](end_span).</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-2xl font-semibold nhs-text-dark-blue border-b pb-2 mb-4">The Head Count (WNR)</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                             <img src="https://i.imgur.com/uT7wz7k.png" alt="Normal WNR Scatterplot" class="rounded-md shadow w-full">
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg">What We're Looking At</h4>
+                            <p class="mt-2 text-gray-700">This is the most accurate way the machine gets a total 'head count' of all your white blood cells. It uses a strong reagent that strips away the outside of the cells, leaving only the nucleus (the cell's control centre). This simple method avoids errors. It's also excellent at spotting two specific cell types:</p>
+                             <ul class="list-disc list-inside mt-2 text-gray-700">
+                                <li><span class="font-semibold text-cyan-500">Main WBC Cluster (Light Blue):</span> The nuclei of most of your white cells all grouped together.</li>
+                                <li><span class="font-semibold text-pink-500">Nucleated Red Cells (Pink):</span> Very young red blood cells that still have their nucleus. These aren't normally found in adult blood.</li>
+                                <li><span class="font-semibold text-yellow-400">Basophils (Yellow):</span> A rare type of white cell that is tough enough to survive the stripping process, so it shows up as a separate, larger dot.</li>
+                            </ul>
+                            <button onclick="toggleExplanation('wnr')" class="mt-4 bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded hover:bg-gray-300 transition">Show Scientific Explanation</button>
+                        </div>
+                    </div>
+                    <div id="wnr-scientific" class="scientific-explanation p-4 mt-4 rounded-md">
+                        <h4 class="font-bold text-lg nhs-text-dark-blue">WNR Channel: Detailed Interpretation</h4>
+                        [span_16](start_span)<p class="mt-2">The WNR scattergram plots Forward-Scattered Light (FSC) on the Y-axis against Side-Fluorescence Light (SFL) on the X-axis[span_16](end_span).</p>
+                        <ul class="list-disc list-inside mt-2 space-y-2">
+                             [span_17](start_span)<li><strong>Principle:</strong> A potent reagent (Lysercell WNR) lyses all mature RBCs and platelets and strips the cytoplasm from all leukocytes, leaving only their naked nuclei[span_17](end_span). [span_18](start_span)Basophils are uniquely resistant and remain intact[span_18](end_span). [span_19](start_span)A dye (Fluorocell WNR) then stains all remaining nuclei[span_19](end_span). [span_20](start_span)This provides an accurate total nucleated cell count, free from interference[span_20](end_span).</li>
+                             [span_21](start_span)<li><strong>Y-Axis (FSC):</strong> Measures particle size[span_21](end_span). [span_22](start_span)Intact basophils are much larger than naked nuclei and therefore plot higher[span_22](end_span).</li>
+                             [span_23](start_span)<li><strong>X-Axis (SFL):</strong> Measures nucleic acid content[span_23](end_span). [span_24](start_span)Leukocyte nuclei have high DNA content and high SFL[span_24](end_span). [span_25](start_span)NRBC nuclei are smaller and have condensed chromatin, resulting in a much lower SFL signal[span_25](end_span).</li>
+                             <li><strong>Population Mapping:</strong>
+                                <ul>
+                                    [span_26](start_span)<li>- <strong>Main WBC Cluster (Light Blue):</strong> A single large cluster containing the stripped nuclei of neutrophils, lymphocytes, monocytes, and eosinophils[span_26](end_span).</li>
+                                    [span_27](start_span)<li>- <strong>NRBCs (Pink):</strong> Due to their low SFL, they form a distinct cluster to the far left of the main WBC cluster[span_27](end_span).</li>
+                                    [span_28](start_span)<li>- <strong>Basophils (Yellow):</strong> Being larger intact cells, they have a much higher FSC, separating them into a distinct cluster above the main WBC cluster[span_28](end_span).</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-2xl font-semibold nhs-text-dark-blue border-b pb-2 mb-4">The Red Blood Cell Factory (RET)</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                             <img src="https://i.imgur.com/gK9qQ7W.png" alt="Normal RET Scatterplot" class="rounded-md shadow w-full">
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg">What We're Looking At</h4>
+                            <p class="mt-2 text-gray-700">This plot checks on the production of new red blood cells from your "bone marrow factory". It separates cells based on their age. Brand new red cells, called reticulocytes, still contain some leftover material from when they were made, which a special dye can light up.</p>
+                             <ul class="list-disc list-inside mt-2 text-gray-700">
+                                <li><span class="font-semibold text-blue-600">Mature RBCs (Blue):</span> The main population of fully grown red blood cells.</li>
+                                <li><span class="font-semibold text-pink-500">Reticulocytes (Pink/Red):</span> The "baby" red blood cells. The further to the right they are, the younger they are.</li>
+                                 <li><span class="font-semibold text-purple-500">Platelets (Purple):</span> The small cells that help you stop bleeding also show up here.</li>
+                            </ul>
+                            <button onclick="toggleExplanation('ret')" class="mt-4 bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded hover:bg-gray-300 transition">Show Scientific Explanation</button>
+                        </div>
+                    </div>
+                    <div id="ret-scientific" class="scientific-explanation p-4 mt-4 rounded-md">
+                        <h4 class="font-bold text-lg nhs-text-dark-blue">RET Channel: Detailed Interpretation</h4>
+                        [span_29](start_span)<p class="mt-2">The RET scattergram plots Forward-Scattered Light (FSC) on the Y-axis against Fluorescence Intensity on the X-axis[span_29](end_span).</p>
+                        <ul class="list-disc list-inside mt-2 space-y-2">
+                             [span_30](start_span)[span_31](start_span)<li><strong>Principle:</strong> A fluorescent dye (Fluorocell RET) permeates red cells and stains the residual ribosomal RNA present in reticulocytes[span_30](end_span)[span_31](end_span). [span_32](start_span)The fluorescence intensity is directly proportional to the amount of RNA, which indicates the cell's immaturity[span_32](end_span).</li>
+                             <li><strong>Y-Axis (FSC):</strong> Measures cell size/volume. [span_33](start_span)[span_34](start_span)This signal is also used to calculate the Reticulocyte Hemoglobin (RET-He) parameter[span_33](end_span)[span_34](end_span).</li>
+                             [span_35](start_span)<li><strong>X-Axis (Fluorescence):</strong> Represents a continuum of maturation[span_35](end_span). [span_36](start_span)Mature RBCs with no RNA have no fluorescence and are on the far left[span_36](end_span). [span_37](start_span)Immature reticulocytes with high RNA content are on the far right[span_37](end_span).</li>
+                             <li><strong>Population Mapping & Parameters:</strong>
+                                <ul>
+                                    [span_38](start_span)<li>- <strong>Mature RBCs (Blue):</strong> A large, dense population on the far left with minimal fluorescence[span_38](end_span).</li>
+                                    <li>- <strong>Reticulocytes (Pink/Red):</strong> The population to the right of the RBCs. [span_39](start_span)[span_40](start_span)The analyser subdivides them by fluorescence intensity into Low (LFR), Medium (MFR), and High-Fluorescence Ratio (HFR) fractions, representing increasing immaturity[span_39](end_span)[span_40](end_span).</li>
+                                    [span_41](start_span)[span_42](start_span)<li>- <strong>Immature Reticulocyte Fraction (IRF):</strong> Calculated as MFR + HFR, this is a sensitive marker of bone marrow activity[span_41](end_span)[span_42](end_span).</li>
+                                     [span_43](start_span)[span_44](start_span)<li>- <strong>Reticulocyte Hemoglobin (RET-He):</strong> Derived from the FSC signal of the reticulocytes, it measures the hemoglobin content of the very newest red cells, providing a real-time assessment of iron availability for erythropoiesis[span_43](end_span)[span_44](end_span).</li>
+                                     [span_45](start_span)[span_46](start_span)<li>- <strong>Optical Platelets (PLT-O):</strong> Platelets contain RNA and are also counted here, providing a robust backup count when the standard method fails[span_45](end_span)[span_46](end_span).</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-2xl font-semibold nhs-text-dark-blue border-b pb-2 mb-4">Checking the Clotting Crew (PLT-F)</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                             <img src="https://i.imgur.com/w9zVl0C.png" alt="Normal PLT-F Scatterplot" class="rounded-md shadow w-full">
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg">What We're Looking At</h4>
+                            <p class="mt-2 text-gray-700">This is a special high-precision test for counting platelets, the tiny cells that form clots to stop bleeding. It's especially useful when the platelet count is very low. It works by lighting up material inside the platelets, which also allows us to see how many new, "immature" platelets are being made by the bone marrow.</p>
+                             <ul class="list-disc list-inside mt-2 text-gray-700">
+                                <li><span class="font-semibold text-blue-600">Mature Platelets (Blue):</span> The main population of working platelets.</li>
+                                <li><span class="font-semibold text-green-600">Immature Platelets (Green):</span> Brand new, larger platelets fresh from the bone marrow. Seeing lots of these means the body is trying hard to make more.</li>
+                            </ul>
+                            <button onclick="toggleExplanation('pltf')" class="mt-4 bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded hover:bg-gray-300 transition">Show Scientific Explanation</button>
+                        </div>
+                    </div>
+                    <div id="pltf-scientific" class="scientific-explanation p-4 mt-4 rounded-md">
+                        <h4 class="font-bold text-lg nhs-text-dark-blue">PLT-F Channel: Detailed Interpretation</h4>
+                        [span_47](start_span)<p class="mt-2">The PLT-F scattergram plots Forward-Scattered Light (FSC) on the Y-axis against Side-Fluorescence Light (SFL) on the X-axis[span_47](end_span).</p>
+                        <ul class="list-disc list-inside mt-2 space-y-2">
+                             [span_48](start_span)<li><strong>Principle:</strong> This reflex test uses a reagent (Fluorocell PLT) with a dye that specifically labels RNA within platelet mitochondria[span_48](end_span). [span_49](start_span)This allows for a highly accurate count that is not affected by particles of similar size, such as microcytic RBCs or fragments, and correlates strongly with the international reference method[span_49](end_span).</li>
+                             [span_50](start_span)<li><strong>Y-Axis (FSC):</strong> Measures particle size[span_50](end_span).</li>
+                             [span_51](start_span)<li><strong>X-Axis (SFL):</strong> Measures RNA content[span_51](end_span). [span_52](start_span)Immature (reticulated) platelets contain more residual mRNA and are larger, so they plot in a higher FSC and higher SFL region[span_52](end_span).</li>
+                             [span_53](start_span)<li><strong>Immature Platelet Fraction (IPF):</strong> The analyser sets a threshold to distinguish the high-fluorescence immature platelets from the main mature population[span_53](end_span). The IPF% is a direct measure of thrombopoiesis and is crucial for diagnosing the cause of thrombocytopenia. [span_54](start_span)[span_55](start_span)A high IPF suggests peripheral destruction (like ITP), while a low IPF suggests bone marrow failure[span_54](end_span)[span_55](end_span).</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-2xl font-semibold nhs-text-dark-blue border-b pb-2 mb-4">The Specialist Investigation (WPC)</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                             <img src="https://i.imgur.com/g8e1O4z.png" alt="Normal WPC Scatterplot" class="rounded-md shadow w-full">
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg">What We're Looking At</h4>
+                            <p class="mt-2 text-gray-700">This is a clever "double-check" that the machine runs automatically only if it spots something suspicious in the main white cell test (the WDF). It uses a different set of chemicals that affect normal and abnormal cells differently. This helps to confirm if there are genuinely worrying cells, like leukaemic blasts, or if the initial flag was just a false alarm. This saves a lot of time and helps scientists focus on the samples that really need a closer look under the microscope.</p>
+                            <button onclick="toggleExplanation('wpc')" class="mt-4 bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded hover:bg-gray-300 transition">Show Scientific Explanation</button>
+                        </div>
+                    </div>
+                    <div id="wpc-scientific" class="scientific-explanation p-4 mt-4 rounded-md">
+                        <h4 class="font-bold text-lg nhs-text-dark-blue">WPC Channel: Detailed Interpretation</h4>
+                        [span_56](start_span)[span_57](start_span)<p class="mt-2">The WPC channel is an automated reflex test triggered by a "Blasts/Abn. Lympho?" flag from the WDF channel[span_56](end_span)[span_57](end_span). [span_58](start_span)It generates two scattergrams, the primary being SSC (Y-axis) vs. SFL (X-axis)[span_58](end_span).</p>
+                        <ul class="list-disc list-inside mt-2 space-y-2">
+                             [span_59](start_span)<li><strong>Principle:</strong> This channel uses a unique reagent (Lysercell WPC) that exploits differences in cell membrane stability[span_59](end_span).
+                                <ul>
+                                    <li>- The membranes of <strong>blasts</strong> are more resistant to the reagent, meaning very little fluorescent dye can enter. [span_60](start_span)This results in a characteristically <strong>low SFL</strong> signal[span_60](end_span).</li>
+                                    <li>- The membranes of certain <strong>abnormal lymphocytes</strong> are more fragile, allowing a large influx of dye. [span_61](start_span)[span_62](start_span)This results in a characteristically <strong>high SFL</strong> signal[span_61](end_span)[span_62](end_span).</li>
+                                </ul>
+                             </li>
+                             [span_63](start_span)<li><strong>Clinical Utility:</strong> The WPC channel acts as a specificity filter for the highly sensitive WDF channel[span_63](end_span). [span_64](start_span)If a WDF flag is triggered by a benign condition (e.g., reactive lymphocytes), the WPC scattergram will appear normal, allowing the result to be auto-validated without manual review[span_64](end_span). [span_65](start_span)[span_66](start_span)[span_67](start_span)However, if the WPC confirms a population in the distinct "Blast" (low SFL) or "Abn. Lympho" (high SFL) region, it provides strong evidence that a manual slide review is necessary, streamlining laboratory workflow[span_65](end_span)[span_66](end_span)[span_67](end_span).</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+      <script src="js/component-loader.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            feather.replace();
+        });
+
+        function toggleExplanation(id) {
+            const element = document.getElementById(id + '-scientific');
+            if (element.style.display === 'none' || element.style.display === '') {
+                element.style.display = 'block';
+            } else {
+                element.style.display = 'none';
+            }
+        }
+    </script>
+
+</body>
+</html>
