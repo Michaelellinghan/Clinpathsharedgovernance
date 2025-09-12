@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample Transport Pathways</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <style> 
+        body { font-family: 'Inter', sans-serif; } 
+        .nhs-text-blue { color: #005EB8; } 
+        .nhs-dark-blue { color: #003087; }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
+
+    <div id="header-placeholder"></div>
+
+    <main class="flex-grow">
+        <div class="container mx-auto px-6 py-12 max-w-5xl">
+            <a href="specimen_reception.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8">
+                <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Specimen Reception
+            </a>
+            <div class="text-center mb-12">
+                <h1 class="text-4xl font-bold nhs-dark-blue mb-4">Getting Samples to the Lab</h1>
+                <p class="text-lg text-gray-600">A reliable result starts with a safe and timely journey. The way a sample travels to us can impact its stability and our turnaround times.</p>
+            </div>
+
+            <div class="space-y-12">
+                <!-- In-Hospital Transport -->
+                <div>
+                    <h2 class="text-3xl font-bold nhs-dark-blue mb-6 border-b-4 border-blue-200 pb-2">In-Hospital Transport</h2>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <div class="flex items-center mb-4">
+                                <i data-feather="send" class="w-10 h-10 text-blue-600 mr-4"></i>
+                                <h3 class="text-2xl font-semibold">Pneumatic Tube System (POD)</h3>
+                            </div>
+                            <p class="text-gray-700">This system is a convenient way to transport <strong class="font-semibold">routine, non-time-critical</strong> samples to the laboratory. While direct, it is not the fastest method for urgent requests as pods can queue. The rapid transit can also agitate samples, so ensuring they are securely packaged is essential to prevent haemolysis or breakages. <strong class="font-semibold text-red-700">Time-critical samples must not be sent in the POD.</strong></p>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <div class="flex items-center mb-4">
+                                <i data-feather="truck" class="w-10 h-10 text-blue-600 mr-4"></i>
+                                <h3 class="text-2xl font-semibold">Portering Service</h3>
+                            </div>
+                            <p class="text-gray-700">Our trusted porters perform scheduled and ad-hoc collections from wards and clinics. This is the primary method for transporting both <strong class="font-semibold">routine and urgent</strong> samples, ensuring they are handled directly and delivered promptly to our reception.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-md md:col-span-2">
+                            <div class="flex items-center mb-4">
+                                <i data-feather="alert-triangle" class="w-10 h-10 text-yellow-500 mr-4"></i>
+                                <h3 class="text-2xl font-semibold">Hand Delivery</h3>
+                            </div>
+                            <p class="text-gray-700">For irreplaceable or <strong class="font-semibold">clinically urgent / time-critical</strong> samples (e.g., major haemorrhage requests, CSFs, bone marrows), hand delivery is the safest and most reliable option. To ensure it is processed immediately, please <strong class="font-semibold">hand the sample directly to a member of the Specimen Reception staff</strong> and state that it is urgent.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- External Transport -->
+                <div>
+                    <h2 class="text-3xl font-bold nhs-dark-blue mb-6 border-b-4 border-blue-200 pb-2">External Transport</h2>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <div class="flex items-center mb-4">
+                                <i data-feather="map" class="w-10 h-10 text-green-600 mr-4"></i>
+                                <h3 class="text-2xl font-semibold">GP Practices & Community Clinics</h3>
+                            </div>
+                            <p class="text-gray-700">Samples from primary care are brought to the laboratory via dedicated van transport. These vans run on a scheduled timetable throughout the day, collecting from GP surgeries across the region. It is important that samples are packaged correctly and ready for the scheduled collection time to ensure they are processed within the expected 24-hour turnaround time.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                             <div class="flex items-center mb-4">
+                                <i data-feather="package" class="w-10 h-10 text-purple-600 mr-4"></i>
+                                <h3 class="text-2xl font-semibold">Referral & External Hospitals</h3>
+                            </div>
+                            <p class="text-gray-700">As a large teaching hospital, we act as a specialist testing centre for other NHS Trusts and healthcare providers. These samples arrive via courier or specialist transport and are often for complex, non-routine tests. They are logged and processed by our dedicated referrals team within Specimen Reception.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+    
+    <script src="js/component-loader.js"></script>
+    <script>
+        feather.replace();
+   </script>
+</body>
+</html>
+
