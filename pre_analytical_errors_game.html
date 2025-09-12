@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pre-Analytical Challenge</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .nhs-text-blue { color: #005EB8; } 
+        .nhs-dark-blue { color: #003087; }
+        .answer-btn {
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .answer-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .correct {
+            background-color: #D1FAE5 !important;
+            border-color: #10B981 !important;
+        }
+        .incorrect {
+            background-color: #FEE2E2 !important;
+            border-color: #EF4444 !important;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
+
+    <div id="header-placeholder"></div>
+
+    <main class="flex-grow">
+        <div class="container mx-auto px-4 py-12 max-w-3xl text-center">
+            <h1 class="text-3xl md:text-4xl font-bold nhs-dark-blue mb-2">The Pre-Analytical Challenge!</h1>
+            <p class="text-lg text-gray-600 mb-8">Test your knowledge with these real-world scenarios. What would you do?</p>
+            
+            <div id="game-container" class="bg-white p-8 rounded-lg shadow-lg text-left">
+                <!-- Question Area -->
+                <div id="question-area">
+                    <p class="text-sm font-semibold text-blue-600 mb-2" id="question-counter">Question 1 of 5</p>
+                    <p class="text-xl font-semibold text-gray-800" id="question-text"></p>
+                </div>
+                
+                <!-- Answers Area -->
+                <div id="answers-area" class="mt-6 space-y-4">
+                </div>
+
+                <!-- Feedback Area -->
+                <div id="feedback-area" class="mt-6 p-4 rounded-lg hidden">
+                    <p id="feedback-text" class="text-gray-700"></p>
+                </div>
+
+                <!-- Next Button -->
+                <button id="next-btn" class="w-full mt-6 bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition hidden">Next Question</button>
+            </div>
+            
+             <!-- Final Score Area -->
+            <div id="score-area" class="hidden bg-white p-8 rounded-lg shadow-lg text-center mt-8">
+                <h2 class="text-2xl font-bold nhs-dark-blue mb-4">Challenge Complete!</h2>
+                <p class="text-lg text-gray-700 mb-4">You scored <span id="final-score" class="font-bold"></span> out of 5.</p>
+                <p id="score-summary" class="text-gray-600 mb-6"></p>
+                <button id="restart-btn" class="bg-green-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-green-700 transition">Play Again</button>
+            </div>
+        </div>
+    </main>
+    
+    <div id="footer-placeholder"></div>
+    
+    <script src="js/component-loader.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            feather.replace();
+
+            const questions = [
+                {
+                    question: "You've taken a blood sample, but you notice the printed label has the wrong patient's name on it. What should you do?",
+                    answers: [
+                        { text: "Scrape the name off and write the correct one on with a pen.", isCorrect: false, feedback: "Incorrect. Handwritten amendments are not acceptable and create a serious patient safety risk. The sample must be rejected." },
+                        { text: "Discard the tube and the label, and start the process again from the beginning.", isCorrect: true, feedback: "Correct! To ensure patient safety, a new label must be printed and a fresh sample collected. There is a zero-tolerance policy for mislabelled samples." },
+                        { text: "Send it to the lab anyway and phone them to let them know about the mix-up.", isCorrect: false, feedback: "Incorrect. The lab cannot accept mislabelled samples under any circumstances due to the risk of patient misidentification." }
+                    ]
+                },
+                {
+                    question: "A doctor urgently needs a coagulation screen for a patient. You only have a spare gold-top SST tube. What should you do?",
+                    answers: [
+                        { text: "Use the SST tube, but write 'Urgent Coag' on it so the lab knows.", isCorrect: false, feedback: "Incorrect. The gel and clot activator in an SST tube make it completely unsuitable for coagulation tests, which require un-clotted citrated plasma." },
+                        { text: "Find a light blue top (citrate) tube before taking the sample.", isCorrect: true, feedback: "Correct. A coagulation screen requires a citrate tube. Using any other tube type would render the sample useless and delay the result." },
+                        { text: "Take the sample in the SST tube and send it, as getting a sample to the lab is better than nothing.", isCorrect: false, feedback: "Incorrect. Sending the wrong tube type just wastes resources and delays the correct result, as a re-bleed will always be required." }
+                    ]
+                },
+                {
+                    question: "You need to send an urgent Troponin sample to the lab from the ward. What is the best and safest transport method?",
+                    answers: [
+                        { text: "Send it via the POD system as it's the most direct route.", isCorrect: false, feedback: "Incorrect. The POD is for routine samples. Urgent and time-critical samples can be delayed in the POD system and should be sent by a more direct method." },
+                        { text: "Ask a porter to take it directly to the specimen reception.", isCorrect: true, feedback: "Correct! For urgent samples, using a porter or hand-delivering ensures the sample is prioritised as soon as it arrives at the laboratory." },
+                        { text: "Leave it in the collection area for the next scheduled porter run.", isCorrect: false, feedback: "Incorrect. Waiting for a routine collection will significantly delay the turnaround time for an urgent test." }
+                    ]
+                },
+                {
+                    question: "You've drawn a citrate (light blue top) tube for a D-Dimer test, but it's only half full. What is the correct action?",
+                    answers: [
+                        { text: "Send it to the lab. A half-full tube is better than no sample.", isCorrect: false, feedback: "Incorrect. An underfilled citrate tube will be rejected. The ratio of blood to anticoagulant is critical for accurate coagulation results." },
+                        { text: "Top it up with blood from another tube from the same patient.", isCorrect: false, feedback: "Incorrect. This would contaminate the sample with the additive from the other tube (e.g., EDTA or gel), making the results invalid." },
+                        { text: "Discard the sample and perform a re-bleed, ensuring the new tube is filled to the mark.", isCorrect: true, feedback: "Correct. Coagulation tubes must be filled correctly to ensure the 9:1 blood-to-anticoagulant ratio is met. Anything less will lead to rejection and delays." }
+                    ]
+                },
+                {
+                    question: "A sample you've taken for U&Es comes back from the lab as haemolysed, with the Potassium result rejected. Why does this happen?",
+                    answers: [
+                        { text: "The patient likely has a high potassium level that the analyser can't read.", isCorrect: false, feedback: "Incorrect. Haemolysis itself is the cause. Red blood cells contain high concentrations of potassium, which is released when the cells rupture, falsely elevating the level in the sample." },
+                        { text: "The sample was likely taken too slowly or shaken too vigorously, causing red cells to break.", isCorrect: true, feedback: "Correct! Haemolysis is often caused by the collection technique. A traumatic draw, using too small a needle, or vigorous shaking can all damage red cells and lead to a rejected sample." },
+                        { text: "The lab's analyser is probably faulty.", isCorrect: false, feedback: "Incorrect. While analysers can have issues, haemolysis is a common pre-analytical problem. The lab's analysers detect it to prevent dangerously incorrect results from being issued." }
+                    ]
+                }
+            ];
+
+            let currentQuestionIndex = 0;
+            let score = 0;
+
+            const gameContainer = document.getElementById('game-container');
+            const scoreArea = document.getElementById('score-area');
+            const questionCounter = document.getElementById('question-counter');
+            const questionText = document.getElementById('question-text');
+            const answersArea = document.getElementById('answers-area');
+            const feedbackArea = document.getElementById('feedback-area');
+            const feedbackText = document.getElementById('feedback-text');
+            const nextBtn = document.getElementById('next-btn');
+            const restartBtn = document.getElementById('restart-btn');
+
+            function startGame() {
+                currentQuestionIndex = 0;
+                score = 0;
+                scoreArea.classList.add('hidden');
+                gameContainer.classList.remove('hidden');
+                showQuestion();
+            }
+
+            function showQuestion() {
+                resetState();
+                const currentQuestion = questions[currentQuestionIndex];
+                questionCounter.textContent = `Question ${currentQuestionIndex + 1} of ${questions.length}`;
+                questionText.textContent = currentQuestion.question;
+
+                currentQuestion.answers.forEach(answer => {
+                    const button = document.createElement('button');
+                    button.innerHTML = answer.text;
+                    button.classList.add('answer-btn', 'w-full', 'p-4', 'bg-white', 'border-2', 'border-gray-300', 'rounded-lg', 'text-left', 'hover:bg-gray-100', 'hover:border-blue-500');
+                    button.addEventListener('click', () => selectAnswer(button, answer));
+                    answersArea.appendChild(button);
+                });
+            }
+            
+            function resetState() {
+                nextBtn.classList.add('hidden');
+                feedbackArea.classList.add('hidden');
+                while(answersArea.firstChild) {
+                    answersArea.removeChild(answersArea.firstChild);
+                }
+            }
+
+            function selectAnswer(button, answer) {
+                Array.from(answersArea.children).forEach(btn => {
+                    btn.disabled = true; // Disable all buttons
+                    const btnAnswer = questions[currentQuestionIndex].answers.find(a => a.text === btn.innerHTML);
+                    if (btnAnswer.isCorrect) {
+                        btn.classList.add('correct');
+                    }
+                });
+
+                feedbackArea.classList.remove('hidden');
+                feedbackText.textContent = answer.feedback;
+
+                if (answer.isCorrect) {
+                    button.classList.add('correct');
+                    score++;
+                } else {
+                    button.classList.add('incorrect');
+                }
+                
+                if (questions.length > currentQuestionIndex + 1) {
+                    nextBtn.classList.remove('hidden');
+                } else {
+                    showScore();
+                }
+            }
+
+            function showScore() {
+                gameContainer.classList.add('hidden');
+                scoreArea.classList.remove('hidden');
+                document.getElementById('final-score').textContent = score;
+                let summaryText = '';
+                if (score === 5) {
+                    summaryText = "Excellent work! You're a pre-analytical champion.";
+                } else if (score >= 3) {
+                    summaryText = "Great job! You have a strong understanding of these critical steps.";
+                } else {
+                    summaryText = "Good effort. Reviewing the feedback will help solidify your knowledge!";
+                }
+                document.getElementById('score-summary').textContent = summaryText;
+            }
+
+            nextBtn.addEventListener('click', () => {
+                currentQuestionIndex++;
+                showQuestion();
+            });
+
+            restartBtn.addEventListener('click', startGame);
+
+            startGame();
+        });
+    </script>
+</body>
+</html>
