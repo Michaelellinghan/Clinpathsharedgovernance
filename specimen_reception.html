@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>An Introduction to Specimen Reception</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <style> 
+        body { font-family: 'Inter', sans-serif; } 
+        .nhs-text-blue { color: #005EB8; } 
+        .nhs-dark-blue { color: #003087; }
+        .hero-bg {
+             background-image: linear-gradient(rgba(0, 48, 135, 0.7), rgba(0, 48, 135, 0.7)), url('Clerical Quality control in a Laboratory coat .jpg');
+             background-size: cover;
+             background-position: center;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
+
+    <div id="header-placeholder"></div>
+
+    <main class="flex-grow">
+        <!-- Hero Section -->
+        <section class="hero-bg text-white">
+            <div class="container mx-auto px-6 py-24 text-center">
+                <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Specimen Reception: The Gateway to Your Results</h1>
+                <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">The journey for over 19,000 daily samples starts here. Discover how this vital hub works and how we can work together to improve patient care.</p>
+            </div>
+        </section>
+
+        <!-- What is Specimen Reception? Section -->
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-6 max-w-5xl">
+                <div class="text-center mb-12">
+                    <i data-feather="compass" class="w-12 h-12 nhs-text-blue mx-auto mb-4"></i>
+                    <h2 class="text-3xl font-bold nhs-dark-blue">The Control Centre of the Lab</h2>
+                    <p class="text-lg text-gray-600 mt-4">Specimen Reception is the first and most critical checkpoint for every sample that enters Clinical Pathology. Our team is responsible for receiving, sorting, and preparing every tube—whether from a ward, a GP surgery, or another hospital—before it reaches the analysers. Getting this stage right is essential for accurate and timely results.</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8 text-center">
+                    <div class="p-6">
+                        <i data-feather="log-in" class="w-10 h-10 nhs-text-blue mx-auto mb-3"></i>
+                        <h3 class="text-xl font-semibold mb-2">Receiving & Triaging</h3>
+                        <p>We receive thousands of samples from diverse sources and immediately triage them based on clinical urgency.</p>
+                    </div>
+                    <div class="p-6">
+                        <i data-feather="edit" class="w-10 h-10 nhs-text-blue mx-auto mb-3"></i>
+                        <h3 class="text-xl font-semibold mb-2">Data Entry & Verification</h3>
+                        <p>Each sample is meticulously checked and booked into our system, linking the physical tube to the patient and their requested tests.</p>
+                    </div>
+                    <div class="p-6">
+                        <i data-feather="refresh-cw" class="w-10 h-10 nhs-text-blue mx-auto mb-3"></i>
+                        <h3 class="text-xl font-semibold mb-2">Pre-Analytical Preparation</h3>
+                        <p>This includes tasks like centrifugation to separate serum or plasma, ensuring the sample is ready for the correct analyser.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Journey to the Lab Section -->
+        <section class="py-16">
+             <div class="container mx-auto px-6 max-w-5xl">
+                 <div class="text-center mb-12">
+                    <i data-feather="truck" class="w-12 h-12 nhs-text-blue mx-auto mb-4"></i>
+                    <h2 class="text-3xl font-bold nhs-dark-blue">The Journey to the Lab</h2>
+                    <p class="text-lg text-gray-600 mt-4">Samples arrive from a wide variety of locations, each with its own process and priority.</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Inpatient -->
+                    <div class="bg-white p-6 rounded-lg shadow text-center">
+                        <i data-feather="hospital" class="w-8 h-8 mx-auto mb-3 text-blue-600"></i>
+                        <h3 class="font-bold text-lg">Inpatient Wards</h3>
+                        <p class="text-sm text-gray-600">Routine samples often arrive via the POD system, while urgent and time-critical samples are sent with porters or hand-delivered.</p>
+                    </div>
+                    <!-- GPs -->
+                    <div class="bg-white p-6 rounded-lg shadow text-center">
+                        <i data-feather="home" class="w-8 h-8 mx-auto mb-3 text-green-600"></i>
+                        <h3 class="font-bold text-lg">GP Practices</h3>
+                        <p class="text-sm text-gray-600">Collected in scheduled van runs throughout the day from across the region.</p>
+                    </div>
+                    <!-- External Hospitals -->
+                    <div class="bg-white p-6 rounded-lg shadow text-center">
+                        <i data-feather="navigation" class="w-8 h-8 mx-auto mb-3 text-purple-600"></i>
+                        <h3 class="font-bold text-lg">Other Hospitals</h3>
+                        <p class="text-sm text-gray-600">Samples for specialised tests are referred to us from other Trusts.</p>
+                    </div>
+                     <!-- Hand Delivered -->
+                    <div class="bg-white p-6 rounded-lg shadow text-center">
+                        <i data-feather="alert-circle" class="w-8 h-8 mx-auto mb-3 text-red-600"></i>
+                        <h3 class="font-bold text-lg">Urgent & Critical</h3>
+                        <p class="text-sm text-gray-600">Irreplaceable or critical samples are often hand-delivered by clinical staff.</p>
+                    </div>
+                </div>
+                 <div class="text-center mt-8">
+                     <a href="sample_transport.html" class="inline-block bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition">Learn More About Sample Transport</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- How You Can Help Section -->
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-6 max-w-5xl">
+                <div class="text-center mb-12">
+                    <i data-feather="users" class="w-12 h-12 nhs-text-blue mx-auto mb-4"></i>
+                    <h2 class="text-3xl font-bold nhs-dark-blue">The Pre-Analytical Partnership: Help Us Get It Right First Time</h2>
+                    <p class="text-lg text-gray-600 mt-4">The pre-analytical phase—everything that happens before the sample reaches the analyser—is where most errors occur. By following these best practices, you can significantly reduce delays and improve patient safety.</p>
+                </div>
+
+                <div class="space-y-8">
+                    <!-- Correct Labelling -->
+                    <div class="bg-gray-50 p-8 rounded-lg">
+                        <h3 class="text-2xl font-semibold nhs-dark-blue mb-4">1. Perfect Labelling: The Most Critical Step</h3>
+                        <p class="text-gray-700 mb-6">Incorrect labelling is the single biggest cause of sample rejection and delays. Our analysers rely entirely on the barcode for identification. Please ensure every label is:</p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700">
+                            <li><strong>Straight and Vertical:</strong> Applied directly over the manufacturer's label. Crooked labels cannot be read by the automation.</li>
+                            <li><strong>One Per Tube:</strong> Never apply multiple labels. Add-on tests should be requested via ICE.</li>
+                            <li><strong>Clear and High Quality:</strong> Faded or smudged barcodes will fail. Please check your printer's ink levels.</li>
+                            <li><strong>Correctly Placed:</strong> Labels must not overhang the top or bottom of the tube, as this can cause jams and sample loss on the track.</li>
+                        </ul>
+                        <a href="labelling_guide.html" class="inline-block mt-4 bg-blue-600 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 transition">View Full Labelling Guide</a>
+                    </div>
+
+                    <!-- Tube Types -->
+                    <div class="bg-gray-50 p-8 rounded-lg">
+                        <h3 class="text-2xl font-semibold nhs-dark-blue mb-4">2. The Right Tube for the Right Test</h3>
+                        <p class="text-gray-700 mb-6">The colour of a tube's lid indicates the specific anticoagulant or additive inside, which is vital for preserving the sample correctly for the requested test. Using the wrong tube will mean the test cannot be performed and a re-bleed will be required.</p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700">
+                           <li><strong>EDTA (Purple):</strong> Used for haematology tests (e.g., FBC) as it preserves cell morphology.</li>
+                           <li><strong>Citrate (Light Blue):</strong> Essential for coagulation tests as the anticoagulant is reversible. The tube **must** be filled to the line.</li>
+                           <li><strong>Serum SST (Gold/Yellow):</strong> Contains a gel separator and clot activator, used for most chemistry tests.</li>
+                           <li><strong>Fluoride Oxalate (Grey):</strong> Prevents glycolysis, essential for accurate glucose and lactate measurements.</li>
+                        </ul>
+                         <a href="pre_analytical_tool.html" class="inline-block mt-4 bg-blue-600 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 transition">Check Test Requirements Tool</a>
+                    </div>
+                </div>
+
+                <!-- Test Your Knowledge -->
+                <div class="mt-12 text-center">
+                    <h3 class="text-2xl font-bold nhs-dark-blue">Test Your Knowledge!</h3>
+                    <p class="text-gray-600 mt-2 mb-6">Think you're a pre-analytical expert? Try our games to see if you can spot common errors and sort the samples correctly.</p>
+                    <div class="flex justify-center gap-4 flex-wrap">
+                        <a href="pre_analytical_errors_game.html" class="bg-green-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-green-700 transition">Spot the Error Game</a>
+                        <a href="tube_sorter_game.html" class="bg-green-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-green-700 transition">Tube Sorter Challenge</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Visit Us Section -->
+        <section class="bg-gray-200 py-16">
+             <div class="container mx-auto px-6 text-center max-w-4xl">
+                <h3 class="text-3xl font-bold nhs-dark-blue mb-6">See It in Action!</h3>
+                <p class="text-lg text-gray-700 mb-8">The best way to understand our processes is to see them first-hand. We welcome ward and clinical staff to visit Specimen Reception for a brief tour. See our automation in action and ask our expert team any questions you have.</p>
+                <a href="contact.html" class="bg-blue-800 text-white font-bold py-3 px-8 rounded-full hover:bg-blue-700 transition duration-300 text-lg">Arrange a Visit</a>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+    
+    <script src="js/component-loader.js"></script>
+    <script>
+        feather.replace();
+   </script>
+</body>
+</html>
+
+
