@@ -9,49 +9,99 @@
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <style>
         body { font-family: 'Inter', sans-serif; }
-        .hero-bg-further-haem { background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1618939303117-b236f38d391a?q=80&w=1932&auto=format=fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; background-position: center; }
+        .hero-bg-haem { 
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1578496479532-35f0ba2b516b?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+        .text-shadow-lg { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
+        .nhs-dark-blue { color: #003087; }
+        .card-icon {
+            color: #005EB8;
+        }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
 
     <div id="header-placeholder"></div>
 
-    <main class="container mx-auto px-4 py-8 flex-grow">
-
-        <section class="hero-bg-further-haem text-white rounded-lg p-16 mb-8 text-center shadow-lg">
-            <h1 class="text-4xl md:text-6xl font-bold mb-4">Further Haematology Tests</h1>
-            <p class="text-lg md:text-2xl max-w-3xl mx-auto">Key investigations beyond the FBC and blood film.</p>
-        </section>
-
-        <section class="bg-white p-8 rounded-lg shadow-md mb-8">
-            <div class="space-y-8">
-                 <div class="p-6 bg-gray-50 rounded-lg">
-                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-mosquito text-purple-600 mr-2"></i>Malaria Screening</h3>
-                    <p>When a doctor suspects malaria, we perform an urgent microscopic examination of a blood film. This is a time-critical investigation where our scientists meticulously search for parasites within the patient's red blood cells. A rapid diagnosis is crucial for starting life-saving treatment.</p>
-                </div>
-                <div class="p-6 bg-gray-50 rounded-lg">
-                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-ruler-vertical text-orange-600 mr-2"></i>Erythrocyte Sedimentation Rate (ESR)</h3>
-                    <p>The ESR is a non-specific marker of inflammation. The test measures how quickly red blood cells settle in a tube of blood. A faster rate can indicate inflammation and is useful for monitoring conditions like rheumatoid arthritis or temporal arteritis.</p>
-                </div>
-                <div class="p-6 bg-gray-50 rounded-lg">
-                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-viruses text-green-600 mr-2"></i>Infectious Mononucleosis (IM) Screen</h3>
-                    <p>Also known as glandular fever, this test looks for specific antibodies that the body produces in response to the Epstein-Barr virus. A positive result helps to confirm the diagnosis, especially when combined with typical symptoms and blood film findings.</p>
-                </div>
-                <div class="p-6 bg-gray-50 rounded-lg">
-                    <h3 class="text-2xl font-semibold mb-2"><i class="fas fa-water text-red-600 mr-2"></i>Polycythaemia Vera (PV) Investigation</h3>
-                    <p>When a patient has a persistently high red blood cell count, we can perform molecular testing to look for a specific gene mutation (JAK2 V617F). This mutation is found in over 95% of cases of Polycythaemia Vera, a condition that causes the blood to become too thick.</p>
-                </div>
+    <main class="flex-grow">
+        
+        <section class="hero-bg-haem text-white text-center py-20 md:py-24">
+            <div class="container mx-auto px-4">
+                <h1 class="text-4xl md:text-6xl font-bold mb-4 text-shadow-lg">Further Haematology Tests</h1>
+                <p class="text-lg md:text-2xl max-w-3xl mx-auto text-shadow-lg">Exploring key markers of inflammation, infection, and specialised fluid analysis.</p>
             </div>
         </section>
 
-        <section class="text-center mt-12">
-            <a href="what_haematology_does.html" class="bg-gray-800 text-white font-bold py-3 px-8 rounded-full hover:bg-gray-700 transition duration-300">
-                <i class="fas fa-arrow-left mr-2"></i>Back to Haematology Overview
-            </a>
-        </section>
+        <div class="container mx-auto px-4 py-12">
+            <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                
+                <!-- Card for Plasma Viscosity -->
+                <div class="bg-white rounded-lg shadow-md p-6 flex items-start">
+                    <i class="fas fa-wind text-4xl card-icon mr-6 mt-1"></i>
+                    <div>
+                        <h3 class="text-2xl font-bold nhs-dark-blue mb-3">Plasma Viscosity (PV)</h3>
+                        <p class="text-gray-700 mb-4">The PV is a reliable and stable measure of the acute phase response. It measures the thickness (viscosity) of blood plasma, which increases with the amount of plasma proteins, such as fibrinogen and immunoglobulins. It is generally preferred over the ESR as it is not affected by anaemia.</p>
+                        <div class="text-sm bg-gray-50 p-3 rounded-lg">
+                           <p><strong>Sample:</strong> 4mL EDTA (Purple Top)</p>
+                           <p><strong>Use:</strong> Primarily for monitoring inflammatory conditions like Temporal Arteritis and Polymyalgia Rheumatica.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card for ESR -->
+                <div class="bg-white rounded-lg shadow-md p-6 flex items-start">
+                    <i class="fas fa-layer-group text-4xl card-icon mr-6 mt-1"></i>
+                    <div>
+                        <h3 class="text-2xl font-bold nhs-dark-blue mb-3">Erythrocyte Sedimentation Rate (ESR)</h3>
+                        <p class="text-gray-700 mb-4">The ESR is a traditional, non-specific marker of inflammation. It measures the rate at which red blood cells settle in a vertical tube over one hour. The rate is increased when inflammatory proteins coat the red cells, causing them to fall faster. However, the result can be affected by factors other than inflammation, such as anaemia.</p>
+                        <div class="text-sm bg-gray-50 p-3 rounded-lg">
+                           <p><strong>Sample:</strong> 4mL EDTA (Purple Top)</p>
+                           <p><strong>Use:</strong> Largely superseded by PV, but still used in some specific clinical scenarios.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Card for Glandular Fever -->
+                <div class="bg-white rounded-lg shadow-md p-6 flex items-start">
+                    <i class="fas fa-virus text-4xl card-icon mr-6 mt-1"></i>
+                    <div>
+                        <h3 class="text-2xl font-bold nhs-dark-blue mb-3">Glandular Fever Screen (IM)</h3>
+                        <p class="text-gray-700 mb-4">Also known as the Monospot test, this is a rapid screen for heterophile antibodies produced in response to an Epstein-Barr virus (EBV) infection. A blood film review is always performed alongside this test to look for the characteristic 'atypical lymphocytes' which support the diagnosis.</p>
+                        <div class="text-sm bg-gray-50 p-3 rounded-lg">
+                           <p><strong>Sample:</strong> 4mL EDTA (Purple Top)</p>
+                           <p><strong>Note:</strong> False negatives can occur, especially in the early stages of the illness.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card for Cytospins -->
+                <div class="bg-white rounded-lg shadow-md p-6 flex items-start">
+                    <i class="fas fa-brain text-4xl card-icon mr-6 mt-1"></i>
+                    <div>
+                        <h3 class="text-2xl font-bold nhs-dark-blue mb-3">CSF Cytospin</h3>
+                        <p class="text-gray-700 mb-4">This is a specialised technique used to concentrate cells from Cerebrospinal Fluid (CSF) onto a microscope slide. This allows for detailed morphological examination to identify cells that are present in very low numbers, which is crucial for diagnosing conditions like meningitis, subarachnoid haemorrhage, or the spread of cancer to the central nervous system.</p>
+                        <div class="text-sm bg-gray-50 p-3 rounded-lg">
+                           <p><strong>Sample:</strong> Fresh Cerebrospinal Fluid (CSF) in a sterile universal container.</p>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <section class="text-center mt-12">
+                <a href="what_haematology_does.html" class="bg-gray-800 text-white font-bold py-3 px-8 rounded-full hover:bg-gray-700 transition duration-300">
+                    <i class="fas fa-arrow-left mr-2"></i>Back to Haematology
+                </a>
+            </section>
+        </div>
     </main>
 
     <div id="footer-placeholder"></div>
+
     <script src="js/component-loader.js"></script>
+    
 </body>
 </html>
+
