@@ -1,136 +1,75 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clinical Chemistry Explained - SGC</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Added flashy fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Lilita+One&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#005EB8">
+    <title>What Chemistry Does - Lab Tour</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        .nhs-blue { background-color: #005EB8; }
-        .nhs-dark-blue { background-color: #003087; }
-        .nhs-light-grey { background-color: #F0F4F5; }
-        .nhs-text-blue { color: #005EB8; }
-        .nhs-text-dark-blue { color: #003087; }
-
-        /* Added flashy font and text styles */
-        .font-bangers { font-family: 'Bangers', cursive; }
-        .font-lilita { font-family: 'Lilita One', cursive; }
-
-        .text-shadow-pink { text-shadow: 2px 2px 4px rgba(236, 72, 153, 0.5); }
-        .text-shadow-blue { text-shadow: 2px 2px 4px rgba(59, 130, 246, 0.5); }
-        .text-shadow-yellow { text-shadow: 2px 2px 4px rgba(245, 158, 11, 0.5); }
-        .text-shadow-purple { text-shadow: 2px 2px 4px rgba(168, 85, 247, 0.5); }
-        .text-shadow-orange { text-shadow: 2px 2px 4px rgba(249, 115, 22, 0.5); }
-        /* ADDED: New text shadow for the changed text color */
-        .text-shadow-indigo { text-shadow: 2px 2px 4px rgba(99, 102, 241, 0.5); }
+        .gradient-text {
+            background: -webkit-linear-gradient(#005EB8, #0072CE);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
     </style>
 </head>
-<body class="bg-white text-gray-800 flex flex-col min-h-screen">
+<body class="bg-gray-100">
 
     <div id="header-placeholder"></div>
 
-    <main class="flex-grow">
-        <!-- Content Sections -->
-        <div class="py-12 md:py-16">
-            <div class="container mx-auto px-4 sm:px-6 max-w-4xl space-y-12">
+    <div class="container mx-auto px-4 py-8">
 
-                <!-- Section: Main Title -->
-                <div class="text-center">
-                    <h1 class="text-6xl md:text-8xl font-bangers text-green-500 tracking-wider">Clinical Chemistry</h1>
-                    <p class="mt-4 text-2xl font-lilita text-gray-700">What we do, and how we work for you.</p>
-                </div>
-                <div class="grid md:grid-cols-2 gap-8 items-center">
-                    <img src="Spectrophotometry laboratory assay.jpg" alt="Spectrophotometry laboratory assay.jpg" class="rounded-lg shadow-2xl w-full h-auto object-cover">
-                    <img src="A prism with light shining through that turns into a clinical chemistry results report.jpg" alt="A prism with light shining through that turns into a clinical chemistry results report.jpg" class="rounded-lg shadow-2xl w-full h-auto object-cover">
-                </div>
-
-                <!-- Section: We Use Light -->
-                <div class="text-center pt-8">
-                    <h2 class="text-6xl md:text-8xl font-bangers text-yellow-400 text-shadow-yellow tracking-wider">We Use Light</h2>
-                    <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">Every test is different, but most use the same principle: we shine a light on things and watch them change.</p>
-                </div>
-                <div class="grid md:grid-cols-2 gap-8 items-center">
-                    <div class="text-center">
-                        <img src="A torch shinning through a Chemistry sample .jpg" alt="A torch shinning through a Chemistry sample .jpg" class="rounded-lg shadow-2xl w-full h-auto object-cover">
-                        <p class="mt-4 text-2xl font-lilita text-cyan-400 text-shadow-blue transform rotate-2">We shine a light on things</p>
-                    </div>
-                    <div class="text-center">
-                        <img src="White Light shining horizontaly through a clinical chemistry sample and changing colour as it passes through. Emphasize the point in the centre of the sample where the colour change happens as though tha.jpg" alt="White Light shining horizontaly through a clinical chemistry sample and changing colour as it passes through. Emphasize the point in the centre of the sample where the colour change happens as though tha.jpg" class="rounded-lg shadow-2xl w-full h-auto object-cover">
-                        <p class="mt-4 text-3xl font-lilita text-pink-500 text-shadow-pink">Then add magic</p>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <!-- CHANGED: Text color from cyan to indigo for variation -->
-                    <h3 class="text-5xl md:text-7xl font-bangers text-indigo-500 text-shadow-indigo tracking-wider">and watch things change</h3>
-                </div>
-
-                <!-- Section: How That Works For You -->
-                <div class="text-center pt-8">
-                    <h2 class="text-6xl md:text-8xl font-bangers text-purple-500 text-shadow-purple tracking-wider">How that works for you</h2>
-                    <p class="mt-4 text-3xl font-lilita text-gray-700">Team work makes the dream work</p>
-                </div>
-                <div class="grid md:grid-cols-2 gap-8 items-center bg-nhs-light-grey p-8 rounded-lg shadow-inner">
-                    <img src="Clerical Quality control in a Laboratory coat .jpg" alt="Clerical Quality control in a Laboratory coat .jpg" class="rounded-lg shadow-2xl w-full h-auto object-cover">
-                    <div class="text-center md:text-left">
-                        <p class="text-xl font-semibold nhs-text-dark-blue">Specimen reception perform the first round of quality checks</p>
-                        <p class="mt-4 text-gray-600">Single Sample: 1-2 minutes</p>
-                        <p class="mt-1 text-gray-600">Batch of 30 Samples: 15+ minutes (depending on labeling and data entry)</p>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <h3 class="text-4xl font-bold nhs-text-dark-blue">THEN THE SAMPLE IS SPUN FOR 10 MINUTES</h3>
-                    <img src="Spinning blood samples.jpg" alt="Spinning blood samples.jpg" class="mt-6 rounded-lg shadow-2xl w-full h-auto object-cover max-w-xl mx-auto">
-                </div>
-                <div class="text-center bg-blue-100 p-6 rounded-lg">
-                     <p class="text-lg font-semibold text-blue-800">The spec rec teams book in over 8000 samples @city and over 10000 samples @ qmc every single day</p>
-                     <p class="mt-4 text-gray-700">So please remember, nothing is urgent if it's all marked urgent. While we do prioritise those marked as urgent, if every ward sends them down at the same time there will always be a back log</p>
-                </div>
-
-                <!-- Section: Laboratory Automation -->
-                <div class="text-center pt-8">
-                    <h2 class="text-6xl md:text-8xl font-bangers text-red-500 tracking-wider">Laboratory Automation</h2>
-                    <p class="mt-4 text-lg text-gray-600">A tiny little mouse car Takes the sample where it needs to go</p>
-                </div>
-                <div class="grid md:grid-cols-2 gap-8 items-center bg-nhs-dark-blue text-white p-8 rounded-lg shadow-xl">
-                    <img src="A yellow lidded blood collection tube strapped to the top of a car with a mouse driving .jpg" alt="A yellow lidded blood collection tube strapped to the top of a car with a mouse driving .jpg" class="rounded-lg shadow-2xl w-full h-auto object-cover">
-                    <div class="text-center md:text-left">
-                        <p class="text-gray-200">Single Sample: 5-15 minutes (varies greatly depending on requested tests and current samples on track)</p>
-                        <p class="mt-2 text-gray-200">Batch of 30 Samples: 30-90 minutes (automated analyzers can process multiple samples, but total time increases with batch size)</p>
-                    </div>
-                </div>
-                <div class="text-center bg-red-100 p-6 rounded-lg">
-                    <p class="text-xl font-bold text-red-700">Please remember U&Es is a collection of tests, not just 1 test</p>
-                </div>
-
-                <!-- Section: Golden Hour -->
-                <div class="text-center pt-8">
-                    <h2 class="text-6xl md:text-8xl font-bangers text-orange-500 text-shadow-orange tracking-wider">GOLDEN HOUR</h2>
-                    <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">While we do aim to process all urgent samples within the hour, it is not always possible. The Volume of samples is the main problem.</p>
-                </div>
-
-            </div>
+        <div class="text-center mb-12">
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold gradient-text leading-tight">
+                Welcome to the World of Chemistry!
+            </h1>
+            <p class="text-lg text-gray-600 mt-4 max-w-2xl mx-auto">
+                Ever wondered what happens to your blood sample after it's taken? Here in the Chemistry department, we're like detectives, uncovering the secrets hidden in your blood to help doctors understand what's happening inside your body. Let's dive in and explore the amazing world of clinical chemistry!
+            </p>
         </div>
-    </main>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                <img src="Spectrophotometry laboratory assay.jpg" alt="Routine Chemistry" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">Routine Chemistry</h2>
+                    <p class="text-gray-600 mb-4">Discover the day-to-day tests that check your body's essential functions, from your liver and kidneys to your electrolytes and glucose levels.</p>
+                    <a href="routine_chemistry.html" class="inline-block bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600 transition-colors duration-300">Learn More <i class="fas fa-arrow-right ml-2"></i></a>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                <img src="A torch shinning through a Chemistry sample .jpg" alt="Immunoassay" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">Immunoassay</h2>
+                    <p class="text-gray-600 mb-4">Explore how we use antibodies to detect and measure tiny amounts of substances like hormones and vitamins in your blood.</p>
+                    <a href="immunoassay.html" class="inline-block bg-green-500 text-white px-6 py-2 rounded-full hover:bg-green-600 transition-colors duration-300">Learn More <i class="fas fa-arrow-right ml-2"></i></a>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                <img src="A prism with light shining through that turns into a clinical chemistry results report.jpg" alt="Special Chemistry" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">Special Chemistry</h2>
+                    <p class="text-gray-600 mb-4">Delve into the more specialised tests that help diagnose complex conditions, from therapeutic drug monitoring to protein electrophoresis.</p>
+                    <a href="special_chemistry.html" class="inline-block bg-purple-500 text-white px-6 py-2 rounded-full hover:bg-purple-600 transition-colors duration-300">Learn More <i class="fas fa-arrow-right ml-2"></i></a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="text-center mt-16">
+            <a href="games.html" class="bg-yellow-500 text-white font-bold py-3 px-8 rounded-full hover:bg-yellow-600 transition duration-300 text-lg">
+                <i class="fas fa-gamepad mr-2"></i>
+                Play the Chemistry Game!
+            </a>
+        </div>
+    </div>
 
     <div id="footer-placeholder"></div>
 
     <script src="js/component-loader.js"></script>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            if (typeof feather !== 'undefined') {
-                feather.replace();
-            }
-        });
-    </script>
 </body>
 </html>
