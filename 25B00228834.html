@@ -61,7 +61,7 @@
                                 <tr><td>MPV</td><td class="font-mono text-right">10.7 fL</td></tr>
                                 <tr><td>RDW-CV</td><td class="font-mono text-right">14.0 %</td></tr>
                                 <tr><td>NRBC</td><td class="font-mono text-right">0.00 x10⁹/L</td></tr>
-                                <tr class="highlight-abnormal"><td>Reticulocyte</td><td class="font-mono text-right">201.10 x10⁹/L</td></tr>
+                                <tr><td>Reticulocyte</td><td class="font-mono text-right">201.10 x10⁹/L</td></tr>
                             </table>
                              <h4 class="font-bold mt-4">Automated Differential</h4>
                              <table class="w-full results-table mt-2">
@@ -71,6 +71,8 @@
                                 <tr><td>Eosinophils</td><td class="font-mono text-right">0.09 x10⁹/L (1.5%)</td></tr>
                                 <tr><td>Basophils</td><td class="font-mono text-right">0.07 x10⁹/L (1.2%)</td></tr>
                             </table>
+                        </div>
+                        <div id="full-case-details" class="hidden mt-4 pt-4 border-t">
                              <div class="space-y-4 mt-4">
                                 <h4 class="font-bold">Biochemistry Results</h4>
                                  <table class="w-full results-table mt-2">
@@ -79,17 +81,15 @@
                                 <tr><td>Urea</td><td class="font-mono text-right">5.4 mmol/L</td></tr>
                                 <tr><td>Creatinine</td><td class="font-mono text-right">68 umol/L</td></tr>
                                 <tr><td>eGFR</td><td class="font-mono text-right">>90 mL/min/1.73m*2</td></tr>
-                                 <tr class="highlight-abnormal"><td>ALT</td><td class="font-mono text-right">38 U/L</td></tr>
-                                 <tr class="highlight-abnormal"><td>Total Bilirubin</td><td class="font-mono text-right">44 umol/L</td></tr>
+                                 <tr id="alt-result"><td>ALT</td><td class="font-mono text-right">38 U/L</td></tr>
+                                 <tr id="bilirubin-result"><td>Total Bilirubin</td><td class="font-mono text-right">44 umol/L</td></tr>
                                  <tr><td>ALP</td><td class="font-mono text-right">74 U/L</td></tr>
                                  <tr><td>Adjusted Calcium</td><td class="font-mono text-right">2.30 mmol/L</td></tr>
-                                <tr class="highlight-abnormal"><td>Albumin</td><td class="font-mono text-right">52 g/L</td></tr>
+                                <tr id="albumin-result"><td>Albumin</td><td class="font-mono text-right">52 g/L</td></tr>
                                 <tr><td>Phosphate</td><td class="font-mono text-right">0.97 mmol/L</td></tr>
                                  <tr><td>Lactate Dehydrogenase</td><td class="font-mono text-right">218 U/L</td></tr>
                             </table>
                             </div>
-                        </div>
-                        <div id="full-case-details" class="hidden mt-4 pt-4 border-t">
                         </div>
                     </div>
                     <div class="bg-white p-6 rounded-lg shadow-md">
@@ -185,7 +185,7 @@
                 {"feature":"Acanthocytes"},
             ];
 
-            const morphologyFeatures = {"Red Cell Features":["Anaemia","Microcytes","Hypochromic Cells","Polychromatic Cells","Mixed Cell Population (Dimorphic)","Poikilocytes","Target Cells","Echinocytes/Crenated Cells","Fragments/Schistocytes","Sickle Cells","Spherocytes","Rouleaux","Basophilic Stippling","Nucleated RBCs","Acanthocytes","Tear Drop Poikilocytes","Keratocytes/Bite Cells","Boat-shaped Cells","Howell-Jolly Bodies"],"White Cell Features":["Leukocytosis","Eosinophilia","Band Form Neutrophils","Toxic Granulation","Hypogranular/Agranular Cytoplasm (Neutrophils)","Blast Cells","Promyelocytes","Prolymphocytes","Myelocytes","Smear/Smudge Cells","Atypical/Suspect Reactive Lymphocytes","Reactive/Plasmacytoid Lymphocytes","Cleft Nuclei","Plasma Cells","Auer Rods","Basophilia","Neutropenia","Lymphocytosis","Lymphopenia","Abnormal/Suspect Neoplastic Lymphocytes","Large Granular Lymphocytes","Left Shift","Pseudo-Pelger Cells","Promonocytes"],"Platelet Features":["Thrombocytosis","Thrombocytopenia","Large/Giant Platelets","Platelet Anisocytosis","Platelet Clumps"]};
+            const morphologyFeatures = {"Red Cell Features":["Acanthocytes"]};
             
             // --- UI Element References ---
             const checklistContainer = document.getElementById('feature-checklist');
@@ -311,6 +311,12 @@
                 const isUserChoice = selectedFeatures.includes(f.feature);
                 return `<tr class="${isUserChoice ? 'highlight-correct font-bold' : ''}"><td class="p-2">${f.feature}</td></tr>`;
             }).join('');
+
+            // Highlight abnormal results
+            document.getElementById('alt-result').classList.add('highlight-abnormal');
+            document.getElementById('bilirubin-result').classList.add('highlight-abnormal');
+            document.getElementById('albumin-result').classList.add('highlight-abnormal');
+            document.querySelector('.results-table tr:last-child').classList.add('highlight-abnormal');
 
         }
 
