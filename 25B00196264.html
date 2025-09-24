@@ -20,6 +20,7 @@ body { font-family: 'Inter', sans-serif; }
 .feature-checkbox:disabled { opacity: 0.7; }
 .feature-label:has(.feature-checkbox:disabled) { cursor: not-allowed; color: #6b7280; }
 .highlight-correct { background-color: #dcfce7; color: #166534; }
+.highlight-abnormal { background-color: #fee2e2; }
 /* Modal Styles */
 .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.85); align-items: center; justify-content: center; }
 .modal-content { margin: auto; display: block; max-width: 85%; max-height: 85%; transition: transform 0.2s ease; cursor: zoom-in; }
@@ -50,17 +51,17 @@ body { font-family: 'Inter', sans-serif; }
                          <h4 class="font-bold mt-4">Full Blood Count</h4>
                         <table class="w-full results-table mt-2">
                             <tr><td>WBC</td><td class="font-mono text-right">4.17 x10⁹/L</td></tr>
-                            <tr class="bg-red-100"><td>RBC</td><td class="font-mono text-right">3.72 x10¹²/L</td></tr>
+                            <tr id="rbc-row"><td>RBC</td><td class="font-mono text-right">3.72 x10¹²/L</td></tr>
                             <tr><td>HGB</td><td class="font-mono text-right">120 g/L</td></tr>
-                            <tr class="bg-red-100"><td>HCT</td><td class="font-mono text-right">0.342 L/L</td></tr>
+                            <tr id="hct-row"><td>HCT</td><td class="font-mono text-right">0.342 L/L</td></tr>
                             <tr><td>MCV</td><td class="font-mono text-right">91.9 fL</td></tr>
                             <tr><td>MCH</td><td class="font-mono text-right">32.3 pg</td></tr>
-                            <tr class="bg-red-100"><td>MCHC</td><td class="font-mono text-right">351 g/L</td></tr>
+                            <tr id="mchc-row"><td>MCHC</td><td class="font-mono text-right">351 g/L</td></tr>
                             <tr><td>PLT</td><td class="font-mono text-right">241 x10⁹/L</td></tr>
                             <tr><td>MPV</td><td class="font-mono text-right">9.7 fL</td></tr>
-                            <tr class="bg-red-100"><td>RDW-CV</td><td class="font-mono text-right">15.8 %</td></tr>
+                            <tr id="rdw-row"><td>RDW-CV</td><td class="font-mono text-right">15.8 %</td></tr>
                             <tr><td>NRBC</td><td class="font-mono text-right">0.01 x10⁹/L</td></tr>
-                            <tr class="bg-red-100"><td>Reticulocyte</td><td class="font-mono text-right">183.40 x10⁹/L</td></tr>
+                            <tr id="retic-row"><td>Reticulocyte</td><td class="font-mono text-right">183.40 x10⁹/L</td></tr>
                         </table>
                          <h4 class="font-bold mt-4">Automated Differential</h4>
                          <table class="w-full results-table mt-2">
@@ -160,7 +161,7 @@ body { font-family: 'Inter', sans-serif; }
         feather.replace();
 
         // --- Page Data for Case ---
-        const imageFilenames = [];
+        const imageFilenames = ["SNE_241519.jpg", "SNE_241520.jpg", "SNE_241521.jpg", "SNE_241522.jpg", "SNE_241523.jpg", "SNE_241524.jpg", "SNE_241525.jpg", "SNE_241526.jpg", "SNE_241527.jpg", "SNE_241528.jpg", "SNE_241529.jpg", "SNE_241530.jpg", "SNE_241531.jpg", "SNE_241532.jpg", "SNE_241533.jpg", "SNE_241534.jpg", "SNE_241535.jpg", "SNE_241536.jpg", "SNE_241537.jpg", "SNE_241538.jpg", "SNE_241539.jpg", "SNE_241540.jpg", "SNE_241541.jpg", "SNE_241542.jpg", "SNE_241543.jpg", "SNE_241544.jpg", "SNE_241545.jpg", "SNE_241546.jpg", "SNE_241547.jpg", "SNE_241548.jpg", "SNE_241549.jpg", "SNE_241550.jpg", "SNE_241551.jpg", "SNE_241552.jpg", "SNE_241553.jpg", "SNE_241554.jpg", "SNE_241555.jpg", "SNE_241556.jpg", "SNE_241557.jpg", "SNE_241558.jpg", "SNE_241559.jpg", "SNE_241560.jpg", "SNE_241561.jpg", "SNE_241562.jpg", "SNE_241563.jpg", "SNE_241564.jpg", "SNE_241565.jpg", "SNE_241566.jpg", "SNE_241567.jpg", "SNE_241568.jpg", "SNE_241569.jpg", "SNE_241570.jpg", "SNE_241571.jpg", "SNE_241572.jpg", "SNE_241573.jpg", "SNE_241574.jpg", "SNE_241575.jpg", "SNE_241576.jpg", "SNE_241577.jpg", "SNE_241578.jpg", "SNE_241579.jpg", "SNE_241580.jpg", "SNE_241581.jpg", "SNE_241582.jpg", "SNE_241583.jpg", "SNE_241584.jpg", "SNE_241585.jpg", "SNE_241586.jpg", "SNE_241587.jpg", "SNE_241588.jpg", "SNE_241589.jpg", "SNE_241590.jpg", "SNE_241591.jpg", "SNE_241592.jpg", "SNE_241593.jpg", "SNE_241594.jpg", "SNE_241595.jpg", "SNE_241596.jpg", "SNE_241597.jpg", "SNE_241598.jpg", "SNE_241599.jpg", "SNE_241600.jpg", "SNE_241601.jpg", "SNE_241602.jpg", "SNE_241603.jpg", "SNE_241604.jpg", "SNE_241605.jpg", "SNE_241606.jpg", "SNE_241607.jpg", "SNE_241608.jpg", "SNE_241609.jpg", "SNE_241610.jpg", "SNE_241611.jpg", "SNE_241612.jpg", "SNE_241613.jpg", "SNE_241614.jpg", "SNE_241615.jpg", "SNE_241616.jpg", "SNE_241617.jpg", "SNE_241618.jpg"];
         const expertComment = "The FBC shows a mild anaemia with a high MCHC and RDW, and a significant reticulocytosis. This combination is suggestive of haemolysis. The blood film confirms this, with a variety of red cell abnormalities. The presence of both spherocytes and elliptocytes is a classic feature of hereditary elliptocytosis, particularly the spherocytic variant. Polychromasia is also present, which is consistent with the high reticulocyte count and reflects the bone marrow's response to the anaemia. Hereditary elliptocytosis is a genetic disorder of the red blood cell membrane, leading to an elliptical or oval shape. These abnormal cells are less flexible than normal red cells and are therefore prematurely destroyed in the spleen, leading to a compensated haemolytic anaemia. The haematology registrar's comment of '?membranopathy related' is a strong indicator of this diagnosis. Further tests, such as osmotic fragility testing or genetic testing, would be required to confirm the diagnosis.";
         
         const topPeerFeatures = [
@@ -169,7 +170,7 @@ body { font-family: 'Inter', sans-serif; }
             {"feature":"Polychromasia"},
         ];
 
-        const morphologyFeatures = {"Red Cell Features":["Spherocytes","Elliptocytes", "Polychromasia"]};
+        const morphologyFeatures = {"Red Cell Features":["Anaemia","Microcytes","Hypochromic Cells","Polychromatic Cells","Mixed Cell Population (Dimorphic)","Poikilocytes","Target Cells","Echinocytes/Crenated Cells","Fragments/Schistocytes","Sickle Cells","Spherocytes","Rouleaux","Basophilic Stippling","Nucleated RBCs","Acanthocytes","Tear Drop Poikilocytes","Keratocytes/Bite Cells","Boat-shaped Cells","Howell-Jolly Bodies", "Elliptocytes"],"White Cell Features":["Leukocytosis","Eosinophilia","Band Form Neutrophils","Toxic Granulation","Hypogranular/Agranular Cytoplasm (Neutrophils)","Blast Cells","Promyelocytes","Prolymphocytes","Myelocytes","Smear/Smudge Cells","Atypical/Suspect Reactive Lymphocytes","Reactive/Plasmacytoid Lymphocytes","Cleft Nuclei","Plasma Cells","Auer Rods","Basophilia","Neutropenia","Lymphocytosis","Lymphopenia","Abnormal/Suspect Neoplastic Lymphocytes","Large Granular Lymphocytes","Left Shift","Pseudo-Pelger Cells","Promonocytes"],"Platelet Features":["Thrombocytosis","Thrombocytopenia","Large/Giant Platelets","Platelet Anisocytosis","Platelet Clumps"]};
         
         // --- UI Element References ---
         const checklistContainer = document.getElementById('feature-checklist');
@@ -305,6 +306,13 @@ body { font-family: 'Inter', sans-serif; }
             const isUserChoice = selectedFeatures.includes(f.feature);
             return `<tr class="${isUserChoice ? 'highlight-correct font-bold' : ''}"><td class="p-2">${f.feature}</td></tr>`;
         }).join('');
+
+        // Highlight abnormal results
+        document.getElementById('rbc-row').classList.add('highlight-abnormal');
+        document.getElementById('hct-row').classList.add('highlight-abnormal');
+        document.getElementById('mchc-row').classList.add('highlight-abnormal');
+        document.getElementById('rdw-row').classList.add('highlight-abnormal');
+        document.getElementById('retic-row').classList.add('highlight-abnormal');
 
     }
 
