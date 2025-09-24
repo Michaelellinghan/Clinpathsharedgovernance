@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Morphology Case 25B00196264</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+<style>
+body { font-family: 'Inter', sans-serif; }
+.nhs-blue { background-color: #005EB8; }
+.nhs-dark-blue { background-color: #003087; }
+.nhs-text-blue { color: #005EB8; }
+.nhs-text-dark-blue { color: #003087; }
+.results-table { font-size: 0.9rem; }
+.results-table td { padding: 0.25rem 0.5rem; border-bottom: 1px solid #e5e7eb; }
+.results-table tr:last-child td { border-bottom: none; }
+.feature-checkbox:disabled { opacity: 0.7; }
+.feature-label:has(.feature-checkbox:disabled) { cursor: not-allowed; color: #6b7280; }
+.highlight-correct { background-color: #dcfce7; color: #166534; }
+/* Modal Styles */
+.modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.85); align-items: center; justify-content: center; }
+.modal-content { margin: auto; display: block; max-width: 85%; max-height: 85%; transition: transform 0.2s ease; cursor: zoom-in; }
+.modal-content.zoomed { transform: scale(2); cursor: zoom-out; }
+.modal-close { position: absolute; top: 15px; right: 35px; color: #f1f1f1; font-size: 40px; font-weight: bold; transition: 0.3s; cursor: pointer; }
+.modal-nav { cursor: pointer; position: absolute; top: 50%; width: auto; padding: 16px; margin-top: -22px; color: white; font-weight: bold; font-size: 20px; transition: 0.3s ease; user-select: none; background-color: rgba(0,0,0,0.3); }
+.modal-nav:hover { background-color: rgba(0,0,0,0.8); }
+.modal-prev { left: 0; border-radius: 0 3px 3px 0; }
+.modal-next { right: 0; border-radius: 3px 0 0 3px; }
+</style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div id="header-placeholder"></div>
+
+<main class="py-16">
+    <div class="container mx-auto px-6 max-w-7xl">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl font-bold nhs-text-dark-blue">Morphology Case Library</h2>
+            <p class="text-lg text-gray-600">Case Study: 25B00196264</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-2xl font-semibold nhs-text-dark-blue border-b pb-2 mb-4">Case Information</h3>
+                    <div id="initial-info">
+                         <h4 class="font-bold mt-4">Full Blood Count</h4>
+                        <table class="w-full results-table mt-2">
+                            <tr><td>WBC</td><td class="font-mono text-right">4.17 x10⁹/L</td></tr>
+                            <tr class="bg-red-100"><td>RBC</td><td class="font-mono text-right">3.72 x10¹²/L</td></tr>
+                            <tr><td>HGB</td><td class="font-mono text-right">120 g/L</td></tr>
+                            <tr class="bg-red-100"><td>HCT</td><td class="font-mono text-right">0.342 L/L</td></tr>
+                            <tr><td>MCV</td><td class="font-mono text-right">91.9 fL</td></tr>
+                            <tr><td>MCH</td><td class="font-mono text-right">32.3 pg</td></tr>
+                            <tr class="bg-red-100"><td>MCHC</td><td class="font-mono text-right">351 g/L</td></tr>
+                            <tr><td>PLT</td><td class="font-mono text-right">241 x10⁹/L</td></tr>
+                            <tr><td>MPV</td><td class="font-mono text-right">9.7 fL</td></tr>
+                            <tr class="bg-red-100"><td>RDW-CV</td><td class="font-mono text-right">15.8 %</td></tr>
+                            <tr><td>NRBC</td><td class="font-mono text-right">0.01 x10⁹/L</td></tr>
+                            <tr class="bg-red-100"><td>Reticulocyte</td><td class="font-mono text-right">183.40 x10⁹/L</td></tr>
+                        </table>
+                         <h4 class="font-bold mt-4">Automated Differential</h4>
+                         <table class="w-full results-table mt-2">
+                            <tr><td>Neutrophils</td><td class="font-mono text-right">2.57 x10⁹/L (61.6%)</td></tr>
+                            <tr><td>Lymphocytes</td><td class="font-mono text-right">1.23 x10⁹/L (29.5%)</td></tr>
+                            <tr><td>Monocytes</td><td class="font-mono text-right">0.25 x10⁹/L (6.0%)</td></tr>
+                            <tr><td>Eosinophils</td><td class="font-mono text-right">0.09 x10⁹/L (2.2%)</td></tr>
+                            <tr><td>Basophils</td><td class="font-mono text-right">0.03 x10⁹/L (0.7%)</td></tr>
+                        </table>
+                    </div>
+                    <div id="full-case-details" class="hidden mt-4 pt-4 border-t">
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-2xl font-semibold nhs-text-dark-blue border-b pb-2 mb-4">Blood Film Examination</h3>
+                    <div class="mb-6">
+                        <h4 class="font-semibold text-lg">Red Cell Picture</h4>
+                        <div id="red-cell-container" class="cursor-pointer">
+                            <img id="red-cell-img" src="morphology/25B00196264/red cells.png" alt="Overall red cell picture for case" class="rounded-md w-full h-auto mt-2 shadow">
+                        </div>
+                    </div>
+                    <div>
+                         <h4 class="font-semibold text-lg">White Cell Gallery</h4>
+                         <p class="text-sm text-gray-600 mb-2">Click a thumbnail to view the full-size image.</p>
+                         <div id="wbc-gallery" class="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2 max-h-96 overflow-y-auto pr-2">
+                             </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-2xl font-semibold nhs-text-dark-blue border-b pb-2 mb-4">Morphology Checklist</h3>
+                <p class="text-gray-600 mb-4">Select up to three key morphological features you have identified.</p>
+                
+                <div id="feature-checklist" class="space-y-4 max-h-96 overflow-y-auto pr-2">
+                    </div>
+
+                <button id="reveal-btn" onclick="checkMorphology()" class="w-full mt-6 bg-black text-white font-bold py-3 px-4 rounded-lg hover:bg-gray-800 transition duration-300">See Results</button>
+                
+                <div id="results" class="mt-4"></div>
+
+                <div id="analysis-section" class="hidden mt-6 border-t pt-6">
+                    <h3 class="text-2xl font-semibold nhs-text-dark-blue mb-4">Analysis & Peer Consensus</h3>
+                    
+                    <div class="mb-6">
+                        <h4 class="text-lg font-bold">Your Selected Features:</h4>
+                        <ul id="user-choices" class="list-disc list-inside mt-2"></ul>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <h4 class="text-lg font-bold">Expert Commentary</h4>
+                        <div class="mt-2 p-4 bg-gray-100 rounded-md text-gray-700">
+                            <p id="expert-comment-text" class="whitespace-pre-wrap"></p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="text-lg font-bold">Top Features</h4>
+                        <table class="w-full text-left mt-2 text-sm">
+                            <thead>
+                                <tr class="bg-gray-50"><th class="p-2">Feature</th><th
+                            </thead>
+                            <tbody id="top-features-table"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                                    <section class="text-center mt-12">
+            <a href="morphology_cases.html" class="bg-gray-800 text-white font-bold py-3 px-8 rounded-full hover:bg-gray-700 transition duration-300">
+                <i class="fas fa-arrow-left mr-2"></i>Back to More Cases
+            </a>
+        </section>
+</main>
+
+<div id="image-modal" class="modal">
+    <span class="modal-close" id="modal-close-btn">&times;</span>
+    <a class="modal-prev modal-nav" id="modal-prev-btn">&#10094;</a>
+    <a class="modal-next modal-nav" id="modal-next-btn">&#10095;</a>
+    <img class="modal-content" id="modal-img">
+</div>
+
+<div id="footer-placeholder"></div>
+
+  <script src="js/component-loader.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        feather.replace();
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- Initialise Feather Icons ---
+        feather.replace();
+
+        // --- Page Data for Case ---
+        const imageFilenames = [];
+        const expertComment = "The FBC shows a mild anaemia with a high MCHC and RDW, and a significant reticulocytosis. This combination is suggestive of haemolysis. The blood film confirms this, with a variety of red cell abnormalities. The presence of both spherocytes and elliptocytes is a classic feature of hereditary elliptocytosis, particularly the spherocytic variant. Polychromasia is also present, which is consistent with the high reticulocyte count and reflects the bone marrow's response to the anaemia. Hereditary elliptocytosis is a genetic disorder of the red blood cell membrane, leading to an elliptical or oval shape. These abnormal cells are less flexible than normal red cells and are therefore prematurely destroyed in the spleen, leading to a compensated haemolytic anaemia. The haematology registrar's comment of '?membranopathy related' is a strong indicator of this diagnosis. Further tests, such as osmotic fragility testing or genetic testing, would be required to confirm the diagnosis.";
+        
+        const topPeerFeatures = [
+            {"feature":"Spherocytes"},
+            {"feature":"Elliptocytes"},
+            {"feature":"Polychromasia"},
+        ];
+
+        const morphologyFeatures = {"Red Cell Features":["Spherocytes","Elliptocytes", "Polychromasia"]};
+        
+        // --- UI Element References ---
+        const checklistContainer = document.getElementById('feature-checklist');
+        const galleryContainer = document.getElementById('wbc-gallery');
+        const revealBtn = document.getElementById('reveal-btn');
+        const analysisSection = document.getElementById('analysis-section');
+        const fullDetailsSection = document.getElementById('full-case-details');
+        const modal = document.getElementById('image-modal');
+        const modalImg = document.getElementById('modal-img');
+        const closeModalBtn = document.getElementById('modal-close-btn');
+        const prevBtn = document.getElementById('modal-prev-btn');
+        const nextBtn = document.getElementById('modal-next-btn');
+        const redCellContainer = document.getElementById('red-cell-container');
+
+        let currentImageIndex = 0;
+        const imagePath = 'morphology/25B00196264/';
+        const allGalleryImages = [document.getElementById('red-cell-img').src, ...imageFilenames.map(name => imagePath + name)];
+
+        // --- UI Population ---
+        for (const category in morphologyFeatures) {
+            let categoryHtml = `<h4 class="font-bold mt-4 text-gray-700">${category}</h4>`;
+            morphologyFeatures[category].forEach(feature => {
+                categoryHtml += `<label class="feature-label flex items-center space-x-3 cursor-pointer"><input type="checkbox" value="${feature}" class="feature-checkbox h-5 w-5 rounded border-gray-300 text-nhs-blue focus:ring-nhs-blue" data-feature="${feature}"><span>${feature}</span></label>`;
+            });
+            checklistContainer.innerHTML += categoryHtml;
+        }
+
+
+        imageFilenames.forEach(filename => {
+            const img = document.createElement('img');
+            img.src = imagePath + filename;
+            img.alt = `Morphology image: ${filename}`;
+            img.className = 'w-full h-auto rounded cursor-pointer hover:opacity-75 transition-opacity';
+            galleryContainer.appendChild(img);
+        });
+        
+        // --- Event Logic ---
+        const openModal = (startIndex) => {
+            currentImageIndex = startIndex;
+            modal.style.display = "flex";
+            modalImg.src = allGalleryImages[currentImageIndex];
+            modalImg.classList.remove('zoomed');
+        };
+
+        const showImage = (newIndex) => {
+            currentImageIndex = (newIndex + allGalleryImages.length) % allGalleryImages.length;
+            modalImg.src = allGalleryImages[currentImageIndex];
+            modalImg.classList.remove('zoomed');
+        };
+        
+        redCellContainer.addEventListener('click', () => openModal(0));
+        
+        Array.from(galleryContainer.children).forEach((thumb, index) => {
+            thumb.addEventListener('click', () => openModal(index + 1)); // +1 to account for red cell image at index 0
+        });
+
+        prevBtn.addEventListener('click', (e) => { e.stopPropagation(); showImage(currentImageIndex - 1); });
+        nextBtn.addEventListener('click', (e) => { e.stopPropagation(); showImage(currentImageIndex + 1); });
+        closeModalBtn.onclick = () => { modal.style.display = "none"; };
+        modal.addEventListener('click', (e) => { if (e.target === modal) modal.style.display = "none"; });
+        modalImg.addEventListener('click', (e) => { e.stopPropagation(); e.target.classList.toggle('zoomed'); });
+
+        checklistContainer.addEventListener('change', (e) => {
+            if (e.target.type === 'checkbox') {
+                if (document.querySelectorAll('.feature-checkbox:checked').length > 3) {
+                    e.target.checked = false;
+                    alert('You can select a maximum of three features.');
+                }
+            }
+        });
+    });
+
+    function checkMorphology() {
+        const correctFeatures = ["Spherocytes","Elliptocytes", "Polychromasia"];
+        const checkboxes = document.querySelectorAll('#feature-checklist input[type="checkbox"]:checked');
+        const selectedFeatures = Array.from(checkboxes).map(cb => cb.value);
+        const resultContainer = document.getElementById('results');
+
+        let score = 0;
+        let correctSelections = [];
+        let incorrectSelections = [];
+
+        // Check selected features against the correct list
+        selectedFeatures.forEach(feature => {
+            if (correctFeatures.includes(feature)) {
+                score++;
+                correctSelections.push(feature);
+            } else {
+                incorrectSelections.push(feature);
+            }
+        });
+
+        const missedFeatures = correctFeatures.filter(f => !selectedFeatures.includes(f));
+
+        let resultHTML = `<h3>Results</h3>`;
+        resultHTML += `<p>You correctly identified ${correctSelections.length} out of 3 features.</p>`;
+
+        if (correctSelections.length > 0) {
+            resultHTML += `<p><strong>Correctly identified:</strong> ${correctSelections.join(', ')}</p>`;
+        }
+        if (incorrectSelections.length > 0) {
+            resultHTML += `<p><strong>Incorrectly identified:</strong> ${incorrectSelections.join(', ')}</p>`;
+        }
+        if (missedFeatures.length > 0) {
+            resultHTML += `<p><strong>Missed features:</strong> ${missedFeatures.join(', ')}</p>`;
+        }
+
+        // Display final score and feedback
+        if (score === 3 && selectedFeatures.length === 3) {
+            resultHTML += `<p style="color: green;"><strong>Excellent! You identified all the key morphological features.</strong></p>`;
+        } else {
+            resultHTML += `<p style="color: orange;"><strong>You're on the right track! Review the missed or incorrectly identified features and try again.</strong></p>`;
+        }
+
+        resultContainer.innerHTML = resultHTML;
+
+        // Also reveal the analysis section
+        document.getElementById('analysis-section').classList.remove('hidden');
+        document.getElementById('full-case-details').classList.remove('hidden');
+        document.getElementById('reveal-btn').disabled = true;
+        document.getElementById('reveal-btn').classList.add('opacity-50', 'cursor-not-allowed');
+        document.querySelectorAll('.feature-checkbox').forEach(cb => cb.disabled = true);
+        document.getElementById('user-choices').innerHTML = selectedFeatures.length > 0 ? selectedFeatures.map(choice => `<li>${choice}</li>`).join('') : '<li>No features selected.</li>';
+        document.getElementById('expert-comment-text').textContent = "The FBC shows a mild anaemia with a high MCHC and RDW, and a significant reticulocytosis. This combination is suggestive of haemolysis. The blood film confirms this, with a variety of red cell abnormalities. The presence of both spherocytes and elliptocytes is a classic feature of hereditary elliptocytosis, particularly the spherocytic variant. Polychromasia is also present, which is consistent with the high reticulocyte count and reflects the bone marrow's response to the anaemia. Hereditary elliptocytosis is a genetic disorder of the red blood cell membrane, leading to an elliptical or oval shape. These abnormal cells are less flexible than normal red cells and are therefore prematurely destroyed in the spleen, leading to a compensated haemolytic anaemia. The haematology registrar's comment of '?membranopathy related' is a strong indicator of this diagnosis. Further tests, such as osmotic fragility testing or genetic testing, would be required to confirm the diagnosis.";
+        
+        const topFeaturesTable = document.getElementById('top-features-table');
+        const topPeerFeatures = [
+            {"feature":"Spherocytes"},
+            {"feature":"Elliptocytes"},
+            {"feature":"Polychromasia"},
+        ];
+        topFeaturesTable.innerHTML = topPeerFeatures.map(f => {
+            const isUserChoice = selectedFeatures.includes(f.feature);
+            return `<tr class="${isUserChoice ? 'highlight-correct font-bold' : ''}"><td class="p-2">${f.feature}</td></tr>`;
+        }).join('');
+
+    }
+
+</script>
+</body>
+</html>
