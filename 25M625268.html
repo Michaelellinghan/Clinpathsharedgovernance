@@ -248,4 +248,68 @@
             const correctFeatures = ["Trophozoites", "Ring forms", "Multiple parasites per cell"];
             const checkboxes = document.querySelectorAll('#feature-checklist input[type="checkbox"]:checked');
             const selectedFeatures = Array.from(checkboxes).map(cb => cb.value);
-            const resultContainer = document.getElementById('result
+            const resultContainer = document.getElementById('results');
+
+            let score = 0;
+            let correctSelections = [];
+            let incorrectSelections = [];
+
+            // Check selected features against the correct list
+            selectedFeatures.forEach(feature => {
+                if (correctFeatures.includes(feature)) {
+                    score++;
+                    correctSelections.push(feature);
+                } else {
+                    incorrectSelections.push(feature);
+                }
+            });
+
+            const missedFeatures = correctFeatures.filter(f => !selectedFeatures.includes(f));
+
+            let resultHTML = `<h3>Results</h3>`;
+            resultHTML += `<p>You correctly identified ${correctSelections.length} out of 3 features.</p>`;
+
+            if (correctSelections.length > 0) {
+                resultHTML += `<p><strong>Correctly identified:</strong> ${correctSelections.join(', ')}</p>`;
+            }
+            if (incorrectSelections.length > 0) {
+                resultHTML += `<p><strong>Incorrectly identified:</strong> ${incorrectSelections.join(', ')}</p>`;
+            }
+            if (missedFeatures.length > 0) {
+                resultHTML += `<p><strong>Missed features:</strong> ${missedFeatures.join(', ')}</p>`;
+            }
+
+            // Display final score and feedback
+            if (score === 3 && selectedFeatures.length === 3) {
+                resultHTML += `<p style="color: green;"><strong>Excellent! You identified all the key morphological features.</strong></p>`;
+            } else {
+                resultHTML += `<p style="color: orange;"><strong>You're on the right track! Review the missed or incorrectly identified features and try again.</strong></p>`;
+            }
+
+            resultContainer.innerHTML = resultHTML;
+
+            // Also reveal the analysis section
+            document.getElementById('analysis-section').classList.remove('hidden');
+            document.getElementById('full-case-details').classList.remove('hidden');
+            document.getElementById('reveal-btn').disabled = true;
+            document.getElementById('reveal-btn').classList.add('opacity-50', 'cursor-not-allowed');
+            document.querySelectorAll('.feature-checkbox').forEach(cb => cb.disabled = true);
+            document.getElementById('user-choices').innerHTML = selectedFeatures.length > 0 ? selectedFeatures.map(choice => `<li>${choice}</li>`).join('') : '<li>No features selected.</li>';
+            document.getElementById('expert-comment-text').textContent = "The patient's clinical presentation of pyrexia and the blood film findings are highly suggestive of malaria. The presence of P. falciparum ring forms confirms the diagnosis. The parasitaemia of <1% is noted. The rapid test being positive for a non-falciparum species is discordant with the film finding and highlights the importance of microscopy. The report from the London School of Hygiene and Tropical Medicine further supports the diagnosis, describing trophozoites, delicate ring forms, and multiple parasites in some red blood cells. These are all classic features of Plasmodium falciparum infection. The lymphopenia is also a common finding in acute malaria.";
+            
+            const topFeaturesTable = document.getElementById('top-features-table');
+            topFeaturesTable.innerHTML = topPeerFeatures.map(f => {
+                const isUserChoice = selectedFeatures.includes(f.feature);
+                return `<tr class="${isUserChoice ? 'highlight-correct font-bold' : ''}"><td class="p-2">${f.feature}</td></tr>`;
+            }).join('');
+            
+            // Highlight abnormal results
+            document.getElementById('lymph-row').classList.add('highlight-abnormal');
+            document.getElementById('mchc-row').classList.add('highlight-abnormal');
+            document.getElementById('hct-row').classList.add('highlight-abnormal');
+
+        }
+    </script>
+
+</body>
+</html>
