@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coagulation Cascade Game - SGC</title>
+    <title>Coagulation Cascade Challenge - SGC</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,24 +17,31 @@
         .nhs-dark-blue { background-color: #003087; }
         .nhs-light-grey { background-color: #F0F4F5; }
         .nhs-text-blue { color: #005EB8; }
+        .nhs-text-dark-blue { color: #003087; }
         .cascade-pathway {
             background-color: #F0F4F5;
             border: 2px solid #e5e7eb;
-            border-radius: 0.5rem;
+            border-radius: 0.75rem;
             padding: 1rem;
-            min-height: 400px;
         }
         .factor-slot {
             background-color: #fff;
             border: 2px dashed #9ca3af;
             border-radius: 0.5rem;
-            height: 50px;
+            min-height: 52px;
             width: 100%;
-            margin: 0.75rem 0;
+            margin: 0.5rem 0;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.2s;
+            position: relative;
+        }
+        .factor-slot .slot-hint {
+            font-size: 0.65rem;
+            color: #9ca3af;
+            text-align: center;
+            padding: 2px;
         }
         .factor-slot.correct {
             border: 2px solid #22c55e;
@@ -48,14 +55,22 @@
             background-color: #fff;
             border: 2px solid #6b7280;
             border-radius: 0.5rem;
-            padding: 0.5rem 1rem;
+            padding: 0.4rem 0.75rem;
             cursor: grab;
             user-select: none;
             transition: all 0.2s;
+            font-size: 0.85rem;
+            text-align: center;
         }
         .draggable-factor:hover {
             background-color: #f3f4f6;
-            transform: scale(1.05);
+            transform: scale(1.04);
+            border-color: #005EB8;
+        }
+        .draggable-factor.placed {
+            opacity: 0.45;
+            pointer-events: none;
+            cursor: default;
         }
         .factor-bank {
             display: flex;
@@ -63,181 +78,387 @@
             gap: 0.5rem;
             padding: 1rem;
             background-color: #e5e7eb;
-            border-radius: 0.5rem;
+            border-radius: 0.75rem;
+            min-height: 80px;
         }
-        .arrow {
-            text-align: center;
-            font-size: 1.5rem;
-            color: #6b7280;
-        }
+        .arrow { text-align: center; font-size: 1.2rem; color: #6b7280; line-height: 1.2; margin: 2px 0; }
+        .horiz-arrow { text-align: center; font-size: 1.2rem; color: #6b7280; display: flex; align-items: center; justify-content: center; }
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
             25% { transform: translateX(-5px); }
             75% { transform: translateX(5px); }
         }
+        .difficulty-badge {
+            display: inline-block; font-size: 0.7rem; font-weight: 700;
+            padding: 2px 8px; border-radius: 9999px; letter-spacing: 0.04em;
+        }
+        .dragover-highlight { border-color: #005EB8 !important; background-color: #e0f2fe !important; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
-    
+
     <div id="header-placeholder"></div>
-    
-    <main class="py-16">
-        <div class="container mx-auto px-6">
-            <a href="games.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8">
+
+    <main class="py-10">
+        <div class="container mx-auto px-4">
+            <a href="games.html" class="inline-flex items-center nhs-text-blue font-semibold mb-6 hover:underline">
                 <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Games
             </a>
-            <div class="text-center">
-                <h2 class="text-3xl font-bold nhs-text-dark-blue mb-4">Coagulation Cascade Challenge</h2>
-                <p class="text-gray-600 mb-2 max-w-2xl mx-auto">Drag and drop the factors from the bank into their correct positions in the cascade.</p>
+
+            <div class="text-center mb-6">
+                <h2 class="text-3xl font-bold nhs-text-dark-blue mb-2">Coagulation Cascade Challenge</h2>
+                <p class="text-gray-600 mb-4 max-w-2xl mx-auto">Drag and drop the coagulation factors into their correct positions. Choose your difficulty level to reveal more of the cascade.</p>
+                <div class="flex justify-center gap-3 mb-2">
+                    <button id="btn-easy" data-level="easy" class="difficulty-btn px-4 py-2 rounded-lg font-bold text-sm bg-green-600 text-white hover:bg-green-700 transition">
+                        Easy (Core 7)
+                    </button>
+                    <button id="btn-medium" data-level="medium" class="difficulty-btn px-4 py-2 rounded-lg font-bold text-sm bg-yellow-500 text-white hover:bg-yellow-600 transition">
+                        Medium (11 Factors)
+                    </button>
+                    <button id="btn-hard" data-level="hard" class="difficulty-btn px-4 py-2 rounded-lg font-bold text-sm bg-red-600 text-white hover:bg-red-700 transition">
+                        Hard (Full Cascade)
+                    </button>
+                </div>
                 <p class="text-lg font-bold">Score: <span id="score">0</span> / <span id="total-factors">0</span></p>
             </div>
 
-            <div class="my-8">
-                <h3 class="text-xl font-semibold text-center mb-2">Factor Bank</h3>
-                <div id="factor-bank" class="factor-bank justify-center">
+            <div class="my-5">
+                <h3 class="text-lg font-semibold text-center mb-2 text-gray-700">Factor Bank — Drag factors to their correct position</h3>
+                <div id="factor-bank" class="factor-bank justify-center"></div>
+            </div>
+
+            <!-- Cascade layout -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-start">
+
+                <!-- INTRINSIC PATHWAY (APTT) -->
+                <div class="cascade-pathway">
+                    <h3 class="text-base font-bold text-center nhs-text-dark-blue border-b-2 pb-2 mb-3">
+                        Intrinsic Pathway
+                        <span class="block text-xs text-gray-500 font-normal">Tested by APTT</span>
+                        <span class="block text-xs text-blue-600 font-normal">Contact activation</span>
+                    </h3>
+                    <p class="text-xs text-gray-500 text-center mb-1">Surface contact / damaged endothelium</p>
+                    <div class="arrow">↓</div>
+                    <div class="factor-slot" data-factor="XIIa" data-hint="Factor XII activated">
+                        <span class="slot-hint">Factor XII activated</span>
+                    </div>
+                    <div class="arrow">↓ (+ Prekallikrein / HMWK)</div>
+                    <div class="factor-slot" data-factor="XIa" data-hint="Factor XI activated">
+                        <span class="slot-hint">Factor XI activated</span>
+                    </div>
+                    <div class="arrow">↓</div>
+                    <div class="factor-slot" data-factor="IXa" data-hint="Factor IX activated">
+                        <span class="slot-hint">Factor IX activated</span>
+                    </div>
+                    <div class="arrow">↓ + Factor VIIIa</div>
+                    <div class="factor-slot" data-factor="VIIIa" data-hint="Co-factor: Factor VIII activated">
+                        <span class="slot-hint">Factor VIII activated (co-factor)</span>
+                    </div>
+                    <div class="arrow text-xs text-gray-500">↓ Intrinsic tenase complex (IXa + VIIIa on platelet surface)</div>
+                    <div class="arrow">→ Common Pathway</div>
+                </div>
+
+                <!-- COMMON PATHWAY -->
+                <div class="cascade-pathway border-2 border-blue-300">
+                    <h3 class="text-base font-bold text-center nhs-text-dark-blue border-b-2 pb-2 mb-3">
+                        Common Pathway
+                        <span class="block text-xs text-gray-500 font-normal">Tested by both PT + APTT</span>
+                    </h3>
+                    <p class="text-xs text-gray-500 text-center mb-1">Both pathways converge here</p>
+                    <div class="arrow">↓</div>
+                    <div class="factor-slot" data-factor="Xa" data-hint="Factor X activated (prothrombinase)">
+                        <span class="slot-hint">Factor X activated</span>
+                    </div>
+                    <div class="arrow">↓ + Factor Va (co-factor)</div>
+                    <div class="factor-slot" data-factor="Va" data-hint="Co-factor: Factor V activated">
+                        <span class="slot-hint">Factor V activated (co-factor)</span>
+                    </div>
+                    <div class="arrow text-xs text-gray-500">↓ Prothrombinase complex (Xa + Va)</div>
+                    <div class="factor-slot" data-factor="Thrombin" data-hint="Thrombin (Factor IIa) — the central enzyme">
+                        <span class="slot-hint">Prothrombin → Thrombin (Factor IIa)</span>
+                    </div>
+                    <div class="arrow">↓</div>
+                    <div class="factor-slot" data-factor="Fibrin" data-hint="Fibrinogen → Fibrin (soluble)">
+                        <span class="slot-hint">Fibrinogen (I) → Fibrin (Ia) — soluble</span>
+                    </div>
+                    <div class="arrow">↓ + Factor XIIIa</div>
+                    <div class="factor-slot" data-factor="XIIIa" data-hint="Factor XIII cross-links fibrin">
+                        <span class="slot-hint">Factor XIII activated → cross-links fibrin (stable clot)</span>
+                    </div>
+                </div>
+
+                <!-- EXTRINSIC PATHWAY (PT) -->
+                <div class="cascade-pathway">
+                    <h3 class="text-base font-bold text-center nhs-text-dark-blue border-b-2 pb-2 mb-3">
+                        Extrinsic Pathway
+                        <span class="block text-xs text-gray-500 font-normal">Tested by PT / INR</span>
+                        <span class="block text-xs text-red-600 font-normal">Tissue injury initiates</span>
+                    </h3>
+                    <p class="text-xs text-gray-500 text-center mb-1">Vascular injury → Tissue Factor (TF) exposed</p>
+                    <div class="arrow">↓</div>
+                    <div class="factor-slot" data-factor="TF" data-hint="Tissue Factor (Factor III)">
+                        <span class="slot-hint">Tissue Factor (TF / Factor III)</span>
+                    </div>
+                    <div class="arrow">↓ + Ca²⁺</div>
+                    <div class="factor-slot" data-factor="VIIa" data-hint="Factor VII activated (shortest half-life)">
+                        <span class="slot-hint">Factor VII + TF → Factor VIIa/TF complex</span>
+                    </div>
+                    <div class="arrow text-xs text-gray-500">↓ Extrinsic tenase complex</div>
+                    <div class="arrow">→ Common Pathway</div>
+
+                    <!-- Regulatory proteins (hard mode) -->
+                    <div id="regulation-section" class="mt-4 hidden">
+                        <div class="border-t-2 border-dashed border-gray-300 pt-3 mt-2">
+                            <h4 class="text-xs font-bold text-gray-500 uppercase text-center mb-2">Natural Anticoagulants</h4>
+                            <div class="factor-slot" data-factor="ProteinC" data-hint="Protein C — activated by Thrombomodulin/Thrombin">
+                                <span class="slot-hint">Protein C (activated by thrombin-thrombomodulin)</span>
+                            </div>
+                            <div class="arrow text-xs">↓ Inactivates Va + VIIIa</div>
+                            <div class="factor-slot" data-factor="ProteinS" data-hint="Protein S — co-factor for activated Protein C">
+                                <span class="slot-hint">Protein S (co-factor for Protein C)</span>
+                            </div>
+                            <div class="arrow">↓</div>
+                            <div class="factor-slot" data-factor="ATIII" data-hint="Antithrombin III — inhibits Thrombin + Xa">
+                                <span class="slot-hint">Antithrombin III (inhibits thrombin, Xa, IXa)</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
-                <div class="cascade-pathway">
-                    <h3 class="text-xl font-bold text-center nhs-text-dark-blue border-b-2 pb-2">Intrinsic Pathway (APTT)</h3>
-                    <div class="factor-slot" data-factor="XIIa"></div>
-                    <div class="arrow">↓</div>
-                    <div class="factor-slot" data-factor="XIa"></div>
-                    <div class="arrow">↓</div>
-                    <div class="factor-slot" data-factor="IXa"></div>
+            <!-- Win message & controls -->
+            <div class="text-center mt-6">
+                <div id="win-message" class="hidden p-4 bg-green-100 text-green-800 rounded-lg text-xl font-bold mb-4">
+                    🎉 Excellent! You've completed the cascade! Clinically brilliant!
                 </div>
-
-                <div class="cascade-pathway">
-                    <h3 class="text-xl font-bold text-center nhs-text-dark-blue border-b-2 pb-2">Extrinsic Pathway (PT)</h3>
-                    <div class="factor-slot" data-factor="VIIa"></div>
-                </div>
-
-                <div class="cascade-pathway">
-                    <h3 class="text-xl font-bold text-center nhs-text-dark-blue border-b-2 pb-2">Common Pathway</h3>
-                    <div class="factor-slot" data-factor="Xa"></div>
-                    <div class="arrow">↓</div>
-                    <div class="factor-slot" data-factor="Thrombin"></div>
-                    <div class="arrow">↓</div>
-                    <div class="factor-slot" data-factor="Fibrin"></div>
-                </div>
+                <button id="reset-btn" class="bg-red-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-red-700 transition">Reset Game</button>
             </div>
 
-            <div class="text-center mt-8">
-                <div id="win-message" class="hidden p-4 bg-green-100 text-green-800 rounded-lg text-xl font-bold">
-                    Congratulations! You've completed the cascade!
+            <!-- Educational reference -->
+            <div class="mt-10 grid md:grid-cols-2 gap-6">
+                <div class="bg-white rounded-lg shadow p-5">
+                    <h3 class="font-bold nhs-text-dark-blue mb-3">Key Clinical Correlations — Coagulation Tests</h3>
+                    <table class="w-full text-sm">
+                        <thead><tr class="text-gray-500 text-xs uppercase"><th class="text-left py-1">Test</th><th class="text-left py-1">Pathway Tested</th><th class="text-left py-1">Factors Tested</th></tr></thead>
+                        <tbody class="text-gray-700">
+                            <tr class="border-t"><td class="py-1 font-semibold">PT / INR</td><td>Extrinsic + Common</td><td>VII, X, V, II, I (fibrinogen)</td></tr>
+                            <tr class="border-t"><td class="py-1 font-semibold">APTT</td><td>Intrinsic + Common</td><td>XII, XI, IX, VIII, X, V, II, I</td></tr>
+                            <tr class="border-t"><td class="py-1 font-semibold">TT (Thrombin Time)</td><td>Common (final step)</td><td>Fibrinogen, heparin effect</td></tr>
+                            <tr class="border-t"><td class="py-1 font-semibold">Fibrinogen</td><td>Common (end product)</td><td>Factor I only</td></tr>
+                        </tbody>
+                    </table>
                 </div>
-                <button id="reset-btn" class="mt-4 bg-red-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-red-700 transition duration-300">Reset Game</button>
+                <div class="bg-white rounded-lg shadow p-5">
+                    <h3 class="font-bold nhs-text-dark-blue mb-3">Vitamin K Dependent Factors</h3>
+                    <p class="text-sm text-gray-600 mb-3">Warfarin inhibits vitamin K epoxide reductase (VKORC1), preventing activation of these factors. Remember: <strong>1972</strong> (Factors II, VII, IX, X and Protein C, S, Z)</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2 py-1 bg-orange-100 text-orange-700 rounded text-sm font-bold">II (Prothrombin)</span>
+                        <span class="px-2 py-1 bg-orange-100 text-orange-700 rounded text-sm font-bold">VII</span>
+                        <span class="px-2 py-1 bg-orange-100 text-orange-700 rounded text-sm font-bold">IX</span>
+                        <span class="px-2 py-1 bg-orange-100 text-orange-700 rounded text-sm font-bold">X</span>
+                        <span class="px-2 py-1 bg-green-100 text-green-700 rounded text-sm font-bold">Protein C</span>
+                        <span class="px-2 py-1 bg-green-100 text-green-700 rounded text-sm font-bold">Protein S</span>
+                        <span class="px-2 py-1 bg-green-100 text-green-700 rounded text-sm font-bold">Protein Z</span>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-2">Factor VII has the SHORTEST half-life (~6h) → PT/INR is the first test to become prolonged on starting warfarin. Protein C is also vitamin K dependent with a short half-life — warfarin initially causes a prothrombotic state (transient Protein C deficiency). This is why bridging with LMWH is required.</p>
+                </div>
+                <div class="bg-white rounded-lg shadow p-5">
+                    <h3 class="font-bold nhs-text-dark-blue mb-3">Isolated Test Abnormalities</h3>
+                    <table class="w-full text-sm">
+                        <thead><tr class="text-gray-500 text-xs uppercase"><th class="text-left py-1">Pattern</th><th class="text-left py-1">Consider</th></tr></thead>
+                        <tbody class="text-gray-700">
+                            <tr class="border-t"><td class="py-1 font-semibold">↑ PT only</td><td>Warfarin, liver disease (early), Factor VII deficiency, vitamin K deficiency</td></tr>
+                            <tr class="border-t"><td class="py-1 font-semibold">↑ APTT only</td><td>Haemophilia A/B, vWD, heparin (UFH), Factor XI deficiency, lupus anticoagulant</td></tr>
+                            <tr class="border-t"><td class="py-1 font-semibold">↑ PT + ↑ APTT</td><td>DIC, severe liver disease, combined factor deficiency, warfarin (later), supratherapeutic heparin</td></tr>
+                            <tr class="border-t"><td class="py-1 font-semibold">↑ TT only</td><td>Heparin (UFH/LMWH), hypofibrinogenaemia, dabigatran</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="bg-white rounded-lg shadow p-5">
+                    <h3 class="font-bold nhs-text-dark-blue mb-3">Key Coagulation Disorders</h3>
+                    <ul class="text-sm space-y-2 text-gray-700">
+                        <li><span class="font-bold text-red-600">Haemophilia A:</span> Factor VIII deficiency (X-linked) → ↑ APTT, normal PT</li>
+                        <li><span class="font-bold text-red-600">Haemophilia B:</span> Factor IX deficiency (X-linked) → ↑ APTT, normal PT</li>
+                        <li><span class="font-bold text-orange-600">Von Willebrand Disease:</span> vWF deficiency (carries FVIII) → ↑ APTT (type 2/3), normal PT, prolonged PFA</li>
+                        <li><span class="font-bold text-purple-600">DIC:</span> Consumption of ALL factors → ↑ PT, ↑ APTT, ↑ TT, ↓ Fibrinogen, ↓ Platelets, ↑ D-dimer</li>
+                        <li><span class="font-bold text-blue-600">Protein C Deficiency:</span> Thrombophilia (unprovoked VTE); warfarin-induced skin necrosis risk</li>
+                        <li><span class="font-bold text-green-600">Factor V Leiden:</span> Resistance to APC (Protein C cannot inactivate Factor Va) → most common thrombophilia in Caucasians</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </main>
-    
-    <div id="footer-placeholder"></div>
 
+    <div id="footer-placeholder"></div>
     <script src="js/component-loader.js"></script>
-    
-    <!-- FIX: Combined all JavaScript into a single, robust script block -->
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // This is called by component-loader.js, but we call it here too to be safe.
-            if (typeof feather !== 'undefined') {
-                feather.replace();
-            }
+            if (typeof feather !== 'undefined') feather.replace();
 
-            // --- Coagulation Game Logic ---
-            const factors = [
-                { id: 'VIIa', name: 'Factor VIIa' },
-                { id: 'IXa', name: 'Factor IXa' },
-                { id: 'XIa', name: 'Factor XIa' },
-                { id: 'XIIa', name: 'Factor XIIa' },
-                { id: 'Xa', name: 'Factor Xa' },
-                { id: 'Thrombin', name: 'Thrombin (IIa)' },
-                { id: 'Fibrin', name: 'Fibrin (Ia)' }
-            ];
+            const LEVELS = {
+                easy: {
+                    factors: [
+                        { id: 'XIIa', name: 'Factor XIIa' },
+                        { id: 'XIa', name: 'Factor XIa' },
+                        { id: 'IXa', name: 'Factor IXa' },
+                        { id: 'VIIa', name: 'Factor VIIa' },
+                        { id: 'Xa', name: 'Factor Xa' },
+                        { id: 'Thrombin', name: 'Thrombin (IIa)' },
+                        { id: 'Fibrin', name: 'Fibrin (Ia)' }
+                    ],
+                    showRegulation: false
+                },
+                medium: {
+                    factors: [
+                        { id: 'XIIa', name: 'Factor XIIa' },
+                        { id: 'XIa', name: 'Factor XIa' },
+                        { id: 'IXa', name: 'Factor IXa' },
+                        { id: 'VIIIa', name: 'Factor VIIIa' },
+                        { id: 'TF', name: 'Tissue Factor (TF)' },
+                        { id: 'VIIa', name: 'Factor VIIa' },
+                        { id: 'Xa', name: 'Factor Xa' },
+                        { id: 'Va', name: 'Factor Va' },
+                        { id: 'Thrombin', name: 'Thrombin (IIa)' },
+                        { id: 'Fibrin', name: 'Fibrin (Ia)' },
+                        { id: 'XIIIa', name: 'Factor XIIIa' }
+                    ],
+                    showRegulation: false
+                },
+                hard: {
+                    factors: [
+                        { id: 'XIIa', name: 'Factor XIIa' },
+                        { id: 'XIa', name: 'Factor XIa' },
+                        { id: 'IXa', name: 'Factor IXa' },
+                        { id: 'VIIIa', name: 'Factor VIIIa' },
+                        { id: 'TF', name: 'Tissue Factor (TF)' },
+                        { id: 'VIIa', name: 'Factor VIIa' },
+                        { id: 'Xa', name: 'Factor Xa' },
+                        { id: 'Va', name: 'Factor Va' },
+                        { id: 'Thrombin', name: 'Thrombin (IIa)' },
+                        { id: 'Fibrin', name: 'Fibrin (Ia)' },
+                        { id: 'XIIIa', name: 'Factor XIIIa' },
+                        { id: 'ProteinC', name: 'Protein C' },
+                        { id: 'ProteinS', name: 'Protein S' },
+                        { id: 'ATIII', name: 'Antithrombin III' }
+                    ],
+                    showRegulation: true
+                }
+            };
 
             const scoreEl = document.getElementById('score');
             const totalFactorsEl = document.getElementById('total-factors');
             const factorBank = document.getElementById('factor-bank');
-            const slots = document.querySelectorAll('.factor-slot');
             const winMessage = document.getElementById('win-message');
             const resetBtn = document.getElementById('reset-btn');
-            
-            // Safety check to ensure all HTML elements are present before running the game
-            if (!scoreEl || !totalFactorsEl || !factorBank || !slots.length || !winMessage || !resetBtn) {
-                console.error("Coagulation game error: One or more required HTML elements are missing.");
-                const mainContent = document.querySelector('main');
-                if(mainContent) {
-                    mainContent.innerHTML = '<p class="text-center text-red-500 font-bold">Error: Game could not be loaded. Please check the console for details.</p>';
-                }
-                return;
-            }
+            const regulationSection = document.getElementById('regulation-section');
 
+            let currentLevel = 'medium';
             let score = 0;
-            const totalFactors = factors.length;
+            let draggedId = null;
+
+            // Difficulty buttons
+            document.querySelectorAll('.difficulty-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    currentLevel = btn.dataset.level;
+                    document.querySelectorAll('.difficulty-btn').forEach(b => b.classList.remove('ring-4', 'ring-offset-1', 'ring-gray-800'));
+                    btn.classList.add('ring-4', 'ring-offset-1', 'ring-gray-800');
+                    initializeGame();
+                });
+            });
+            document.getElementById('btn-medium').classList.add('ring-4', 'ring-offset-1', 'ring-gray-800');
 
             function initializeGame() {
+                const config = LEVELS[currentLevel];
                 score = 0;
                 scoreEl.textContent = score;
-                totalFactorsEl.textContent = totalFactors;
+                totalFactorsEl.textContent = config.factors.length;
                 winMessage.classList.add('hidden');
                 factorBank.innerHTML = '';
-                slots.forEach(slot => {
-                    slot.innerHTML = '';
-                    slot.classList.remove('correct');
+
+                // Show/hide regulation section
+                if (config.showRegulation) {
+                    regulationSection.classList.remove('hidden');
+                } else {
+                    regulationSection.classList.add('hidden');
+                }
+
+                // Reset all slots
+                const allSlots = document.querySelectorAll('.factor-slot');
+                allSlots.forEach(slot => {
+                    slot.innerHTML = `<span class="slot-hint">${slot.dataset.hint || ''}</span>`;
+                    slot.classList.remove('correct', 'incorrect');
+                    slot.dataset.filled = 'false';
                 });
 
-                // Shuffle and create draggable factors
-                factors.sort(() => Math.random() - 0.5).forEach(factor => {
-                    const factorEl = document.createElement('div');
-                    factorEl.id = factor.id;
-                    factorEl.textContent = factor.name;
-                    factorEl.className = 'draggable-factor';
-                    factorEl.draggable = true;
-                    factorEl.addEventListener('dragstart', dragStart);
-                    factorBank.appendChild(factorEl);
+                // Determine which slots are active for this level
+                const activeIds = new Set(config.factors.map(f => f.id));
+                allSlots.forEach(slot => {
+                    const active = activeIds.has(slot.dataset.factor);
+                    slot.style.display = active ? 'flex' : 'none';
+                    // Also hide parent arrow if slot is hidden - skip for simplicity
+                });
+
+                // Shuffle and populate factor bank
+                const shuffled = [...config.factors].sort(() => Math.random() - 0.5);
+                shuffled.forEach(factor => {
+                    const el = document.createElement('div');
+                    el.id = `factor-${factor.id}`;
+                    el.textContent = factor.name;
+                    el.className = 'draggable-factor';
+                    el.draggable = true;
+                    el.dataset.factorId = factor.id;
+                    el.addEventListener('dragstart', e => {
+                        draggedId = factor.id;
+                        e.dataTransfer.setData('text/plain', factor.id);
+                        e.dataTransfer.effectAllowed = 'move';
+                    });
+                    factorBank.appendChild(el);
+                });
+
+                // Set up slots
+                allSlots.forEach(slot => {
+                    if (!activeIds.has(slot.dataset.factor)) return;
+                    slot.addEventListener('dragover', e => {
+                        e.preventDefault();
+                        e.dataTransfer.dropEffect = 'move';
+                        slot.classList.add('dragover-highlight');
+                    });
+                    slot.addEventListener('dragleave', () => slot.classList.remove('dragover-highlight'));
+                    slot.addEventListener('drop', e => {
+                        e.preventDefault();
+                        slot.classList.remove('dragover-highlight');
+                        handleDrop(slot, e.dataTransfer.getData('text/plain'));
+                    });
                 });
             }
 
-            function dragStart(e) {
-                e.dataTransfer.setData('text/plain', e.target.id);
-            }
+            function handleDrop(slot, droppedFactorId) {
+                if (slot.dataset.filled === 'true') return;
+                const targetFactor = slot.dataset.factor;
+                const bankEl = document.getElementById(`factor-${droppedFactorId}`);
 
-            slots.forEach(slot => {
-                slot.addEventListener('dragover', e => e.preventDefault());
-                slot.addEventListener('drop', drop);
-            });
-
-            function drop(e) {
-                e.preventDefault();
-                const slot = e.currentTarget;
-                if (slot.classList.contains('correct')) return;
-
-                const draggedFactorId = e.dataTransfer.getData('text/plain');
-                const draggedFactorEl = document.getElementById(draggedFactorId);
-                const targetFactorId = slot.dataset.factor;
-
-                if (draggedFactorId === targetFactorId) {
-                    // Correct drop
-                    slot.appendChild(draggedFactorEl);
-                    draggedFactorEl.draggable = false;
-                    draggedFactorEl.style.cursor = 'default';
+                if (droppedFactorId === targetFactor) {
+                    // Correct
+                    const name = bankEl ? bankEl.textContent : droppedFactorId;
+                    slot.innerHTML = `<span class="font-bold text-green-800 text-sm px-2 text-center">${name}</span>`;
                     slot.classList.add('correct');
+                    slot.dataset.filled = 'true';
+                    if (bankEl) bankEl.classList.add('placed');
                     score++;
                     scoreEl.textContent = score;
-
-                    if (score === totalFactors) {
+                    if (score === LEVELS[currentLevel].factors.length) {
                         winMessage.classList.remove('hidden');
+                        winMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     }
                 } else {
-                    // Incorrect drop
+                    // Wrong
                     slot.classList.add('incorrect');
                     setTimeout(() => slot.classList.remove('incorrect'), 500);
                 }
             }
 
             resetBtn.addEventListener('click', initializeGame);
-            
-            // Start game on load
             initializeGame();
         });
     </script>

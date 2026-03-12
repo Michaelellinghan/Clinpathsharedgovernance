@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blood Compatibility Game - SGC</title>
+    <title>Blood Group BATTLE - SGC</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,70 +16,182 @@
         .nhs-light-grey { background-color: #F0F4F5; }
         .nhs-text-blue { color: #005EB8; }
         .nhs-text-dark-blue { color: #003087; }
+        .group-badge {
+            font-size: 2.5rem; font-weight: 900;
+            letter-spacing: -0.5px;
+        }
+        .fade-in { animation: fadeIn 0.3s ease-out; }
+        @keyframes fadeIn { from { opacity:0;transform:translateY(8px);} to { opacity:1;transform:translateY(0);} }
+        .pulse-correct { animation: pulseGreen 0.5s ease-out; }
+        @keyframes pulseGreen { 0%{transform:scale(1);} 50%{transform:scale(1.08);} 100%{transform:scale(1);} }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
 
     <div id="header-placeholder"></div>
 
-    <main class="py-12 md:py-16 bg-nhs-light-grey flex-grow">
-        <div class="container mx-auto px-4 sm:px-6 max-w-lg text-center">
-             <a href="games.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8 hover:underline">
+    <main class="py-10 md:py-14 flex-grow">
+        <div class="container mx-auto px-4 sm:px-6 max-w-2xl text-center">
+            <a href="games.html" class="inline-flex items-center nhs-text-blue font-semibold mb-6 hover:underline">
                 <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Games
             </a>
-             <h2 class="text-3xl font-bold nhs-text-dark-blue mb-4">Blood Group BATTLE</h2>
-             <p class="text-gray-600 mb-8">A patient needs blood. Is the unit compatible? Make the right call!</p>
-             
-             <div id="compat-game-area" class="space-y-8">
-                <div class="flex justify-around items-center">
-                    <div>
-                        <h3 class="text-lg font-semibold text-gray-700">Patient</h3>
-                        <div class="mt-2 bg-white p-4 rounded-lg shadow-md">
-                            <i data-feather="user" class="w-16 h-16 mx-auto text-nhs-blue"></i>
-                            <p id="patient-blood-group" class="text-2xl font-bold mt-2 h-8"></p>
+            <h2 class="text-3xl font-bold nhs-text-dark-blue mb-2">Blood Group BATTLE</h2>
+            <p class="text-gray-600 mb-6 max-w-lg mx-auto">A patient needs a blood component. Choose the component type and decide if the unit is compatible. Learn the clinical rules behind every decision.</p>
+
+            <!-- Stats -->
+            <div class="flex justify-center gap-3 mb-6">
+                <div class="bg-white rounded-lg shadow px-4 py-2">
+                    <p class="text-xs text-gray-500 uppercase font-semibold">Score</p>
+                    <p class="text-2xl font-bold nhs-text-dark-blue" id="compat-score">0</p>
+                </div>
+                <div class="bg-white rounded-lg shadow px-4 py-2">
+                    <p class="text-xs text-gray-500 uppercase font-semibold">Streak 🔥</p>
+                    <p class="text-2xl font-bold text-orange-500" id="streak">0</p>
+                </div>
+                <div class="bg-white rounded-lg shadow px-4 py-2">
+                    <p class="text-xs text-gray-400 uppercase font-semibold">Component</p>
+                    <select id="component-select" class="text-sm font-bold text-gray-700 border-0 bg-transparent focus:outline-none cursor-pointer mt-1">
+                        <option value="all">All Components</option>
+                        <option value="rbc">Red Blood Cells</option>
+                        <option value="ffp">FFP / Plasma</option>
+                        <option value="platelets">Platelets</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Game area -->
+            <div class="bg-white p-6 rounded-xl shadow-lg fade-in">
+                <!-- Component badge -->
+                <div class="flex justify-center mb-4">
+                    <span id="component-badge" class="inline-block px-3 py-1 text-sm font-bold rounded-full uppercase tracking-wide"></span>
+                </div>
+
+                <!-- Clinical scenario -->
+                <div id="scenario-box" class="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-lg text-sm text-amber-900 text-left hidden">
+                    <span class="font-bold">Clinical Scenario: </span><span id="scenario-text"></span>
+                </div>
+
+                <!-- Patient vs Unit -->
+                <div class="flex justify-around items-center mb-6">
+                    <div class="text-center">
+                        <div class="w-28 h-28 bg-blue-50 border-2 border-blue-200 rounded-xl flex flex-col items-center justify-center mx-auto">
+                            <i data-feather="user" class="w-8 h-8 text-blue-500 mb-1"></i>
+                            <p class="group-badge nhs-text-dark-blue" id="patient-blood-group">—</p>
                         </div>
+                        <p class="mt-2 font-semibold text-gray-600">Patient</p>
                     </div>
-                    <i data-feather="arrow-right-circle" class="w-12 h-12 text-gray-400"></i>
-                    <div>
-                         <h3 class="text-lg font-semibold text-gray-700">Blood Unit</h3>
-                         <div class="mt-2 bg-red-500 text-white p-4 rounded-lg shadow-md">
-                             <i data-feather="droplet" class="w-16 h-16 mx-auto"></i>
-                             <p id="unit-blood-group" class="text-2xl font-bold mt-2 h-8"></p>
-                         </div>
+
+                    <div class="flex flex-col items-center">
+                        <i data-feather="arrow-right" class="w-10 h-10 text-gray-300 mb-1"></i>
+                        <span class="text-xs text-gray-400 uppercase font-semibold">Transfuse?</span>
+                    </div>
+
+                    <div class="text-center">
+                        <div class="w-28 h-28 bg-red-500 rounded-xl flex flex-col items-center justify-center mx-auto shadow-md">
+                            <i data-feather="droplet" class="w-8 h-8 text-white mb-1"></i>
+                            <p class="group-badge text-white" id="unit-blood-group">—</p>
+                        </div>
+                        <p class="mt-2 font-semibold text-gray-600">Blood Unit</p>
                     </div>
                 </div>
-                <div id="compat-feedback" class="text-xl font-bold p-4 rounded-lg hidden"></div>
-                <div class="flex justify-center space-x-4">
-                    <button id="safe-btn" class="bg-green-500 text-white font-bold py-4 px-8 rounded-lg text-xl hover:bg-green-600 transition-transform transform hover:scale-105">Safe</button>
-                    <button id="unsafe-btn" class="bg-red-500 text-white font-bold py-4 px-8 rounded-lg text-xl hover:bg-red-600 transition-transform transform hover:scale-105">Unsafe</button>
+
+                <!-- Action buttons -->
+                <div class="flex justify-center gap-4 mb-5">
+                    <button id="safe-btn" class="flex-1 py-4 px-6 bg-green-500 text-white font-bold rounded-xl text-xl hover:bg-green-600 transition shadow-sm">
+                        ✓ Compatible
+                    </button>
+                    <button id="unsafe-btn" class="flex-1 py-4 px-6 bg-red-500 text-white font-bold rounded-xl text-xl hover:bg-red-600 transition shadow-sm">
+                        ✗ Incompatible
+                    </button>
                 </div>
-             </div>
-             <div id="compat-score-area" class="mt-8 bg-white p-4 rounded-lg shadow-md">
-                <p class="text-lg">Score: <span id="compat-score" class="font-bold">0</span></p>
-                <button id="compat-new-game-btn" class="mt-4 bg-gray-800 text-white font-bold py-3 px-8 rounded-lg hover:bg-black transition duration-300 hidden">New Game</button>
-             </div>
+
+                <!-- Feedback -->
+                <div id="compat-feedback" class="hidden rounded-lg p-4 text-left text-sm">
+                    <p id="feedback-verdict" class="font-bold text-base mb-1"></p>
+                    <p id="feedback-explanation" class="text-gray-700"></p>
+                </div>
+            </div>
+
+            <div class="mt-4 text-center">
+                <button id="next-btn" class="mt-2 bg-gray-800 text-white font-bold py-3 px-8 rounded-lg hover:bg-black transition hidden">Next →</button>
+            </div>
+
+            <!-- Reference tables -->
+            <div class="mt-8 grid md:grid-cols-3 gap-4 text-left text-sm">
+                <div class="bg-white rounded-lg shadow p-4">
+                    <h3 class="font-bold nhs-text-dark-blue mb-2">🩸 Red Blood Cells</h3>
+                    <p class="text-xs text-gray-500 mb-2">Patient receives donor RBCs. Match ABO and Rh. Donor must NOT have antigens the patient lacks antibodies against.</p>
+                    <table class="w-full text-xs">
+                        <thead><tr class="text-gray-400"><th class="text-left">Patient</th><th class="text-left">Can Receive</th></tr></thead>
+                        <tbody>
+                            <tr><td class="py-0.5 font-semibold">O−</td><td>O−</td></tr>
+                            <tr><td class="py-0.5 font-semibold">O+</td><td>O−, O+</td></tr>
+                            <tr><td class="py-0.5 font-semibold">A−</td><td>O−, A−</td></tr>
+                            <tr><td class="py-0.5 font-semibold">A+</td><td>O−, O+, A−, A+</td></tr>
+                            <tr><td class="py-0.5 font-semibold">B−</td><td>O−, B−</td></tr>
+                            <tr><td class="py-0.5 font-semibold">B+</td><td>O−, O+, B−, B+</td></tr>
+                            <tr><td class="py-0.5 font-semibold">AB−</td><td>O−, A−, B−, AB−</td></tr>
+                            <tr><td class="py-0.5 font-semibold">AB+</td><td>All groups ✓</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="bg-white rounded-lg shadow p-4">
+                    <h3 class="font-bold nhs-text-dark-blue mb-2">🧬 FFP / Plasma</h3>
+                    <p class="text-xs text-gray-500 mb-2">FFP contains plasma antibodies. Donor antibodies must NOT react with patient's red cells. Rh compatibility NOT required for FFP.</p>
+                    <table class="w-full text-xs">
+                        <thead><tr class="text-gray-400"><th class="text-left">Patient</th><th class="text-left">Can Receive</th></tr></thead>
+                        <tbody>
+                            <tr><td class="py-0.5 font-semibold">O</td><td>O, A, B, AB</td></tr>
+                            <tr><td class="py-0.5 font-semibold">A</td><td>A, AB</td></tr>
+                            <tr><td class="py-0.5 font-semibold">B</td><td>B, AB</td></tr>
+                            <tr><td class="py-0.5 font-semibold">AB</td><td>AB only</td></tr>
+                        </tbody>
+                    </table>
+                    <p class="text-xs text-gray-400 mt-2">For FFP, O is the universal RECIPIENT (not donor). AB is the universal DONOR.</p>
+                </div>
+                <div class="bg-white rounded-lg shadow p-4">
+                    <h3 class="font-bold nhs-text-dark-blue mb-2">🩺 Platelets</h3>
+                    <p class="text-xs text-gray-500 mb-2">ABO-compatible preferred (small plasma volume). Rh-compatible preferred especially in women of childbearing age (D antigen on contaminating RBCs). Anti-D prophylaxis if Rh+ platelets given to Rh− patient.</p>
+                    <table class="w-full text-xs">
+                        <thead><tr class="text-gray-400"><th class="text-left">Priority</th><th class="text-left">Rule</th></tr></thead>
+                        <tbody>
+                            <tr><td class="py-0.5 font-semibold">1st</td><td>Identical ABO + Rh</td></tr>
+                            <tr><td class="py-0.5 font-semibold">2nd</td><td>ABO compatible + Rh matched</td></tr>
+                            <tr><td class="py-0.5 font-semibold">3rd</td><td>ABO compatible + Rh unmatched (Anti-D prophylaxis if Rh− female)</td></tr>
+                            <tr><td class="py-0.5 font-semibold">4th</td><td>ABO incompatible (last resort, avoid)</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </main>
 
     <div id="footer-placeholder"></div>
-
     <script src="js/component-loader.js"></script>
-    
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- DOM Element References ---
-            const patientBloodGroupEl = document.getElementById('patient-blood-group');
-            const unitBloodGroupEl = document.getElementById('unit-blood-group');
+            if (typeof feather !== 'undefined') feather.replace();
+
+            const patientBGEl = document.getElementById('patient-blood-group');
+            const unitBGEl = document.getElementById('unit-blood-group');
             const safeBtn = document.getElementById('safe-btn');
             const unsafeBtn = document.getElementById('unsafe-btn');
             const compatFeedbackEl = document.getElementById('compat-feedback');
+            const feedbackVerdictEl = document.getElementById('feedback-verdict');
+            const feedbackExplanationEl = document.getElementById('feedback-explanation');
             const compatScoreEl = document.getElementById('compat-score');
-            const newCompatGameBtn = document.getElementById('compat-new-game-btn');
+            const streakEl = document.getElementById('streak');
+            const nextBtn = document.getElementById('next-btn');
+            const componentSelect = document.getElementById('component-select');
+            const componentBadgeEl = document.getElementById('component-badge');
+            const scenarioBoxEl = document.getElementById('scenario-box');
+            const scenarioTextEl = document.getElementById('scenario-text');
 
-            // --- Game Data ---
             const bloodGroups = ['O-', 'O+', 'A-', 'A+', 'B-', 'B+', 'AB-', 'AB+'];
-            // This matrix defines which blood groups (value) a patient (key) can safely receive.
-            const compatibilityMatrix = {
+
+            // RBC compatibility: patient → compatible donor RBC groups
+            const rbcMatrix = {
                 'O-': ['O-'],
                 'O+': ['O-', 'O+'],
                 'A-': ['O-', 'A-'],
@@ -87,64 +199,185 @@
                 'B-': ['O-', 'B-'],
                 'B+': ['O-', 'O+', 'B-', 'B+'],
                 'AB-': ['O-', 'A-', 'B-', 'AB-'],
-                'AB+': ['O-', 'O+', 'A-', 'A+', 'B-', 'B+', 'AB-', 'AB+'] // Universal recipient
+                'AB+': ['O-', 'O+', 'A-', 'A+', 'B-', 'B+', 'AB-', 'AB+']
             };
-            
-            // --- Game State ---
-            let patientGroup, unitGroup, score;
 
-            // --- Game Logic ---
-            function newCompatRound() {
+            // FFP compatibility: patient ABO → compatible FFP ABO groups (Rh irrelevant)
+            // FFP antibodies must not attack patient's cells
+            // Donor FFP antibodies (e.g., Group O FFP has Anti-A + Anti-B) must NOT react with patient cells
+            // So patient must NOT have an ABO antigen that the donor FFP targets
+            const aboOf = g => g.replace(/[+-]/, '');
+            function ffpCompatible(patientGroup, unitGroup) {
+                const patientABO = aboOf(patientGroup);
+                const donorABO = aboOf(unitGroup);
+                // FFP antibodies: O has Anti-A + Anti-B; A has Anti-B; B has Anti-A; AB has none
+                const ffpMatrix = { 'O': ['O','A','B','AB'], 'A': ['A','AB'], 'B': ['B','AB'], 'AB': ['AB'] };
+                return ffpMatrix[patientABO].includes(donorABO);
+            }
+
+            // Platelet compatibility: ABO preferred. Rh compatibility important for Rh- patients.
+            // For simplicity in game: compatible if ABO identical OR ABO compatible + Rh considerations flagged
+            function plateletsCompatible(patientGroup, unitGroup) {
+                const patientABO = aboOf(patientGroup);
+                const donorABO = aboOf(unitGroup);
+                const patientRh = patientGroup.includes('+') ? '+' : '-';
+                const donorRh = unitGroup.includes('+') ? '+' : '-';
+                // ABO must be compatible (same or donor ABO doesn't harm patient RBCs)
+                // Platelets in plasma: donor plasma antibodies attack patient cells if ABO incompatible
+                const aboPlateletMatrix = { 'O': ['O','A','B','AB'], 'A': ['A','AB'], 'B': ['B','AB'], 'AB': ['AB'] };
+                const aboOk = aboPlateletMatrix[patientABO].includes(donorABO);
+                // Rh: D+ platelets → Rh- patient is acceptable clinically (low D exposure) but not ideal
+                // For game: Rh+ to Rh- is "compatible with caution" — we treat it as COMPATIBLE (with note)
+                return aboOk; // Rh incompatibility handled in explanation text
+            }
+
+            const scenarios = {
+                rbc: [
+                    "A 78-year-old woman with hip fracture requires 2 units of red cells in theatre.",
+                    "A 34-year-old man with sickle cell disease is admitted in pain crisis and needs top-up transfusion.",
+                    "A neonate with haemolytic disease of the foetus/newborn (HDFN) requires a top-up transfusion.",
+                    "A 55-year-old woman with GI bleeding requires emergency red cells in A&E.",
+                    "A 24-year-old with beta-thalassaemia major requires regular transfusion.",
+                    "A patient post-cardiac surgery with anaemia (Hb 68 g/L) requires red cells on ITU.",
+                    "An 8-year-old child undergoing chemotherapy develops anaemia and requires transfusion."
+                ],
+                ffp: [
+                    "A patient in the ITU with severe DIC and prolonged PT/APTT requires FFP for coagulopathy reversal.",
+                    "A patient on warfarin requiring urgent reversal for emergency surgery.",
+                    "A patient with acute liver failure has coagulopathy and is bleeding from oesophageal varices.",
+                    "A post-partum haemorrhage patient in the major haemorrhage protocol requires FFP.",
+                    "A patient undergoing massive transfusion (>10 units RBC) requires FFP to replace clotting factors."
+                ],
+                platelets: [
+                    "A patient on ITU with DIC has platelets of 18×10⁹/L and active bleeding.",
+                    "A patient post-bone marrow transplant has platelets of 8×10⁹/L — prophylactic platelet transfusion required.",
+                    "A 22-year-old woman with ITP and platelets of 5×10⁹/L is admitted with epistaxis.",
+                    "A patient on chemotherapy has platelets of 12×10⁹/L and requires a central line insertion.",
+                    "A patient with acute leukaemia (AML) requires platelet support during induction chemotherapy."
+                ]
+            };
+
+            const COMPONENT_CONFIG = {
+                rbc: { label: 'Red Blood Cells (RBCs)', colour: 'bg-red-100 text-red-700' },
+                ffp: { label: 'Fresh Frozen Plasma (FFP)', colour: 'bg-yellow-100 text-yellow-700' },
+                platelets: { label: 'Platelets', colour: 'bg-purple-100 text-purple-700' }
+            };
+
+            let patientGroup, unitGroup, currentComponent, isActuallySafe;
+            let score = 0;
+            let streak = 0;
+
+            function getComponent() {
+                const sel = componentSelect.value;
+                if (sel === 'all') {
+                    const arr = ['rbc', 'ffp', 'platelets'];
+                    return arr[Math.floor(Math.random() * arr.length)];
+                }
+                return sel;
+            }
+
+            function isCompatible(patientG, unitG, component) {
+                if (component === 'rbc') return rbcMatrix[patientG].includes(unitG);
+                if (component === 'ffp') return ffpCompatible(patientG, unitG);
+                if (component === 'platelets') return plateletsCompatible(patientG, unitG);
+            }
+
+            function buildExplanation(patientG, unitG, component, safe) {
+                const pABO = aboOf(patientG), dABO = aboOf(unitG);
+                const pRh = patientG.includes('+') ? 'Rh positive' : 'Rh negative';
+                const dRh = unitG.includes('+') ? 'Rh positive' : 'Rh negative';
+                const rhMismatch = patientG.includes('-') && unitG.includes('+');
+
+                if (component === 'rbc') {
+                    if (safe) {
+                        if (patientG === unitG) return `Identical group — always compatible. ${pRh} patient receiving ${dRh} cells.`;
+                        if (dABO === 'O') return `Group O RBCs are compatible for any ABO patient — O negative is the universal donor for red cells. ${rhMismatch ? 'Rh+ to Rh− would normally be avoided (risk of anti-D sensitisation), but here the unit is the same Rh type.' : ''}`;
+                        return `ABO and Rh compatible. The patient has the same or fewer antigens than the donor — no incompatible antibody reaction will occur.`;
+                    } else {
+                        if (pABO !== dABO && dABO !== 'O') return `ABO INCOMPATIBLE: Patient is group ${pABO} and will have natural antibodies (Anti-${dABO === 'AB' ? 'A and/or Anti-B' : dABO.replace('AB','A and Anti-B')}) that will destroy group ${dABO} red cells → acute haemolytic transfusion reaction (AHTR).`;
+                        if (rhMismatch) return `Rh INCOMPATIBLE: Rh negative patient receiving Rh positive (D antigen present) red cells. This risks sensitisation and production of Anti-D. In women of childbearing potential, Anti-D causes haemolytic disease of the foetus/newborn (HDFN) in future pregnancies.`;
+                        return `INCOMPATIBLE: The donor red cells carry antigens that the patient lacks and has antibodies against, risking a haemolytic transfusion reaction.`;
+                    }
+                }
+                if (component === 'ffp') {
+                    if (safe) {
+                        if (dABO === 'AB') return `Group AB FFP has NO anti-A or anti-B antibodies — it is the universal donor FFP (suitable for any patient).`;
+                        if (pABO === dABO) return `Identical ABO group — perfectly compatible. The donor FFP antibodies will not react with the patient's red cells. Note: Rh compatibility is NOT required for FFP as it contains no significant red cells.`;
+                        if (pABO === 'O') return `Group ${dABO} FFP is compatible for a Group O patient. The FFP antibodies (Anti-${pABO === 'O' && dABO === 'A' ? 'B' : 'A'}) will NOT react with O red cells (which have neither A nor B antigens).`;
+                        return `Compatible: The donor FFP antibodies will not attack the patient's red cells.`;
+                    } else {
+                        return `INCOMPATIBLE: Group ${dABO} FFP contains antibodies (Anti-${dABO === 'A' ? 'B' : dABO === 'B' ? 'A' : 'A and Anti-B'}) that WILL react with the patient's Group ${pABO} red cells. This can cause haemolysis. For FFP: the rule is the OPPOSITE of RBCs — Group O FFP is NOT universal donor (it contains both Anti-A and Anti-B). Group AB FFP is the universal donor.`;
+                    }
+                }
+                if (component === 'platelets') {
+                    if (safe) {
+                        if (rhMismatch) return `ABO compatible. Note: Rh positive platelets given to an Rh negative patient — a small risk of D-antigen sensitisation from contaminating red cells. In Rh negative women of childbearing potential, Anti-D prophylaxis (250 IU) should be considered. This is clinically acceptable when Rh negative platelets are unavailable.`;
+                        if (pABO === dABO) return `Identical ABO and Rh group — ideal platelet compatibility. No risk of antibody-mediated platelet destruction or haemolysis from residual plasma.`;
+                        return `ABO compatible: The donor platelet plasma will not contain antibodies harmful to the patient's red cells. ABO identical platelets are preferred for optimal increment, but ABO compatible is acceptable.`;
+                    } else {
+                        return `ABO INCOMPATIBLE for platelets: The donor platelet plasma contains antibodies (Anti-${pABO}) that react with the patient's red cells. Although rare, high-titre incompatible plasma can cause haemolysis. ABO incompatible platelets also achieve a lower platelet count increment. ABO compatible or identical platelets should be used when available.`;
+                    }
+                }
+                return '';
+            }
+
+            function newRound() {
+                currentComponent = getComponent();
                 patientGroup = bloodGroups[Math.floor(Math.random() * bloodGroups.length)];
                 unitGroup = bloodGroups[Math.floor(Math.random() * bloodGroups.length)];
-                
-                patientBloodGroupEl.textContent = patientGroup;
-                unitBloodGroupEl.textContent = unitGroup;
-                
+                isActuallySafe = isCompatible(patientGroup, unitGroup, currentComponent);
+
+                patientBGEl.textContent = patientGroup;
+                unitBGEl.textContent = unitGroup;
+
+                const cfg = COMPONENT_CONFIG[currentComponent];
+                componentBadgeEl.className = `inline-block px-3 py-1 text-sm font-bold rounded-full uppercase tracking-wide ${cfg.colour}`;
+                componentBadgeEl.textContent = cfg.label;
+
+                // Show a scenario
+                const scArr = scenarios[currentComponent];
+                const sc = scArr[Math.floor(Math.random() * scArr.length)];
+                scenarioTextEl.textContent = sc;
+                scenarioBoxEl.classList.remove('hidden');
+
                 compatFeedbackEl.classList.add('hidden');
+                nextBtn.classList.add('hidden');
                 safeBtn.disabled = false;
                 unsafeBtn.disabled = false;
             }
 
-            function checkCompat(isSafeClicked) {
+            function checkCompat(userSaidSafe) {
                 safeBtn.disabled = true;
                 unsafeBtn.disabled = true;
-                
-                const isActuallySafe = compatibilityMatrix[patientGroup].includes(unitGroup);
-                compatFeedbackEl.classList.remove('hidden');
-                
-                if (isSafeClicked === isActuallySafe) {
-                    compatFeedbackEl.textContent = 'Correct!';
-                    compatFeedbackEl.className = 'text-xl font-bold p-4 rounded-lg bg-green-100 text-green-800';
+
+                const correct = userSaidSafe === isActuallySafe;
+                const explanation = buildExplanation(patientGroup, unitGroup, currentComponent, isActuallySafe);
+
+                if (correct) {
                     score++;
+                    streak++;
+                    compatScoreEl.textContent = score;
+                    streakEl.textContent = streak;
+                    feedbackVerdictEl.textContent = streak >= 5 ? `🔥 ${streak} in a row! Correct!` : `✓ Correct! This transfusion is ${isActuallySafe ? 'COMPATIBLE' : 'INCOMPATIBLE'}.`;
+                    compatFeedbackEl.className = 'rounded-lg p-4 text-left text-sm bg-green-50 border-l-4 border-green-500';
                 } else {
-                    compatFeedbackEl.textContent = `Incorrect! This transfusion is ${isActuallySafe ? 'Safe' : 'Unsafe'}.`;
-                    compatFeedbackEl.className = 'text-xl font-bold p-4 rounded-lg bg-red-100 text-red-800';
+                    streak = 0;
+                    streakEl.textContent = 0;
+                    feedbackVerdictEl.textContent = `✗ Incorrect. This transfusion is ${isActuallySafe ? 'COMPATIBLE' : 'INCOMPATIBLE'}.`;
+                    compatFeedbackEl.className = 'rounded-lg p-4 text-left text-sm bg-red-50 border-l-4 border-red-500';
                 }
-                
-                compatScoreEl.textContent = score;
-                setTimeout(newCompatRound, 2500);
+
+                feedbackExplanationEl.textContent = explanation;
+                compatFeedbackEl.classList.remove('hidden');
+                nextBtn.classList.remove('hidden');
             }
 
-            function startNewCompatGame() {
-                score = 0;
-                compatScoreEl.textContent = score;
-                newCompatRound();
-            }
-
-            // --- Event Listeners ---
             safeBtn.addEventListener('click', () => checkCompat(true));
             unsafeBtn.addEventListener('click', () => checkCompat(false));
-            newCompatGameBtn.addEventListener('click', startNewCompatGame);
+            nextBtn.addEventListener('click', newRound);
+            componentSelect.addEventListener('change', newRound);
 
-            // --- Initialisation ---
-            startNewCompatGame();
-            
-            // Initialise Feather Icons on the page.
-            // The component loader will handle icons loaded in the header/footer separately.
-            if (typeof feather !== 'undefined') {
-                feather.replace();
-            }
+            newRound();
         });
     </script>
 </body>
