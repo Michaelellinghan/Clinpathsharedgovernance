@@ -16,18 +16,15 @@
         .nhs-light-grey { background-color: #F0F4F5; }
         .nhs-text-blue { color: #005EB8; }
         .nhs-text-dark-blue { color: #003087; }
-        .result-table th, .result-table td { padding: 0.5rem 1rem; border-bottom: 1px solid #e5e7eb; }
-        .result-abnormal { color: #dc2626; font-weight: bold; }
+        .result-table th, .result-table td { padding: 0.4rem 0.75rem; border-bottom: 1px solid #e5e7eb; }
+        .result-abnormal-high { color: #dc2626; font-weight: 700; }
+        .result-abnormal-low { color: #2563eb; font-weight: 700; }
         .diagnosis-option-btn:disabled { background-color: #d1d5db; cursor: not-allowed; opacity: 0.7; }
-        .diagnosis-option-btn {
-             transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
-        }
-        .diagnosis-option-btn:hover:not(:disabled) {
-            background-color: #e5e7eb;
-        }
-         .diagnosis-option-btn:active:not(:disabled) {
-            transform: scale(0.98);
-        }
+        .diagnosis-option-btn { transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out; }
+        .diagnosis-option-btn:hover:not(:disabled) { background-color: #e5e7eb; }
+        .diagnosis-option-btn:active:not(:disabled) { transform: scale(0.98); }
+        .fade-in { animation: fadeIn 0.3s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
@@ -37,33 +34,54 @@
     <main class="py-12 md:py-16 bg-nhs-light-grey flex-grow">
         <div class="container mx-auto px-4 sm:px-6 max-w-4xl">
             <div class="text-center">
-                <a href="games.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8 hover:underline">
+                <a href="games.html" class="inline-flex items-center nhs-text-blue font-semibold mb-6 hover:underline">
                     <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Games
                 </a>
-                <h2 class="text-3xl md:text-4xl font-bold nhs-text-dark-blue mb-4">Clinical Chemistry Case Challenge</h2>
-                <p class="text-gray-600 mb-8 max-w-2xl mx-auto">Analyse the patient's case notes and biochemistry results to determine the most likely diagnosis.</p>
+                <h2 class="text-3xl md:text-4xl font-bold nhs-text-dark-blue mb-2">Clinical Chemistry Case Challenge</h2>
+                <p class="text-gray-600 mb-6 max-w-2xl mx-auto">Analyse the patient's case notes and biochemistry results to determine the most likely diagnosis.</p>
+
+                <!-- Stats bar -->
+                <div class="flex justify-center gap-4 mb-6">
+                    <div class="bg-white rounded-lg shadow px-5 py-2">
+                        <p class="text-xs text-gray-500 uppercase font-semibold">Score</p>
+                        <p class="text-2xl font-bold nhs-text-dark-blue" id="score-display">0</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow px-5 py-2">
+                        <p class="text-xs text-gray-500 uppercase font-semibold">Case</p>
+                        <p class="text-2xl font-bold text-gray-700"><span id="case-num">1</span><span class="text-base text-gray-400">/<span id="case-total">0</span></span></p>
+                    </div>
+                </div>
             </div>
 
-            <div class="bg-white p-6 md:p-8 rounded-lg shadow-lg text-left">
-                <h3 class="text-xl font-bold nhs-text-dark-blue mb-4 border-b-2 border-gray-200 pb-2">Case Study</h3>
-                <p id="case-scenario" class="text-gray-700 mb-6 min-h-[60px]"></p>
+            <div class="bg-white p-6 md:p-8 rounded-lg shadow-lg text-left fade-in">
+                <div class="flex items-start gap-3 mb-4">
+                    <span class="inline-block px-2 py-1 text-xs font-bold rounded-full uppercase" id="specialty-badge" style="background:#e0f2fe;color:#0369a1;"></span>
+                </div>
+                <h3 class="text-xl font-bold nhs-text-dark-blue mb-2 border-b-2 border-gray-200 pb-2">Case Study</h3>
+                <p id="case-scenario" class="text-gray-700 mb-5 min-h-[60px]"></p>
 
-                <h3 class="text-xl font-bold nhs-text-dark-blue mb-4 border-b-2 border-gray-200 pb-2">Results</h3>
+                <h3 class="text-xl font-bold nhs-text-dark-blue mb-3 border-b-2 border-gray-200 pb-2">Results</h3>
                 <div class="overflow-x-auto">
-                    <table id="results-table" class="w-full result-table mb-4">
-                        </table>
+                    <table id="results-table" class="w-full result-table mb-2 text-sm"></table>
                 </div>
+                <p class="text-xs text-gray-400 mb-4">↑ = above reference range, ↓ = below reference range</p>
 
-                <div class="mt-8">
+                <div class="mt-6">
                     <h3 class="text-xl font-bold nhs-text-dark-blue mb-4">What is the most likely diagnosis?</h3>
-                    <div id="diagnosis-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        </div>
+                    <div id="diagnosis-options" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
                 </div>
             </div>
-            
-            <div id="case-feedback" class="mt-6 p-4 rounded-lg text-lg font-semibold text-center hidden"></div>
+
+            <div id="case-feedback" class="mt-5 p-4 rounded-lg text-base font-semibold text-center hidden"></div>
+
+            <!-- Explanation box -->
+            <div id="explanation-container" class="mt-3 p-5 bg-blue-50 border-l-4 border-blue-500 rounded-lg hidden fade-in">
+                <h4 class="font-bold text-blue-800 mb-1">Key Teaching Points</h4>
+                <p id="explanation-text" class="text-sm text-gray-700"></p>
+            </div>
+
             <div class="text-center">
-                <button id="next-question-btn" class="mt-6 bg-gray-800 text-white font-bold py-3 px-8 rounded-lg hover:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 transition duration-300 hidden">Next Case</button>
+                <button id="next-question-btn" class="mt-5 bg-gray-800 text-white font-bold py-3 px-8 rounded-lg hover:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 transition duration-300 hidden">Next Case →</button>
             </div>
         </div>
     </main>
@@ -71,192 +89,457 @@
     <div id="footer-placeholder"></div>
 
     <script src="js/component-loader.js"></script>
-    
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- DOM Element References ---
             const caseScenarioEl = document.getElementById('case-scenario');
             const resultsTableEl = document.getElementById('results-table');
             const diagnosisOptionsEl = document.getElementById('diagnosis-options');
             const caseFeedbackEl = document.getElementById('case-feedback');
             const nextCaseBtn = document.getElementById('next-question-btn');
+            const explanationContainer = document.getElementById('explanation-container');
+            const explanationTextEl = document.getElementById('explanation-text');
+            const scoreDisplayEl = document.getElementById('score-display');
+            const caseNumEl = document.getElementById('case-num');
+            const caseTotalEl = document.getElementById('case-total');
+            const specialtyBadge = document.getElementById('specialty-badge');
 
-            // --- Game Data ---
             const cases = [
+                // ── PANCREAS / GI ──────────────────────────────────────────────────
                 {
-                    scenario: "A 68-year-old man presents to A&E with severe abdominal pain radiating to his back. He admits to heavy alcohol consumption.",
+                    specialty: 'Gastroenterology',
+                    scenario: "A 52-year-old man presents to A&E with severe, constant epigastric pain radiating to his back, vomiting, and low-grade fever. He drinks approximately 40 units of alcohol per week. His abdomen is rigid on palpation.",
                     results: [
-                        { test: 'Amylase', value: '1250 U/L', ref: '25-125', abnormal: true },
-                        { test: 'Sodium', value: '138 mmol/L', ref: '135-145', abnormal: false },
-                        { test: 'Urea', value: '6.5 mmol/L', ref: '2.5-7.8', abnormal: false },
-                        { test: 'ALT', value: '45 U/L', ref: '<50', abnormal: false },
+                        { test: 'Amylase', value: '1850 U/L', ref: '25–125 U/L', dir: 'high' },
+                        { test: 'Lipase', value: '3100 U/L', ref: '<190 U/L', dir: 'high' },
+                        { test: 'CRP', value: '185 mg/L', ref: '<5 mg/L', dir: 'high' },
+                        { test: 'Glucose', value: '9.8 mmol/L', ref: '4.0–7.0 mmol/L', dir: 'high' },
+                        { test: 'Calcium (adjusted)', value: '1.95 mmol/L', ref: '2.20–2.60 mmol/L', dir: 'low' },
                     ],
-                    options: ['Myocardial Infarction', 'Acute Pancreatitis', 'Diabetic Ketoacidosis', 'Appendicitis'],
-                    answer: 'Acute Pancreatitis'
+                    options: ['Perforated Duodenal Ulcer', 'Acute Pancreatitis', 'Mesenteric Ischaemia', 'Acute Cholangitis'],
+                    answer: 'Acute Pancreatitis',
+                    explanation: 'Amylase and lipase >3× upper limit of normal confirms acute pancreatitis. Lipase is more sensitive and specific. Hypocalcaemia (saponification of peripancreatic fat) is an important marker of severity and appears in Ranson/Glasgow criteria. Hyperglycaemia reflects pancreatic beta-cell dysfunction. Gallstones and alcohol are the two most common causes in the UK.'
                 },
                 {
-                    scenario: "A 45-year-old woman presents with fatigue, weight gain, and feeling cold. Her GP suspects a thyroid issue.",
+                    specialty: 'Gastroenterology',
+                    scenario: "A 35-year-old woman presents with a 6-week history of pale, offensive, floating stools, weight loss, and abdominal bloating. She was recently diagnosed with type 1 diabetes.",
                     results: [
-                        { test: 'TSH', value: '12.5 mU/L', ref: '0.4-4.0', abnormal: true },
-                        { test: 'Free T4', value: '8.0 pmol/L', ref: '10-22', abnormal: true },
-                        { test: 'Sodium', value: '140 mmol/L', ref: '135-145', abnormal: false },
+                        { test: 'Anti-TTG IgA', value: 'Strongly Positive (>200 U/mL)', ref: '<10 U/mL (Negative)', dir: 'high' },
+                        { test: 'Total IgA', value: '0.9 g/L', ref: '0.8–4.0 g/L', dir: 'normal' },
+                        { test: 'Haemoglobin', value: '101 g/L', ref: '120–160 g/L', dir: 'low' },
+                        { test: 'Ferritin', value: '5 µg/L', ref: '20–200 µg/L', dir: 'low' },
+                        { test: 'Folate', value: '2.1 nmol/L', ref: '7.0–45.0 nmol/L', dir: 'low' },
                     ],
-                    options: ['Hyperthyroidism', 'Hypothyroidism', 'Cushing\'s Syndrome', 'Normal Thyroid Function'],
-                    answer: 'Hypothyroidism'
+                    options: ['Crohn\'s Disease', 'Coeliac Disease', 'Lactose Intolerance', 'Exocrine Pancreatic Insufficiency'],
+                    answer: 'Coeliac Disease',
+                    explanation: 'Strongly positive anti-TTG IgA antibody in a patient with sufficient total IgA is highly sensitive and specific for coeliac disease. Malabsorption of iron and folate causes the anaemia. The association with type 1 diabetes and other autoimmune conditions is well established. IgA deficiency (low total IgA) must always be checked as it causes false-negative TTG results — use IgG-based tests in this situation. Duodenal biopsy confirms the diagnosis (Marsh grading).'
+                },
+
+                // ── THYROID ───────────────────────────────────────────────────────
+                {
+                    specialty: 'Endocrinology',
+                    scenario: "A 45-year-old woman presents with a 3-month history of weight gain, fatigue, constipation, dry skin, cold intolerance, and slowed speech. Her GP suspects a thyroid problem.",
+                    results: [
+                        { test: 'TSH', value: '18.5 mU/L', ref: '0.4–4.0 mU/L', dir: 'high' },
+                        { test: 'Free T4 (fT4)', value: '6.2 pmol/L', ref: '10.0–22.0 pmol/L', dir: 'low' },
+                        { test: 'Free T3 (fT3)', value: '2.8 pmol/L', ref: '3.1–6.8 pmol/L', dir: 'low' },
+                        { test: 'Anti-TPO antibodies', value: 'Positive (450 IU/mL)', ref: '<34 IU/mL', dir: 'high' },
+                        { test: 'Total Cholesterol', value: '6.8 mmol/L', ref: '<5.0 mmol/L', dir: 'high' },
+                    ],
+                    options: ['Hyperthyroidism (Graves\' Disease)', 'Primary Hypothyroidism (Hashimoto\'s)', 'Secondary Hypothyroidism', 'Subclinical Hypothyroidism'],
+                    answer: 'Primary Hypothyroidism (Hashimoto\'s)',
+                    explanation: 'Primary hypothyroidism is characterised by high TSH (the pituitary trying to stimulate the thyroid) and low fT4/fT3. Positive anti-TPO antibodies confirm the autoimmune cause (Hashimoto\'s thyroiditis). Secondary hypothyroidism (pituitary failure) would show low TSH with low T4. Hypercholesterolaemia is a classic metabolic consequence of insufficient thyroid hormone. Treatment is levothyroxine, titrated to achieve a normal TSH.'
                 },
                 {
-                    scenario: "A 55-year-old man with known type 2 diabetes presents with confusion. He has been unwell with a chest infection for 3 days.",
+                    specialty: 'Endocrinology',
+                    scenario: "A 28-year-old woman presents with weight loss despite increased appetite, tremor, heat intolerance, palpitations, and goitre. She appears anxious and has a fine tremor on examination.",
                     results: [
-                        { test: 'Glucose', value: '35.2 mmol/L', ref: '4.0-7.0', abnormal: true },
-                        { test: 'Ketones', value: 'Negative', ref: 'Negative', abnormal: false },
-                        { test: 'Sodium', value: '155 mmol/L', ref: '135-145', abnormal: true },
-                        { test: 'Osmolality (calc)', value: '350 mOsmol/kg', ref: '275-295', abnormal: true },
+                        { test: 'TSH', value: '<0.01 mU/L', ref: '0.4–4.0 mU/L', dir: 'low' },
+                        { test: 'Free T4 (fT4)', value: '42.5 pmol/L', ref: '10.0–22.0 pmol/L', dir: 'high' },
+                        { test: 'Free T3 (fT3)', value: '12.1 pmol/L', ref: '3.1–6.8 pmol/L', dir: 'high' },
+                        { test: 'TSH Receptor Antibodies (TRAb)', value: 'Positive (8.2 U/L)', ref: '<1.75 U/L', dir: 'high' },
                     ],
-                    options: ['Diabetic Ketoacidosis (DKA)', 'Hypoglycaemia', 'Hyperosmolar Hyperglycaemic State (HHS)', 'Sepsis'],
-                    answer: 'Hyperosmolar Hyperglycaemic State (HHS)'
+                    options: ['Toxic Multinodular Goitre', 'Graves\' Disease (Hyperthyroidism)', 'Primary Hypothyroidism', 'Thyroid Crisis (Storm)'],
+                    answer: 'Graves\' Disease (Hyperthyroidism)',
+                    explanation: 'Suppressed TSH with elevated fT4 and fT3 confirms hyperthyroidism. Positive TSH receptor antibodies (TRAb/TRAB/TSI) are specific to Graves\' disease — these stimulatory antibodies mimic TSH, driving autonomous thyroid hormone production. Treatment options: antithyroid drugs (carbimazole), radioactive iodine (¹³¹I), or thyroidectomy. Toxic nodular goitre would be TRAb-negative. A thyroid storm is a life-threatening exacerbation.'
                 },
                 {
-                    scenario: "A 24-year-old female presents with central chest pain. An ECG is performed.",
+                    specialty: 'Endocrinology',
+                    scenario: "A 70-year-old man on long-term amiodarone for atrial fibrillation has a routine thyroid screen. He has no symptoms referable to thyroid disease.",
                     results: [
-                        { test: 'Troponin I', value: '1500 ng/L', ref: '<15', abnormal: true },
-                        { test: 'CK', value: '350 U/L', ref: '<145', abnormal: true },
-                        { test: 'Potassium', value: '4.1 mmol/L', ref: '3.5-5.3', abnormal: false },
+                        { test: 'TSH', value: '8.2 mU/L', ref: '0.4–4.0 mU/L', dir: 'high' },
+                        { test: 'Free T4 (fT4)', value: '18.5 pmol/L', ref: '10.0–22.0 pmol/L', dir: 'normal' },
+                        { test: 'Free T3 (fT3)', value: '2.9 pmol/L', ref: '3.1–6.8 pmol/L', dir: 'low' },
                     ],
-                    options: ['Acute Pancreatitis', 'Pulmonary Embolism', 'Myocardial Infarction', 'Stable Angina'],
-                    answer: 'Myocardial Infarction'
+                    options: ['Primary Hypothyroidism', 'Subclinical Hypothyroidism / Amiodarone Effect', 'Hyperthyroidism', 'Sick Euthyroid Syndrome'],
+                    answer: 'Subclinical Hypothyroidism / Amiodarone Effect',
+                    explanation: 'Amiodarone contains ~37% iodine by weight and has multiple effects on thyroid function tests: it inhibits T4-to-T3 conversion (causing low T3 and elevated T4), and the iodine load can cause either hypothyroidism (Amiodarone-induced Hypothyroidism, AIH) or hyperthyroidism (AIT). This pattern of raised TSH, normal T4, and low T3 is consistent with subclinical hypothyroidism, possibly amiodarone-induced. Consultation with endocrinology is essential before stopping amiodarone.'
+                },
+
+                // ── ADRENAL / ENDOCRINE ───────────────────────────────────────────
+                {
+                    specialty: 'Endocrinology',
+                    scenario: "A 42-year-old woman presents with weight gain (particularly central/truncal), a \"buffalo hump\", easy bruising, purple striae on her abdomen, and hypertension resistant to medication.",
+                    results: [
+                        { test: 'Cortisol (09:00)', value: '920 nmol/L', ref: '200–535 nmol/L', dir: 'high' },
+                        { test: 'Overnight 1mg Dexamethasone Suppression', value: 'Cortisol 780 nmol/L', ref: '<50 nmol/L (suppressed)', dir: 'high' },
+                        { test: 'Urinary Free Cortisol (24h)', value: '1250 nmol/24h', ref: '<280 nmol/24h', dir: 'high' },
+                        { test: 'Potassium', value: '3.0 mmol/L', ref: '3.5–5.3 mmol/L', dir: 'low' },
+                    ],
+                    options: ['Addison\'s Disease', 'Cushing\'s Syndrome', 'Primary Hyperaldosteronism (Conn\'s)', 'Phaeochromocytoma'],
+                    answer: 'Cushing\'s Syndrome',
+                    explanation: 'Cushing\'s syndrome is confirmed by failure to suppress cortisol with overnight dexamethasone (>50 nmol/L) and elevated 24h urinary free cortisol. Hypokalaemia occurs because excess cortisol activates mineralocorticoid receptors. The next step is ACTH measurement: elevated ACTH suggests pituitary (Cushing\'s disease) or ectopic (e.g. small cell lung cancer) source; suppressed ACTH suggests adrenal adenoma/carcinoma. High-dose dexamethasone suppression helps localise the source.'
                 },
                 {
-                    scenario: "A 72-year-old male with a history of bone pain and frequent infections presents with fatigue.",
+                    specialty: 'Endocrinology',
+                    scenario: "A 36-year-old man presents with fatigue, weight loss, postural dizziness, nausea, and bronze skin pigmentation. He has a past history of autoimmune thyroiditis.",
                     results: [
-                        { test: 'Total Protein', value: '105 g/L', ref: '60-80', abnormal: true },
-                        { test: 'Albumin', value: '30 g/L', ref: '35-50', abnormal: true },
-                        { test: 'Adjusted Calcium', value: '2.95 mmol/L', ref: '2.2-2.6', abnormal: true },
-                        { test: 'Creatinine', value: '180 umol/L', ref: '64-104', abnormal: true },
-                        { test: 'Serum Free Light Chains', value: 'Kappa:Lambda ratio 5.60', ref: '0.26-1.65', abnormal: true },
+                        { test: 'Sodium', value: '126 mmol/L', ref: '133–146 mmol/L', dir: 'low' },
+                        { test: 'Potassium', value: '5.8 mmol/L', ref: '3.5–5.3 mmol/L', dir: 'high' },
+                        { test: 'Glucose', value: '3.1 mmol/L', ref: '4.0–7.0 mmol/L', dir: 'low' },
+                        { test: 'Cortisol (09:00)', value: '38 nmol/L', ref: '200–535 nmol/L', dir: 'low' },
+                        { test: 'ACTH', value: '1200 ng/L', ref: '7.2–63.3 ng/L', dir: 'high' },
+                        { test: 'Renin Activity', value: 'Very High', ref: 'Low', dir: 'high' },
                     ],
-                    options: ['Liver Disease', 'Dehydration', 'Multiple Myeloma', 'Hyperparathyroidism'],
-                    answer: 'Multiple Myeloma'
+                    options: ['Secondary Adrenal Insufficiency', 'Addison\'s Disease (Primary Adrenal Insufficiency)', 'Cushing\'s Syndrome', 'SIADH'],
+                    answer: 'Addison\'s Disease (Primary Adrenal Insufficiency)',
+                    explanation: 'The hallmarks of primary adrenal insufficiency (Addison\'s disease): very low cortisol WITH very high ACTH (negative feedback loop broken — pituitary drives hard but the adrenal cannot respond), hyponatraemia, hyperkalaemia (aldosterone deficiency), hypoglycaemia, and skin hyperpigmentation (ACTH/MSH cross-reactivity). Confirmation: Short Synacthen Test (SST) — cortisol fails to rise above 420–500 nmol/L. Treatment: hydrocortisone + fludrocortisone. Autoimmune cause (anti-21-hydroxylase antibodies) is most common in developed countries.'
                 },
                 {
-                    scenario: "A 35-year-old female presents with jaundice, dark urine, and right upper quadrant pain. She denies alcohol use.",
+                    specialty: 'Endocrinology',
+                    scenario: "A 55-year-old woman with hypertension resistant to multiple drugs is found to have a persistent low potassium. She has no oedema and urine potassium is elevated.",
                     results: [
-                        { test: 'Bilirubin', value: '85 umol/L', ref: '<21', abnormal: true },
-                        { test: 'ALT', value: '450 U/L', ref: '<40', abnormal: true },
-                        { test: 'AST', value: '380 U/L', ref: '<30', abnormal: true },
-                        { test: 'Alkaline Phosphatase', value: '150 U/L', ref: '30-130', abnormal: true },
+                        { test: 'Potassium', value: '2.9 mmol/L', ref: '3.5–5.3 mmol/L', dir: 'low' },
+                        { test: 'Sodium', value: '148 mmol/L', ref: '133–146 mmol/L', dir: 'high' },
+                        { test: 'Aldosterone', value: '580 pmol/L', ref: '100–800 pmol/L (supine)', dir: 'normal' },
+                        { test: 'Plasma Renin Activity', value: '<0.2 pmol/mL/h', ref: '1.0–2.5 pmol/mL/h', dir: 'low' },
+                        { test: 'Aldosterone:Renin Ratio', value: '>1000', ref: '<800 (typically)', dir: 'high' },
                     ],
-                    options: ['Acute Pancreatitis', 'Acute Hepatitis', 'Gilbert\'s Syndrome', 'Gallstones'],
-                    answer: 'Acute Hepatitis'
+                    options: ['Renal Artery Stenosis', 'Primary Hyperaldosteronism (Conn\'s Syndrome)', 'Essential Hypertension', 'Liddle\'s Syndrome'],
+                    answer: 'Primary Hyperaldosteronism (Conn\'s Syndrome)',
+                    explanation: 'The key diagnostic clue is an elevated aldosterone:renin ratio (ARR >800) with suppressed renin. Primary hyperaldosteronism (Conn\'s) is the most common cause of secondary hypertension (up to 10% of hypertensives). The autonomous aldosterone secretion suppresses renin (via negative feedback). Hypokalaemia and hypernatraemia occur due to aldosterone\'s effect on the kidney. Next steps: CT adrenal to look for adenoma, then adrenal vein sampling to lateralise if surgery planned. Unilateral adenoma: adrenalectomy. Bilateral hyperplasia: spironolactone/eplerenone.'
                 },
                 {
-                    scenario: "A 60-year-old male is reviewed in the renal clinic. He has a long history of hypertension and type 2 diabetes.",
+                    specialty: 'Endocrinology',
+                    scenario: "A 38-year-old man is referred urgently with severe, episodic headache, sweating, and palpitations. His blood pressure during an episode is 220/130 mmHg. Between episodes he is normotensive.",
                     results: [
-                        { test: 'Creatinine', value: '250 umol/L', ref: '64-104', abnormal: true },
-                        { test: 'eGFR', value: '25 mL/min/1.73m²', ref: '>60', abnormal: true },
-                        { test: 'Urea', value: '15.2 mmol/L', ref: '2.5-7.8', abnormal: true },
-                        { test: 'Potassium', value: '5.6 mmol/L', ref: '3.5-5.3', abnormal: true },
+                        { test: 'Plasma Normetanephrine', value: '8.2 nmol/L', ref: '<0.9 nmol/L', dir: 'high' },
+                        { test: 'Plasma Metanephrine', value: '4.5 nmol/L', ref: '<0.5 nmol/L', dir: 'high' },
+                        { test: 'Glucose', value: '11.2 mmol/L', ref: '4.0–7.0 mmol/L', dir: 'high' },
                     ],
-                    options: ['Acute Kidney Injury', 'Chronic Kidney Disease', 'Nephrotic Syndrome', 'Urinary Tract Infection'],
-                    answer: 'Chronic Kidney Disease'
+                    options: ['Malignant Hypertension', 'Panic Disorder / Anxiety', 'Phaeochromocytoma', 'Carcinoid Syndrome'],
+                    answer: 'Phaeochromocytoma',
+                    explanation: 'Phaeochromocytoma is a catecholamine-secreting tumour of adrenal chromaffin cells. The classic triad: episodic headache, sweating, and palpitations. Markedly elevated plasma metanephrines (normetanephrine and metanephrine) are the investigation of choice — highly sensitive (97%) and specific (93%). Hyperglycaemia occurs as catecholamines oppose insulin. Localisation: CT/MRI adrenal. MIBG scintigraphy for occult/extra-adrenal. Surgery is curative; pre-operative alpha-blockade (phenoxybenzamine) is essential to prevent hypertensive crisis intraoperatively.'
+                },
+
+                // ── DIABETES ──────────────────────────────────────────────────────
+                {
+                    specialty: 'Diabetes/Endocrinology',
+                    scenario: "An 18-year-old presents to A&E with nausea, vomiting, abdominal pain, and confusion. He has a 2-year history of type 1 diabetes and has run out of insulin for 3 days. He is hyperventilating (Kussmaul breathing).",
+                    results: [
+                        { test: 'Glucose (plasma)', value: '28.4 mmol/L', ref: '4.0–7.0 mmol/L', dir: 'high' },
+                        { test: 'Blood Ketones (PoC)', value: '5.8 mmol/L', ref: '<0.6 mmol/L', dir: 'high' },
+                        { test: 'pH (arterial)', value: '7.12', ref: '7.35–7.45', dir: 'low' },
+                        { test: 'Bicarbonate (HCO₃⁻)', value: '8 mmol/L', ref: '22–29 mmol/L', dir: 'low' },
+                        { test: 'Potassium', value: '5.5 mmol/L', ref: '3.5–5.3 mmol/L', dir: 'high' },
+                        { test: 'Sodium', value: '130 mmol/L', ref: '133–146 mmol/L', dir: 'low' },
+                    ],
+                    options: ['Hyperosmolar Hyperglycaemic State (HHS)', 'Lactic Acidosis', 'Alcoholic Ketoacidosis', 'Diabetic Ketoacidosis (DKA)'],
+                    answer: 'Diabetic Ketoacidosis (DKA)',
+                    explanation: 'DKA is defined by the triad: hyperglycaemia (>11 mmol/L), ketonaemia (>3.0 mmol/L) or ketonuria, and acidosis (pH <7.30 or HCO₃ <15). Absent insulin → unrestrained lipolysis → ketoacid production → metabolic acidosis. Kussmaul breathing is a compensatory respiratory alkalosis. Hyperkalaemia occurs as H⁺ ions shift K⁺ extracellularly, but total body potassium is always depleted (critical: K⁺ falls as DKA is treated with insulin — must monitor and replace). Hyponatraemia is often due to pseudohyponatraemia (hyperglycaemia draws water out of cells). Treatment: fixed-rate insulin infusion + IV fluids + careful potassium replacement.'
                 },
                 {
-                    scenario: "A 30-year-old female presents with muscle weakness, hypertension, and weight gain, particularly around her abdomen.",
+                    specialty: 'Diabetes/Endocrinology',
+                    scenario: "A 70-year-old man with type 2 diabetes is confused and lethargic. He has had poor oral intake for 5 days due to a chest infection. Blood ketones on a point-of-care meter read 0.3 mmol/L.",
                     results: [
-                        { test: 'Cortisol (9am)', value: '750 nmol/L', ref: '102-535', abnormal: true },
-                        { test: 'Overnight Dexamethasone Suppression', value: 'Cortisol 600 nmol/L', ref: '<50', abnormal: true },
-                        { test: 'Potassium', value: '3.1 mmol/L', ref: '3.5-5.3', abnormal: true },
+                        { test: 'Glucose (plasma)', value: '48.0 mmol/L', ref: '4.0–7.0 mmol/L', dir: 'high' },
+                        { test: 'Sodium', value: '158 mmol/L', ref: '133–146 mmol/L', dir: 'high' },
+                        { test: 'Serum Osmolality (calc)', value: '372 mOsmol/kg', ref: '275–295 mOsmol/kg', dir: 'high' },
+                        { test: 'Blood Ketones', value: '0.3 mmol/L', ref: '<0.6 mmol/L', dir: 'normal' },
+                        { test: 'Urea', value: '24.5 mmol/L', ref: '2.5–7.8 mmol/L', dir: 'high' },
                     ],
-                    options: ['Addison\'s Disease', 'Hypothyroidism', 'Cushing\'s Syndrome', 'Conn\'s Syndrome'],
-                    answer: 'Cushing\'s Syndrome'
+                    options: ['Diabetic Ketoacidosis (DKA)', 'Hyperglycaemic Hyperosmolar State (HHS)', 'Septic Encephalopathy', 'Meningitis'],
+                    answer: 'Hyperglycaemic Hyperosmolar State (HHS)',
+                    explanation: 'HHS is characterised by extreme hyperglycaemia (>30 mmol/L), severe hyperosmolality (>320 mOsmol/kg), profound dehydration, and ABSENCE of significant ketosis (residual insulin in T2DM prevents unrestrained lipolysis). Confusion, lethargy, and focal neurological signs can occur. Mortality is 15–20% — significantly higher than DKA. Key differences from DKA: no acidosis, no Kussmaul breathing, much higher glucose, much more dehydrated. Treatment: SLOW fluid replacement (0.9% NaCl, then 0.45% if hypernatraemic), insulin only after fluids given (risk of cerebral oedema with rapid correction). VTE prophylaxis essential.'
+                },
+
+                // ── RENAL ────────────────────────────────────────────────────────
+                {
+                    specialty: 'Nephrology',
+                    scenario: "A 65-year-old man with a 20-year history of hypertension and type 2 diabetes attends the renal clinic for review. He is asymptomatic but fatigued. His eGFR has been declining steadily over 5 years.",
+                    results: [
+                        { test: 'Creatinine', value: '312 µmol/L', ref: '59–104 µmol/L', dir: 'high' },
+                        { test: 'eGFR (CKD-EPI)', value: '18 mL/min/1.73m²', ref: '>60 mL/min/1.73m²', dir: 'low' },
+                        { test: 'Urea', value: '22.4 mmol/L', ref: '2.5–7.8 mmol/L', dir: 'high' },
+                        { test: 'Potassium', value: '5.7 mmol/L', ref: '3.5–5.3 mmol/L', dir: 'high' },
+                        { test: 'Bicarbonate', value: '18 mmol/L', ref: '22–29 mmol/L', dir: 'low' },
+                        { test: 'Phosphate', value: '1.9 mmol/L', ref: '0.8–1.5 mmol/L', dir: 'high' },
+                        { test: 'Haemoglobin', value: '95 g/L', ref: '130–175 g/L', dir: 'low' },
+                    ],
+                    options: ['Acute Kidney Injury (Pre-renal)', 'Nephrotic Syndrome', 'Chronic Kidney Disease Stage 5 (near ESRD)', 'Rhabdomyolysis'],
+                    answer: 'Chronic Kidney Disease Stage 5 (near ESRD)',
+                    explanation: 'CKD Stage 5 = eGFR <15. The constellation of findings reflects multisystem consequences of severely impaired renal function: azotaemia (raised urea/creatinine), hyperkalaemia (impaired K⁺ excretion), metabolic acidosis (impaired H⁺ excretion), hyperphosphataemia (impaired phosphate excretion), and normochromic normocytic anaemia of renal failure (reduced erythropoietin production). Renal bone disease (renal osteodystrophy) also develops. This patient requires renal replacement therapy planning. The gradually declining eGFR over 5 years excludes AKI.'
                 },
                 {
-                    scenario: "A patient presents with severe dehydration, hypotension, and confusion following a bout of vomiting and diarrhoea.",
+                    specialty: 'Nephrology',
+                    scenario: "A 25-year-old woman develops severe facial and leg oedema over 2 weeks. She is passing frothy urine. Blood pressure is 130/80 mmHg.",
                     results: [
-                        { test: 'Sodium', value: '122 mmol/L', ref: '133-146', abnormal: true },
-                        { test: 'Potassium', value: '2.8 mmol/L', ref: '3.5-5.3', abnormal: true },
-                        { test: 'Urea', value: '18.1 mmol/L', ref: '2.5-7.8', abnormal: true },
-                        { test: 'Creatinine', value: '160 umol/L', ref: '64-104', abnormal: true },
+                        { test: 'Urine Protein:Creatinine Ratio', value: '620 mg/mmol', ref: '<30 mg/mmol', dir: 'high' },
+                        { test: 'Albumin', value: '18 g/L', ref: '35–50 g/L', dir: 'low' },
+                        { test: 'Total Cholesterol', value: '9.2 mmol/L', ref: '<5.0 mmol/L', dir: 'high' },
+                        { test: 'Creatinine', value: '78 µmol/L', ref: '45–84 µmol/L', dir: 'normal' },
+                        { test: 'eGFR', value: '82 mL/min/1.73m²', ref: '>60 mL/min/1.73m²', dir: 'normal' },
                     ],
-                    options: ['Diabetes Insipidus', 'Acute Kidney Injury (Pre-renal)', 'SIADH', 'Primary Polydipsia'],
-                    answer: 'Acute Kidney Injury (Pre-renal)'
+                    options: ['Nephritic Syndrome (IgA Nephropathy)', 'Nephrotic Syndrome', 'Heart Failure', 'Liver Cirrhosis with Ascites'],
+                    answer: 'Nephrotic Syndrome',
+                    explanation: 'Nephrotic syndrome is defined by the triad: heavy proteinuria (>3.5 g/24h or PCR >300 mg/mmol), hypoalbuminaemia, and oedema. Hyperlipidaemia is the fourth feature (the liver compensatorily synthesises lipoproteins). Renal function is often preserved initially. Most common causes by age: children — minimal change disease; adults — membranous nephropathy (anti-PLA2R antibodies), FSGS, minimal change. Distinguishing nephrotic from nephritic: nephrotic = protein loss, oedema, no haematuria; nephritic = haematuria, hypertension, reduced GFR.'
                 },
                 {
-                    scenario: "An 18-year-old presents to A&E with confusion, vomiting and a Kussmaul breathing pattern. A fingerprick glucose is very high.",
+                    specialty: 'Nephrology',
+                    scenario: "A 22-year-old male bodybuilder presents with dark brown (\"cola-coloured\") urine, muscle pain, and weakness the day after an intense workout. He takes creatine supplements.",
                     results: [
-                        { test: 'Glucose', value: '25.6 mmol/L', ref: '4.0-7.0', abnormal: true },
-                        { test: 'Ketones (Blood)', value: '4.1 mmol/L', ref: '<0.6', abnormal: true },
-                        { test: 'Bicarbonate', value: '12 mmol/L', ref: '22-29', abnormal: true },
-                        { test: 'pH (venous)', value: '7.15', ref: '7.32-7.42', abnormal: true },
+                        { test: 'Creatine Kinase (CK)', value: '85,000 U/L', ref: '38–174 U/L', dir: 'high' },
+                        { test: 'Creatinine', value: '390 µmol/L', ref: '59–104 µmol/L', dir: 'high' },
+                        { test: 'Potassium', value: '6.2 mmol/L', ref: '3.5–5.3 mmol/L', dir: 'high' },
+                        { test: 'Urine Dipstick', value: '+++ Blood (no RBCs on microscopy)', ref: 'Negative', dir: 'high' },
+                        { test: 'LDH', value: '2100 U/L', ref: '<250 U/L', dir: 'high' },
                     ],
-                    options: ['Hyperosmolar Hyperglycaemic State (HHS)', 'Alcoholic Ketoacidosis', 'Diabetic Ketoacidosis (DKA)', 'Lactic Acidosis'],
-                    answer: 'Diabetic Ketoacidosis (DKA)'
+                    options: ['Glomerulonephritis', 'Rhabdomyolysis with AKI', 'Haemolytic Anaemia', 'Myocardial Infarction'],
+                    answer: 'Rhabdomyolysis with AKI',
+                    explanation: 'Rhabdomyolysis is breakdown of skeletal muscle releasing myoglobin, CK, LDH, and potassium. Markedly elevated CK (>10,000 U/L suggests rhabdomyolysis; >1,000 U/L is significant) is the key marker. Myoglobinuria causes the dipstick to read positive for blood (myoglobin cross-reacts with the haem-based dipstick) but no red cells on microscopy — a critical diagnostic clue. Myoglobin directly damages renal tubules → AKI. Hyperkalaemia is life-threatening. Treatment: aggressive IV fluid resuscitation to flush the kidneys. Risk factors: extreme exercise, crush injury, statins, alcohol, drugs (cocaine), hyperthermia.'
+                },
+
+                // ── ELECTROLYTES / METABOLIC ──────────────────────────────────────
+                {
+                    specialty: 'Metabolic/Renal',
+                    scenario: "A 72-year-old woman on a thiazide diuretic for hypertension is reviewed by her GP. She feels lethargic and has had nausea for weeks. She is euvolaemic on examination.",
+                    results: [
+                        { test: 'Sodium', value: '119 mmol/L', ref: '133–146 mmol/L', dir: 'low' },
+                        { test: 'Potassium', value: '3.1 mmol/L', ref: '3.5–5.3 mmol/L', dir: 'low' },
+                        { test: 'Serum Osmolality', value: '242 mOsmol/kg', ref: '275–295 mOsmol/kg', dir: 'low' },
+                        { test: 'Urine Osmolality', value: '510 mOsmol/kg', ref: 'Varies', dir: 'high' },
+                        { test: 'Urine Sodium', value: '65 mmol/L', ref: 'Varies', dir: 'high' },
+                    ],
+                    options: ['Hypervolaemic Hyponatraemia (Heart Failure)', 'Hypovolaemic Hyponatraemia (diarrhoea)', 'SIADH or Thiazide-induced Hyponatraemia', 'Pseudohyponatraemia (hyperglycaemia)'],
+                    answer: 'SIADH or Thiazide-induced Hyponatraemia',
+                    explanation: 'Euvolaemic hyponatraemia with low plasma osmolality, inappropriately concentrated urine (>100 mOsmol/kg), and elevated urine sodium (>30 mmol/L) is the biochemical signature of SIADH. Thiazide diuretics are one of the most common causes and cause the same pattern. In true SIADH: the underlying cause must be found (e.g. SCLC, CNS disease, pneumonia, SSRIs). Hypovolaemic hyponatraemia would show low urine sodium (kidney conserving Na⁺). Hypervolaemic states (CCF, cirrhosis): also low urine sodium. Slow, careful correction is essential — rapid overcorrection causes osmotic demyelination syndrome (central pontine myelinolysis). Rate of correction should not exceed 8–10 mmol/L in 24 hours.'
                 },
                 {
-                    scenario: "A 40-year-old man presents with extreme fatigue, skin hyperpigmentation, and postural hypotension.",
+                    specialty: 'Metabolic',
+                    scenario: "A 68-year-old man with metastatic prostate cancer presents with confusion, constipation, polyuria, and polydipsia. He takes no calcium supplements.",
                     results: [
-                        { test: 'Sodium', value: '128 mmol/L', ref: '133-146', abnormal: true },
-                        { test: 'Potassium', value: '5.9 mmol/L', ref: '3.5-5.3', abnormal: true },
-                        { test: 'Cortisol (9am)', value: '45 nmol/L', ref: '102-535', abnormal: true },
-                        { test: 'ACTH', value: '850 ng/L', ref: '7.2-63.3', abnormal: true },
+                        { test: 'Adjusted Calcium', value: '3.45 mmol/L', ref: '2.20–2.60 mmol/L', dir: 'high' },
+                        { test: 'Phosphate', value: '0.65 mmol/L', ref: '0.80–1.50 mmol/L', dir: 'low' },
+                        { test: 'PTH (intact)', value: '<0.5 pmol/L', ref: '1.6–7.2 pmol/L', dir: 'low' },
+                        { test: 'PTHrP (parathyroid hormone-related protein)', value: 'Elevated', ref: 'Undetectable', dir: 'high' },
+                        { test: 'Creatinine', value: '168 µmol/L', ref: '59–104 µmol/L', dir: 'high' },
                     ],
-                    options: ['Cushing\'s Syndrome', 'Addison\'s Disease', 'Hypopituitarism', 'Conn\'s Syndrome'],
-                    answer: 'Addison\'s Disease'
+                    options: ['Primary Hyperparathyroidism', 'Familial Hypocalciuric Hypercalcaemia', 'Hypercalcaemia of Malignancy (PTHrP-mediated)', 'Vitamin D Toxicity'],
+                    answer: 'Hypercalcaemia of Malignancy (PTHrP-mediated)',
+                    explanation: 'Hypercalcaemia of malignancy is the most common cause of severe hypercalcaemia in hospitalised patients. Elevated PTHrP (produced by the tumour) binds PTH receptors, mimicking PTH action (hypercalcaemia + hypophosphataemia), but crucially, it suppresses actual PTH levels. Primary hyperparathyroidism would show elevated PTH. Symptoms: "Bones, Stones, Groans, Moans" — bone pain, kidney stones, GI symptoms, and neuropsychiatric features. Treatment: IV rehydration (first-line), then IV bisphosphonate (zoledronic acid), denosumab. Treat the underlying malignancy if possible.'
                 },
                 {
-                    scenario: "A 58-year-old woman is investigated for persistent bone pain. Her GP notes a raised alkaline phosphatase.",
+                    specialty: 'Metabolic',
+                    scenario: "A 52-year-old woman on long-term proton pump inhibitor therapy and with poor sunlight exposure presents with generalised bone pain, muscle weakness, and a waddling gait.",
                     results: [
-                        { test: 'Alkaline Phosphatase', value: '550 U/L', ref: '30-130', abnormal: true },
-                        { test: 'Adjusted Calcium', value: '2.4 mmol/L', ref: '2.2-2.6', abnormal: false },
-                        { test: 'Phosphate', value: '1.1 mmol/L', ref: '0.8-1.5', abnormal: false },
-                        { test: 'Gamma GT', value: '40 U/L', ref: '<40', abnormal: false },
+                        { test: 'Adjusted Calcium', value: '2.10 mmol/L', ref: '2.20–2.60 mmol/L', dir: 'low' },
+                        { test: 'Phosphate', value: '0.60 mmol/L', ref: '0.80–1.50 mmol/L', dir: 'low' },
+                        { test: 'Alkaline Phosphatase (ALP)', value: '380 U/L', ref: '30–130 U/L', dir: 'high' },
+                        { test: '25-OH Vitamin D', value: '8 nmol/L', ref: '>50 nmol/L (sufficient)', dir: 'low' },
+                        { test: 'PTH (intact)', value: '18.5 pmol/L', ref: '1.6–7.2 pmol/L', dir: 'high' },
                     ],
-                    options: ['Primary Hyperparathyroidism', 'Liver disease', 'Vitamin D Deficiency', 'Paget\'s Disease of Bone'],
-                    answer: 'Paget\'s Disease of Bone'
+                    options: ['Primary Hyperparathyroidism', 'Hypercalcaemia of Malignancy', 'Osteomalacia (Vitamin D Deficiency)', 'Paget\'s Disease of Bone'],
+                    answer: 'Osteomalacia (Vitamin D Deficiency)',
+                    explanation: 'Osteomalacia (softening of bone due to inadequate mineralisation) presents with bone pain, proximal muscle weakness, and in severe cases pathological fractures. The biochemical pattern: low/normal calcium, low phosphate, markedly elevated ALP (active osteoblast activity laying down unmineralised osteoid), very low 25-OH vitamin D, and elevated PTH (secondary hyperparathyroidism — the body tries to raise calcium by increasing bone resorption and renal phosphate wasting). This differs from Paget\'s disease (normal calcium + phosphate, isolated ALP rise, no muscle weakness, normal Vit D) and primary hyperparathyroidism (high calcium, low phosphate, high PTH, but vitamin D usually normal).'
+                },
+
+                // ── LIVER ────────────────────────────────────────────────────────
+                {
+                    specialty: 'Hepatology',
+                    scenario: "A 38-year-old man presents with a 2-week history of fatigue, nausea, right upper quadrant discomfort, dark urine, and mild jaundice. He returned from a backpacking trip to South Asia 6 weeks ago.",
+                    results: [
+                        { test: 'Bilirubin (total)', value: '95 µmol/L', ref: '<21 µmol/L', dir: 'high' },
+                        { test: 'ALT', value: '1850 U/L', ref: '<45 U/L', dir: 'high' },
+                        { test: 'AST', value: '1200 U/L', ref: '<35 U/L', dir: 'high' },
+                        { test: 'ALP', value: '180 U/L', ref: '30–130 U/L', dir: 'high' },
+                        { test: 'GGT', value: '95 U/L', ref: '<55 U/L', dir: 'high' },
+                        { test: 'PT/INR', value: '1.4', ref: '0.9–1.2', dir: 'high' },
+                    ],
+                    options: ['Alcoholic Hepatitis', 'Obstructive Jaundice (Gallstones)', 'Acute Viral Hepatitis (A or E)', 'Non-alcoholic Fatty Liver Disease'],
+                    answer: 'Acute Viral Hepatitis (A or E)',
+                    explanation: 'The pattern of markedly elevated transaminases (ALT:AST ratio typically >1 in viral hepatitis, and both many times normal) with relatively modestly elevated ALP and GGT is a hepatocellular pattern, pointing to acute hepatitis rather than cholestasis (where ALP:ALT ratio is >3). Travel to South Asia + 6-week incubation = hepatitis E (faeco-oral, epidemic in developing countries) or hepatitis A. Obstructive jaundice shows more marked ALP/GGT elevation. Alcoholic hepatitis typically shows AST:ALT ratio >2 (AST predominant). Investigate with hepatitis A IgM, hepatitis E IgM, hepatitis B sAg, and HCV RNA.'
+                },
+
+                // ── CARDIAC MARKERS ───────────────────────────────────────────────
+                {
+                    specialty: 'Cardiology',
+                    scenario: "A 58-year-old woman with known stable angina presents with 2 hours of central crushing chest pain radiating to her left arm and jaw. Her ECG shows ST elevation in leads V2–V5.",
+                    results: [
+                        { test: 'Troponin I (high-sensitivity)', value: '8500 ng/L', ref: '<16 ng/L (99th percentile)', dir: 'high' },
+                        { test: 'CK-MB', value: '185 U/L', ref: '<25 U/L', dir: 'high' },
+                        { test: 'CK (total)', value: '1200 U/L', ref: '<145 U/L', dir: 'high' },
+                        { test: 'LDH', value: '480 U/L', ref: '<250 U/L', dir: 'high' },
+                    ],
+                    options: ['Unstable Angina', 'Myocarditis', 'STEMI (ST-Elevation Myocardial Infarction)', 'Pulmonary Embolism'],
+                    answer: 'STEMI (ST-Elevation Myocardial Infarction)',
+                    explanation: 'STEMI is diagnosed on the ECG (ST elevation in a coronary territory); troponin confirms myocardial necrosis (markedly elevated) and helps quantify damage. High-sensitivity troponin (hsTnI/hsTnT) rises within 1–3 hours of onset, peaks at 12–24h, and returns to normal in 5–14 days. Serial troponins (0h/1h or 0h/3h) are used in a rapid rule-in/rule-out protocol for NSTEMI. CK-MB is more specific to cardiac muscle than total CK and useful for detecting reinfarction (shorter half-life than troponin). Treatment: primary PCI (cath lab activation) — "time is muscle." Aspirin + P2Y12 inhibitor.'
                 },
                 {
-                    scenario: "A 65-year-old male presents with jaundice and pruritus (itching). He notes his stools have become pale.",
+                    specialty: 'Cardiology',
+                    scenario: "A 72-year-old man with chronic heart failure presents with worsening breathlessness and leg swelling. He is on furosemide and ramipril.",
                     results: [
-                        { test: 'Bilirubin', value: '120 umol/L', ref: '<21', abnormal: true },
-                        { test: 'Alkaline Phosphatase', value: '800 U/L', ref: '30-130', abnormal: true },
-                        { test: 'Gamma GT', value: '950 U/L', ref: '<55', abnormal: true },
-                        { test: 'ALT', value: '95 U/L', ref: '<50', abnormal: true },
+                        { test: 'NT-proBNP', value: '8500 pg/mL', ref: '<125 pg/mL (or <300 pg/mL acute)', dir: 'high' },
+                        { test: 'Sodium', value: '129 mmol/L', ref: '133–146 mmol/L', dir: 'low' },
+                        { test: 'Creatinine', value: '185 µmol/L', ref: '59–104 µmol/L', dir: 'high' },
+                        { test: 'Potassium', value: '5.2 mmol/L', ref: '3.5–5.3 mmol/L', dir: 'normal' },
                     ],
-                    options: ['Acute Hepatitis', 'Haemolytic Anaemia', 'Obstructive Jaundice', 'Gilbert\'s Syndrome'],
-                    answer: 'Obstructive Jaundice'
+                    options: ['Pulmonary Embolism', 'Decompensated Chronic Heart Failure', 'Cor Pulmonale (COPD)', 'Cardiac Tamponade'],
+                    answer: 'Decompensated Chronic Heart Failure',
+                    explanation: 'BNP (B-type natriuretic peptide) and NT-proBNP are released by cardiac myocytes in response to increased wall stress/stretch. Markedly elevated NT-proBNP (>1000 pg/mL in decompensated heart failure; extreme elevation indicates poor prognosis) confirms a cardiac cause for his breathlessness. Hyponatraemia in CCF is dilutional and indicates severe disease — a negative prognostic marker. Cardiorenal syndrome (AKI in CCF) occurs due to reduced cardiac output and diuretic use. NT-proBNP also helps guide diuretic therapy. Key: NT-proBNP is renally cleared, so renal impairment raises NT-proBNP independently.'
+                },
+
+                // ── HAEMATOLOGICAL BIOCHEMISTRY ───────────────────────────────────
+                {
+                    specialty: 'Haematology',
+                    scenario: "A 74-year-old man is referred with fatigue, recurrent chest infections, and 6 kg weight loss. His GP found a very high total protein. He reports bone pain in his back.",
+                    results: [
+                        { test: 'Total Protein', value: '112 g/L', ref: '60–80 g/L', dir: 'high' },
+                        { test: 'Albumin', value: '26 g/L', ref: '35–50 g/L', dir: 'low' },
+                        { test: 'Adjusted Calcium', value: '3.10 mmol/L', ref: '2.20–2.60 mmol/L', dir: 'high' },
+                        { test: 'Creatinine', value: '210 µmol/L', ref: '59–104 µmol/L', dir: 'high' },
+                        { test: 'Serum Protein Electrophoresis', value: 'Monoclonal band (paraprotein) — IgG kappa', ref: 'No M-band', dir: 'high' },
+                        { test: 'Serum Free Light Chains (Kappa)', value: '1250 mg/L', ref: '3.3–19.4 mg/L', dir: 'high' },
+                        { test: 'Kappa:Lambda Ratio', value: '85.2', ref: '0.26–1.65', dir: 'high' },
+                    ],
+                    options: ['Waldenström Macroglobulinaemia', 'MGUS', 'Multiple Myeloma', 'Primary Amyloidosis'],
+                    answer: 'Multiple Myeloma',
+                    explanation: 'Multiple myeloma is diagnosed using the SLiM-CRAB criteria. CRAB: hyperCalcaemia, Renal failure, Anaemia, Bone pain/lesions. The monoclonal (M) protein on SPEP with suppression of normal immunoglobulins (immunoparesis → recurrent infections) and markedly elevated free light chains confirm clonal plasma cell proliferation. Renal failure in myeloma: cast nephropathy (light chains form casts in tubules), hypercalcaemia, dehydration, NSAIDs. Treatment: induction chemotherapy (e.g. bortezomib + lenalidomide + dexamethasone) followed by autologous stem cell transplant in eligible patients. 24h urine for Bence-Jones proteins (free light chains) and bone marrow biopsy to confirm diagnosis.'
+                },
+
+                // ── LIPIDS / CVD RISK ─────────────────────────────────────────────
+                {
+                    specialty: 'Cardiology/Lipidology',
+                    scenario: "A 35-year-old man presents for cardiovascular risk assessment. His father had a myocardial infarction at age 43. On examination, he has bilateral tendon xanthomata on his Achilles tendons and xanthelasma.",
+                    results: [
+                        { test: 'Total Cholesterol', value: '9.8 mmol/L', ref: '<5.0 mmol/L', dir: 'high' },
+                        { test: 'LDL Cholesterol', value: '7.2 mmol/L', ref: '<3.0 mmol/L', dir: 'high' },
+                        { test: 'HDL Cholesterol', value: '1.4 mmol/L', ref: '>1.0 mmol/L', dir: 'normal' },
+                        { test: 'Triglycerides (fasting)', value: '1.8 mmol/L', ref: '<1.7 mmol/L', dir: 'normal' },
+                        { test: 'Lipoprotein(a) [Lp(a)]', value: '250 nmol/L', ref: '<75 nmol/L', dir: 'high' },
+                    ],
+                    options: ['Secondary Hypercholesterolaemia (hypothyroidism)', 'Familial Hypercholesterolaemia (FH)', 'Familial Combined Hyperlipidaemia', 'Polygenic Hypercholesterolaemia'],
+                    answer: 'Familial Hypercholesterolaemia (FH)',
+                    explanation: 'Familial hypercholesterolaemia (FH) is an autosomal dominant disorder affecting the LDL receptor (most common), apoB, or PCSK9. Clues: very high LDL (>5 mmol/L in adults), tendon xanthomata (pathognomonic), xanthelasma, corneal arcus <45 years, and premature CVD in first-degree relatives. Simon Broome or Dutch Lipid Clinic Network criteria used for diagnosis. Elevated Lp(a) is an additional independent risk factor. Treatment: high-intensity statin ± ezetimibe; PCSK9 inhibitors (evolocumab/alirocumab) for statin-intolerant or inadequately controlled. Cascade testing of all first-degree relatives is essential. Exclude secondary causes (hypothyroidism, nephrotic syndrome) first.'
+                },
+
+                // ── ACID-BASE ─────────────────────────────────────────────────────
+                {
+                    specialty: 'Respiratory/Critical Care',
+                    scenario: "A 65-year-old woman with severe COPD presents to A&E acutely breathless and drowsy. On arterial blood gas she is cyanosed with RR 32/min.",
+                    results: [
+                        { test: 'pH (arterial)', value: '7.22', ref: '7.35–7.45', dir: 'low' },
+                        { test: 'PaCO₂', value: '9.8 kPa', ref: '4.7–6.0 kPa', dir: 'high' },
+                        { test: 'PaO₂', value: '6.2 kPa', ref: '>10.0 kPa on air', dir: 'low' },
+                        { test: 'Bicarbonate (HCO₃⁻)', value: '29 mmol/L', ref: '22–29 mmol/L', dir: 'normal' },
+                        { test: 'Base Excess', value: '+4.5 mmol/L', ref: '-2 to +2 mmol/L', dir: 'high' },
+                    ],
+                    options: ['Acute Metabolic Acidosis', 'Acute Type 1 Respiratory Failure', 'Acute-on-chronic Type 2 Respiratory Failure', 'Pulmonary Embolism with respiratory failure'],
+                    answer: 'Acute-on-chronic Type 2 Respiratory Failure',
+                    explanation: 'Type 2 (hypercapnic) respiratory failure: pH low (acidosis) + elevated PaCO₂ (CO₂ retention due to inability to ventilate adequately). The key discriminator: the HCO₃ is at the upper limit of normal and base excess is positive — indicating pre-existing metabolic compensation for chronic CO₂ retention (COPD). A fully acute CO₂ retention would show low HCO₃ (no time to compensate). This is acute decompensation on a background of chronic hypercapnia. Treatment: controlled O₂ (target SpO₂ 88–92% in COPD), non-invasive ventilation (BiPAP), nebulisers, steroids, antibiotics. Uncontrolled high-flow O₂ removes the hypoxic drive and worsens CO₂ retention.'
+                },
+
+                // ── VITAMINS & NUTRITION ──────────────────────────────────────────
+                {
+                    specialty: 'Gastroenterology/Nutrition',
+                    scenario: "A 45-year-old woman who had a Roux-en-Y gastric bypass 3 years ago presents with tingling in her hands and feet, difficulty walking, and she appears confused. She admits to poor compliance with vitamin supplements.",
+                    results: [
+                        { test: 'Vitamin B12 (serum)', value: '<85 pmol/L', ref: '150–700 pmol/L', dir: 'low' },
+                        { test: 'Methylmalonic Acid (MMA)', value: '1.8 µmol/L', ref: '<0.4 µmol/L', dir: 'high' },
+                        { test: 'Homocysteine (total)', value: '48 µmol/L', ref: '<15 µmol/L', dir: 'high' },
+                        { test: 'Haemoglobin', value: '105 g/L', ref: '120–160 g/L', dir: 'low' },
+                        { test: 'MCV', value: '112 fL', ref: '80–100 fL', dir: 'high' },
+                    ],
+                    options: ['Folate Deficiency', 'Peripheral Neuropathy from Diabetes', 'Vitamin B12 Deficiency (Subacute Combined Degeneration)', 'Multiple Sclerosis'],
+                    answer: 'Vitamin B12 Deficiency (Subacute Combined Degeneration)',
+                    explanation: 'Bariatric surgery (especially bypass) bypasses intrinsic factor secretion in the stomach and the intrinsic factor-B12 absorption site in the terminal ileum, making B12 deficiency inevitable without supplementation. B12 deficiency causes megaloblastic anaemia (high MCV, oval macrocytes, hypersegmented neutrophils) AND neurological damage (subacute combined degeneration of the spinal cord — posterior and lateral column demyelination). Elevated MMA and homocysteine confirm functional B12 deficiency (more sensitive than serum B12 alone). Treatment: IM hydroxocobalamin (especially with neurological features — oral may be insufficient). NB: folate deficiency causes macrocytic anaemia but NOT subacute combined degeneration.'
+                },
+
+                // ── TUMOUR MARKERS ────────────────────────────────────────────────
+                {
+                    specialty: 'Oncology',
+                    scenario: "A 62-year-old man is referred by his GP after 3 months of lower urinary tract symptoms, nocturia, and difficulty voiding. Examination reveals a large, hard, irregular prostate.",
+                    results: [
+                        { test: 'PSA (total)', value: '85.0 µg/L', ref: '<4.0 µg/L', dir: 'high' },
+                        { test: 'Free:Total PSA Ratio', value: '6%', ref: '>25% (lower ratio = higher cancer risk)', dir: 'low' },
+                        { test: 'Alkaline Phosphatase', value: '820 U/L', ref: '30–130 U/L', dir: 'high' },
+                        { test: 'Adjusted Calcium', value: '2.85 mmol/L', ref: '2.20–2.60 mmol/L', dir: 'high' },
+                    ],
+                    options: ['Benign Prostatic Hypertrophy (BPH)', 'Prostatitis', 'Metastatic Prostate Cancer', 'Bladder Cancer'],
+                    answer: 'Metastatic Prostate Cancer',
+                    explanation: 'PSA >50 µg/L with a low free:total PSA ratio, a hard irregular prostate, and elevated ALP (bone metastases are osteoblastic → high ALP) with hypercalcaemia strongly indicates metastatic prostate cancer. BPH causes a modest PSA rise (usually <10 µg/L). Prostatitis causes a dramatic transient PSA spike but typically with normal free:total ratio. ALP elevation in metastatic bone disease reflects osteoblast activation. Bone scan and staging CT are next investigations. Treatment options: androgen deprivation therapy (ADT) ± docetaxel or abiraterone. Important: PSA is an organ-specific, not cancer-specific, marker.'
+                },
+
+                // ── HAEMATINICS ───────────────────────────────────────────────────
+                {
+                    specialty: 'Haematology',
+                    scenario: "A 54-year-old woman with known rheumatoid arthritis presents with fatigue and mild breathlessness on exertion. Her ESR is markedly elevated.",
+                    results: [
+                        { test: 'Haemoglobin', value: '96 g/L', ref: '120–160 g/L', dir: 'low' },
+                        { test: 'MCV', value: '82 fL', ref: '80–100 fL', dir: 'normal' },
+                        { test: 'Ferritin', value: '185 µg/L', ref: '20–200 µg/L', dir: 'normal' },
+                        { test: 'Serum Iron', value: '5.2 µmol/L', ref: '10–30 µmol/L', dir: 'low' },
+                        { test: 'TIBC', value: '42 µmol/L', ref: '45–75 µmol/L', dir: 'low' },
+                        { test: 'Transferrin Saturation', value: '12%', ref: '20–50%', dir: 'low' },
+                        { test: 'CRP', value: '68 mg/L', ref: '<5 mg/L', dir: 'high' },
+                    ],
+                    options: ['Iron Deficiency Anaemia', 'Anaemia of Chronic Disease (Inflammation)', 'Beta Thalassaemia Trait', 'Autoimmune Haemolytic Anaemia'],
+                    answer: 'Anaemia of Chronic Disease (Inflammation)',
+                    explanation: 'Anaemia of chronic disease (ACD) — also called anaemia of inflammation — is the second most common anaemia worldwide. Key features: normochromic, normocytic anaemia; LOW serum iron; LOW TIBC (distinguishes from IDA where TIBC is HIGH); NORMAL or HIGH ferritin (ferritin is an acute phase reactant — it is elevated by inflammation, masking true iron stores). The pathophysiology involves hepcidin (the liver produces hepcidin in response to IL-6; hepcidin locks iron inside macrophages and enterocytes, preventing it being used for erythropoiesis). The raised CRP confirms active inflammation. IDA: low serum iron + HIGH TIBC + LOW ferritin. Overlapping IDA + ACD can occur — check both ferritin AND iron studies.'
                 }
             ];
 
-            // --- Game State ---
             let currentCase = {};
             let usedCaseIndices = [];
+            let score = 0;
+            let caseNum = 0;
 
-            // --- Game Logic Functions ---
+            caseTotalEl.textContent = cases.length;
+
             function loadNewCase() {
                 if (usedCaseIndices.length === cases.length) {
-                    usedCaseIndices = []; 
+                    usedCaseIndices = [];
+                    caseNum = 0;
                 }
-                let availableCases = cases.filter((c, index) => !usedCaseIndices.includes(index));
-                const caseIndexInAvailable = Math.floor(Math.random() * availableCases.length);
-                currentCase = availableCases[caseIndexInAvailable];
-                const actualIndex = cases.indexOf(currentCase);
+
+                const available = cases.filter((_, i) => !usedCaseIndices.includes(i));
+                const pick = available[Math.floor(Math.random() * available.length)];
+                const actualIndex = cases.indexOf(pick);
                 usedCaseIndices.push(actualIndex);
-                
+                currentCase = pick;
+                caseNum++;
+
+                caseNumEl.textContent = caseNum;
+                specialtyBadge.textContent = currentCase.specialty;
+
                 caseScenarioEl.textContent = currentCase.scenario;
                 caseFeedbackEl.classList.add('hidden');
                 nextCaseBtn.classList.add('hidden');
+                explanationContainer.classList.add('hidden');
 
-                let resultsHTML = '<thead><tr class="text-left"><th class="font-semibold pb-2">Test</th><th class="font-semibold pb-2 text-right">Result</th><th class="font-semibold pb-2 text-right">Reference Range</th></tr></thead><tbody>';
+                let resultsHTML = '<thead><tr class="text-left bg-gray-50"><th class="font-semibold py-2">Test</th><th class="font-semibold py-2 text-right">Result</th><th class="font-semibold py-2 text-right pl-4">Reference Range</th></tr></thead><tbody>';
                 currentCase.results.forEach(res => {
-                    resultsHTML += `<tr><td class="font-semibold py-1">${res.test}</td><td class="text-right py-1 ${res.abnormal ? 'result-abnormal' : ''}">${res.value}</td><td class="text-xs text-gray-500 text-right py-1">${res.ref}</td></tr>`;
+                    const cls = res.dir === 'high' ? 'result-abnormal-high' : res.dir === 'low' ? 'result-abnormal-low' : '';
+                    const arrow = res.dir === 'high' ? ' ↑' : res.dir === 'low' ? ' ↓' : '';
+                    resultsHTML += `<tr><td class="font-semibold py-1">${res.test}</td><td class="text-right py-1 ${cls}">${res.value}${arrow}</td><td class="text-xs text-gray-400 text-right py-1 pl-4">${res.ref}</td></tr>`;
                 });
                 resultsHTML += '</tbody>';
                 resultsTableEl.innerHTML = resultsHTML;
 
                 diagnosisOptionsEl.innerHTML = '';
-                const shuffledOptions = [...currentCase.options].sort(() => Math.random() - 0.5);
-                shuffledOptions.forEach(opt => {
+                const shuffled = [...currentCase.options].sort(() => Math.random() - 0.5);
+                shuffled.forEach(opt => {
                     const button = document.createElement('button');
-                    button.className = 'diagnosis-option-btn w-full text-left p-4 bg-gray-100 rounded-lg hover:bg-gray-200';
+                    button.className = 'diagnosis-option-btn w-full text-left p-4 bg-gray-100 rounded-lg border-2 border-transparent text-sm font-medium';
                     button.textContent = opt;
                     button.addEventListener('click', checkCaseAnswer);
                     diagnosisOptionsEl.appendChild(button);
@@ -267,36 +550,35 @@
                 const selectedAnswer = event.target.textContent;
                 caseFeedbackEl.classList.remove('hidden');
                 nextCaseBtn.classList.remove('hidden');
-                
-                if (selectedAnswer === currentCase.answer) {
-                    caseFeedbackEl.textContent = 'Correct! Well done.';
-                    caseFeedbackEl.className = 'mt-6 p-4 rounded-lg text-lg font-semibold bg-green-100 text-green-800 text-center';
-                } else {
-                    caseFeedbackEl.textContent = `Not quite. The correct diagnosis is: ${currentCase.answer}.`;
-                    caseFeedbackEl.className = 'mt-6 p-4 rounded-lg text-lg font-semibold bg-red-100 text-red-800 text-center';
-                }
+                explanationContainer.classList.remove('hidden');
+                explanationTextEl.textContent = currentCase.explanation;
 
                 document.querySelectorAll('.diagnosis-option-btn').forEach(btn => {
                     btn.disabled = true;
                     if (btn.textContent === currentCase.answer) {
-                        btn.classList.add('bg-green-200');
-                    } else if (btn.textContent === selectedAnswer) {
-                        btn.classList.add('bg-red-200');
+                        btn.classList.add('bg-green-200', 'border-green-500');
+                    } else if (btn.textContent === selectedAnswer && selectedAnswer !== currentCase.answer) {
+                        btn.classList.add('bg-red-200', 'border-red-400');
                     }
                 });
+
+                if (selectedAnswer === currentCase.answer) {
+                    score++;
+                    scoreDisplayEl.textContent = score;
+                    caseFeedbackEl.textContent = '✓ Correct! Well done.';
+                    caseFeedbackEl.className = 'mt-5 p-4 rounded-lg text-base font-semibold bg-green-100 text-green-800 text-center';
+                } else {
+                    caseFeedbackEl.textContent = `✗ Incorrect. The correct diagnosis is: ${currentCase.answer}.`;
+                    caseFeedbackEl.className = 'mt-5 p-4 rounded-lg text-base font-semibold bg-red-100 text-red-800 text-center';
+                }
             }
 
-            // --- Initialisation ---
             if (nextCaseBtn) {
                 nextCaseBtn.addEventListener('click', loadNewCase);
             }
             loadNewCase();
-            
-            // Re-render any Feather icons in the main body content.
-            // Your component-loader will handle icons in the header/footer.
-            if (typeof feather !== 'undefined') {
-                feather.replace();
-            }
+
+            if (typeof feather !== 'undefined') feather.replace();
         });
     </script>
 </body>

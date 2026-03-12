@@ -17,19 +17,31 @@
         .nhs-dark-blue { background-color: #003087; }
         .nhs-light-grey { background-color: #F0F4F5; }
         .nhs-text-blue { color: #005EB8; }
-        .option-btn:disabled {
-            background-color: #d1d5db;
-            cursor: not-allowed;
+        .nhs-text-dark-blue { color: #003087; }
+        .option-btn:disabled { background-color: #d1d5db; cursor: not-allowed; }
+        .option-btn.correct { background-color: #4ade80; color: white; border-color: #22c55e; }
+        .option-btn.incorrect { background-color: #f87171; color: white; border-color: #ef4444; }
+        .streak-fire { animation: pulse 0.6s ease-in-out; }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
         }
-        .option-btn.correct {
-            background-color: #4ade80;
-            color: white;
-            border-color: #22c55e;
+        .fade-in {
+            animation: fadeIn 0.3s ease-out;
         }
-        .option-btn.incorrect {
-            background-color: #f87171;
-            color: white;
-            border-color: #ef4444;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .category-badge {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
         }
     </style>
 </head>
@@ -37,146 +49,294 @@
 
     <div id="header-placeholder"></div>
 
-    <main class="py-16">
+    <main class="py-12">
         <div class="container mx-auto px-6 max-w-2xl text-center">
-            <a href="games.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8">
+            <a href="games.html" class="inline-flex items-center nhs-text-blue font-semibold mb-6 hover:underline">
                 <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Games
             </a>
-            <h2 class="text-3xl font-bold nhs-text-dark-blue mb-4">Morphology Mastermind</h2>
-            <p class="text-gray-600 mb-8 max-w-2xl mx-auto">Read the description of a haematological feature and select the correct term.</p>
+            <h2 class="text-3xl font-bold nhs-text-dark-blue mb-2">Morphology Mastermind</h2>
+            <p class="text-gray-600 mb-6 max-w-xl mx-auto">Read the description of a haematological feature and select the correct term. Learn the clinical significance of each finding.</p>
 
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <p class="text-lg font-semibold text-gray-700">Which feature is described as:</p>
-                <div id="description-box" class="my-4 p-4 bg-yellow-100 text-yellow-800 text-xl font-bold rounded-lg min-h-[100px] flex items-center justify-center">
-                    </div>
-                
-                <div id="answer-options" class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-                    </div>
-
-                <div id="feedback-message" class="mt-6 p-4 rounded-lg text-lg font-semibold hidden"></div>
+            <!-- Stats Bar -->
+            <div class="flex justify-center gap-6 mb-6">
+                <div class="bg-white rounded-lg shadow px-5 py-2">
+                    <p class="text-xs text-gray-500 uppercase font-semibold">Score</p>
+                    <p class="text-2xl font-bold nhs-text-dark-blue" id="score">0</p>
+                </div>
+                <div class="bg-white rounded-lg shadow px-5 py-2">
+                    <p class="text-xs text-gray-500 uppercase font-semibold">Question</p>
+                    <p class="text-2xl font-bold text-gray-700"><span id="q-current">1</span><span class="text-base text-gray-400">/<span id="q-total">0</span></span></p>
+                </div>
+                <div class="bg-white rounded-lg shadow px-5 py-2">
+                    <p class="text-xs text-gray-500 uppercase font-semibold">Streak 🔥</p>
+                    <p class="text-2xl font-bold text-orange-500" id="streak">0</p>
+                </div>
+                <div class="bg-white rounded-lg shadow px-5 py-2">
+                    <p class="text-xs text-gray-500 uppercase font-semibold">Best Streak</p>
+                    <p class="text-2xl font-bold text-purple-600" id="best-streak">0</p>
+                </div>
             </div>
 
-            <div class="mt-6">
-                <p class="text-lg">Score: <span id="score" class="font-bold">0</span></p>
-                <button id="next-question-btn" class="mt-4 bg-gray-800 text-white font-bold py-3 px-8 rounded-lg hover:bg-black transition duration-300 hidden">Next Question</button>
+            <div class="bg-white p-6 rounded-lg shadow-md fade-in" id="question-card">
+                <!-- Category badge -->
+                <div class="flex justify-center mb-3">
+                    <span id="category-badge" class="category-badge bg-blue-100 text-blue-700"></span>
+                </div>
+
+                <p class="text-base font-semibold text-gray-500 mb-1">Which haematological feature is described as:</p>
+                <div id="description-box" class="my-4 p-4 bg-yellow-50 border-2 border-yellow-300 text-yellow-900 text-lg font-medium rounded-lg min-h-[90px] flex items-center justify-center italic">
+                </div>
+
+                <div id="answer-options" class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-5">
+                </div>
+
+                <div id="feedback-message" class="mt-5 p-4 rounded-lg text-base font-semibold hidden"></div>
+
+                <!-- Explanation box shown after each answer -->
+                <div id="explanation-box" class="mt-3 p-4 bg-blue-50 border-l-4 border-blue-500 text-left rounded hidden">
+                    <p class="text-xs font-bold text-blue-600 uppercase mb-1">Clinical Significance</p>
+                    <p id="explanation-text" class="text-sm text-gray-700"></p>
+                </div>
+            </div>
+
+            <div class="mt-5 flex justify-center gap-4">
+                <button id="next-question-btn" class="mt-2 bg-gray-800 text-white font-bold py-3 px-8 rounded-lg hover:bg-black transition duration-300 hidden">Next Question →</button>
+            </div>
+
+            <!-- Filter by category -->
+            <div class="mt-8 bg-white p-4 rounded-lg shadow-md text-left">
+                <p class="font-semibold text-gray-700 mb-2">Filter Category:</p>
+                <div id="category-filter" class="flex flex-wrap gap-2">
+                    <button class="filter-btn px-3 py-1 text-sm rounded-full bg-gray-800 text-white font-semibold" data-cat="All">All</button>
+                </div>
             </div>
         </div>
     </main>
-    
+
     <div id="footer-placeholder"></div>
 
-      <script src="js/component-loader.js"></script>
-    
+    <script src="js/component-loader.js"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            feather.replace();
+            if (typeof feather !== 'undefined') feather.replace();
         });
-   </script>
-    
+    </script>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const descriptionBox = document.getElementById('description-box');
             const answerOptionsEl = document.getElementById('answer-options');
             const feedbackMessageEl = document.getElementById('feedback-message');
+            const explanationBox = document.getElementById('explanation-box');
+            const explanationText = document.getElementById('explanation-text');
             const nextQuestionBtn = document.getElementById('next-question-btn');
             const scoreEl = document.getElementById('score');
+            const qCurrentEl = document.getElementById('q-current');
+            const qTotalEl = document.getElementById('q-total');
+            const streakEl = document.getElementById('streak');
+            const bestStreakEl = document.getElementById('best-streak');
+            const categoryBadge = document.getElementById('category-badge');
+            const categoryFilter = document.getElementById('category-filter');
+
+            const CATEGORY_COLORS = {
+                'RBC Basic': 'bg-red-100 text-red-700',
+                'RBC Size': 'bg-red-100 text-red-700',
+                'RBC Colour': 'bg-orange-100 text-orange-700',
+                'RBC Shape': 'bg-amber-100 text-amber-700',
+                'RBC Distribution': 'bg-yellow-100 text-yellow-800',
+                'RBC Inclusion': 'bg-lime-100 text-lime-700',
+                'WBC Mature': 'bg-blue-100 text-blue-700',
+                'WBC Precursor': 'bg-indigo-100 text-indigo-700',
+                'WBC Abnormal': 'bg-purple-100 text-purple-700',
+                'WBC Inclusion': 'bg-violet-100 text-violet-700',
+                'Platelet': 'bg-green-100 text-green-700',
+                'Malaria': 'bg-teal-100 text-teal-700',
+            };
 
             const morphologyPairs = [
-                // Red Cell Features
-                { term: 'Red Blood Cell', description: 'A non-nucleated, biconcave disc, approximately 7-8µm in diameter, responsible for oxygen transport.', category: 'RBC Basic' },
-                { term: 'Microcytes', description: 'Red cells that are smaller than normal (<7µm), with a mean cell volume (MCV) below the reference range.', category: 'RBC Size' },
-                { term: 'Macrocytes', description: 'Red cells that are larger than normal (>8µm), with a mean cell volume (MCV) above the reference range.', category: 'RBC Size' },
-                { term: 'Hypochromia', description: 'Red cells with an increased area of central pallor, reflecting a reduced haemoglobin content.', category: 'RBC Color' },
-                { term: 'Spherocytes', description: 'Small, spherical, dense red cells which lack central pallor.', category: 'RBC Shape' },
-                { term: 'Target Cells', description: 'Cells with a central area of pallor containing a dot of haemoglobin.', category: 'RBC Shape' },
-                { term: 'Sickle Cells', description: 'Elongated, crescent-shaped red cells.', category: 'RBC Shape' },
-                { term: 'Schistocytes', description: 'Red cell fragments, varying in size and shape.', category: 'RBC Shape' },
-                { term: 'Rouleaux', description: 'Red cells adhering to one another in a pattern resembling a stack of coins.', category: 'RBC Distribution' },
-                { term: 'Howell-Jolly Body', description: 'A small, dense, dark purple spherical nuclear remnant within a red cell.', category: 'RBC Inclusion' },
-                { term: 'Basophilic Stippling', description: 'Numerous, small, dark blue dots throughout the cytoplasm of a red cell.', category: 'RBC Inclusion' },
-                { term: 'Pappenheimer Bodies', description: 'Small, irregular, dark-staining iron granules in red blood cells, clustered towards the periphery.', category: 'RBC Inclusion' },
-                { term: 'Tear Drop Cell (Dacrocyte)', description: 'A red cell shaped like a tear drop.', category: 'RBC Shape' },
-                { term: 'Polychromasia', description: 'Red cells that stain shades of blue/grey, representing young reticulocytes.', category: 'RBC Color' },
-                { term: 'Pencil Cells / Elliptocytes', description: 'Elongated, oval, or cigar-shaped red cells.', category: 'RBC Shape' },
-                { term: 'Stomatocyte', description: 'A red cell with a slit-like, mouth-shaped area of central pallor.', category: 'RBC Shape' },
+                // ── RED CELL BASICS ───────────────────────────────────────────────
+                { term: 'Red Blood Cell (Erythrocyte)', description: 'A non-nucleated, biconcave disc approximately 7–8 µm in diameter with a central pale area occupying roughly one-third of the cell diameter. Responsible for oxygen and CO₂ transport via haemoglobin.', category: 'RBC Basic', significance: 'The normal reference against which all red cell size and shape abnormalities are judged. Central pallor of >1/3 diameter indicates hypochromia.' },
+                { term: 'Normocyte', description: 'A red cell of normal size (MCV 80–100 fL) and normal haemoglobin content, appearing with the characteristic small area of central pallor.', category: 'RBC Basic', significance: 'Normocytic anaemia occurs in haemolysis, acute blood loss, aplastic anaemia, anaemia of chronic disease, and renal failure.' },
+                { term: 'Reticulocyte', description: 'An immature red cell that has extruded its nucleus but retains RNA. It appears slightly larger and bluer than mature red cells on a Romanowsky stain (polychromasia) and shows a reticular network on a supravital stain.', category: 'RBC Basic', significance: 'An elevated reticulocyte count (>2%) indicates increased erythropoiesis, as seen in haemolytic anaemia or recovery from blood loss. A low count in anaemia suggests marrow failure or ineffective erythropoiesis.' },
 
-                // White Cell Features
-                { term: 'Neutrophil', description: 'A mature granulocyte with a multi-lobed nucleus (2-5 lobes) and fine, lilac-staining cytoplasmic granules.', category: 'WBC Mature' },
-                { term: 'Lymphocyte', description: 'A mononuclear cell with a large, round nucleus and a thin rim of basophilic cytoplasm.', category: 'WBC Mature' },
-                { term: 'Monocyte', description: 'The largest normal white blood cell, with an indented or kidney-bean shaped nucleus, and abundant grey-blue cytoplasm.', category: 'WBC Mature' },
-                { term: 'Eosinophil', description: 'A granulocyte with a bi-lobed nucleus and large, prominent, eosinophilic (red-pink) cytoplasmic granules.', category: 'WBC Mature' },
-                { term: 'Basophil', description: 'A granulocyte with a nucleus obscured by large, coarse, dark purple/black cytoplasmic granules.', category: 'WBC Mature' },
-                { term: 'Myeloblast', description: 'The earliest recognisable granulocyte precursor, with a large nucleus, fine chromatin, and prominent nucleoli.', category: 'WBC Precursor' },
-                { term: 'Promyelocyte', description: 'A granulocyte precursor characterised by a large nucleus and the presence of prominent, primary (azurophilic) granules.', category: 'WBC Precursor' },
-                { term: 'Myelocyte', description: 'A granulocyte precursor where the nucleus begins to flatten and specific (secondary) granules become prominent.', category: 'WBC Precursor' },
-                { term: 'Metamyelocyte', description: 'A granulocyte precursor with an indented, kidney-bean shaped nucleus.', category: 'WBC Precursor' },
-                { term: 'Band Form Neutrophil', description: 'An immature neutrophil with a U-shaped nucleus of uniform thickness. An increase is known as a "left shift".', category: 'WBC Precursor' },
-                { term: 'Hypersegmented Neutrophil', description: 'A neutrophil with six or more nuclear lobes, a classic feature of megaloblastic anaemia.', category: 'WBC Abnormal' },
-                { term: 'Toxic Granulation', description: 'Prominent, dark-staining granules in the cytoplasm of neutrophils, indicating a response to severe infection.', category: 'WBC Inclusion' },
-                { term: 'Auer Rods', description: 'Pink/purple staining needle-like bodies in the cytoplasm of blast cells. Pathognomonic of Acute Myeloid Leukaemia.', category: 'WBC Inclusion' },
-                { term: 'Smear/Smudge Cell', description: 'A fragile lymphocyte ruptured during film preparation, characteristic of Chronic Lymphocytic Leukaemia (CLL).', category: 'WBC Abnormal' },
-                { term: 'Döhle Bodies', description: 'Pale blue, oval inclusions in the periphery of a neutrophil\'s cytoplasm.', category: 'WBC Inclusion' },
-                { term: 'Atypical Lymphocyte', description: 'A large, reactive lymphocyte with an indented nucleus and abundant, flowing cytoplasm, characteristic of infectious mononucleosis.', category: 'WBC Abnormal' },
-                { term: 'Plasma Cell', description: 'A mature B-lymphocyte with an eccentric nucleus and deeply basophilic cytoplasm that secretes antibodies.', category: 'WBC Abnormal' },
-                { term: 'Hairy Cell', description: 'An abnormal lymphoid cell with fine, irregular, hair-like projections on its surface.', category: 'WBC Abnormal' },
-                
-                // Platelet Features
-                { term: 'Platelet', description: 'A small, anucleated cell fragment, typically 2-3µm in diameter, that is essential for blood clotting.', category: 'Platelet' },
-                { term: 'Giant Platelet', description: 'A platelet that is larger than a normal red blood cell.', category: 'Platelet' },
-                { term: 'Platelet Clumping', description: 'An in-vitro EDTA-related artefact where platelets aggregate, leading to a falsely low automated count.', category: 'Platelet' },
-                
-                // Malaria Parasites
-                { term: 'Plasmodium falciparum', description: 'Malarial parasite characterised by multiple fine ring forms per red cell and crescent-shaped gametocytes.', category: 'Malaria' },
-                { term: 'Plasmodium vivax', description: 'Malarial parasite that typically infects enlarged red cells and shows amoeboid trophozoites.', category: 'Malaria' },
-                { term: 'Plasmodium ovale', description: 'Malarial parasite that characteristically infects oval-shaped red cells, which may have fimbriated edges.', category: 'Malaria' },
-                { term: 'Plasmodium malariae', description: 'Malarial parasite where the trophozoites often form a characteristic "band form" across a normal-sized red cell.', category: 'Malaria' },
-                { term: 'Plasmodium knowlesi', description: 'A zoonotic malarial parasite which can morphologically resemble either P. falciparum or P. malariae.', category: 'Malaria' }
+                // ── RBC SIZE ──────────────────────────────────────────────────────
+                { term: 'Microcyte', description: 'A red cell smaller than a normal lymphocyte nucleus (<7 µm, MCV <80 fL). Often accompanied by hypochromia.', category: 'RBC Size', significance: 'Causes include iron deficiency anaemia (most common), thalassaemia trait/major, anaemia of chronic disease (late), sideroblastic anaemia, and lead poisoning.' },
+                { term: 'Macrocyte', description: 'A red cell larger than normal (>8 µm, MCV >100 fL). Oval macrocytes suggest megaloblastic change; round macrocytes suggest other causes.', category: 'RBC Size', significance: 'Oval macrocytes: B12/folate deficiency, MDS. Round macrocytes: liver disease, alcohol, hypothyroidism, reticulocytosis, drugs (hydroxyurea).' },
+                { term: 'Megalocyte / Oval Macrocyte', description: 'A large, oval erythrocyte (not merely round) — a hallmark of megaloblastic anaemia. Larger and more elliptical than a simple macrocyte.', category: 'RBC Size', significance: 'Pathognomonic of megaloblastic anaemia (B12 or folate deficiency, or drugs affecting DNA synthesis). Often accompanied by hypersegmented neutrophils.' },
+                { term: 'Anisocytosis', description: 'Variation in red cell size beyond the normal range, seen on a blood film when cells of strikingly different sizes coexist. Reflected by an elevated RDW on the analyser.', category: 'RBC Size', significance: 'An elevated RDW (>14%) is an early and sensitive indicator of iron deficiency. Marked anisocytosis also occurs in thalassaemia, megaloblastic anaemia, haemolytic states, and post-transfusion.' },
+
+                // ── RBC COLOUR ────────────────────────────────────────────────────
+                { term: 'Hypochromia', description: 'Red cells with an expanded area of central pallor (>1/3 of cell diameter), indicating reduced haemoglobin content. Reflected by a low MCH and low MCHC on the FBC.', category: 'RBC Colour', significance: 'Hallmark of iron deficiency anaemia and thalassaemia. Also seen in sideroblastic anaemia and anaemia of chronic disease (mild/late).' },
+                { term: 'Polychromasia', description: 'Red cells with a diffuse blue-grey tinge on a Romanowsky stain, caused by retained RNA in immature red cells (reticulocytes). Reflects increased marrow output.', category: 'RBC Colour', significance: 'Indicates active erythropoiesis. Seen in haemolytic anaemia, acute blood loss, and recovery from nutritional anaemia. Marked polychromasia alongside anaemia strongly suggests haemolysis.' },
+                { term: 'Hyperchromia', description: 'Red cells that appear deeply stained with absent or barely visible central pallor, reflecting a high concentration of haemoglobin per unit volume (raised MCHC).', category: 'RBC Colour', significance: 'Most commonly seen with spherocytes. A raised MCHC is a key clue to hereditary spherocytosis or autoimmune haemolytic anaemia.' },
+
+                // ── RBC SHAPE ─────────────────────────────────────────────────────
+                { term: 'Spherocyte', description: 'A small, spherical, densely staining red cell with absent central pallor. Smaller than a normal red cell and lacks the biconcave shape.', category: 'RBC Shape', significance: 'Hereditary spherocytosis (genetic membrane protein defects); autoimmune haemolytic anaemia (antibody-coated cells partially phagocytosed); transfusion reactions; ABO incompatibility.' },
+                { term: 'Target Cell (Codocyte)', description: 'A red cell with a central dense area of haemoglobin surrounded by a pale ring, then an outer rim — resembling a shooting target or Mexican hat.', category: 'RBC Shape', significance: 'Seen in liver disease, obstructive jaundice, post-splenectomy, thalassaemia, HbC disease, haemoglobin SC disease, and iron deficiency. Related to excess membrane relative to cell content.' },
+                { term: 'Sickle Cell (Drepanocyte)', description: 'An elongated, crescent or sickle-shaped red cell caused by polymerisation of deoxygenated HbS. May show a pointed or blunt end.', category: 'RBC Shape', significance: 'Pathognomonic of sickle cell anaemia (HbSS). Also seen in HbSC disease and HbS/β-thalassaemia. Sickling causes vaso-occlusion, pain crises, and organ damage.' },
+                { term: 'Schistocyte (Fragmentocyte)', description: 'A fragmented red cell of varying size and shape — often helmet-shaped, triangular, or comma-shaped — caused by mechanical shearing within blood vessels.', category: 'RBC Shape', significance: 'Key finding in microangiopathic haemolytic anaemia (MAHA): TTP, HUS, DIC, malignant hypertension, pre-eclampsia/HELLP, mechanical heart valves. >1% schistocytes is clinically significant.' },
+                { term: 'Tear Drop Cell (Dacrocyte)', description: 'A red cell shaped like a tear drop or pear, with a single point or tail drawn out at one end.', category: 'RBC Shape', significance: 'Classically associated with myelofibrosis (cells squeezed out of fibrotic marrow). Also seen in thalassaemia, megaloblastic anaemia, and severe iron deficiency. Critical feature of a leucoerythroblastic film.' },
+                { term: 'Elliptocyte / Ovalocyte', description: 'An elongated, oval or elliptical red cell. The degree of elongation varies. More than 25% on a film is abnormal.', category: 'RBC Shape', significance: 'Hereditary elliptocytosis (spectrin or protein 4.1 defect). Mild elliptocytosis (<25%) is seen in iron deficiency, thalassaemia, and megaloblastic anaemia — these are not hereditary.' },
+                { term: 'Pencil Cell (Drepanocyte variant)', description: 'A very elongated, pencil- or cigar-shaped red cell. A more extreme form of elliptocyte with very prominent elongation.', category: 'RBC Shape', significance: 'Strongly associated with iron deficiency anaemia and thalassaemia. Reflects membrane deformation due to reduced haemoglobin content and membrane abnormalities.' },
+                { term: 'Stomatocyte', description: 'A red cell with a linear or slit-like pale area rather than the usual circular area of central pallor, giving a mouth-like appearance.', category: 'RBC Shape', significance: 'Hereditary stomatocytosis (rare). Also caused by liver disease, alcoholism, and certain drugs. Artefactual stomatocytes (>few%) can result from improper film preparation.' },
+                { term: 'Echinocyte (Burr Cell)', description: 'A red cell with multiple (10–30) short, evenly spaced, blunt projections distributed uniformly around the cell surface.', category: 'RBC Shape', significance: 'Uraemia (renal failure) — a classic association. Also artefactual (slow drying of film, high pH, EDTA effect). True echinocytes are distinguished from artefacts by their regularity and clinical context.' },
+                { term: 'Acanthocyte (Spur Cell)', description: 'A red cell with a small number (3–12) of irregular, spiky projections of variable length and distribution — distinctly irregular compared to echinocytes.', category: 'RBC Shape', significance: 'Liver disease (cirrhosis, alcoholic liver disease), abetalipoproteinaemia, post-splenectomy, and McLeod syndrome. Excess cholesterol in the membrane causes membrane deformation.' },
+                { term: 'Microspherocyte', description: 'A very small, spherical, densely staining red cell — smaller than a normal spherocyte — often seen alongside typical spherocytes.', category: 'RBC Shape', significance: 'Severe haemolysis: Clostridium perfringens toxin-mediated haemolysis produces dramatic microspherocytes. Also seen in severe autoimmune haemolytic anaemia and burns.' },
+                { term: 'Keratocyte (Helmet Cell)', description: 'A red cell that appears to have had a "bite" taken out of it, leaving projections (horns) on one side, resembling a helmet or damaged cell.', category: 'RBC Shape', significance: 'A variant of schistocyte formation seen in MAHA conditions. Also seen in G6PD deficiency where Heinz bodies are pitted out by the spleen, leaving "bite cells".' },
+                { term: 'Bite Cell (Degmacyte)', description: 'A red cell with one or more semicircular bites taken from the margin, created when the spleen removes Heinz body inclusions.', category: 'RBC Shape', significance: 'Pathognomonic of G6PD deficiency (or other oxidative haemolysis). The spleen pits out precipitated haemoglobin (Heinz bodies), creating the characteristic bite. Heinz bodies require a supravital stain to visualise.' },
+                { term: 'Rouleaux', description: 'Red cells adhering to one another in linear stacks resembling a pile of coins. This is a reversible aggregation phenomenon, not true agglutination.', category: 'RBC Distribution', significance: 'Caused by elevated plasma proteins (paraproteins in myeloma, fibrinogen in inflammation). Leads to a raised ESR. Rouleaux must be distinguished from true agglutination (cold agglutinin disease).' },
+                { term: 'Red Cell Agglutination', description: 'Irregular clumping of red cells in three-dimensional grape-like clusters — distinct from the coin-stack appearance of rouleaux.', category: 'RBC Distribution', significance: 'Cold agglutinin disease: IgM autoantibodies cause red cells to clump at room temperature. Causes spuriously high MCV and low RBC count on analysers. Warm the sample to 37°C for accurate results.' },
+
+                // ── RBC INCLUSIONS ────────────────────────────────────────────────
+                { term: 'Howell-Jolly Body', description: 'A small (1–2 µm), dense, dark purple spherical nuclear remnant within a red cell. Usually single per cell. Normally removed by the spleen.', category: 'RBC Inclusion', significance: 'Indicator of hyposplenism or asplenia: post-splenectomy, sickle cell disease (autosplenectomy), coeliac disease, amyloid. Also seen in megaloblastic anaemia (nuclear fragmentation).' },
+                { term: 'Basophilic Stippling', description: 'Multiple small, dark blue dots scattered throughout the cytoplasm of a red cell. Represents aggregated ribosomes. Fine stippling differs from coarse stippling.', category: 'RBC Inclusion', significance: 'Coarse stippling: lead poisoning (pathognomonic), thalassaemia. Fine stippling: a non-specific finding in many anaemias. Also seen in pyrimidine 5\'-nucleotidase deficiency, arsenic poisoning.' },
+                { term: 'Pappenheimer Body', description: 'Small, irregular, dark-staining iron-containing granules usually clustered in pairs at the periphery of a red cell. Appear blue on Romanowsky stain; confirmed as iron by Perls\' (Prussian blue) stain.', category: 'RBC Inclusion', significance: 'Iron overload, sideroblastic anaemia, haemolytic anaemia, and post-splenectomy (spleen normally removes these). Perls\' stain confirms iron content.' },
+                { term: 'Cabot Ring', description: 'A thin, ring- or figure-of-eight-shaped inclusion in red cells, believed to represent remnants of the nuclear spindle or nuclear membrane. Rare.', category: 'RBC Inclusion', significance: 'Seen in megaloblastic anaemia, lead poisoning, and severe haemolytic states. Often co-exists with Howell-Jolly bodies and basophilic stippling.' },
+                { term: 'Heinz Body', description: 'Aggregates of denatured (oxidised) haemoglobin precipitated within the red cell. Not visible on standard Romanowsky stain — require a supravital stain (e.g., crystal violet or brilliant cresyl blue).', category: 'RBC Inclusion', significance: 'G6PD deficiency (especially after oxidative stress: drugs, fava beans, infection). Also seen in unstable haemoglobin disorders. Heinz bodies are pitted out by the spleen, producing bite cells.' },
+                { term: 'Malarial Parasite (Ring Form)', description: 'A small, delicate ring-shaped intraerythrocytic inclusion consisting of a dot of chromatin and a thin cytoplasmic ring. May be single or multiple per cell depending on species.', category: 'RBC Inclusion', significance: 'Malaria diagnosis requires identification of species. Multiple rings per cell and absence of other stages in peripheral blood suggest P. falciparum. Prompt identification is critical as falciparum malaria is life-threatening.' },
+
+                // ── WHITE CELL MATURE ─────────────────────────────────────────────
+                { term: 'Neutrophil', description: 'A mature granulocyte with a multi-lobed nucleus (2–5 lobes joined by thin chromatin filaments) and fine, lilac-pink (neutrophilic) cytoplasmic granules. The most abundant white cell (40–75% of total WBC).', category: 'WBC Mature', significance: 'First-line defence against bacterial and fungal infections. Neutrophilia (↑ neutrophils) in infection, inflammation, steroids, stress, CML. Neutropenia (↓) in viral infection, drug reactions, B12/folate deficiency, aplasia.' },
+                { term: 'Lymphocyte', description: 'A mononuclear cell with a large, round nucleus occupying most of the cell, with a thin rim of sky-blue cytoplasm. Small lymphocytes are 7–10 µm; large granular lymphocytes are larger with azurophilic granules.', category: 'WBC Mature', significance: 'Predominant in viral infections. Lymphocytosis in EBV (atypical lymphs), CMV, pertussis, and lymphoproliferative disorders (CLL). Large granular lymphocytes are NK cells or cytotoxic T cells.' },
+                { term: 'Monocyte', description: 'The largest normal circulating white blood cell (12–20 µm), with a large, indented, kidney-bean or horseshoe-shaped nucleus and abundant, grey-blue ("ground glass") cytoplasm containing fine vacuoles and granules.', category: 'WBC Mature', significance: 'Phagocytes that differentiate into tissue macrophages. Monocytosis in TB, subacute bacterial endocarditis, inflammatory bowel disease, and CMML. Absent/very low monocytes is a striking feature of hairy cell leukaemia.' },
+                { term: 'Eosinophil', description: 'A granulocyte with a bilobed nucleus (two lobes joined by a thin strand) and large, refractile, red-orange (eosinophilic) cytoplasmic granules that fill the cytoplasm.', category: 'WBC Mature', significance: 'Mediates response to parasites and allergic reactions. Eosinophilia in parasitic infection, atopy/asthma, drug reactions, eosinophilic oesophagitis, hypereosinophilic syndrome. Eosinopenia occurs with steroids or acute stress.' },
+                { term: 'Basophil', description: 'A granulocyte with a bilobed or irregular nucleus that is often partially obscured by large, coarse, dark purple-black cytoplasmic granules — the most darkly staining of all leukocytes.', category: 'WBC Mature', significance: 'Basophilia (>0.1×10⁹/L) is a key feature of CML (an important diagnostic clue) and other myeloproliferative neoplasms. Also seen in allergic reactions and hypothyroidism. The rarest normal circulating leukocyte (<1%).' },
+
+                // ── WBC PRECURSORS ────────────────────────────────────────────────
+                { term: 'Myeloblast', description: 'The earliest recognisable granulocyte precursor: a large cell (14–20 µm) with a large oval nucleus, fine open chromatin, 2–5 prominent nucleoli, and a small amount of pale blue cytoplasm that may contain a few azurophilic granules. No specific granules.', category: 'WBC Precursor', significance: 'Blast cells should not be present in normal peripheral blood. A blast count ≥20% in marrow confirms AML. Even a few blasts on the film warrants urgent review.' },
+                { term: 'Promyelocyte', description: 'A granulocyte precursor larger than a myeloblast, with a large nucleus and abundant dark-blue cytoplasm packed with prominent primary (azurophilic) granules. May contain Auer rods in AML/APML.', category: 'WBC Precursor', significance: 'Promyelocytes may appear in the blood in severe infections (degenerative left shift) or leukaemia. In APML, malignant promyelocytes can trigger DIC. Identification is urgent.' },
+                { term: 'Myelocyte', description: 'A granulocyte precursor where the nucleus has begun to flatten or indent and specific (secondary) granules have appeared, defining the cell type (neutrophilic, eosinophilic, or basophilic). Last cell capable of mitosis.', category: 'WBC Precursor', significance: 'Myelocytes in peripheral blood (with other immature cells) indicate a "left shift." Classic in CML. Can also appear in severe bacterial infections and leukaemoid reactions.' },
+                { term: 'Metamyelocyte', description: 'A granulocyte precursor with a distinctly kidney-bean or horseshoe-shaped (indented) nucleus. More mature than a myelocyte but less mature than a band.', category: 'WBC Precursor', significance: 'Seen in peripheral blood in left-shifted states: CML, severe infection, recovery from chemotherapy. The presence of meta-myelocytes alongside earlier cells = leucoerythroblastic picture if NRBCs also present.' },
+                { term: 'Band Form Neutrophil (Stab Cell)', description: 'An immature neutrophil with a U-shaped or curved nucleus of roughly uniform thickness — no filaments between lobes. Constitutes up to 6% of normal leucocytes.', category: 'WBC Precursor', significance: 'An increase in band forms (>6% or >0.5×10⁹/L) is called a "left shift." Indicates active neutrophil release from marrow in bacterial infection, inflammation, or CML. An important indicator of sepsis.' },
+                { term: 'Nucleated Red Blood Cell (NRBC)', description: 'A red cell precursor (normoblast) that has not yet extruded its nucleus. Has a round, dense, pyknotic nucleus and may be at various maturity stages (pro-, baso-, poly-, ortho-normoblast).', category: 'WBC Precursor', significance: 'Not present in normal adult peripheral blood. NRBCs alongside immature white cells = leucoerythroblastic picture — strongly suggests marrow infiltration, fibrosis, or severe stress (sepsis, haemolytic crisis, severe hypoxia). Falsely elevates automated WBC count.' },
+                { term: 'Pelger-Huët Anomaly (True)', description: 'Neutrophils with hyposegmented nuclei — bilobed (pince-nez/spectacle shape) or non-segmented (round) — with coarse, densely clumped chromatin. An inherited or acquired defect in nuclear segmentation.', category: 'WBC Precursor', significance: 'True Pelger-Huët: autosomal dominant, benign. Pseudo-Pelger-Huët: acquired in MDS, AML, drugs. Pseudo-Pelger cells may be mistaken for band forms. Distinguishing is important as pseudo-Pelger implies MDS.' },
+
+                // ── WBC ABNORMAL ──────────────────────────────────────────────────
+                { term: 'Hypersegmented Neutrophil', description: 'A neutrophil with an abnormally increased number of nuclear lobes — classically ≥5 lobes or any single cell with 6 or more lobes. The lobes are clearly separated by thin chromatin filaments.', category: 'WBC Abnormal', significance: 'A classic hallmark of megaloblastic anaemia (B12 or folate deficiency). If >5% of neutrophils have 5+ lobes, or any have 6+ lobes, megaloblastic change should be strongly suspected. Also in uraemia and cytotoxic drugs.' },
+                { term: 'Toxic Granulation', description: 'Prominent, coarse, dark-purple or black primary granules in the cytoplasm of neutrophils — far more visible than in a normal neutrophil.', category: 'WBC Abnormal', significance: 'Indicates a vigorous neutrophil response to severe bacterial infection, sepsis, or inflammation. Often accompanied by Döhle bodies and cytoplasmic vacuolation. The trio of toxic granulation + Döhle bodies + vacuolation = toxic changes.' },
+                { term: 'Döhle Body', description: 'Small (1–3 µm), pale grey-blue, oval or irregular inclusions located at the periphery (ectoplasm) of a neutrophil\'s cytoplasm. Represent aggregates of rough endoplasmic reticulum.', category: 'WBC Abnormal', significance: 'Seen in bacterial infection, sepsis, pregnancy, and after G-CSF therapy. Part of the "toxic change" triad. Also a feature of May-Hegglin anomaly (an inherited condition with thrombocytopenia and giant platelets).' },
+                { term: 'Cytoplasmic Vacuolation', description: 'Clear, circular vacuoles within the cytoplasm of neutrophils or monocytes, often associated with toxic granulation and Döhle bodies.', category: 'WBC Abnormal', significance: 'Part of the toxic change triad alongside toxic granulation and Döhle bodies. Strongly associated with severe bacterial infection and sepsis. In monocytes, vacuolation may indicate haemophagocytosis.' },
+                { term: 'Auer Rod', description: 'A pink or red needle-like or rod-shaped crystalline inclusion in the cytoplasm of blast cells or promyelocytes, visible on Romanowsky stain. Represents a fused primary granule.', category: 'WBC Abnormal', significance: 'Pathognomonic of myeloid leukaemia (AML). Never seen in ALL. "Faggot cells" contain bundles of Auer rods and are specific to Acute Promyelocytic Leukaemia (APML/M3). APML is a medical emergency (risk of fatal DIC).' },
+                { term: 'Smear Cell (Smudge Cell / Shadow Cell)', description: 'The remains of a fragile, disrupted lymphocyte during film preparation — appearing as a smeared purple nuclear material without a distinct cell boundary.', category: 'WBC Abnormal', significance: 'Characteristic of Chronic Lymphocytic Leukaemia (CLL), where malignant B-lymphocytes are fragile. Smear cells alongside a lymphocytosis strongly suggest CLL. CD5+/CD19+/CD23+ immunophenotyping confirms the diagnosis.' },
+                { term: 'Atypical (Reactive) Lymphocyte', description: 'A large, reactive lymphocyte (15–30 µm) with an irregular, indented or lobulated nucleus, open chromatin, and abundant, flowing pale-blue cytoplasm that may mould around adjacent red cells.', category: 'WBC Abnormal', significance: 'Hallmark of infectious mononucleosis (Epstein-Barr virus / EBV). >20% atypical lymphocytes + symptoms strongly suggests EBV. Also seen in CMV, toxoplasmosis, acute HIV, hepatitis viruses. Monospot/EBV serology confirms.' },
+                { term: 'Plasma Cell', description: 'A large, oval cell with an eccentric, round nucleus with characteristic "clock-face" (cartwheel) chromatin pattern and a prominent pale perinuclear hof (Golgi zone). Cytoplasm is deeply basophilic. Secretes antibodies.', category: 'WBC Abnormal', significance: 'Normally rare in blood. Circulating plasma cells or plasmablasts occur in multiple myeloma (plasma cell leukaemia), reactive plasmacytosis (severe viral infection), and Waldenström macroglobulinaemia.' },
+                { term: 'Hairy Cell', description: 'An abnormal lymphoid cell (medium-large, 10–20 µm) with an oval or kidney-shaped nucleus and abundant pale cytoplasm displaying characteristic circumferential fine, hair-like cytoplasmic projections visible on the blood film.', category: 'WBC Abnormal', significance: 'Pathognomonic of Hairy Cell Leukaemia (HCL). Immunophenotyping: CD11c+, CD25+, CD103+, CD123+, Annexin A1+. BRAF V600E mutation is present in ~100% of cases. Notably causes a striking monocytopenia.' },
+                { term: 'Reed-Sternberg Cell', description: 'A large, binucleated or multinucleated malignant cell with prominent "owl-eye" nucleoli in each nucleus. These cells are not normally seen in peripheral blood — a biopsy finding.', category: 'WBC Abnormal', significance: 'The pathognomonic cell of Classical Hodgkin Lymphoma. CD15+, CD30+, EBV association in many cases. Rarely circulate in peripheral blood; found in lymph node or marrow biopsies.' },
+                { term: 'Large Granular Lymphocyte (LGL)', description: 'A lymphocyte larger than the usual small lymphocyte, with a round or indented nucleus and distinctive azurophilic (pink) cytoplasmic granules. Represents NK cells or cytotoxic T cells.', category: 'WBC Abnormal', significance: 'LGL lymphocytosis (>2×10⁹/L) may be reactive (viral) or clonal. Clonal T-LGL leukaemia causes neutropenia, anaemia, and is associated with rheumatoid arthritis and splenomegaly. NK-LGL leukaemia is aggressive.' },
+
+                // ── WBC INCLUSIONS ─────────────────────────────────────────────────
+                { term: 'May-Hegglin Inclusion', description: 'Large (2–5 µm), pale blue, spindle-shaped or round inclusions in neutrophils, eosinophils, basophils, and monocytes — resembling giant Döhle bodies but larger and more distinct.', category: 'WBC Inclusion', significance: 'A feature of May-Hegglin anomaly — an autosomal dominant MYH9-related disorder characterised by giant platelets, thrombocytopenia, and characteristic leukocyte inclusions. Often clinically benign despite low platelet count.' },
+                { term: 'Chédiak-Higashi Granule', description: 'Giant, fused, abnormal lysosomes within neutrophils and other leucocytes — appearing as very large, irregular, grey-green or purple inclusions on Romanowsky stain.', category: 'WBC Inclusion', significance: 'Pathognomonic of Chédiak-Higashi syndrome — a rare autosomal recessive disorder (LYST gene). Impairs neutrophil killing, causing recurrent severe infections. Associated with oculocutaneous albinism and peripheral neuropathy.' },
+
+                // ── PLATELET FEATURES ─────────────────────────────────────────────
+                { term: 'Platelet', description: 'A small, anucleated cell fragment (2–3 µm in diameter) derived from megakaryocytes. Appears as a pale blue disc with pink central granules (the granulomere) on a blood film. Essential for primary haemostasis.', category: 'Platelet', significance: 'Normal count 150–400×10⁹/L. Thrombocytopenia (<150) causes bleeding risk; thrombocytosis (>400) may be reactive or clonal. Platelet count alone does not predict bleeding — function matters too.' },
+                { term: 'Giant Platelet', description: 'A platelet equal to or larger than a normal red blood cell (>8 µm). Reflects increased megakaryocyte production and rapid platelet release.', category: 'Platelet', significance: 'Giant platelets occur in immune thrombocytopenic purpura (ITP), Bernard-Soulier syndrome, May-Hegglin anomaly, MYH9 disorders, myeloproliferative neoplasms, and in any reactive/compensatory thrombocytopenia.' },
+                { term: 'Platelet Clumping (EDTA-induced Pseudothrombocytopenia)', description: 'Clusters of platelets seen on the blood film caused by EDTA-dependent platelet-activating antibodies in vitro. The analyser counts clumps as single events, producing a spuriously low platelet count.', category: 'Platelet', significance: 'A common laboratory artefact (1 in 1,000 patients). Always check the film when the automated count is unexpectedly low. Recollection into citrate (sodium citrate 3.2%) or heparin tube resolves the clumping and gives the true count.' },
+                { term: 'Platelet Satellitism', description: 'An in-vitro EDTA-dependent phenomenon where platelets adhere to the surface of neutrophils (or less commonly other leucocytes), forming rosette-like clusters around the white cell.', category: 'Platelet', significance: 'Like platelet clumping, this is an EDTA artefact that causes pseudothrombocytopenia. Recollection into a citrate tube resolves the issue. Both platelet satellitism and clumping should be reported to the clinician.' },
+                { term: 'Megathrombocyte', description: 'An unusually large platelet, sometimes approaching the size of a red cell, with dense granulation. Distinct from a giant platelet in that the term specifically describes accelerated platelet production.', category: 'Platelet', significance: 'Seen in conditions of high platelet turnover: ITP, post-splenectomy, myeloproliferative disorders, and reactive thrombocytosis. A high proportion of large platelets (high MPV) indicates active thrombopoiesis.' },
+                { term: 'Hypogranular Platelet', description: 'Platelets with reduced or absent cytoplasmic granulation, appearing grey or agranular on the blood film. The granulomere is absent or indistinct.', category: 'Platelet', significance: 'A feature of myelodysplastic syndrome (MDS) and myeloproliferative neoplasms, reflecting dysplastic megakaryopoiesis. May also indicate grey platelet syndrome (alpha-granule deficiency). Functionally abnormal platelets can cause bleeding despite a normal count.' },
+
+                // ── MALARIA PARASITES ─────────────────────────────────────────────
+                { term: 'Plasmodium falciparum', description: 'Malarial parasite with multiple delicate ring forms per cell, absence of other stages in peripheral blood (except gametocytes), crescent/banana-shaped gametocytes, and no red cell enlargement. May show Maurer\'s clefts.', category: 'Malaria', significance: 'The most deadly malaria species. Can cause cerebral malaria, pulmonary oedema, and multi-organ failure. A clinical emergency. High parasitaemia (>5%) = severe malaria. Artemisinin-based combination therapy + urgent senior review.' },
+                { term: 'Plasmodium vivax', description: 'Malarial parasite that infects enlarged red cells showing pale, stippled Schüffner\'s dots. Trophozoites are amoeboid ("amoeba-like"). Ring forms are larger than in falciparum. All stages seen in peripheral blood.', category: 'Malaria', significance: 'Causes benign tertian malaria with fever every 48 hours. Can establish liver hypnozoites (dormant forms) causing relapse months-years later. Treatment includes chloroquine for blood stages plus primaquine to eradicate liver stages (check G6PD first).' },
+                { term: 'Plasmodium ovale', description: 'Malarial parasite infecting enlarged, oval-shaped red cells with irregular, fimbriated (ragged) edges (James\'s dots present). Ring forms are compact; all stages seen in blood.', category: 'Malaria', significance: 'Similar biology to P. vivax; causes ovale tertian malaria. Liver hypnozoites require primaquine to eradicate and prevent relapse. Generally causes mild disease.' },
+                { term: 'Plasmodium malariae', description: 'Malarial parasite infecting normal-sized (not enlarged) red cells. Trophozoites frequently form a characteristic "band form" across the red cell. Schüffner\'s dots absent. Rosette schizonts also distinctive.', category: 'Malaria', significance: 'Causes quartan malaria (fever every 72 hours). Can cause quartan nephrotic syndrome in children (immune complex deposition). Does not form liver hypnozoites, so no relapse — but can produce very long-lasting low-level parasitaemias (decades).' },
+                { term: 'Plasmodium knowlesi', description: 'A zoonotic simian malaria parasite (from Macaque monkeys) that morphologically resembles both P. falciparum (early rings) and P. malariae (band forms, rosette schizonts). Requires PCR for definitive species identification.', category: 'Malaria', significance: 'Increasingly reported in South-East Asia (Malaysian Borneo). Can reach high parasitaemia rapidly (replication every 24 hours) and cause severe or fatal disease. Microscopic misidentification as P. malariae can lead to underestimating severity.' }
             ];
 
             let currentPair = {};
             let score = 0;
+            let streak = 0;
+            let bestStreak = 0;
             let usedIndices = [];
+            let questionNumber = 0;
+            let activeCategory = 'All';
+            let filteredPairs = [...morphologyPairs];
+
+            // Build category filter buttons
+            const categories = ['All', ...new Set(morphologyPairs.map(p => p.category))];
+            categories.forEach(cat => {
+                if (cat === 'All') return; // already added
+                const btn = document.createElement('button');
+                btn.textContent = cat;
+                btn.className = 'filter-btn px-3 py-1 text-sm rounded-full bg-gray-200 text-gray-700 font-semibold hover:bg-gray-300 transition';
+                btn.dataset.cat = cat;
+                btn.addEventListener('click', () => setCategory(cat));
+                categoryFilter.appendChild(btn);
+            });
+
+            // First button "All" already in HTML
+            document.querySelector('.filter-btn[data-cat="All"]').addEventListener('click', () => setCategory('All'));
+
+            qTotalEl.textContent = morphologyPairs.length;
+
+            function setCategory(cat) {
+                activeCategory = cat;
+                filteredPairs = cat === 'All' ? [...morphologyPairs] : morphologyPairs.filter(p => p.category === cat);
+                usedIndices = [];
+                questionNumber = 0;
+                score = 0;
+                streak = 0;
+                scoreEl.textContent = score;
+                streakEl.textContent = streak;
+                qTotalEl.textContent = filteredPairs.length;
+                document.querySelectorAll('.filter-btn').forEach(b => {
+                    b.className = b.dataset.cat === cat
+                        ? 'filter-btn px-3 py-1 text-sm rounded-full bg-gray-800 text-white font-semibold'
+                        : 'filter-btn px-3 py-1 text-sm rounded-full bg-gray-200 text-gray-700 font-semibold hover:bg-gray-300 transition';
+                });
+                newQuestion();
+            }
 
             function newQuestion() {
-                if (usedIndices.length === morphologyPairs.length) { usedIndices = []; }
+                if (usedIndices.length === filteredPairs.length) { usedIndices = []; }
                 let nextIndex;
-                do { nextIndex = Math.floor(Math.random() * morphologyPairs.length); } while (usedIndices.includes(nextIndex));
+                do { nextIndex = Math.floor(Math.random() * filteredPairs.length); } while (usedIndices.includes(nextIndex));
                 usedIndices.push(nextIndex);
-                currentPair = morphologyPairs[nextIndex];
+                currentPair = filteredPairs[nextIndex];
+                questionNumber++;
+
                 feedbackMessageEl.classList.add('hidden');
+                explanationBox.classList.add('hidden');
                 nextQuestionBtn.classList.add('hidden');
                 answerOptionsEl.innerHTML = '';
-                descriptionBox.textContent = currentPair.description;
+
+                qCurrentEl.textContent = questionNumber;
+                descriptionBox.textContent = `"${currentPair.description}"`;
+
+                // Set category badge
+                const catClass = CATEGORY_COLORS[currentPair.category] || 'bg-gray-100 text-gray-600';
+                categoryBadge.className = `category-badge ${catClass}`;
+                categoryBadge.textContent = currentPair.category;
+
                 generateOptions(currentPair);
             }
 
             function generateOptions(correctPair) {
                 let options = [correctPair.term];
-                // Get other options from the same category
-                const distractors = morphologyPairs.filter(item => item.category === correctPair.category && item.term !== correctPair.term);
-                
-                // Shuffle and pick distractors
-                distractors.sort(() => Math.random() - 0.5);
-                
-                for (let i = 0; i < Math.min(3, distractors.length); i++) {
-                    options.push(distractors[i].term);
+                const pool = filteredPairs.filter(item => item.term !== correctPair.term);
+
+                // Prefer same-category distractors
+                const sameCategory = pool.filter(p => p.category === correctPair.category);
+                sameCategory.sort(() => Math.random() - 0.5);
+                for (let i = 0; i < Math.min(2, sameCategory.length); i++) {
+                    options.push(sameCategory[i].term);
                 }
 
-                // If not enough distractors in the category, fill with random terms
-                while (options.length < 4) {
-                    const randomIndex = Math.floor(Math.random() * morphologyPairs.length);
-                    const randomOption = morphologyPairs[randomIndex].term;
-                    if (!options.includes(randomOption)) {
-                        options.push(randomOption);
-                    }
+                // Fill remaining from any category
+                const remaining = pool.filter(p => !options.includes(p.term));
+                remaining.sort(() => Math.random() - 0.5);
+                while (options.length < 4 && remaining.length > 0) {
+                    options.push(remaining.shift().term);
                 }
-                
+
                 options.sort(() => Math.random() - 0.5);
 
                 options.forEach(option => {
                     const button = document.createElement('button');
                     button.textContent = option;
-                    button.className = 'option-btn w-full text-left p-4 bg-gray-100 rounded-lg hover:bg-gray-200 transition border-2 border-transparent';
+                    button.className = 'option-btn w-full text-left p-3 bg-gray-100 rounded-lg hover:bg-gray-200 transition border-2 border-transparent text-sm font-medium';
                     button.addEventListener('click', () => checkAnswer(option, correctPair.term, button));
                     answerOptionsEl.appendChild(button);
                 });
@@ -185,22 +345,36 @@
             function checkAnswer(selectedOption, correctAnswer, buttonEl) {
                 document.querySelectorAll('.option-btn').forEach(btn => btn.disabled = true);
                 feedbackMessageEl.classList.remove('hidden');
+                explanationBox.classList.remove('hidden');
                 nextQuestionBtn.classList.remove('hidden');
+                explanationText.textContent = currentPair.significance;
 
                 if (selectedOption === correctAnswer) {
                     score++;
+                    streak++;
+                    if (streak > bestStreak) {
+                        bestStreak = streak;
+                        bestStreakEl.textContent = bestStreak;
+                    }
                     scoreEl.textContent = score;
-                    feedbackMessageEl.textContent = 'Correct!';
-                    feedbackMessageEl.className = 'mt-6 p-4 rounded-lg text-lg font-semibold bg-green-100 text-green-800';
+                    streakEl.textContent = streak;
+                    streakEl.classList.add('streak-fire');
+                    setTimeout(() => streakEl.classList.remove('streak-fire'), 600);
+                    feedbackMessageEl.textContent = streak >= 5 ? `🔥 ${streak} in a row! Correct!` : 'Correct!';
+                    feedbackMessageEl.className = 'mt-5 p-4 rounded-lg text-base font-semibold bg-green-100 text-green-800';
                     buttonEl.classList.add('correct');
                 } else {
-                    feedbackMessageEl.textContent = `Incorrect. This describes ${correctAnswer}.`;
-                    feedbackMessageEl.className = 'mt-6 p-4 rounded-lg text-lg font-semibold bg-red-100 text-red-800';
+                    streak = 0;
+                    streakEl.textContent = streak;
+                    feedbackMessageEl.textContent = `Incorrect. This describes: ${correctAnswer}.`;
+                    feedbackMessageEl.className = 'mt-5 p-4 rounded-lg text-base font-semibold bg-red-100 text-red-800';
                     buttonEl.classList.add('incorrect');
-                    document.querySelectorAll('.option-btn').forEach(btn => { if (btn.textContent === correctAnswer) { btn.classList.add('correct'); } });
+                    document.querySelectorAll('.option-btn').forEach(btn => {
+                        if (btn.textContent === correctAnswer) btn.classList.add('correct');
+                    });
                 }
             }
-            
+
             nextQuestionBtn.addEventListener('click', newQuestion);
             newQuestion();
         });

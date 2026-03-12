@@ -5,90 +5,155 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blood Grouping Game - Clinical Pathology</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <style>
         body { font-family: 'Inter', sans-serif; }
+        .nhs-text-dark-blue { color: #003087; }
+        .nhs-text-blue { color: #005EB8; }
         .reaction-well {
-            width: 100px;
-            height: 100px;
-            border: 2px solid #cbd5e1; /* slate-300 */
+            width: 90px; height: 90px;
+            border: 2px solid #cbd5e1;
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            font-weight: bold;
-            color: white;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.6rem; font-weight: bold; color: white;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
         }
         .positive {
-            background-color: #ef4444; /* red-500 */
-            background-image: radial-gradient(#dc2626 20%, transparent 20%), radial-gradient(#dc2626 20%, transparent 20%);
-            background-size: 15px 15px;
-            background-position: 0 0, 7.5px 7.5px;
+            background-color: #dc2626;
+            background-image: radial-gradient(#991b1b 18%, transparent 18%), radial-gradient(#991b1b 18%, transparent 18%);
+            background-size: 14px 14px; background-position: 0 0, 7px 7px;
         }
-        .negative {
-            background-color: #f87171; /* red-400 */
-        }
+        .negative { background-color: #fca5a5; }
+        .fade-in { animation: fadeIn 0.35s ease-out; }
+        @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
 
     <div id="header-placeholder"></div>
 
-    <main class="container mx-auto px-4 py-8 flex-grow">
+    <main class="container mx-auto px-4 py-8 flex-grow max-w-4xl">
 
-        <section class="text-center mb-8">
-            <h1 class="text-4xl md:text-5xl font-bold mb-2">The Blood Grouping Challenge</h1>
-            <p class="text-lg text-gray-600">Interpret the reactions and determine the patient's blood group!</p>
+        <a href="games.html" class="inline-flex items-center nhs-text-blue font-semibold mb-6 hover:underline">
+            <i class="fas fa-arrow-left mr-2"></i>Back to Games
+        </a>
+
+        <section class="text-center mb-6">
+            <h1 class="text-4xl font-bold nhs-text-dark-blue mb-2">The Blood Grouping Challenge</h1>
+            <p class="text-gray-600">Interpret the forward AND reverse group reactions to determine the patient's blood group!</p>
         </section>
 
-        <div class="bg-white p-6 rounded-lg shadow-md max-w-4xl mx-auto">
-            <div class="flex justify-between items-start mb-6">
-                <div>
-                    <h2 class="text-2xl font-bold">Patient Sample</h2>
-                    <p id="feedback" class="mt-1 h-6 text-lg font-semibold text-gray-500">What is the blood group?</p>
-                </div>
-                <div class="text-xl font-bold text-right">Score: <span id="score">0</span></div>
+        <!-- Stats bar -->
+        <div class="flex justify-center gap-4 mb-6">
+            <div class="bg-white rounded-lg shadow px-5 py-2 text-center">
+                <p class="text-xs text-gray-500 uppercase font-semibold">Score</p>
+                <p class="text-2xl font-bold nhs-text-dark-blue" id="score">0</p>
             </div>
-
-            <div class="flex justify-around items-center bg-gray-100 p-6 rounded-lg">
-                <div class="text-center">
-                    <div id="reaction-a" class="reaction-well mx-auto"></div>
-                    <p class="mt-2 font-bold text-lg">Anti-A</p>
-                </div>
-                <div class="text-center">
-                    <div id="reaction-b" class="reaction-well mx-auto"></div>
-                    <p class="mt-2 font-bold text-lg">Anti-B</p>
-                </div>
-                <div class="text-center">
-                    <div id="reaction-d" class="reaction-well mx-auto"></div>
-                    <p class="mt-2 font-bold text-lg">Anti-D (Rh)</p>
-                </div>
+            <div class="bg-white rounded-lg shadow px-5 py-2 text-center">
+                <p class="text-xs text-gray-500 uppercase font-semibold">Mode</p>
+                <select id="mode-select" class="text-base font-bold text-gray-700 border-0 bg-transparent focus:outline-none cursor-pointer">
+                    <option value="forward">Forward Group Only</option>
+                    <option value="both" selected>Forward + Reverse Group</option>
+                </select>
             </div>
-
-            <div id="answer-buttons" class="grid grid-cols-4 md:grid-cols-4 gap-4 mt-6">
-                </div>
+            <div class="bg-white rounded-lg shadow px-5 py-2 text-center">
+                <p class="text-xs text-gray-500 uppercase font-semibold">Streak 🔥</p>
+                <p class="text-2xl font-bold text-orange-500" id="streak">0</p>
+            </div>
         </div>
 
-        <section class="mt-8 bg-white p-6 rounded-lg shadow-md max-w-4xl mx-auto">
-            <h2 class="text-2xl font-bold mb-4 text-center">How to Interpret Forward Group Reactions</h2>
-            <div class="text-left">
-                <p><span class="font-bold">Positive (+) Reaction (Agglutination):</span> Means the antigen is PRESENT on the red cells.</p>
-                <p><span class="font-bold">Negative (-) Reaction (No Agglutination):</span> Means the antigen is ABSENT from the red cells.</p>
-                <ul class="list-disc list-inside mt-4 space-y-1">
-                    <li>If Anti-A is positive, the patient has the <strong>A antigen</strong>.</li>
-                    <li>If Anti-B is positive, the patient has the <strong>B antigen</strong>.</li>
-                    <li>If both are positive, they have <strong>A and B antigens</strong> (Group AB).</li>
-                    <li>If both are negative, they have <strong>neither antigen</strong> (Group O).</li>
-                    <li>If Anti-D is positive, the patient is <strong>Rh Positive (+)</strong>.</li>
-                    <li>If Anti-D is negative, the patient is <strong>Rh Negative (-)</strong>.</li>
-                </ul>
+        <div class="bg-white p-6 rounded-lg shadow-md max-w-3xl mx-auto fade-in">
+            <div class="flex justify-between items-center mb-5">
+                <div>
+                    <h2 class="text-xl font-bold">Patient Sample</h2>
+                    <p id="feedback" class="mt-1 h-7 text-base font-semibold text-gray-500">Interpret the reactions below and select the blood group.</p>
+                </div>
+            </div>
+
+            <!-- Forward Group -->
+            <div class="mb-6">
+                <h3 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-3">
+                    Forward Group <span class="font-normal">(Patient cells + antibody reagents)</span>
+                </h3>
+                <div class="flex justify-around items-center bg-gray-50 p-4 rounded-lg">
+                    <div class="text-center">
+                        <div id="reaction-a" class="reaction-well mx-auto"></div>
+                        <p class="mt-2 font-bold">Anti-A</p>
+                        <p class="text-xs text-gray-500">Tests for A antigen</p>
+                    </div>
+                    <div class="text-center">
+                        <div id="reaction-b" class="reaction-well mx-auto"></div>
+                        <p class="mt-2 font-bold">Anti-B</p>
+                        <p class="text-xs text-gray-500">Tests for B antigen</p>
+                    </div>
+                    <div class="text-center">
+                        <div id="reaction-d" class="reaction-well mx-auto"></div>
+                        <p class="mt-2 font-bold">Anti-D (Rh)</p>
+                        <p class="text-xs text-gray-500">Tests for D antigen</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reverse Group (hidden in forward-only mode) -->
+            <div id="reverse-group-section" class="mb-6">
+                <h3 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-3">
+                    Reverse Group <span class="font-normal">(Patient serum + known cells)</span>
+                </h3>
+                <div class="flex justify-around items-center bg-blue-50 p-4 rounded-lg">
+                    <div class="text-center">
+                        <div id="reaction-ra" class="reaction-well mx-auto"></div>
+                        <p class="mt-2 font-bold">A₁ Cells</p>
+                        <p class="text-xs text-gray-500">Tests for Anti-A in serum</p>
+                    </div>
+                    <div class="text-center">
+                        <div id="reaction-rb" class="reaction-well mx-auto"></div>
+                        <p class="mt-2 font-bold">B Cells</p>
+                        <p class="text-xs text-gray-500">Tests for Anti-B in serum</p>
+                    </div>
+                    <div class="text-center">
+                        <div id="reaction-ro" class="reaction-well mx-auto"></div>
+                        <p class="mt-2 font-bold">O Cells</p>
+                        <p class="text-xs text-gray-500">Negative control</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Answer buttons -->
+            <div id="answer-buttons" class="grid grid-cols-4 gap-3 mt-4"></div>
+        </div>
+
+        <!-- Educational explanation -->
+        <section class="mt-6 bg-white p-5 rounded-lg shadow-md max-w-3xl mx-auto">
+            <h2 class="text-lg font-bold nhs-text-dark-blue mb-3">How to Interpret Blood Group Reactions</h2>
+            <div class="grid md:grid-cols-2 gap-4 text-sm">
+                <div>
+                    <h3 class="font-bold text-gray-700 mb-2">Forward Group (Cells + Antibody Reagents)</h3>
+                    <ul class="space-y-1 text-gray-600">
+                        <li>• <span class="font-semibold text-red-600">Positive (+)</span> = Agglutination = Antigen PRESENT on red cells</li>
+                        <li>• <span class="font-semibold text-gray-500">Negative (−)</span> = No agglutination = Antigen ABSENT</li>
+                        <li>• Anti-A + : Group A or AB antigen on cells</li>
+                        <li>• Anti-B + : Group B or AB antigen on cells</li>
+                        <li>• Anti-D + : D (Rh) antigen present → Rh positive</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold text-gray-700 mb-2">Reverse Group (Serum + Known Cells)</h3>
+                    <ul class="space-y-1 text-gray-600">
+                        <li>• A₁ cells + : Anti-A present in serum → NOT group A or AB</li>
+                        <li>• B cells + : Anti-B present in serum → NOT group B or AB</li>
+                        <li>• O cells − : Should always be negative (negative control)</li>
+                        <li>• Reverse confirms forward — discrepancies require investigation</li>
+                        <li>• Reverse group not valid in neonates (no natural antibodies yet)</li>
+                    </ul>
+                </div>
             </div>
         </section>
-        
-        <section class="text-center mt-12">
+
+        <section class="text-center mt-8 mb-6">
             <a href="games.html" class="bg-gray-800 text-white font-bold py-3 px-8 rounded-full hover:bg-gray-700 transition duration-300">
                 <i class="fas fa-arrow-left mr-2"></i>Back to Games
             </a>
@@ -100,61 +165,94 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            if (typeof feather !== 'undefined') feather.replace();
+
+            // forward: [anti-A, anti-B, anti-D]  reverse: [A1-cells, B-cells, O-cells]
             const problems = [
-                { reactions: ['-', '-', '-'], group: 'O-' },
-                { reactions: ['-', '-', '+'], group: 'O+' },
-                { reactions: ['+', '-', '-'], group: 'A-' },
-                { reactions: ['+', '-', '+'], group: 'A+' },
-                { reactions: ['-', '+', '-'], group: 'B-' },
-                { reactions: ['-', '+', '+'], group: 'B+' },
-                { reactions: ['+', '+', '-'], group: 'AB-' },
-                { reactions: ['+', '+', '+'], group: 'AB+' }
+                { reactions: ['-','-','-'], reverseRx: ['+','+','-'], group: 'O-', serology: 'No A or B antigens. No D antigen. Natural antibodies: Anti-A and Anti-B in serum (confirmed by positive reactions with A₁ and B cells in reverse group). Universal donor for red cells.' },
+                { reactions: ['-','-','+'], reverseRx: ['+','+','-'], group: 'O+', serology: 'No A or B antigens. D antigen present. Natural antibodies: Anti-A and Anti-B (same as O-). Rh positive — can receive O+ or O- blood.' },
+                { reactions: ['+','-','-'], reverseRx: ['-','+','-'], group: 'A-', serology: 'A antigen present, no B antigen, no D antigen. Natural antibody: Anti-B in serum (reacts with B cells in reverse). No Anti-A (would destroy own cells).' },
+                { reactions: ['+','-','+'], reverseRx: ['-','+','-'], group: 'A+', serology: 'A antigen and D antigen present, no B antigen. Natural antibody: Anti-B. The most common blood group in the UK (~37% of the population).' },
+                { reactions: ['-','+','-'], reverseRx: ['+','-','-'], group: 'B-', serology: 'B antigen present, no A antigen, no D antigen. Natural antibody: Anti-A in serum (reacts with A₁ cells).' },
+                { reactions: ['-','+','+'], reverseRx: ['+','-','-'], group: 'B+', serology: 'B antigen and D antigen present, no A antigen. Natural antibody: Anti-A.' },
+                { reactions: ['+','+','-'], reverseRx: ['-','-','-'], group: 'AB-', serology: 'Both A and B antigens present, no D antigen. NO natural antibodies (Anti-A or Anti-B) — confirmed by negative reactions in reverse group. Universal recipient for plasma/FFP. Rarest blood group (~1% in UK).' },
+                { reactions: ['+','+','+'], reverseRx: ['-','-','-'], group: 'AB+', serology: 'Both A and B antigens and D antigen present. No natural Anti-A or Anti-B. Universal recipient for red blood cells. Can receive any blood group.' }
             ];
 
-            const bloodGroups = ['O-', 'O+', 'A-', 'A+', 'B-', 'B+', 'AB-', 'AB+'];
-
+            const bloodGroups = ['O-','O+','A-','A+','B-','B+','AB-','AB+'];
             const reactionA = document.getElementById('reaction-a');
             const reactionB = document.getElementById('reaction-b');
             const reactionD = document.getElementById('reaction-d');
+            const reactionRA = document.getElementById('reaction-ra');
+            const reactionRB = document.getElementById('reaction-rb');
+            const reactionRO = document.getElementById('reaction-ro');
             const answerButtonsContainer = document.getElementById('answer-buttons');
             const feedbackEl = document.getElementById('feedback');
             const scoreEl = document.getElementById('score');
+            const streakEl = document.getElementById('streak');
+            const modeSelect = document.getElementById('mode-select');
+            const reverseGroupSection = document.getElementById('reverse-group-section');
 
             let currentProblem = {};
             let currentScore = 0;
+            let streak = 0;
+            let mode = 'both';
+
+            modeSelect.addEventListener('change', () => {
+                mode = modeSelect.value;
+                if (mode === 'forward') {
+                    reverseGroupSection.classList.add('hidden');
+                } else {
+                    reverseGroupSection.classList.remove('hidden');
+                }
+                generateNewProblem();
+            });
+
+            function setWell(el, reaction) {
+                el.className = 'reaction-well mx-auto ' + (reaction === '+' ? 'positive' : 'negative');
+                el.textContent = reaction;
+            }
 
             function generateNewProblem() {
-                feedbackEl.textContent = 'What is the blood group?';
-                feedbackEl.className = 'mt-1 h-6 text-lg font-semibold text-gray-500';
+                feedbackEl.textContent = 'Interpret the reactions and select the blood group.';
+                feedbackEl.className = 'mt-1 h-7 text-base font-semibold text-gray-500';
 
-                // Get a random problem
                 currentProblem = problems[Math.floor(Math.random() * problems.length)];
-
-                // Update reaction wells visually
                 const [a, b, d] = currentProblem.reactions;
-                
-                reactionA.className = 'reaction-well mx-auto ' + (a === '+' ? 'positive' : 'negative');
-                reactionB.className = 'reaction-well mx-auto ' + (b === '+' ? 'positive' : 'negative');
-                reactionD.className = 'reaction-well mx-auto ' + (d === '+' ? 'positive' : 'negative');
+                const [ra, rb, ro] = currentProblem.reverseRx;
 
-                // Enable buttons
-                answerButtonsContainer.querySelectorAll('button').forEach(btn => btn.disabled = false);
+                setWell(reactionA, a);
+                setWell(reactionB, b);
+                setWell(reactionD, d);
+                setWell(reactionRA, ra);
+                setWell(reactionRB, rb);
+                setWell(reactionRO, ro);
+
+                answerButtonsContainer.querySelectorAll('button').forEach(btn => {
+                    btn.disabled = false;
+                    btn.className = 'w-full p-3 bg-blue-500 text-white font-bold rounded-lg hover:bg-blue-600 transition-colors duration-300';
+                });
             }
 
             function checkAnswer(selectedGroup) {
-                 // Disable all buttons to prevent multiple clicks
                 answerButtonsContainer.querySelectorAll('button').forEach(btn => btn.disabled = true);
 
                 if (selectedGroup === currentProblem.group) {
-                    feedbackEl.textContent = 'Correct!';
-                    feedbackEl.className = 'mt-1 h-6 text-lg font-semibold text-green-600';
+                    streak++;
                     currentScore++;
                     scoreEl.textContent = currentScore;
-                    setTimeout(generateNewProblem, 1500); // Next question after 1.5s
+                    streakEl.textContent = streak;
+                    feedbackEl.textContent = streak >= 5
+                        ? `🔥 ${streak} in a row! Correct! ${currentProblem.serology}`
+                        : `✓ Correct! ${currentProblem.serology}`;
+                    feedbackEl.className = 'mt-1 text-sm font-semibold text-green-700';
+                    setTimeout(generateNewProblem, 3500);
                 } else {
-                    feedbackEl.textContent = `Incorrect. The group is ${currentProblem.group}.`;
-                    feedbackEl.className = 'mt-1 h-6 text-lg font-semibold text-red-600';
-                    setTimeout(generateNewProblem, 2000); // Next question after 2s
+                    streak = 0;
+                    streakEl.textContent = 0;
+                    feedbackEl.textContent = `✗ Incorrect. The group is ${currentProblem.group}. ${currentProblem.serology}`;
+                    feedbackEl.className = 'mt-1 text-sm font-semibold text-red-700';
+                    setTimeout(generateNewProblem, 4000);
                 }
             }
 
@@ -162,12 +260,11 @@
             bloodGroups.forEach(group => {
                 const button = document.createElement('button');
                 button.textContent = group;
-                button.className = 'w-full p-4 bg-blue-500 text-white font-bold rounded-lg hover:bg-blue-600 transition-colors duration-300 disabled:bg-gray-400';
+                button.className = 'w-full p-3 bg-blue-500 text-white font-bold rounded-lg hover:bg-blue-600 transition-colors duration-300';
                 button.addEventListener('click', () => checkAnswer(group));
                 answerButtonsContainer.appendChild(button);
             });
-            
-            // Initialise Game
+
             generateNewProblem();
         });
     </script>

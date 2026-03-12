@@ -16,72 +16,71 @@
         .nhs-light-grey { background-color: #F0F4F5; }
         .nhs-text-blue { color: #005EB8; }
         .nhs-text-dark-blue { color: #003087; }
-        .fade-in {
-            animation: fadeIn 0.5s ease-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        /* Style for the option buttons */
-        .option-btn {
-            transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-        }
+        .fade-in { animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .option-btn { transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
 
-    <!-- This div will be populated by js/component-loader.js -->
     <div id="header-placeholder"></div>
 
     <main class="py-12 md:py-16 bg-nhs-light-grey flex-grow">
         <div class="container mx-auto px-4 sm:px-6 max-w-3xl text-center">
-            <a href="games.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8 hover:underline">
+            <a href="games.html" class="inline-flex items-center nhs-text-blue font-semibold mb-6 hover:underline">
                 <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Games
             </a>
-            <h2 class="text-3xl md:text-4xl font-bold nhs-text-dark-blue mb-4">Pre-analytical Pitfalls</h2>
-            <p class="text-gray-600 mb-8 max-w-2xl mx-auto">Identify common errors in sample collection and handling, and understand their impact on test results.</p>
+            <h2 class="text-3xl md:text-4xl font-bold nhs-text-dark-blue mb-2">Pre-analytical Pitfalls</h2>
+            <p class="text-gray-600 mb-6 max-w-2xl mx-auto">Identify common errors in sample collection, handling, and processing, and understand how they impact laboratory test results.</p>
 
-            <!-- The main quiz container. It starts hidden and is shown by the script. -->
-            <div id="quiz-container" class="bg-white p-6 md:p-8 rounded-lg shadow-lg text-left hidden">
-                <p id="question-text" class="text-xl font-medium mb-6"></p>
-                <div id="options-container" class="space-y-4">
-                    <!-- Options will be populated by JS -->
-                </div>
-                <div id="feedback-container" class="mt-6 p-4 rounded-lg hidden">
-                    <p id="feedback-text" class="font-semibold"></p>
+            <!-- Progress bar -->
+            <div class="bg-white rounded-lg shadow p-3 mb-6 flex items-center gap-4">
+                <div class="flex-1">
+                    <div class="flex justify-between text-xs text-gray-500 mb-1">
+                        <span>Progress</span>
+                        <span><span id="progress-num">0</span> / <span id="progress-total">0</span></span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div id="progress-bar" class="bg-blue-600 h-2 rounded-full transition-all duration-300" style="width:0%"></div>
+                    </div>
                 </div>
                 <div class="text-right">
-                    <button id="next-question-btn" class="mt-6 bg-gray-800 text-white font-bold py-3 px-8 rounded-lg hover:bg-black transition duration-300 hidden">Next Question</button>
+                    <p class="text-xs text-gray-500 uppercase font-semibold">Score</p>
+                    <p class="text-xl font-bold nhs-text-dark-blue"><span id="score">0</span></p>
                 </div>
             </div>
 
-            <!-- The game over screen. Also starts hidden. -->
-            <div id="game-over-screen" class="hidden bg-white p-8 rounded-lg shadow-lg mt-8 fade-in">
-                <h3 class="text-2xl font-bold nhs-text-dark-blue mb-4">Quiz Complete!</h3>
-                <p id="final-score" class="text-xl text-gray-700 mb-6"></p>
-                <button id="play-again-btn" class="bg-nhs-blue text-white font-bold py-3 px-8 rounded-lg hover:bg-nhs-dark-blue transition duration-300">Play Again</button>
+            <div id="quiz-container" class="bg-white p-6 md:p-8 rounded-lg shadow-lg text-left hidden fade-in">
+                <div class="flex justify-between items-start mb-4">
+                    <span id="category-badge" class="inline-block px-2 py-1 text-xs font-bold rounded-full bg-orange-100 text-orange-700 uppercase tracking-wide"></span>
+                </div>
+                <p id="question-text" class="text-lg font-medium mb-5"></p>
+                <div id="options-container" class="space-y-3"></div>
+                <div id="feedback-container" class="mt-5 p-4 rounded-lg hidden">
+                    <p id="feedback-text" class="font-semibold text-sm"></p>
+                </div>
+                <div class="text-right mt-4">
+                    <button id="next-question-btn" class="bg-gray-800 text-white font-bold py-3 px-8 rounded-lg hover:bg-black transition duration-300 hidden">Next Question →</button>
+                </div>
+            </div>
+
+            <div id="game-over-screen" class="hidden bg-white p-8 rounded-lg shadow-lg mt-6 fade-in">
+                <h3 class="text-2xl font-bold nhs-text-dark-blue mb-3">Quiz Complete! 🎉</h3>
+                <p id="final-score" class="text-xl text-gray-700 mb-2"></p>
+                <p id="performance-msg" class="text-base text-gray-500 mb-6"></p>
+                <button id="play-again-btn" class="bg-blue-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-blue-700 transition duration-300">Play Again</button>
             </div>
         </div>
     </main>
 
-    <!-- This div will be populated by js/component-loader.js -->
     <div id="footer-placeholder"></div>
-    
-    <!-- This script loads the header and footer. Make sure the path is correct. -->
+
     <script src="js/component-loader.js"></script>
-    
-    <!-- This is the main script for the game itself. -->
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- Initialise Feather Icons ---
-            // This renders icons present in the initial HTML (like the 'Back to Games' arrow).
-            // The component-loader.js will separately call this for icons in the header/footer.
-            if (typeof feather !== 'undefined') {
-                feather.replace();
-            }
+            if (typeof feather !== 'undefined') feather.replace();
 
-            // --- DOM Element References ---
             const questionTextEl = document.getElementById('question-text');
             const optionsContainerEl = document.getElementById('options-container');
             const feedbackContainerEl = document.getElementById('feedback-container');
@@ -90,108 +89,371 @@
             const quizContainerEl = document.getElementById('quiz-container');
             const gameOverScreenEl = document.getElementById('game-over-screen');
             const finalScoreEl = document.getElementById('final-score');
+            const performanceMsgEl = document.getElementById('performance-msg');
             const playAgainBtn = document.getElementById('play-again-btn');
+            const scoreEl = document.getElementById('score');
+            const progressNumEl = document.getElementById('progress-num');
+            const progressTotalEl = document.getElementById('progress-total');
+            const progressBarEl = document.getElementById('progress-bar');
+            const categoryBadgeEl = document.getElementById('category-badge');
 
-            // --- Game State ---
             let currentQuestionIndex = 0;
             let score = 0;
             let questions = [];
 
-            // --- Game Data ---
             const allQuestions = [
+                // ── SAMPLE STABILITY & TEMPERATURE ───────────────────────────────
                 {
-                    question: "A blood sample for **Potassium** measurement was left at room temperature for 8 hours before being centrifuged. The result is likely to be...",
+                    category: 'Sample Stability',
+                    question: "A blood sample for **Potassium** was left at room temperature for 8 hours before centrifugation. The result is most likely to be:",
                     options: [
-                        { text: "Falsely low due to cell metabolism.", isCorrect: false },
-                        { text: "Falsely high due to potassium leakage from red blood cells.", isCorrect: true },
-                        { text: "Unaffected, as potassium is stable.", isCorrect: false },
-                        { text: "Inconclusive due to clot formation.", isCorrect: false }
+                        { text: "Falsely HIGH due to potassium leaking from red blood cells.", isCorrect: true },
+                        { text: "Falsely LOW due to cellular metabolism consuming potassium.", isCorrect: false },
+                        { text: "Unaffected — potassium is very stable in whole blood.", isCorrect: false },
+                        { text: "Inconclusive due to haemolysis causing clot formation.", isCorrect: false }
                     ],
-                    explanation: "Prolonged contact of serum/plasma with red blood cells allows potassium to leak out, causing a falsely elevated result. This is a common pre-analytical error."
+                    explanation: "Red blood cells (RBCs) and platelets continue to metabolise after sample collection, causing K⁺ to leak out of cells (elevated intracellular K⁺ is ~150 mmol/L vs plasma ~4.0 mmol/L). Prolonged contact with cells, warm temperature, and thrombocytosis all worsen this artefact. Samples for potassium should be separated within 2 hours. Cold temperatures can also cause K⁺ leakage (cold inhibits the Na⁺/K⁺ pump)."
                 },
                 {
-                    question: "A **coagulation** sample (e.g., for PT/APTT) is collected into a tube that is underfilled. What is the likely impact on results?",
+                    category: 'Sample Stability',
+                    question: "A sample for **Blood Glucose** was left unseparated at room temperature for 4 hours. How will this affect the result?",
                     options: [
-                        { text: "Clotting times will be falsely shortened.", isCorrect: false },
-                        { text: "Clotting times will be falsely prolonged.", isCorrect: true },
-                        { text: "The sample will haemolyse.", isCorrect: false },
-                        { text: "There will be no significant impact.", isCorrect: false }
+                        { text: "Result will be falsely LOW due to glycolysis by blood cells.", isCorrect: true },
+                        { text: "Result will be falsely HIGH due to glycogen breakdown.", isCorrect: false },
+                        { text: "Glucose is extremely stable; no significant change.", isCorrect: false },
+                        { text: "Glucose is only affected by haemolysis.", isCorrect: false }
                     ],
-                    explanation: "The fixed amount of citrate anticoagulant is too high for the blood volume, leading to excess binding of calcium and falsely prolonged clotting times."
+                    explanation: "Glucose decreases by approximately 0.5–1.0 mmol/L per hour at room temperature in whole blood (glycolysis by red cells, white cells, and bacteria). At 4 hours this could easily cause a 2–4 mmol/L fall — enough to misclassify a diabetic or prediabetic result as normal. Samples should be centrifuged and separated promptly, or collected into fluoride-oxalate (grey top) tubes which inhibit glycolysis."
                 },
                 {
-                    question: "A **bilirubin** sample is exposed to direct sunlight for an extended period. What effect is this likely to have on the result?",
+                    category: 'Sample Stability',
+                    question: "A **bilirubin** sample is left near a window in direct sunlight for 3 hours before analysis. The expected result is:",
                     options: [
-                        { text: "Falsely increased due to light activation.", isCorrect: false },
-                        { text: "Falsely decreased due to photodegradation.", isCorrect: true },
-                        { text: "No significant effect, bilirubin is stable.", isCorrect: false },
-                        { text: "It will cause the sample to clot.", isCorrect: false }
+                        { text: "Falsely DECREASED due to photodegradation of bilirubin.", isCorrect: true },
+                        { text: "Falsely INCREASED due to light-induced oxidation.", isCorrect: false },
+                        { text: "Unaffected — bilirubin is light-stable in whole blood.", isCorrect: false },
+                        { text: "Haemolysis will occur, causing a falsely high result.", isCorrect: false }
                     ],
-                    explanation: "Bilirubin is light-sensitive and breaks down upon exposure to UV light, leading to a falsely decreased result. Samples should be protected from light."
+                    explanation: "Bilirubin is photolabile — it degrades rapidly on exposure to white or UV light, leading to falsely LOW results. This is clinically significant in neonatal jaundice monitoring, where underestimation could delay treatment and risk kernicterus. Bilirubin samples should be protected from light (wrap in foil or use amber tubes) and processed promptly."
                 },
                 {
-                    question: "A blood sample for **Sodium** is found to be lipemic (high fats). Using an indirect ISE method, what is the likely impact?",
+                    category: 'Sample Stability',
+                    question: "A sample for **troponin** is frozen and then thawed multiple times before analysis. What is the most likely consequence?",
                     options: [
-                        { text: "Falsely high sodium due to interference.", isCorrect: false },
-                        { text: "Falsely low sodium (pseudohyponatremia).", isCorrect: true },
-                        { text: "No effect on sodium.", isCorrect: false },
-                        { text: "The sample will clot prematurely.", isCorrect: false }
+                        { text: "Progressive degradation of troponin, leading to falsely LOW results.", isCorrect: true },
+                        { text: "No effect — troponin is stable through freeze-thaw cycles.", isCorrect: false },
+                        { text: "Falsely HIGH troponin due to protein aggregation.", isCorrect: false },
+                        { text: "Only the cardiac fraction (cTnI) is affected, not cTnT.", isCorrect: false }
                     ],
-                    explanation: "High lipid content displaces the aqueous portion of the sample. Since sodium is in the aqueous phase, its measured concentration appears lower than it actually is."
+                    explanation: "Multiple freeze-thaw cycles cause protein denaturation and degradation, leading to artefactually LOW results for biomarkers like troponin, hormones, and specific proteins. Laboratories must document freeze-thaw history and follow strict pre-analytical protocols. Samples should ideally be aliquoted and frozen once if repeat testing is anticipated."
                 },
                 {
-                    question: "A patient's blood sample is collected with **prolonged tourniquet application** (over 3 minutes). Which analytes are most likely to be falsely elevated?",
+                    category: 'Sample Stability',
+                    question: "A sample for **ACTH (adrenocorticotropic hormone)** measurement is collected in a plain tube and left at room temperature for 6 hours. What will happen?",
                     options: [
-                        { text: "Glucose and Urea.", isCorrect: false },
-                        { text: "Total Protein, Albumin, and Calcium.", isCorrect: true },
-                        { text: "Sodium and Chloride.", isCorrect: false },
-                        { text: "Creatinine and Phosphate.", isCorrect: false }
+                        { text: "ACTH is highly unstable and will degrade to give falsely LOW levels.", isCorrect: true },
+                        { text: "ACTH is stable at room temperature for 24 hours.", isCorrect: false },
+                        { text: "ACTH will be elevated due to stress on the sample.", isCorrect: false },
+                        { text: "Room temperature has no effect; only freezing degrades ACTH.", isCorrect: false }
                     ],
-                    explanation: "Prolonged venous stasis causes water and small molecules to leak from the vessel, concentrating larger molecules like proteins and protein-bound analytes like calcium."
+                    explanation: "ACTH is one of the most unstable analytes in clinical biochemistry. It degrades within 15–30 minutes at room temperature. Requirements: collect into EDTA/aprotinin tube (chilled, on ice), centrifuge immediately in a refrigerated centrifuge, separate and freeze plasma at -70°C within 1 hour. Failure to follow these pre-analytical protocols is the most common cause of falsely low ACTH results, potentially misdiagnosing Cushing's disease as an adrenal adenoma."
                 },
                 {
-                    question: "An EDTA (lavender top) tube is collected **before** a serum (red top) tube. What is a significant risk for the chemistry results?",
+                    category: 'Sample Stability',
+                    question: "A sample for **Insulin** measurement is collected and sits at room temperature for 2 hours unseparated. The expected impact is:",
                     options: [
-                        { text: "Falsely low potassium and high calcium.", isCorrect: false },
-                        { text: "Falsely high potassium and falsely low calcium.", isCorrect: true },
-                        { text: "Contamination with gel separator.", isCorrect: false },
-                        { text: "Delayed clotting of the serum tube.", isCorrect: false }
+                        { text: "Falsely LOW insulin due to proteolytic degradation.", isCorrect: true },
+                        { text: "Falsely HIGH due to red cell release of insulin.", isCorrect: false },
+                        { text: "No impact — insulin is stable in whole blood.", isCorrect: false },
+                        { text: "Insulin is only affected by haemolysis.", isCorrect: false }
                     ],
-                    explanation: "Carryover of potassium-EDTA from the lavender tube contaminates the serum tube. EDTA binds calcium (falsely low) and the sample is contaminated with potassium (falsely high)."
+                    explanation: "Insulin is degraded by insulinase (enzyme in red blood cells and plasma). Samples must be centrifuged and separated within 30–60 minutes and then frozen. Failure to separate promptly is a major cause of falsely low insulin levels, which could misclassify an insulinoma patient as having normal insulin secretion. Chilling the sample slows (but doesn't stop) degradation."
+                },
+
+                // ── HAEMOLYSIS ────────────────────────────────────────────────────
+                {
+                    category: 'Haemolysis',
+                    question: "A sample arrives at the laboratory that is visibly red/pink-tinged in the serum (haemolysed). Which analyte will be MOST significantly elevated as a direct result of haemolysis?",
+                    options: [
+                        { text: "Potassium (K⁺)", isCorrect: true },
+                        { text: "Sodium (Na⁺)", isCorrect: false },
+                        { text: "Total Cholesterol", isCorrect: false },
+                        { text: "Creatinine", isCorrect: false }
+                    ],
+                    explanation: "Potassium is found at very high concentrations inside red blood cells (~150 mmol/L vs plasma 3.5–5.3 mmol/L). Even mild haemolysis releases significant K⁺ into the plasma, causing the most clinically dangerous artefact — apparent hyperkalaemia. This can lead to inappropriate treatment (e.g., stopping ACE inhibitors, administering calcium gluconate or insulin/dextrose for 'high K⁺'). Other analytes elevated by haemolysis: LDH (100× higher in RBCs), AST, ALB2, bilirubin, magnesium, phosphate, haemoglobin."
                 },
                 {
-                    question: "A patient did not fast as required before a **lipid profile** and had a fatty meal. What is the expected impact?",
+                    category: 'Haemolysis',
+                    question: "Haemolysis causes a falsely **LOW** result for which of the following tests?",
                     options: [
-                        { text: "Falsely low cholesterol and triglycerides.", isCorrect: false },
-                        { text: "Falsely high triglycerides.", isCorrect: true },
-                        { text: "No significant effect.", isCorrect: false },
-                        { text: "Increased HDL cholesterol only.", isCorrect: false }
+                        { text: "Haptoglobin", isCorrect: true },
+                        { text: "Potassium", isCorrect: false },
+                        { text: "LDH", isCorrect: false },
+                        { text: "AST", isCorrect: false }
                     ],
-                    explanation: "A non-fasting state, especially after a fatty meal, leads to a temporary but significant increase in circulating triglycerides, making the sample lipemic."
+                    explanation: "Haptoglobin is a plasma protein that binds free haemoglobin released from lysed red cells. In haemolysis, free Hb is released and immediately binds haptoglobin, depleting (consuming) it from the plasma. Therefore, haemolysis causes a falsely LOW haptoglobin — the same way in vivo haemolysis does. This is an important distinction: a truly haemolysed sample makes it IMPOSSIBLE to use haptoglobin as a marker of in vivo haemolysis (it may already be consumed in the tube)."
                 },
                 {
-                    question: "A **blood transfusion** sample is mislabelled with another patient's details. What is the most severe potential outcome?",
+                    category: 'Haemolysis',
+                    question: "A sample for **LDH (Lactate Dehydrogenase)** is haemolysed. What effect will this have?",
                     options: [
-                        { text: "Delayed test results.", isCorrect: false },
-                        { text: "Minor allergic reaction.", isCorrect: false },
-                        { text: "Acute haemolytic transfusion reaction.", isCorrect: true },
-                        { text: "Need for a repeat venepuncture.", isCorrect: false }
+                        { text: "LDH will be falsely ELEVATED — red cells contain very high concentrations of LDH.", isCorrect: true },
+                        { text: "LDH will be falsely LOW due to enzyme inhibition.", isCorrect: false },
+                        { text: "LDH is unaffected by haemolysis.", isCorrect: false },
+                        { text: "LDH will only be elevated if visible haemolysis is present (3+ on the analyser).", isCorrect: false }
                     ],
-                    explanation: "This is a critical error. Transfusing incompatible blood can cause a catastrophic immune reaction, leading to massive red cell destruction, organ failure, and potentially death."
+                    explanation: "LDH (lactate dehydrogenase) is found at concentrations approximately 100–150 times higher inside red blood cells than in plasma. Even 1+ haemolysis on the analyser index causes significant LDH elevation. This is clinically important when LDH is used to monitor haemolysis in TTP, to assess tumour burden in haematological malignancy, or to evaluate myocardial damage. Always check the haemolysis index (H index) before interpreting LDH."
+                },
+
+                // ── LIPAEMIA ──────────────────────────────────────────────────────
+                {
+                    category: 'Lipaemia/Interference',
+                    question: "A lipaemic (turbid, fatty) sample is analysed for **Sodium** using an indirect (dilution) ISE method. The result will likely be:",
+                    options: [
+                        { text: "Falsely LOW — pseudohyponatraemia due to lipid displacement of plasma water.", isCorrect: true },
+                        { text: "Falsely HIGH — lipid increases plasma osmolality.", isCorrect: false },
+                        { text: "Unaffected — sodium is not influenced by lipids.", isCorrect: false },
+                        { text: "Direct ISE and indirect ISE methods are equally affected.", isCorrect: false }
+                    ],
+                    explanation: "Pseudohyponatraemia: lipids (and very high proteins in paraproteinaemia) displace plasma water in the sample. Sodium is dissolved in the aqueous phase, not in lipids. With indirect ISE (dilution method), the volume fraction occupied by water is reduced, so sodium appears falsely low. DIRECT ISE (no dilution, used in blood gas analysers) is NOT affected. The actual sodium activity in the water phase is normal — this is a measurement artefact, not true hyponatraemia. Clinically: do not treat this 'low sodium.' Repeat using a blood gas analyser or request ultracentrifugation."
                 },
                 {
-                    question: "A **coagulation** sample arrives at the laboratory clotted. What is the most likely reason?",
+                    category: 'Lipaemia/Interference',
+                    question: "A patient did NOT fast before having a **lipid profile** taken and had a high-fat meal 2 hours prior. Which analyte will be most significantly affected?",
                     options: [
-                        { text: "Overfilling the tube.", isCorrect: false },
-                        { text: "Underfilling the tube.", isCorrect: false },
-                        { text: "Insufficient or delayed mixing with anticoagulant.", isCorrect: true },
-                        { text: "Exposure to cold temperature.", isCorrect: false }
+                        { text: "Triglycerides will be falsely elevated.", isCorrect: true },
+                        { text: "LDL cholesterol will be directly falsely elevated.", isCorrect: false },
+                        { text: "HDL cholesterol will be falsely low.", isCorrect: false },
+                        { text: "Total cholesterol will be unchanged.", isCorrect: false }
                     ],
-                    explanation: "The blood must be mixed gently but thoroughly with the citrate anticoagulant immediately after collection to prevent the clotting cascade from activating."
+                    explanation: "Post-prandial lipaemia primarily elevates TRIGLYCERIDES (chylomicrons absorbed from the gut after a meal). Triglycerides can be 2–5× higher in a non-fasting state. Total cholesterol and HDL are relatively unaffected by meals. LDL is typically calculated using the Friedewald equation (LDL = TC − HDL − TG/2.2), so falsely elevated TG leads to a falsely LOW calculated LDL — clinically, this means LDL cardiovascular risk is underestimated. A 12-hour fast is required for fasting lipids. Non-fasting lipid profiles are acceptable for total cardiovascular risk assessment but TG results must be interpreted with caution."
+                },
+                {
+                    category: 'Lipaemia/Interference',
+                    question: "Severe lipaemia interferes with many colorimetric assays. What is the standard laboratory procedure to deal with a lipaemic sample?",
+                    options: [
+                        { text: "Ultracentrifugation to remove the lipaemic layer, then re-analyse.", isCorrect: true },
+                        { text: "Dilute the sample 1:2 with saline and multiply results by 2.", isCorrect: false },
+                        { text: "Warm the sample to 37°C to dissolve the lipids.", isCorrect: false },
+                        { text: "Reject the sample and request a new one immediately.", isCorrect: false }
+                    ],
+                    explanation: "Ultracentrifugation (or ultracentrifuge-equivalent lipid clearance devices) removes chylomicrons and VLDL from the sample, eliminating optical interference. Results can then be validated for most analytes (note: lipid analytes themselves cannot be reported after lipid clearance). Direct ISE methods (rather than indirect) can also bypass pseudohyponatraemia. If lipaemia is unavoidable (hypertriglyceridaemia patient, post-prandial), a comment should accompany results warning of potential interference."
+                },
+
+                // ── TUBE TYPE / ORDER OF DRAW ─────────────────────────────────────
+                {
+                    category: 'Tube Type & Order of Draw',
+                    question: "A **coagulation** sample (blue-top/sodium citrate) is collected AFTER an EDTA (purple/lavender top) tube without flushing or changing the needle. What is the risk to the coagulation results?",
+                    options: [
+                        { text: "EDTA carryover will chelate calcium, causing falsely PROLONGED clotting times.", isCorrect: true },
+                        { text: "EDTA carryover will increase fibrinogen, causing falsely shortened times.", isCorrect: false },
+                        { text: "No risk — different anticoagulants do not affect each other.", isCorrect: false },
+                        { text: "The risk is only relevant if the coagulation tube is underfilled.", isCorrect: false }
+                    ],
+                    explanation: "EDTA chelates calcium (Mg²⁺ and Ca²⁺) extremely effectively. Even a few microlitres of carryover from an EDTA tube into a citrate coagulation tube will chelate the calcium that is needed for clot formation in the PT/APTT assay reagents, causing falsely prolonged clotting times. The standard recommended order of draw (CLSI/BCSH): 1. Blood cultures → 2. Citrate (blue) → 3. Serum/SST (gold/red) → 4. Heparin (green) → 5. EDTA (purple) → 6. Fluoride/oxalate (grey)."
+                },
+                {
+                    category: 'Tube Type & Order of Draw',
+                    question: "An EDTA tube is collected **before** a serum biochemistry tube. What is the main concern for the biochemistry results?",
+                    options: [
+                        { text: "EDTA carryover causes falsely HIGH potassium and falsely LOW calcium.", isCorrect: true },
+                        { text: "EDTA carryover causes falsely LOW potassium and HIGH calcium.", isCorrect: false },
+                        { text: "There is no concern — biochemistry tubes are not affected by EDTA.", isCorrect: false },
+                        { text: "Concern only arises if SST gel is used.", isCorrect: false }
+                    ],
+                    explanation: "EDTA (potassium salt) carryover elevates K⁺ (falsely high). EDTA chelates calcium, making it unavailable → falsely LOW calcium (measured as low total calcium). EDTA can also falsely elevate Mg²⁺, iron, and interfere with enzyme assays. In practice, collecting EDTA first with careful technique rarely causes problems, but poor technique (same needle, no discard, overfilling) is a real risk. The safest practice is to follow the correct order of draw."
+                },
+                {
+                    category: 'Tube Type & Order of Draw',
+                    question: "A blood gas sample is collected in a syringe with too much **heparin** remaining from the flush. What is the likely effect?",
+                    options: [
+                        { text: "Dilution of the sample with heparin causes falsely LOW values for all analytes, especially electrolytes.", isCorrect: true },
+                        { text: "Excess heparin activates the coagulation cascade and raises fibrinogen.", isCorrect: false },
+                        { text: "Excess heparin affects only pH measurements.", isCorrect: false },
+                        { text: "No effect — heparin is a physiological anticoagulant.", isCorrect: false }
+                    ],
+                    explanation: "Excess liquid heparin dilutes the blood sample. This dilution effect lowers ALL analytes measured in the sample — most critically for ABG: pCO₂ falls (falsely low), pO₂ rises (falsely high, as heparin is air-equilibrated), pH rises slightly, and electrolytes (Na⁺, K⁺, Ca²⁺, lactate) are all diluted. Pre-filled heparinised syringes with dry heparin avoid this problem. For blood gas syringes, expel all air and excess heparin before sampling."
+                },
+                {
+                    category: 'Tube Type & Order of Draw',
+                    question: "A patient has a **coagulation** sample collected into an EDTA tube by mistake (purple top instead of blue top). What should be done?",
+                    options: [
+                        { text: "Reject the sample immediately and request a recollection into the correct citrate tube.", isCorrect: true },
+                        { text: "Run the coagulation test on the EDTA sample — results will still be valid.", isCorrect: false },
+                        { text: "Add citrate solution to the EDTA tube to neutralise the EDTA.", isCorrect: false },
+                        { text: "Correct for EDTA interference using a mathematical formula.", isCorrect: false }
+                    ],
+                    explanation: "An EDTA tube cannot be used for coagulation testing — EDTA chelates calcium so completely that the coagulation cascade cannot proceed and clotting times become unmeasurably prolonged (all results will be >120 seconds or 'no clot'). There is no correction formula. The sample must be discarded and a new sample collected in the correct sodium citrate tube (blue cap). This is a patient safety issue."
+                },
+
+                // ── UNDERFILL / OVERFILL ──────────────────────────────────────────
+                {
+                    category: 'Tube Fill Volume',
+                    question: "A **coagulation** tube (sodium citrate) is significantly underfilled (less than 75% of recommended volume). What will happen to PT/APTT results?",
+                    options: [
+                        { text: "Clotting times will be falsely PROLONGED due to excess citrate relative to blood.", isCorrect: true },
+                        { text: "Clotting times will be falsely SHORTENED due to haemoconcentration.", isCorrect: false },
+                        { text: "Underfilling only affects APTT, not PT.", isCorrect: false },
+                        { text: "Underfilling has no effect if the tube is inverted correctly.", isCorrect: false }
+                    ],
+                    explanation: "Citrate tubes contain a FIXED volume of sodium citrate anticoagulant for a SPECIFIC blood volume (typically 9:1 blood:citrate ratio). An underfilled tube means too much citrate relative to blood — excess citrate chelates calcium from the sample AND from the reagents in the assay, prolonging both PT and APTT. This is the 'dilution effect' of excess anticoagulant. Tubes should be filled to the stated fill level. Critical: in polycythaemic patients (high Hct >55%), the blood:citrate ratio must be corrected because there is less plasma volume — otherwise the citrate is in relative excess."
+                },
+                {
+                    category: 'Tube Fill Volume',
+                    question: "A blood culture bottle is inoculated with only 2 mL of blood instead of the recommended 10 mL. What is the most significant clinical consequence?",
+                    options: [
+                        { text: "Reduced sensitivity — lower probability of detecting bacteraemia/fungaemia.", isCorrect: true },
+                        { text: "Higher contamination rate due to skin bacteria.", isCorrect: false },
+                        { text: "The bottle will produce a false-positive result.", isCorrect: false },
+                        { text: "No consequence — any volume will detect bacteraemia.", isCorrect: false }
+                    ],
+                    explanation: "Blood culture sensitivity increases directly with blood volume inoculated. In bacteraemia, bacterial counts are often very low (1–10 CFU/mL). Inoculating 10 mL per bottle (20 mL total per set) is the recognised standard — each mL increase significantly raises yield, especially for low-grade bacteraemia (e.g., endocarditis, fungaemia). Under-inoculation is one of the most common reasons for false-negative blood cultures. Each 1 mL below optimal reduces sensitivity by approximately 3–5%."
+                },
+
+                // ── VENEPUNCTURE TECHNIQUE ────────────────────────────────────────
+                {
+                    category: 'Venepuncture Technique',
+                    question: "A tourniquet is left in place for more than **3 minutes** during venepuncture. Which analytes are most likely to be FALSELY ELEVATED?",
+                    options: [
+                        { text: "Total protein, albumin, calcium, and cholesterol.", isCorrect: true },
+                        { text: "Sodium, chloride, and urea.", isCorrect: false },
+                        { text: "Glucose and creatinine.", isCorrect: false },
+                        { text: "All analytes are equally affected.", isCorrect: false }
+                    ],
+                    explanation: "Prolonged venous occlusion (>1 minute) causes haemoconcentration — small molecules and water leak out of capillaries into the interstitium, concentrating larger molecules in the plasma. Protein-bound analytes and large molecules are most affected: total protein, albumin, globulins, calcium (albumin-bound), LDL cholesterol, triglycerides, enzymes. Small, freely diffusible molecules (sodium, chloride, urea, creatinine) are less affected. The tourniquet should be released as soon as blood starts flowing, or ideally only applied for the cannulation step."
+                },
+                {
+                    category: 'Venepuncture Technique',
+                    question: "Blood is collected from an **arm cannula** being used to infuse a saline drip without stopping the infusion first. What will happen to sodium and glucose results?",
+                    options: [
+                        { text: "Both sodium and glucose will be falsely ELEVATED due to contamination with the infusate.", isCorrect: false },
+                        { text: "Sodium will be falsely elevated; glucose will be diluted and falsely LOW.", isCorrect: false },
+                        { text: "Results will be unreliable — diluted with saline, causing low concentrations of most analytes; glucose may be falsely LOW.", isCorrect: true },
+                        { text: "Sodium will be unaffected as it is also present in blood.", isCorrect: false }
+                    ],
+                    explanation: "Collecting blood proximal to (or through) an IV infusion site contaminates the sample with the infusate. Normal saline (0.9% NaCl) would dilute all analytes. Glucose infusions would falsely ELEVATE glucose. Dextrose-saline would elevate glucose and dilute other analytes. The 'discard tube' approach (discard first 5–10 mL) does NOT reliably remove IV fluid contamination from a site with an active infusion. Best practice: collect from the contralateral arm or below the IV site (with the infusion stopped and arm raised for 2 minutes before collection)."
+                },
+                {
+                    category: 'Venepuncture Technique',
+                    question: "A patient is known to have **antithrombin deficiency**. Her coagulation screening shows a normal PT but short APTT. What pre-analytical issue should be considered first?",
+                    options: [
+                        { text: "Underfilling of the tube leading to relative anticoagulant excess.", isCorrect: false },
+                        { text: "Contamination with heparin from a line/flush.", isCorrect: false },
+                        { text: "APTT may actually be correct — antithrombin deficiency does not cause APTT abnormalities on standard screening.", isCorrect: false },
+                        { text: "Contamination of the sample with tissue factor/thromboplastin from traumatic venepuncture, shortening APTT.", isCorrect: true }
+                    ],
+                    explanation: "Traumatic venepuncture causes tissue factor/thromboplastin (and activated factors) to enter the sample, which can activate the coagulation cascade. This leads to partial clotting and consumption of factors — shortening (or invalidating) coagulation tests including APTT. A contaminated first tube with thromboplastin release is a key cause of spuriously short APTT. Always discard the first tube (or use a 'discard tube') when collecting coagulation samples following a difficult venepuncture."
+                },
+
+                // ── TRANSFUSION & PATIENT IDENTIFICATION ─────────────────────────
+                {
+                    category: 'Transfusion Safety',
+                    question: "A group and screen/crossmatch sample is mislabelled with another patient's name. This is discovered post-transfusion. What is the most serious potential outcome?",
+                    options: [
+                        { text: "An acute haemolytic transfusion reaction (AHTR) from ABO incompatible transfusion.", isCorrect: true },
+                        { text: "A minor allergic (urticarial) reaction requiring antihistamines.", isCorrect: false },
+                        { text: "A transfusion-associated circulatory overload (TACO).", isCorrect: false },
+                        { text: "A delayed haemolytic transfusion reaction after 5–10 days.", isCorrect: false }
+                    ],
+                    explanation: "The most common cause of FATAL transfusion reactions is WBIT (Wrong Blood In Tube) — a sample labelled with the wrong patient's details. If used for crossmatching, incompatible ABO blood may be issued and transfused, causing an acute haemolytic transfusion reaction (AHTR): intravascular haemolysis, DIC, renal failure, cardiovascular collapse — can be fatal within minutes. SHOT (Serious Hazards of Transfusion) data consistently shows mislabelling as a top cause of serious adverse events. STRICT bedside identification at the time of sample collection is essential."
+                },
+                {
+                    category: 'Transfusion Safety',
+                    question: "A patient who has been **recently transfused** (within the last 3 months) requires blood group testing. What specific pre-analytical concern applies?",
+                    options: [
+                        { text: "Donor red cells may still be circulating, causing a mixed-field agglutination result and potentially incorrect blood grouping.", isCorrect: true },
+                        { text: "Transfusion has no effect on blood group testing.", isCorrect: false },
+                        { text: "Recent transfusion only affects the crossmatch, not the forward group.", isCorrect: false },
+                        { text: "The DAT will always be positive after transfusion, interfering with crossmatch only.", isCorrect: false }
+                    ],
+                    explanation: "Donor red cells with a different blood group can circulate for up to 120 days after transfusion. This causes a 'mixed field' reaction in blood group serology — the patient's own cells and donor cells both react (or not react) with typing reagents, potentially giving an incorrect blood group. All transfusion request forms must include recent transfusion history. Samples collected within 3 months of transfusion require extra care: the historical blood group must be checked, and discrepancies investigated. Pre-transfusion samples should ideally be collected before transfusion whenever possible."
+                },
+
+                // ── TIMING / CIRCADIAN VARIATION ─────────────────────────────────
+                {
+                    category: 'Timing & Biological Variation',
+                    question: "Cortisol is requested for a patient suspected of Cushing's syndrome, but the blood is collected at **4pm** instead of the standard **9am**. How does this affect interpretation?",
+                    options: [
+                        { text: "Cortisol follows a strong circadian rhythm — 4pm levels are normally significantly lower than 9am; an elevated 4pm level could be missed or misinterpreted.", isCorrect: true },
+                        { text: "The 4pm cortisol is higher than 9am — this makes it a more sensitive test for Cushing's.", isCorrect: false },
+                        { text: "Cortisol has no diurnal variation and can be collected at any time.", isCorrect: false },
+                        { text: "Only a 24h urine cortisol is needed; single-time-point cortisol is meaningless.", isCorrect: false }
+                    ],
+                    explanation: "Cortisol has a well-established circadian rhythm: highest at 09:00 (peak, approx. 200–535 nmol/L), lowest at midnight/00:00 (nadir, <50 nmol/L in healthy individuals). The 9am cortisol is the standard screening time. In Cushing's, the rhythm is LOST (cortisol is elevated at all times, including midnight). A 4pm cortisol collected when a patient is stressed (hospital admission) may be elevated even without Cushing's. The most sensitive single-time-point test is the midnight salivary cortisol (late-night salivary cortisol, LNSC), which should be <2.0 nmol/L in health."
+                },
+                {
+                    category: 'Timing & Biological Variation',
+                    question: "A PSA (prostate-specific antigen) is collected **24 hours after** a digital rectal examination (DRE). The result is elevated. What is the most likely explanation?",
+                    options: [
+                        { text: "DRE causes a transient elevation in PSA — sample should be collected BEFORE DRE or at least 1 week after.", isCorrect: true },
+                        { text: "DRE does not affect PSA levels.", isCorrect: false },
+                        { text: "The elevation confirms prostate cancer and DRE timing is irrelevant.", isCorrect: false },
+                        { text: "PSA only rises after prostate biopsy, not DRE.", isCorrect: false }
+                    ],
+                    explanation: "PSA is an organ-specific but NOT cancer-specific marker. Multiple factors cause transient PSA elevation: digital rectal examination (+1–2 µg/L for 24–48h), prostate massage, prostate biopsy (+50% for 4–6 weeks), urinary tract infection, urinary retention, ejaculation (+0.8 µg/L for 24h). Vigorous exercise and cycling (perineal pressure) may also raise PSA. Guidelines recommend collecting PSA before DRE or at least 48 hours after. For accurate baseline PSA, avoid DRE, prostate procedures, UTI treatment, and ejaculation for at least 48 hours."
+                },
+                {
+                    category: 'Timing & Biological Variation',
+                    question: "A **trough level** for vancomycin (antibiotic) is requested but the sample is taken **2 hours after** the last dose rather than immediately before the next dose. What is the impact?",
+                    options: [
+                        { text: "The level will be falsely HIGH — not a true trough; may lead to an unnecessary dose reduction.", isCorrect: true },
+                        { text: "The level will be falsely LOW — not a true trough.", isCorrect: false },
+                        { text: "Timing of therapeutic drug monitoring does not matter.", isCorrect: false },
+                        { text: "The result is only affected if the patient has renal impairment.", isCorrect: false }
+                    ],
+                    explanation: "The trough level (immediately before the next dose) is the lowest drug concentration in the dosing interval — the point when the drug is at its nadir. Collecting 2 hours after a dose means the drug is still at a higher-than-trough level (distribution phase). This will give a falsely HIGH 'trough,' potentially leading the clinician to reduce the vancomycin dose when it was actually adequate, risking therapeutic failure and antibiotic resistance. Always document collection time and dose time clearly on request forms for therapeutic drug monitoring (TDM)."
+                },
+
+                // ── MIXING / INVERSION ────────────────────────────────────────────
+                {
+                    category: 'Sample Handling',
+                    question: "A coagulation sample is mixed vigorously by shaking rather than gentle inversion. What is the most likely consequence?",
+                    options: [
+                        { text: "Platelet activation and partial clot formation, leading to spuriously prolonged clotting times.", isCorrect: true },
+                        { text: "Enhanced mixing leads to more accurate clotting times.", isCorrect: false },
+                        { text: "Vigorous shaking only affects the haemoglobin measurement.", isCorrect: false },
+                        { text: "No consequence — method of mixing does not matter.", isCorrect: false }
+                    ],
+                    explanation: "Coagulation samples must be mixed gently (8–10 gentle inversions) immediately after collection. Vigorous shaking can: 1) Activate platelets (platelet aggregates form, reducing platelet count and consuming clotting factors), 2) Cause microhaemolysis (red cell lysis releasing haemolysed material), 3) Introduce air bubbles (denatures proteins). All of these can prolong or shorten clotting times unpredictably. Similarly, EDTA tubes need gentle inversion — not shaking — to mix the anticoagulant."
+                },
+                {
+                    category: 'Sample Handling',
+                    question: "An EDTA sample for FBC is collected but **not mixed** with the EDTA anticoagulant immediately. The sample is analysed 4 hours later. What is the likely finding?",
+                    options: [
+                        { text: "Clot formation within the tube — sample rejected; false FBC results.", isCorrect: true },
+                        { text: "No effect — EDTA works without mixing.", isCorrect: false },
+                        { text: "Only the platelet count will be affected.", isCorrect: false },
+                        { text: "Morphology will be abnormal but automated counts will be accurate.", isCorrect: false }
+                    ],
+                    explanation: "EDTA must be mixed with blood immediately by inverting the tube 8–10 times to ensure complete anticoagulation. If not mixed promptly, clotting begins before EDTA is adequately distributed throughout the sample. Visible or microscopic clots will form, leading to: false platelet aggregation (low count), false leukopenia (cells trapped in clot), and incorrect morphology. A clotted sample CANNOT be used for FBC — the results are completely unreliable and the sample must be rejected."
+                },
+
+                // ── COLD AGGLUTININS ──────────────────────────────────────────────
+                {
+                    category: 'Cold Agglutinins',
+                    question: "An FBC on a patient with known cold agglutinin disease shows an MCV of 145 fL and MCHC of 42.5 g/dL with an Hb of 88 g/L. What is the most important pre-analytical step?",
+                    options: [
+                        { text: "Warm the sample to 37°C in a water bath for 30 minutes before re-analysis.", isCorrect: true },
+                        { text: "Dilute the sample 1:2 with warm saline before analysis.", isCorrect: false },
+                        { text: "Add EDTA to prevent agglutination.", isCorrect: false },
+                        { text: "Reject the sample and request a repeat blood count.", isCorrect: false }
+                    ],
+                    explanation: "Cold agglutinins (IgM antibodies) cause red cells to clump at temperatures below 37°C (typically 4–25°C). The analyser counts clumps as giant individual cells, giving a spuriously elevated MCV and MCHC (MCHC >36.5 g/dL is a key flag for either cold agglutinins or a technical error). The solution: keep the sample warm (in a pocket, hand, or insulated bag) from collection, and warm to 37°C before processing. Re-run through the analyser while warm. This reverses the agglutination and gives accurate results. A high MCHC is an important QC flag the laboratory uses to detect this problem."
+                },
+
+                // ── LABELLING ─────────────────────────────────────────────────────
+                {
+                    category: 'Labelling & Identity',
+                    question: "A sample labelled with the patient's name but **no date of birth or NHS number** arrives at the laboratory for a blood group and antibody screen. What is the correct action?",
+                    options: [
+                        { text: "Reject the sample and request a new, correctly labelled sample — minimum required identifiers must be present.", isCorrect: true },
+                        { text: "Process the sample and flag the result as 'unconfirmed identity.'", isCorrect: false },
+                        { text: "Phone the ward to get the missing details and annotate the tube.", isCorrect: false },
+                        { text: "Accept if at least one identifier (name) is present.", isCorrect: false }
+                    ],
+                    explanation: "Transfusion samples require a MINIMUM of three unique patient identifiers for safe blood product issue: surname + forename, date of birth, and NHS/hospital number. Name alone is insufficient — there may be multiple patients with the same surname. Annotating or labelling samples after collection (retrospectively adding information) is NEVER acceptable for transfusion samples. This is a core patient safety requirement. For other biochemistry/haematology tests, two unique identifiers are typically the minimum standard (as per BSQR/BCSH guidelines)."
                 }
             ];
-
-            // --- Game Logic Functions ---
 
             function shuffleArray(array) {
                 for (let i = array.length - 1; i > 0; i--) {
@@ -208,20 +470,26 @@
                 }
 
                 quizContainerEl.classList.remove('fade-in');
-                void quizContainerEl.offsetWidth; // Trigger reflow
+                void quizContainerEl.offsetWidth;
                 quizContainerEl.classList.add('fade-in');
 
                 const questionData = questions[currentQuestionIndex];
+                categoryBadgeEl.textContent = questionData.category;
                 questionTextEl.innerHTML = questionData.question;
                 optionsContainerEl.innerHTML = '';
                 feedbackContainerEl.classList.add('hidden');
                 nextQuestionBtn.classList.add('hidden');
 
+                // Update progress
+                progressNumEl.textContent = currentQuestionIndex + 1;
+                const pct = ((currentQuestionIndex) / questions.length) * 100;
+                progressBarEl.style.width = pct + '%';
+
                 const shuffledOptions = shuffleArray([...questionData.options]);
                 shuffledOptions.forEach(option => {
                     const button = document.createElement('button');
-                    button.innerHTML = option.text; // Use innerHTML to render bold tags
-                    button.classList.add('option-btn', 'w-full', 'p-3', 'border', 'border-gray-300', 'rounded-lg', 'text-left', 'hover:bg-gray-100', 'focus:outline-none', 'focus:ring-2', 'focus:ring-nhs-blue', 'transition', 'duration-200');
+                    button.innerHTML = option.text;
+                    button.classList.add('option-btn', 'w-full', 'p-3', 'border-2', 'border-gray-200', 'rounded-lg', 'text-left', 'hover:bg-gray-100', 'focus:outline-none', 'focus:ring-2', 'focus:ring-blue-400', 'transition', 'text-sm');
                     button.dataset.isCorrect = option.isCorrect;
                     button.addEventListener('click', () => selectOption(button, questionData.explanation));
                     optionsContainerEl.appendChild(button);
@@ -233,20 +501,22 @@
                 optionsContainerEl.querySelectorAll('button').forEach(button => {
                     button.disabled = true;
                     if (button.dataset.isCorrect === 'true') {
-                        button.classList.add('bg-green-200', 'border-green-400');
+                        button.classList.add('bg-green-100', 'border-green-500', 'text-green-900');
                     } else if (button === selectedButton) {
-                        button.classList.add('bg-red-200', 'border-red-400');
+                        button.classList.add('bg-red-100', 'border-red-400', 'text-red-900');
                     }
                 });
 
                 if (isCorrect) {
                     score++;
-                    feedbackContainerEl.className = 'mt-6 p-4 rounded-lg bg-green-100 text-green-800 fade-in';
-                    feedbackTextEl.innerHTML = `<strong>Correct!</strong> ${explanation}`;
+                    scoreEl.textContent = score;
+                    feedbackContainerEl.className = 'mt-5 p-4 rounded-lg bg-green-50 text-green-900 border-l-4 border-green-500 fade-in';
+                    feedbackTextEl.innerHTML = `<strong>✓ Correct!</strong> ${explanation}`;
                 } else {
-                    feedbackContainerEl.className = 'mt-6 p-4 rounded-lg bg-red-100 text-red-800 fade-in';
-                    feedbackTextEl.innerHTML = `<strong>Incorrect.</strong> ${explanation}`;
+                    feedbackContainerEl.className = 'mt-5 p-4 rounded-lg bg-red-50 text-red-900 border-l-4 border-red-500 fade-in';
+                    feedbackTextEl.innerHTML = `<strong>✗ Incorrect.</strong> ${explanation}`;
                 }
+                feedbackContainerEl.classList.remove('hidden');
                 nextQuestionBtn.classList.remove('hidden');
             }
 
@@ -258,23 +528,32 @@
             function endGame() {
                 quizContainerEl.classList.add('hidden');
                 gameOverScreenEl.classList.remove('hidden');
-                finalScoreEl.textContent = `You scored ${score} out of ${questions.length}.`;
+                const pct = Math.round((score / questions.length) * 100);
+                finalScoreEl.textContent = `You scored ${score} out of ${questions.length} (${pct}%).`;
+                let msg = '';
+                if (pct === 100) msg = '🏆 Perfect score! Outstanding knowledge of pre-analytical variables!';
+                else if (pct >= 80) msg = '🌟 Excellent performance! You have a solid grasp of sample integrity.';
+                else if (pct >= 60) msg = '👍 Good work! Review the topics where you struggled to consolidate your knowledge.';
+                else msg = '📚 Keep practising! Pre-analytical errors are a major source of incorrect results.';
+                performanceMsgEl.textContent = msg;
+                progressBarEl.style.width = '100%';
             }
 
             function startGame() {
                 currentQuestionIndex = 0;
                 score = 0;
+                scoreEl.textContent = 0;
                 questions = shuffleArray([...allQuestions]);
+                progressTotalEl.textContent = questions.length;
+                progressNumEl.textContent = 1;
+                progressBarEl.style.width = '0%';
                 gameOverScreenEl.classList.add('hidden');
                 quizContainerEl.classList.remove('hidden');
                 displayQuestion();
             }
 
-            // --- Event Listeners ---
             nextQuestionBtn.addEventListener('click', nextQuestion);
             playAgainBtn.addEventListener('click', startGame);
-
-            // --- Initialisation ---
             startGame();
         });
     </script>

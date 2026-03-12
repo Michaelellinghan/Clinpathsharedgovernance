@@ -17,141 +17,466 @@
         .nhs-dark-blue { background-color: #003087; }
         .nhs-light-grey { background-color: #F0F4F5; }
         .nhs-text-blue { color: #005EB8; }
-        .option-btn:disabled {
-            background-color: #d1d5db;
-            cursor: not-allowed;
-        }
-        .option-btn.correct {
-            background-color: #4ade80;
-            color: white;
-        }
-        .option-btn.incorrect {
-            background-color: #f87171;
-            color: white;
-        }
+        .nhs-text-dark-blue { color: #003087; }
+        .option-btn:disabled { background-color: #d1d5db; cursor: not-allowed; }
+        .option-btn.correct { background-color: #4ade80; color: white; border-color: #22c55e; }
+        .option-btn.incorrect { background-color: #f87171; color: white; border-color: #ef4444; }
+        .fade-in { animation: fadeIn 0.3s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
 
     <div id="header-placeholder"></div>
 
-    <main class="py-16">
+    <main class="py-12">
         <div class="container mx-auto px-6 max-w-2xl text-center">
-            <a href="games.html" class="inline-flex items-center nhs-text-blue font-semibold mb-8">
+            <a href="games.html" class="inline-flex items-center nhs-text-blue font-semibold mb-6 hover:underline">
                 <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Back to Games
             </a>
-            <h2 class="text-3xl font-bold nhs-text-dark-blue mb-4">Antibody & Disease Association</h2>
-            <p class="text-gray-600 mb-8 max-w-2xl mx-auto">Test your knowledge of autoimmune serology. Select the correct match for the given item.</p>
+            <h2 class="text-3xl font-bold nhs-text-dark-blue mb-2">Antibody & Disease Association</h2>
+            <p class="text-gray-600 mb-6 max-w-2xl mx-auto">Test your knowledge of autoimmune serology and HLA associations. Questions alternate between antibody→disease and disease→antibody directions.</p>
 
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <p id="question-prompt" class="text-lg font-semibold text-gray-700"></p>
-                <div id="target-item" class="my-4 p-4 bg-yellow-100 text-yellow-800 text-2xl font-bold rounded-lg">
-                    </div>
-                
-                <div id="answer-options" class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-                    </div>
-
-                <div id="feedback-message" class="mt-6 p-4 rounded-lg text-lg font-semibold hidden"></div>
+            <!-- Stats -->
+            <div class="flex justify-center gap-4 mb-6">
+                <div class="bg-white rounded-lg shadow px-5 py-2">
+                    <p class="text-xs text-gray-500 uppercase font-semibold">Score</p>
+                    <p class="text-2xl font-bold nhs-text-dark-blue" id="score">0</p>
+                </div>
+                <div class="bg-white rounded-lg shadow px-5 py-2">
+                    <p class="text-xs text-gray-500 uppercase font-semibold">Question</p>
+                    <p class="text-2xl font-bold text-gray-700"><span id="q-num">1</span><span class="text-base text-gray-400">/<span id="q-total">0</span></span></p>
+                </div>
+                <div class="bg-white rounded-lg shadow px-5 py-2">
+                    <p class="text-xs text-gray-500 uppercase font-semibold">Streak 🔥</p>
+                    <p class="text-2xl font-bold text-orange-500" id="streak">0</p>
+                </div>
             </div>
 
-            <div class="mt-6">
-                <p class="text-lg">Score: <span id="score" class="font-bold">0</span></p>
-                <button id="next-question-btn" class="mt-4 bg-gray-800 text-white font-bold py-3 px-8 rounded-lg hover:bg-black transition duration-300 hidden">Next Question</button>
+            <div class="bg-white p-6 rounded-lg shadow-md fade-in">
+                <!-- Category badge -->
+                <div class="flex justify-center mb-3">
+                    <span id="cat-badge" class="inline-block px-3 py-1 text-xs font-bold rounded-full bg-purple-100 text-purple-700 uppercase tracking-wide"></span>
+                </div>
+                <p id="question-prompt" class="text-base font-semibold text-gray-500 mb-2"></p>
+                <div id="target-item" class="my-4 p-4 bg-yellow-50 border-2 border-yellow-300 text-yellow-900 text-xl font-bold rounded-lg min-h-[70px] flex items-center justify-center">
+                </div>
+
+                <div id="answer-options" class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-5">
+                </div>
+
+                <div id="feedback-message" class="mt-5 p-4 rounded-lg text-base font-semibold hidden"></div>
+
+                <!-- Clinical context -->
+                <div id="clinical-context" class="mt-3 p-4 bg-blue-50 border-l-4 border-blue-500 text-left rounded hidden">
+                    <p class="text-xs font-bold text-blue-700 uppercase mb-1">Clinical Notes</p>
+                    <p id="clinical-text" class="text-sm text-gray-700"></p>
+                </div>
+            </div>
+
+            <div class="mt-5">
+                <button id="next-question-btn" class="mt-2 bg-gray-800 text-white font-bold py-3 px-8 rounded-lg hover:bg-black transition duration-300 hidden">Next Question →</button>
+            </div>
+
+            <!-- Filter -->
+            <div class="mt-8 bg-white p-4 rounded-lg shadow-md text-left">
+                <p class="font-semibold text-gray-700 mb-2">Filter by Category:</p>
+                <div id="cat-filter" class="flex flex-wrap gap-2">
+                    <button class="cat-filter-btn px-3 py-1 text-sm rounded-full bg-gray-800 text-white font-semibold" data-cat="All">All</button>
+                </div>
             </div>
         </div>
     </main>
-    
+
     <div id="footer-placeholder"></div>
 
-      <script src="js/component-loader.js"></script>
-    
+    <script src="js/component-loader.js"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            feather.replace();
+            if (typeof feather !== 'undefined') feather.replace();
         });
-   </script>
+    </script>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            feather.replace();
-
             const associations = [
-                { antibody: 'Anti-dsDNA', disease: 'Systemic Lupus Erythematosus' },
-                { antibody: 'Anti-CCP', disease: 'Rheumatoid Arthritis' },
-                { antibody: 'Anti-TTG (IgA)', disease: 'Coeliac Disease' },
-                { antibody: 'c-ANCA (Anti-PR3)', disease: 'Granulomatosis with Polyangiitis' },
-                { antibody: 'p-ANCA (Anti-MPO)', disease: 'Microscopic Polyangiitis' },
-                { antibody: 'Anti-GBM', disease: 'Goodpasture\'s Syndrome' },
-                { antibody: 'Anti-Scl-70', disease: 'Systemic Sclerosis (Diffuse)' },
-                { antibody: 'Anti-Centromere', disease: 'Systemic Sclerosis (Limited)' },
-                { antibody: 'Anti-Ro (SS-A) & Anti-La (SS-B)', disease: 'Sjögren\'s Syndrome' },
-                { antibody: 'Anti-Mitochondrial (AMA)', disease: 'Primary Biliary Cholangitis' },
-                { antibody: 'Anti-Smooth Muscle (ASMA)', disease: 'Autoimmune Hepatitis Type 1' },
-                { antibody: 'Anti-LKM-1', disease: 'Autoimmune Hepatitis Type 2' },
-                { antibody: 'Anti-Jo-1', disease: 'Polymyositis / Dermatomyositis' },
-                { antibody: 'Anti-Intrinsic Factor', disease: 'Pernicious Anaemia' },
-                { antibody: 'Anti-GAD', disease: 'Type 1 Diabetes Mellitus' },
-                { antibody: 'Anti-Acetylcholine Receptor (AChR)', disease: 'Myasthenia Gravis' }
+                // ── CONNECTIVE TISSUE / SYSTEMIC AUTOIMMUNE ──────────────────────
+                {
+                    antibody: 'Anti-dsDNA (double-stranded DNA)',
+                    disease: 'Systemic Lupus Erythematosus (SLE)',
+                    category: 'Connective Tissue',
+                    notes: 'Anti-dsDNA is highly specific for SLE (>95% specificity). Titres correlate with disease activity — rising titres predict lupus nephritis flares. Anti-dsDNA is one of the 11 ACR criteria for SLE diagnosis. Also check anti-Sm (highly specific but less sensitive), complement levels (C3/C4 fall in active disease).'
+                },
+                {
+                    antibody: 'Anti-Smith (Anti-Sm)',
+                    disease: 'Systemic Lupus Erythematosus (SLE)',
+                    category: 'Connective Tissue',
+                    notes: 'Anti-Sm is the MOST SPECIFIC antibody for SLE (>99% specificity) but only present in ~25–30% of SLE patients (low sensitivity). Directed against small nuclear ribonucleoprotein (snRNP) particles. Does NOT correlate with disease activity unlike anti-dsDNA.'
+                },
+                {
+                    antibody: 'Anti-Histone',
+                    disease: 'Drug-Induced Lupus (DIL)',
+                    category: 'Connective Tissue',
+                    notes: 'Anti-histone antibodies occur in >95% of drug-induced lupus but are NOT specific (also found in ~75% of idiopathic SLE). Common culprits: hydralazine, procainamide, isoniazid, minocycline, TNF-inhibitors. Resolves on drug withdrawal. Unlike SLE, renal and CNS involvement is rare.'
+                },
+                {
+                    antibody: 'Anti-Ro (SS-A) and Anti-La (SS-B)',
+                    disease: 'Sjögren\'s Syndrome',
+                    category: 'Connective Tissue',
+                    notes: 'Anti-Ro/SS-A is the most sensitive antibody in Sjögren\'s (present in ~75%). Anti-La/SS-B is more specific but present in only ~40%. Critical: Anti-Ro crosses the placenta — can cause neonatal lupus (transient skin rash) and congenital heart block (complete AVB). All pregnant SLE/Sjögren\'s patients need anti-Ro testing. Anti-Ro also found in SLE and subacute cutaneous lupus (SCLE).'
+                },
+                {
+                    antibody: 'Anti-Scl-70 (Anti-Topoisomerase I)',
+                    disease: 'Diffuse Cutaneous Systemic Sclerosis (dcSSc)',
+                    category: 'Connective Tissue',
+                    notes: 'Anti-Scl-70 is found in ~30% of SSc, associated with DIFFUSE disease (widespread skin + internal organ involvement). Strongly associated with interstitial lung disease (ILD) and pulmonary fibrosis. Higher mortality than anti-centromere positive patients. If positive, regular HRCT surveillance for ILD is essential.'
+                },
+                {
+                    antibody: 'Anti-Centromere (ACA)',
+                    disease: 'Limited Cutaneous Systemic Sclerosis (CREST Syndrome)',
+                    category: 'Connective Tissue',
+                    notes: 'Anti-centromere antibodies are found in ~80% of limited cutaneous SSc (CREST: Calcinosis, Raynaud\'s, Oesophageal dysmotility, Sclerodactyly, Telangiectasia). CREST has better prognosis than diffuse SSc. Pulmonary arterial hypertension (PAH) is the major complication — not ILD. Annual echocardiogram surveillance is recommended.'
+                },
+                {
+                    antibody: 'Anti-RNA Polymerase III',
+                    disease: 'Systemic Sclerosis with Renal Crisis',
+                    category: 'Connective Tissue',
+                    notes: 'Anti-RNA Pol III is found in ~20% of SSc and is strongly associated with scleroderma renal crisis (acute hypertension, microangiopathic haemolytic anaemia, rapidly progressive renal failure). Also associated with a higher risk of cancer (synchronous or preceding SSc). Prompt ACE inhibitor therapy is life-saving in renal crisis.'
+                },
+                {
+                    antibody: 'Anti-CCP (Anti-Cyclic Citrullinated Peptide)',
+                    disease: 'Rheumatoid Arthritis (RA)',
+                    category: 'Connective Tissue',
+                    notes: 'Anti-CCP (also called anti-citrullinated protein antibody, ACPA) has >95% specificity for RA, comparable to rheumatoid factor (RF) but higher specificity. A positive anti-CCP even before symptom onset predicts RA development. High anti-CCP titres predict erosive (severe, joint-destructive) disease — important for early aggressive treatment. Can be present in seronegative RA (RF negative but anti-CCP positive).'
+                },
+                {
+                    antibody: 'Rheumatoid Factor (RF)',
+                    disease: 'Rheumatoid Arthritis (RA)',
+                    category: 'Connective Tissue',
+                    notes: 'RF (usually IgM anti-IgG antibody) is positive in ~70–80% of RA patients but has low specificity (also found in Sjögren\'s, SLE, hepatitis C, cryoglobulinaemia, and healthy elderly people). The combination of RF + anti-CCP gives much higher specificity. Seronegative RA (both RF and anti-CCP negative) accounts for ~20–30% of cases.'
+                },
+                {
+                    antibody: 'Anti-Jo-1 (Anti-Histidyl tRNA Synthetase)',
+                    disease: 'Antisynthetase Syndrome / Polymyositis / Dermatomyositis',
+                    category: 'Connective Tissue',
+                    notes: 'Anti-Jo-1 is the most common antisynthetase antibody (others include anti-PL-7, anti-PL-12, anti-EJ, anti-OJ). The antisynthetase syndrome features: inflammatory myopathy (polymyositis/DM), ILD (often the most serious complication), arthritis, mechanic\'s hands, Raynaud\'s, and fever. CK is elevated (muscle damage). Anti-MDA5 is associated with clinically amyopathic DM with rapidly progressive ILD.'
+                },
+                {
+                    antibody: 'Anti-Mi-2',
+                    disease: 'Dermatomyositis (classical)',
+                    category: 'Connective Tissue',
+                    notes: 'Anti-Mi-2 is found in ~20% of dermatomyositis. Associated with the CLASSIC dermatomyositis skin features: heliotrope rash (periorbital), Gottron\'s papules (knuckles), shawl sign. Good prognosis — lower risk of ILD compared to antisynthetase syndrome or anti-MDA5.'
+                },
+
+                // ── VASCULITIS / ANCA ─────────────────────────────────────────────
+                {
+                    antibody: 'c-ANCA / Anti-PR3 (Anti-Proteinase 3)',
+                    disease: 'Granulomatosis with Polyangiitis (GPA, formerly Wegener\'s)',
+                    category: 'Vasculitis',
+                    notes: 'c-ANCA (cytoplasmic ANCA) with specificity for PR3 antigen is the hallmark of GPA. Sensitivity ~90% in active generalised disease; ~60% in limited disease. Classical triad: upper respiratory tract (sinusitis, saddle-nose deformity), lower respiratory tract (haemoptysis, cavitating nodules), and rapidly progressive glomerulonephritis. PR3-ANCA titres can track disease activity. Treatment: rituximab or cyclophosphamide + steroids.'
+                },
+                {
+                    antibody: 'p-ANCA / Anti-MPO (Anti-Myeloperoxidase)',
+                    disease: 'Microscopic Polyangiitis (MPA)',
+                    category: 'Vasculitis',
+                    notes: 'p-ANCA (perinuclear) with specificity for MPO is classic for MPA. MPA is the most common cause of pulmonary-renal syndrome. Renal: rapidly progressive crescentic GN (pauci-immune). Lungs: pulmonary haemorrhage. No granulomata (unlike GPA). MPO-ANCA also seen in eosinophilic GPA (Churg-Strauss), drug-induced ANCA vasculitis (propylthiouracil, hydralazine, minocycline), and inflammatory bowel disease (atypical p-ANCA).'
+                },
+                {
+                    antibody: 'Anti-GBM (Anti-Glomerular Basement Membrane)',
+                    disease: 'Goodpasture\'s Syndrome',
+                    category: 'Vasculitis',
+                    notes: 'Anti-GBM antibodies target the alpha-3 chain of type IV collagen in glomerular and alveolar basement membranes. Causes a pulmonary-renal syndrome: rapidly progressive GN + pulmonary haemorrhage (life-threatening). HLA-DR15 is a predisposing factor. Treatment: plasma exchange (to remove anti-GBM antibodies) + immunosuppression. Approximately 30% of Goodpasture\'s patients are also ANCA-positive (double-positive — more severe, worse prognosis).'
+                },
+
+                // ── LIVER / HEPATOLOGY ────────────────────────────────────────────
+                {
+                    antibody: 'Anti-Mitochondrial Antibody (AMA) — M2 subtype',
+                    disease: 'Primary Biliary Cholangitis (PBC)',
+                    category: 'Hepatology',
+                    notes: 'AMA-M2 (against E2 subunit of pyruvate dehydrogenase complex) is present in >95% of PBC patients — highly specific (>99%). PBC: autoimmune destruction of small intrahepatic bile ducts → cholestasis → biliary cirrhosis. Biochemistry: elevated ALP + GGT, normal/mildly raised transaminases, raised IgM. Symptoms: fatigue, pruritus. Associated with other autoimmune diseases (Sjögren\'s, CREST). AMA-negative PBC (~5%): diagnosed on liver biopsy.'
+                },
+                {
+                    antibody: 'Anti-Smooth Muscle Antibody (ASMA / SMA)',
+                    disease: 'Autoimmune Hepatitis Type 1 (AIH-1)',
+                    category: 'Hepatology',
+                    notes: 'ASMA (usually IgG, targeting F-actin) is found in ~70% of AIH type 1. ANA is also positive in ~80% of AIH-1. AIH-1 affects all ages (bimodal: teens + post-menopausal women). Biochemistry: markedly elevated transaminases, raised IgG. If untreated: progressive fibrosis → cirrhosis. Responds well to immunosuppression (prednisolone + azathioprine).'
+                },
+                {
+                    antibody: 'Anti-LKM-1 (Liver-Kidney Microsomal)',
+                    disease: 'Autoimmune Hepatitis Type 2 (AIH-2)',
+                    category: 'Hepatology',
+                    notes: 'Anti-LKM-1 (targeting CYP2D6 enzyme) is the hallmark of AIH type 2. AIH-2 primarily affects girls and young women; more severe and rapidly progressive than AIH-1. AMA and ASMA negative. Also consider: Anti-LC1 (liver cytosol-1 antibody) in AIH-2. Rare genetic overlap: AIH-2 associated with type 1 diabetes, thyroiditis, vitiligo (autoimmune polyglandular syndrome).'
+                },
+                {
+                    antibody: 'Anti-SP100 / Anti-GP210',
+                    disease: 'Primary Biliary Cholangitis (AMA-negative)',
+                    category: 'Hepatology',
+                    notes: 'In AMA-negative PBC, anti-SP100 and anti-GP210 (anti-nuclear envelope antibodies) are useful alternative markers — each with ~40% sensitivity but high specificity for PBC. Anti-GP210 is also associated with a more severe, progressive disease course. These are detected by indirect immunofluorescence showing a characteristic \"nuclear pore\" or \"nuclear dot\" pattern.'
+                },
+
+                // ── GASTROINTESTINAL ──────────────────────────────────────────────
+                {
+                    antibody: 'Anti-TTG IgA (Anti-Tissue Transglutaminase)',
+                    disease: 'Coeliac Disease',
+                    category: 'Gastroenterology',
+                    notes: 'Anti-TTG IgA is the FIRST-LINE screening antibody for coeliac disease. Sensitivity ~95%, specificity ~97% for coeliac on a gluten-containing diet. Critical: always measure total IgA simultaneously — IgA deficiency (1 in 600) causes false-negative results; use IgG-based tests (anti-TTG IgG or anti-DGP IgG) in IgA-deficient patients. Anti-endomysial IgA (EMA) is highly specific (>99%) but more expensive; used for confirmation.'
+                },
+                {
+                    antibody: 'Anti-Intrinsic Factor (Anti-IF)',
+                    disease: 'Pernicious Anaemia',
+                    category: 'Gastroenterology',
+                    notes: 'Anti-IF is HIGHLY SPECIFIC (>95%) for pernicious anaemia (autoimmune destruction of gastric parietal cells → lack of intrinsic factor → B12 malabsorption). Present in ~60% (moderate sensitivity). Anti-parietal cell antibody (APCA) is more sensitive (~90%) but less specific (found in 16% of healthy adults, atrophic gastritis, type 1 diabetes). APCA alone insufficient for diagnosis. Pernicious anaemia requires lifelong IM B12 replacement.'
+                },
+                {
+                    antibody: 'ASCA (Anti-Saccharomyces cerevisiae Antibodies)',
+                    disease: 'Crohn\'s Disease',
+                    category: 'Gastroenterology',
+                    notes: 'ASCA (IgA or IgG) is found in ~55–65% of Crohn\'s disease patients and ~5% of ulcerative colitis patients. Used alongside pANCA (positive in ~60–70% UC, ~10% CD) as the ASCA+/pANCA- pattern favours Crohn\'s (specificity ~90%). Useful in IBD-indeterminate colitis where endoscopy cannot distinguish. NOT used for diagnosis alone — clinical context essential.'
+                },
+
+                // ── ENDOCRINE / DIABETES ──────────────────────────────────────────
+                {
+                    antibody: 'Anti-GAD65 (Anti-Glutamic Acid Decarboxylase)',
+                    disease: 'Type 1 Diabetes Mellitus / LADA',
+                    category: 'Endocrinology',
+                    notes: 'Anti-GAD65 is the most common autoantibody in type 1 diabetes (found in 70–80% at diagnosis). Also present in LADA (Latent Autoimmune Diabetes in Adults) — type 1 diabetes presenting in adults, often initially misdiagnosed as type 2. GAD antibodies also occur in stiff-person syndrome (a rare neurological condition). Other T1DM markers: anti-IA-2, anti-ZnT8, anti-islet cell antibodies (ICA).'
+                },
+                {
+                    antibody: 'Anti-IA-2 (Islet Antigen 2 / Anti-Tyrosine Phosphatase)',
+                    disease: 'Type 1 Diabetes Mellitus',
+                    category: 'Endocrinology',
+                    notes: 'Anti-IA-2 antibodies target protein tyrosine phosphatase in islet cells. Found in ~60–70% of new-onset T1DM. High specificity; often present months to years before clinical diagnosis. Multiple autoantibodies (Anti-GAD + anti-IA-2 + anti-ZnT8) predict faster progression to overt T1DM. Used in prevention trials and family screening.'
+                },
+                {
+                    antibody: 'Anti-Thyroid Peroxidase (Anti-TPO)',
+                    disease: 'Hashimoto\'s Thyroiditis (Autoimmune Hypothyroidism)',
+                    category: 'Endocrinology',
+                    notes: 'Anti-TPO is the most sensitive antibody for autoimmune thyroid disease (present in ~95% Hashimoto\'s, ~80% Graves\'). Also found in normal thyroid function patients — a positive anti-TPO predicts future hypothyroidism (risk increases with age). Very high titres correlate with degree of lymphocytic infiltration and thyroid damage. Anti-thyroglobulin (anti-TG): less sensitive for Hashimoto\'s but important in thyroid cancer monitoring (interference in Tg measurements).'
+                },
+                {
+                    antibody: 'TSH Receptor Antibodies (TRAb / TSI)',
+                    disease: 'Graves\' Disease (Autoimmune Hyperthyroidism)',
+                    category: 'Endocrinology',
+                    notes: 'TRAb (TSH receptor antibodies) act as stimulatory autoantibodies — they bind the TSH receptor and activate it, driving autonomous thyroid hormone production. Sensitivity ~97% for Graves\'. Important: TRAb cross the placenta — maternal TRAb can cause neonatal Graves\' disease (temporary thyrotoxicosis in the neonate). Measure TRAb in third trimester of pregnant Graves\' patients to assess neonatal risk. Falling TRAb levels after antithyroid drug treatment predict remission.'
+                },
+                {
+                    antibody: 'Anti-21-Hydroxylase',
+                    disease: 'Autoimmune Addison\'s Disease',
+                    category: 'Endocrinology',
+                    notes: 'Anti-21-hydroxylase antibodies (targeting the enzyme in the adrenal cortex) are found in ~90% of autoimmune Addison\'s disease. In developed countries, autoimmune cause accounts for ~80% of Addison\'s disease (TB is the leading cause worldwide). Associated with APS Type 1 (APECED: hypoparathyroidism, Addison\'s, mucocutaneous candidiasis — AIRE mutation) and APS Type 2 (Schmidt syndrome: Addison\'s + autoimmune thyroid + T1DM).'
+                },
+                {
+                    antibody: 'Anti-Adrenal Cortex (ACA)',
+                    disease: 'Autoimmune Addison\'s Disease / APS',
+                    category: 'Endocrinology',
+                    notes: 'Anti-adrenal cortex antibodies detected by indirect immunofluorescence are a historical marker for Addison\'s disease screening, now largely replaced by specific anti-21-hydroxylase antibody testing. Positive in ~85% of autoimmune Addison\'s. In APS Type 1 (APECED), anti-steroid cell antibodies and anti-21-hydroxylase are characteristic.'
+                },
+
+                // ── NEUROLOGICAL ──────────────────────────────────────────────────
+                {
+                    antibody: 'Anti-Acetylcholine Receptor (Anti-AChR)',
+                    disease: 'Myasthenia Gravis',
+                    category: 'Neurology',
+                    notes: 'Anti-AChR is positive in ~85% of generalised myasthenia gravis and ~50% of ocular MG. Causes complement-mediated destruction and blockade of neuromuscular junction AChRs → fatigable muscle weakness (worse with activity, better with rest). Anti-MuSK (muscle-specific kinase): found in ~40% of seronegative MG — often more severe (facial/bulbar/respiratory involvement). All MG patients: CT chest to exclude thymoma (associated in ~15%). Tensilon (edrophonium) test for diagnosis.'
+                },
+                {
+                    antibody: 'Anti-Voltage-Gated Calcium Channel (Anti-VGCC)',
+                    disease: 'Lambert-Eaton Myasthenic Syndrome (LEMS)',
+                    category: 'Neurology',
+                    notes: 'LEMS: presynaptic neuromuscular junction disorder (contrast with MG which is postsynaptic). Anti-VGCC antibodies impair acetylcholine release from motor nerve terminals → proximal muscle weakness that IMPROVES with repeated activity (fatigue is REVERSED — the opposite of MG). ~50–60% associated with small cell lung cancer (SCLC) — LEMS can be paraneoplastic. Screen for SCLC in all LEMS patients. Treatment: 3,4-DAP (diaminopyridine) + immunosuppression.'
+                },
+                {
+                    antibody: 'Anti-Voltage-Gated Potassium Channel Complex (Anti-VGKC/LGI1/CASPR2)',
+                    disease: 'Autoimmune Encephalitis / Limbic Encephalitis',
+                    category: 'Neurology',
+                    notes: 'Anti-LGI1 (leucine-rich glioma inactivated 1) causes limbic encephalitis: subacute onset confusion, amnesia, behavioural change, seizures (faciobrachial dystonic seizures pathognomonic for LGI1). Anti-CASPR2: peripheral nerve hyperexcitability (Morvan\'s syndrome), encephalitis. HLA-DR7/DQ2 association with LGI1. Usually not paraneoplastic (but check for thymoma in CASPR2). Respond well to immunotherapy if treated early.'
+                },
+                {
+                    antibody: 'Anti-NMDAR (Anti-N-Methyl-D-Aspartate Receptor)',
+                    disease: 'Anti-NMDAR Encephalitis',
+                    category: 'Neurology',
+                    notes: 'The most common autoimmune encephalitis. Typically young women. Prodromal viral-like illness → psychiatric symptoms (psychosis, agitation) → seizures → movement disorders (orofacial dyskinesias) → coma/autonomic instability. Associated with ovarian teratoma (contains NMDA receptors; triggers immune response) — ~50% of female patients. Ovarian teratoma removal accelerates recovery. CSF: lymphocytic pleocytosis. Treatment: immunotherapy + teratoma removal.'
+                },
+                {
+                    antibody: 'Anti-MOG (Anti-Myelin Oligodendrocyte Glycoprotein)',
+                    disease: 'MOGAD (MOG-Antibody Associated Disease)',
+                    category: 'Neurology',
+                    notes: 'MOGAD is a distinct CNS demyelinating disease from MS and AQP4-positive NMOSD. Presents as optic neuritis (often bilateral, severe), ADEM-like attacks, transverse myelitis, cortical encephalitis. Unlike MS: often good recovery, short cord lesions. Unlike AQP4-NMOSD: better visual recovery, less female predominance. Treatment: high-dose steroids for acute attacks; long-term immunotherapy for relapsing cases. Annual relapse rate is variable; relapses more common in adults than children.'
+                },
+                {
+                    antibody: 'Anti-AQP4 (Anti-Aquaporin-4)',
+                    disease: 'Neuromyelitis Optica Spectrum Disorder (NMOSD)',
+                    category: 'Neurology',
+                    notes: 'Anti-AQP4 antibodies target astrocyte water channels. NMOSD: severe optic neuritis (often bilateral, can cause permanent blindness), longitudinally extensive transverse myelitis (LETM — >3 vertebral segments), area postrema syndrome (intractable hiccups/vomiting). Female:male ~9:1. MRI: long cord lesion (>3 segments), T2 hyperintensity involving grey matter centrally. Distinguish from MS (different treatment: certain MS DMTs worsen NMOSD). Treatment: azathioprine, rituximab, or monoclonal antibodies (eculizumab, satralizumab, inebilizumab).'
+                },
+                {
+                    antibody: 'Anti-Ganglioside (e.g., Anti-GM1, Anti-GQ1b)',
+                    disease: 'Guillain-Barré Syndrome / Miller Fisher Syndrome',
+                    category: 'Neurology',
+                    notes: 'Guillain-Barré Syndrome (GBS): post-infectious ascending paralysis. Anti-GM1 found in acute motor axonal neuropathy (AMAN subtype, associated with Campylobacter jejuni). Anti-GQ1b is highly specific for Miller Fisher Syndrome (MFS) — the GBS variant with ophthalmoplegia, ataxia, areflexia. Also in Bickerstaff brainstem encephalitis (anti-GQ1b positive). CSF: albuminocytological dissociation (high protein, normal/low cells). Treatment: IVIg or plasma exchange.'
+                },
+
+                // ── RENAL ─────────────────────────────────────────────────────────
+                {
+                    antibody: 'Anti-PLA2R (Anti-Phospholipase A2 Receptor)',
+                    disease: 'Primary Membranous Nephropathy',
+                    category: 'Nephrology',
+                    notes: 'Anti-PLA2R is the diagnostic antibody for PRIMARY membranous nephropathy — the most common cause of nephrotic syndrome in adults. Found in ~70–80% of primary MN; largely absent in secondary MN (lupus, cancer, drugs, hepatitis B). Serum anti-PLA2R titres correlate with disease activity — useful to guide treatment and monitor for relapse. Treatment: conservative (1/3 spontaneous remission) vs immunosuppression (rituximab preferred in current guidelines).'
+                },
+
+                // ── ANTIPHOSPHOLIPID SYNDROME ─────────────────────────────────────
+                {
+                    antibody: 'Lupus Anticoagulant (LA)',
+                    disease: 'Antiphospholipid Syndrome (APS)',
+                    category: 'Haematology/Thrombosis',
+                    notes: 'Lupus anticoagulant is a functional coagulation test, not a specific antibody name. It paradoxically PROLONGS clotting tests in vitro (APTT, DRVVT) but causes thrombosis in vivo. Part of the antiphospholipid antibody (aPL) family alongside anti-cardiolipin and anti-beta-2 glycoprotein I. APS: thrombosis (arterial or venous), recurrent pregnancy loss (1st trimester: miscarriage; 2nd/3rd: pre-eclampsia, fetal death), thrombocytopenia. Confirm with repeat testing at 12 weeks (must be positive on two occasions ≥12 weeks apart for diagnosis).'
+                },
+                {
+                    antibody: 'Anti-Cardiolipin IgG/IgM (aCL)',
+                    disease: 'Antiphospholipid Syndrome (APS)',
+                    category: 'Haematology/Thrombosis',
+                    notes: 'Anti-cardiolipin antibodies are one of the three criteria aPL antibodies for APS. HIGH TITRE (>40 GPL/MPL or >99th percentile) is required for diagnostic significance. Low titres may be transient (post-infection). The triple positivity (LA + aCL + anti-beta2GPI all positive) confers the highest thrombotic risk. Treatment: anticoagulation (warfarin, target INR 2.5–3.5 for arterial; LMWH in pregnancy + aspirin).'
+                },
+                {
+                    antibody: 'Anti-Beta-2 Glycoprotein I (Anti-β2GPI)',
+                    disease: 'Antiphospholipid Syndrome (APS)',
+                    category: 'Haematology/Thrombosis',
+                    notes: 'Anti-β2GPI IgG and IgM are the most pathogenic antiphospholipid antibodies (more thrombogenic than anti-cardiolipin alone). Beta-2 glycoprotein I is the actual antigen; anticardiolipin antibodies bind cardiolipin only in the presence of β2GPI. Anti-β2GPI IgG is the strongest predictor of thrombosis. High-risk APS features (triple positivity, prior thrombosis, cardiac valve disease): consider lifelong anticoagulation.'
+                },
+
+                // ── HAEMATOLOGY ───────────────────────────────────────────────────
+                {
+                    antibody: 'Heparin-Induced Thrombocytopenia (HIT) Antibodies (Anti-PF4/Heparin)',
+                    disease: 'Heparin-Induced Thrombocytopenia (HIT)',
+                    category: 'Haematology/Thrombosis',
+                    notes: 'HIT is a life-threatening immune-mediated complication of heparin. IgG antibodies against PF4-heparin complexes activate platelets → thrombocytopenia + paradoxical thrombosis (both arterial and venous). Occurs 5–14 days after starting heparin (or within 1 day if prior heparin exposure). 4T score for probability assessment. Diagnosis: functional assay (serotonin release assay, SRA) is gold standard; anti-PF4/heparin ELISA is screening test. Treatment: IMMEDIATELY STOP heparin; switch to an alternative anticoagulant (argatroban, fondaparinux, or bivalirudin). NEVER use warfarin alone (risk of venous limb gangrene). NEVER give platelets.'
+                },
+
+                // ── DERMATOLOGY ───────────────────────────────────────────────────
+                {
+                    antibody: 'Anti-Desmoglein 3 (Anti-Dsg3)',
+                    disease: 'Pemphigus Vulgaris',
+                    category: 'Dermatology',
+                    notes: 'Anti-desmoglein 3 (IgG) targets desmosomal proteins, disrupting epidermal cell adhesion → suprabasal acantholysis → intraepidermal bullae. Pemphigus vulgaris: flaccid blisters + mucosal involvement (mucosal predominant if anti-Dsg3 alone; mucocutaneous if anti-Dsg1 also positive). Nikolsky sign positive. High mortality if untreated. Treatment: high-dose steroids + rituximab (increasingly first-line) or azathioprine. Anti-desmoglein 1: pemphigus foliaceus (superficial blisters, no mucosal involvement).'
+                },
+                {
+                    antibody: 'Anti-BP180 / Anti-BP230 (Anti-Bullous Pemphigoid Antigens)',
+                    disease: 'Bullous Pemphigoid',
+                    category: 'Dermatology',
+                    notes: 'Bullous pemphigoid (BP): the most common autoimmune blistering disease. Anti-BP180 (NC16A domain) is the most sensitive and specific marker; correlates with disease activity. Tense (not flaccid) subepidermal blisters on inflamed base, typically affecting the elderly (>70 years). Pruritic urticarial prodrome often precedes blisters. Nikolsky sign NEGATIVE (unlike pemphigus). Treatment: superpotent topical steroids (clobetasol) are preferred over systemic steroids in elderly due to mortality risk.'
+                },
+
+                // ── HAEMATOLOGICAL / CYTOPLASMIC ─────────────────────────────────
+                {
+                    antibody: 'Direct Antiglobulin Test (DAT) — Positive IgG',
+                    disease: 'Warm Autoimmune Haemolytic Anaemia (AIHA)',
+                    category: 'Haematology',
+                    notes: 'The DAT (Coombs\' test) detects antibodies or complement components bound to red cells. IgG-coated red cells = warm AIHA (antibody acts at 37°C; spleen-mediated extravascular haemolysis). Causes: idiopathic, SLE, CLL, drugs (alpha-methyldopa, penicillin, cephalosporins). Spherocytes on blood film. Haemolysis markers: raised bilirubin (unconjugated), raised LDH, low haptoglobin, high reticulocytes. Treatment: steroids → if refractory: rituximab, splenectomy.'
+                },
+                {
+                    antibody: 'Direct Antiglobulin Test (DAT) — Positive C3d only',
+                    disease: 'Cold Agglutinin Disease (CAD)',
+                    category: 'Haematology',
+                    notes: 'Cold agglutinin disease: IgM autoantibodies react with red cell I/i antigens at cold temperatures → complement activation → C3d deposition on red cells → extravascular haemolysis (predominantly liver). DAT: C3d positive, IgG negative. Acrocyanosis (blueness of extremities in cold), haemolytic anaemia. Analyser: spuriously high MCV (clumps read as large cells) — warm sample to 37°C for accurate FBC. Primary (monoclonal, usually IgM kappa, often MYD88 mutated) vs secondary (Mycoplasma pneumoniae, EBV).'
+                }
             ];
 
+            // Build state
             const questionPromptEl = document.getElementById('question-prompt');
             const targetItemEl = document.getElementById('target-item');
             const answerOptionsEl = document.getElementById('answer-options');
             const feedbackMessageEl = document.getElementById('feedback-message');
+            const clinicalContextEl = document.getElementById('clinical-context');
+            const clinicalTextEl = document.getElementById('clinical-text');
             const nextQuestionBtn = document.getElementById('next-question-btn');
             const scoreEl = document.getElementById('score');
+            const qNumEl = document.getElementById('q-num');
+            const qTotalEl = document.getElementById('q-total');
+            const streakEl = document.getElementById('streak');
+            const catBadgeEl = document.getElementById('cat-badge');
+            const catFilterEl = document.getElementById('cat-filter');
 
             let currentAssociation = {};
             let score = 0;
+            let streak = 0;
+            let qNum = 0;
             let usedIndices = [];
+            let activeCategory = 'All';
+            let filteredAssociations = [...associations];
+
+            // Build category filter
+            const cats = ['All', ...new Set(associations.map(a => a.category))];
+            cats.forEach(cat => {
+                if (cat === 'All') return;
+                const btn = document.createElement('button');
+                btn.textContent = cat;
+                btn.className = 'cat-filter-btn px-3 py-1 text-sm rounded-full bg-gray-200 text-gray-700 font-semibold hover:bg-gray-300 transition';
+                btn.dataset.cat = cat;
+                btn.addEventListener('click', () => setCategory(cat));
+                catFilterEl.appendChild(btn);
+            });
+            document.querySelector('.cat-filter-btn[data-cat="All"]').addEventListener('click', () => setCategory('All'));
+
+            qTotalEl.textContent = associations.length;
+
+            function setCategory(cat) {
+                activeCategory = cat;
+                filteredAssociations = cat === 'All' ? [...associations] : associations.filter(a => a.category === cat);
+                usedIndices = [];
+                qNum = 0;
+                score = 0;
+                streak = 0;
+                scoreEl.textContent = 0;
+                streakEl.textContent = 0;
+                qTotalEl.textContent = filteredAssociations.length;
+                document.querySelectorAll('.cat-filter-btn').forEach(b => {
+                    b.className = b.dataset.cat === cat
+                        ? 'cat-filter-btn px-3 py-1 text-sm rounded-full bg-gray-800 text-white font-semibold'
+                        : 'cat-filter-btn px-3 py-1 text-sm rounded-full bg-gray-200 text-gray-700 font-semibold hover:bg-gray-300 transition';
+                });
+                newQuestion();
+            }
 
             function newQuestion() {
-                if (usedIndices.length === associations.length) {
-                    usedIndices = []; // Reset if all questions have been asked
-                }
+                if (usedIndices.length === filteredAssociations.length) usedIndices = [];
 
                 let nextIndex;
-                do {
-                    nextIndex = Math.floor(Math.random() * associations.length);
-                } while (usedIndices.includes(nextIndex));
-                
+                do { nextIndex = Math.floor(Math.random() * filteredAssociations.length); } while (usedIndices.includes(nextIndex));
                 usedIndices.push(nextIndex);
-                currentAssociation = associations[nextIndex];
+                currentAssociation = filteredAssociations[nextIndex];
+                qNum++;
 
                 feedbackMessageEl.classList.add('hidden');
+                clinicalContextEl.classList.add('hidden');
                 nextQuestionBtn.classList.add('hidden');
                 answerOptionsEl.innerHTML = '';
 
-                const askAboutDisease = Math.random() < 0.5;
+                qNumEl.textContent = qNum;
+                catBadgeEl.textContent = currentAssociation.category;
 
+                const askAboutDisease = Math.random() < 0.5;
                 if (askAboutDisease) {
-                    questionPromptEl.textContent = 'Which antibody is most commonly associated with this condition?';
+                    questionPromptEl.textContent = 'Which antibody is most strongly associated with this condition?';
                     targetItemEl.textContent = currentAssociation.disease;
                     generateOptions(currentAssociation.antibody, 'antibody');
                 } else {
-                    questionPromptEl.textContent = 'Which condition is most commonly associated with this antibody?';
+                    questionPromptEl.textContent = 'Which condition is most strongly associated with this antibody?';
                     targetItemEl.textContent = currentAssociation.antibody;
                     generateOptions(currentAssociation.disease, 'disease');
                 }
             }
 
             function generateOptions(correctAnswer, type) {
-                let options = [correctAnswer];
-                while (options.length < 4) {
-                    const randomIndex = Math.floor(Math.random() * associations.length);
-                    const randomOption = associations[randomIndex][type];
-                    if (!options.includes(randomOption)) {
-                        options.push(randomOption);
-                    }
-                }
-
-                // Shuffle options
-                options.sort(() => Math.random() - 0.5);
+                const pool = filteredAssociations.filter(a => a[type] !== correctAnswer);
+                pool.sort(() => Math.random() - 0.5);
+                const distractors = pool.slice(0, 3).map(a => a[type]);
+                const options = [correctAnswer, ...distractors].sort(() => Math.random() - 0.5);
 
                 options.forEach(option => {
                     const button = document.createElement('button');
                     button.textContent = option;
-                    button.className = 'option-btn w-full text-left p-4 bg-gray-100 rounded-lg hover:bg-gray-200 transition';
+                    button.className = 'option-btn w-full text-left p-3 bg-gray-100 rounded-lg hover:bg-gray-200 transition border-2 border-transparent text-sm font-medium';
                     button.addEventListener('click', () => checkAnswer(option, correctAnswer, button));
                     answerOptionsEl.appendChild(button);
                 });
@@ -160,30 +485,31 @@
             function checkAnswer(selectedOption, correctAnswer, buttonEl) {
                 document.querySelectorAll('.option-btn').forEach(btn => btn.disabled = true);
                 feedbackMessageEl.classList.remove('hidden');
+                clinicalContextEl.classList.remove('hidden');
                 nextQuestionBtn.classList.remove('hidden');
+                clinicalTextEl.textContent = currentAssociation.notes;
 
                 if (selectedOption === correctAnswer) {
                     score++;
+                    streak++;
                     scoreEl.textContent = score;
-                    feedbackMessageEl.textContent = 'Correct!';
-                    feedbackMessageEl.className = 'mt-6 p-4 rounded-lg text-lg font-semibold bg-green-100 text-green-800';
+                    streakEl.textContent = streak;
+                    feedbackMessageEl.textContent = streak >= 5 ? `🔥 ${streak} in a row! Correct!` : '✓ Correct!';
+                    feedbackMessageEl.className = 'mt-5 p-4 rounded-lg text-base font-semibold bg-green-100 text-green-800';
                     buttonEl.classList.add('correct');
                 } else {
-                    feedbackMessageEl.textContent = `Incorrect. The correct association is ${correctAnswer}.`;
-                    feedbackMessageEl.className = 'mt-6 p-4 rounded-lg text-lg font-semibold bg-red-100 text-red-800';
+                    streak = 0;
+                    streakEl.textContent = 0;
+                    feedbackMessageEl.textContent = `✗ Incorrect. The correct association is: ${correctAnswer}.`;
+                    feedbackMessageEl.className = 'mt-5 p-4 rounded-lg text-base font-semibold bg-red-100 text-red-800';
                     buttonEl.classList.add('incorrect');
-                    // Highlight the correct answer
                     document.querySelectorAll('.option-btn').forEach(btn => {
-                        if (btn.textContent === correctAnswer) {
-                            btn.classList.add('correct');
-                        }
+                        if (btn.textContent === correctAnswer) btn.classList.add('correct');
                     });
                 }
             }
 
             nextQuestionBtn.addEventListener('click', newQuestion);
-
-            // Initial game start
             newQuestion();
         });
     </script>
