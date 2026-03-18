@@ -5,19 +5,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Footer</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>body { font-family: 'Inter', sans-serif; }</style>
 </head>
 <body>
-    <footer class="text-white py-8 mt-auto" style="background-color: #005EB8;">
-        <div class="container mx-auto px-6 text-center">
-            <div class="flex justify-center items-center space-x-8 my-4">
-                <img src="nhs-logo-880x4951.jpeg" alt="NHS Logo" class="h-10 bg-white p-1 rounded-md">
-                
-                <img src="images.png" alt="Nottingham University Hospitals NHS Trust Logo" class="h-12 bg-white p-1 rounded-md">
-                
-                <img src="SGC.png" alt="Shared Governance Council Logo" class="h-12 bg-white p-1 rounded-full">
+    <footer style="background-color: #003087;" class="text-white mt-auto">
+        <!-- Main footer body -->
+        <div class="container mx-auto px-6 py-10">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+                <!-- Column 1: About -->
+                <div>
+                    <h4 class="text-sm font-bold uppercase tracking-widest mb-4" style="color: #80b3e0;">About</h4>
+                    <p class="text-sm text-blue-100 leading-relaxed">
+                        The Clinical Pathology Shared Governance Council at Nottingham University Hospitals NHS Trust — empowering staff through education and collaboration.
+                    </p>
+                    <div class="flex items-center space-x-3 mt-5">
+                        <img src="nhs-logo-880x4951.jpeg" alt="NHS Logo" class="h-8 bg-white p-1 rounded">
+                        <img src="images.png" alt="NUH Logo" class="h-9 bg-white p-1 rounded">
+                        <img src="SGC.png" alt="SGC Logo" class="h-9 bg-white p-1 rounded-full">
+                    </div>
+                </div>
+
+                <!-- Column 2: Quick Links -->
+                <div>
+                    <h4 class="text-sm font-bold uppercase tracking-widest mb-4" style="color: #80b3e0;">Quick Links</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="Index.html" class="text-blue-100 hover:text-white transition-colors duration-200">Home</a></li>
+                        <li><a href="games.html" class="text-blue-100 hover:text-white transition-colors duration-200">Pathology Games</a></li>
+                        <li><a href="projects.html" class="text-blue-100 hover:text-white transition-colors duration-200">Our Projects</a></li>
+                        <li><a href="helpful_tools.html" class="text-blue-100 hover:text-white transition-colors duration-200">Helpful Tools</a></li>
+                        <li><a href="newsletters.html" class="text-blue-100 hover:text-white transition-colors duration-200">Newsletters</a></li>
+                        <li><a href="links.html" class="text-blue-100 hover:text-white transition-colors duration-200">Learning Links</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: Games -->
+                <div>
+                    <h4 class="text-sm font-bold uppercase tracking-widest mb-4" style="color: #80b3e0;">Featured Games</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="haem_game.html" class="text-blue-100 hover:text-white transition-colors duration-200">Morphology Mastermind</a></li>
+                        <li><a href="chemistry_game.html" class="text-blue-100 hover:text-white transition-colors duration-200">Clinical Chemistry Cases</a></li>
+                        <li><a href="blood_group_game.html" class="text-blue-100 hover:text-white transition-colors duration-200">Blood Grouping Challenge</a></li>
+                        <li><a href="coagulation_game.html" class="text-blue-100 hover:text-white transition-colors duration-200">Coagulation Cascade</a></li>
+                        <li><a href="Anticoagulant_Challenge.html" class="text-blue-100 hover:text-white transition-colors duration-200">Anticoagulant Challenge</a></li>
+                        <li><a href="pre_analytical_game.html" class="text-blue-100 hover:text-white transition-colors duration-200">Pre-analytical Pitfalls</a></li>
+                    </ul>
+                </div>
+
             </div>
-            <p>&copy; 2025 Clinical Pathology Shared Governance Council. All Rights Reserved.</p>
+        </div>
+
+        <!-- Bottom strip -->
+        <div style="background-color: #00205b;" class="py-4">
+            <div class="container mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-2">
+                <p class="text-xs text-blue-200">&copy; 2025 Clinical Pathology Shared Governance Council, NUH NHS Trust. All Rights Reserved.</p>
+                <p class="text-xs text-blue-300">For staff use only &mdash; not for patient advice</p>
+            </div>
         </div>
     </footer>
 </body>
